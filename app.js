@@ -16,10 +16,11 @@ let gameStates = {
 
 let currentState = gameStates.notStartedYet;
 
-let audio = new Audio("./assets/sound.mp3");
+let audio = new Audio("./assets/sounds/sound.mp3");
 audio.loop = true;
+// audio.blur
 audio.volume = 0.5;
-audio.autoplay = true;
+// audio.autoplay = true;
 console.log(audio);
 
 let page_static = document.getElementById("page_static");
@@ -39,7 +40,7 @@ let muteIcons = document.getElementsByClassName("mute-icon");
 console.log(muteIcons);
 let muteIconText = document.getElementsByClassName("mute-icon-text");
 
-let isMute = false;
+let isMute = true;
 
 document.addEventListener("keypress", (e) => {
   if (e.code === "KeyM") {
@@ -98,7 +99,7 @@ function FoldableMaterial(options = {}) {
 //#endregion
 
 const textures = {
-  sky: new THREE.TextureLoader().load("/textures/sky.png", (texture) => {
+  sky: new THREE.TextureLoader().load("assets/textures/sky.png", (texture) => {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
     texture.minFilter = THREE.NearestFilter;
@@ -138,7 +139,7 @@ async function loadModel(url) {
 
 //#region player related stuff
 async function loadPlayerModel() {
-  let { model, animations } = await loadModel("/assets/box_man.glb");
+  let { model, animations } = await loadModel("/assets/models/box_man.glb");
 
   return { model, animations };
 }
@@ -232,7 +233,7 @@ function jumpOnSpace() {
 let first_lanscape = undefined;
 
 async function loadLandscape() {
-  let { model } = await loadModel("/assets/landscape_2.glb");
+  let { model } = await loadModel("/assets/models/landscape_1.glb");
 
   return model.children[0];
 }
