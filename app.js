@@ -395,6 +395,7 @@ function init() {
 
   composer.setSize(window.innerWidth, window.innerHeight);
   composer.addPass(new THREE.RenderPass(scene, camera));
+  /*  
   composer.addPass(
     new THREE.BokehPass(scene, camera, {
       focus: 5,
@@ -403,7 +404,26 @@ function init() {
       width: window.innerWidth,
       height: window.innerHeight,
     })
+  ); */
+  const params = {
+    shape: 1,
+    radius: 1,
+    rotateR: Math.PI / 12,
+    rotateB: (Math.PI / 12) * 2,
+    rotateG: (Math.PI / 12) * 3,
+    scatter: 0,
+    blending: 0.2,
+    blendingMode: 1,
+    greyscale: false,
+    disable: false,
+  };
+  const halftonePass = new THREE.HalftonePass(
+    window.innerWidth,
+    window.innerHeight,
+    params
   );
+  // composer.addPass(renderPass);
+  composer.addPass(halftonePass);
 
   let countDownTimer = 3;
   let level_one_coundown_intervalID;
