@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>BERLIN RUNNER</title>
 
     <link rel="stylesheet" href="css.css" />
 
@@ -22,10 +22,21 @@
     <script src="libs/HalftonePass.js"></script>
     <script src="libs/GLTFLoader.js"></script>
     <script src="libs/OrbitControls.js"></script>
-    <script src="libs/AnimationMixer.js"></script>
-    <script src="libs/AnimationClip.js"></script>
-    <script src="libs/AnimationAction.js"></script>
     <script src="libs/gsap.js"></script>
+    <script src="libs/stats.js"></script>
+
+    <script src="./G.js"></script>
+    <script src="./Workers/landscapeWorker.js"></script>
+    <script src="./Util/UTIL.js"></script>
+    <script src="./AudioManager/AudioManager.js"></script>
+    <script src="./GameStateManager/GameStateManager.js"></script>
+    <script src="./Levels/LevelZero.js"></script>
+    <script src="./RewardGenerationManager/Coin.js"></script>
+    <script src="./RewardGenerationManager/RewardGenerationManager.js"></script>
+    <script src="./LandscapeGenerationManager/LandscapeGenerationManagement.js"></script>
+    <script src="./ScoreManager/ScoreManager.js"></script>
+    <script src="./Player/Player.js"></script>
+    <script src="World/World.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,151 +51,7 @@
     />
   </head>
   <body>
-    <div id="page_static"></div>
-    <div id="intro-screen">
-      <div id="game-title">BERLIN RUNNER</div>
-      <div id="instructions">
-        <span style="font-size: 36px">INSTRUCTIONS</span>
-        <div style="text-align: center">
-          MOVE: A|S|D<br />
-          JUMP: SPACE<br />
-          MUTE/UNMUTE : M
-        </div>
-      </div>
-
-      <div id="pressMe">START GAME</div>
-      <div style="display: flex; flex-direction: row">
-        <span
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 5px;
-          "
-        >
-          <span class="material-symbols-outlined mute-icon" id="mute">
-            volume_off
-          </span>
-          <div
-            id="audio_status_text"
-            class="mute-icon-text"
-            style="color: greenyellow"
-          >
-            MUTED
-          </div>
-        </span>
-      </div>
-    </div>
-
-    <div id="level-one-intro-screen">
-      <div id="game-title">LEVEL ONE, =)</div>
-      <div id="instructions">
-        <span style="font-size: 36px">OBJECTIVES</span>
-        <div style="text-align: center">
-          WELCOME TO THE FIRST LEVEL<br />
-          AVOID OBSTACLES, COLLECT COINS, GET 15 SCORE POINTS, *_* <br />
-          GAME WILL START IN: <br />
-          <span id="countdown-timer" style="font-size: 64px">;)</span>
-        </div>
-      </div>
-
-      <div style="display: flex; flex-direction: row; margin: 10px">
-        <span
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 5px;
-          "
-        >
-          <span class="material-symbols-outlined mute-icon" id="mute">
-            volume_off
-          </span>
-          <div
-            id="audio_status_text"
-            class="mute-icon-text"
-            style="color: greenyellow"
-          >
-            MUTED
-          </div>
-        </span>
-      </div>
-    </div>
-
-    <div id="paused-screen">
-      <div id="game-title">BERLIN RUNNER</div>
-
-      <div class="button-holder" style="display: flex; flex-direction: row">
-        <div id="resume">RESUME GAME</div>
-        <div id="restart">RESTART LEVEL</div>
-      </div>
-      <div style="display: flex; flex-direction: row"></div>
-      <span
-        style="
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          margin: 0 5px;
-        "
-      >
-        <span class="material-symbols-outlined mute-icon" id="mute">
-          volume_off
-        </span>
-        <div
-          id="audio_status_text"
-          class="mute-icon-text"
-          style="color: greenyellow"
-        >
-          MUTED
-        </div>
-      </span>
-    </div>
-
-    <div id="game-over-screen">
-      <div id="game-title">
-        =(, you just died!, <br />
-        <span style="color: blueviolet">(strictly for tetsing purposes)</span>
-      </div>
-      <div id="final-score-holder">
-        FINAL SCORE:<span id="final-score"></span>
-      </div>
-
-      <div id="restart-game">RESTART</div>
-      <div style="display: flex; flex-direction: row">
-        <span
-          style="
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 5px;
-          "
-        >
-          <span class="material-symbols-outlined mute-icon" id="mute">
-            volume_off
-          </span>
-          <div
-            id="audio_status_text"
-            class="mute-icon-text"
-            style="color: greenyellow"
-          >
-            MUTED
-          </div>
-        </span>
-      </div>
-    </div>
-
     <div id="webgl"></div>
-
-    <div class="title">
-      RUNNER DEMO V.1.0.0 <br />MADE WITH LOVE BY
-      <span style="color: tomato">XAR</span>
-    </div>
-
-    <div id="pause-button-holder">
-      <span class="material-symbols-outlined" id="pause-button"> pause </span>
-    </div>
-    <div class="score">SCORE: &nbsp;&nbsp;<span id="score_text">^)^</span></div>
-    <!-- <div class="health">HEALTH:100%</div> -->
   </body>
 
   <script src="app.js"></script>
