@@ -14,18 +14,32 @@ class GameStateManager {
   }
 
   init() {
-    this.currentState = gameStates.notStartedYet;
+    this.currentState = this.gameStates.notStartedYet;
   }
 
   startGame() {
     console.log("SWITCHING GAME STATE TO PLAYING");
-    // hide loader stuff,
-    currentState = gameStates.inPlay;
+    this.currentState = this.gameStates.inPlay;
+    this.context.gameStateEventBus.publish("start_game");
   }
 
   enterPlay() {}
 
-  pauseGame() {}
+  pauseGame() {
+    console.log("pausing game");
+    this.currentState = this.gameStates.paused;
+    this.context.gameStateEventBus.publish("pause_game");
+  }
+
+  resumeGame() {
+    this.currentState = this.gameStates.inPlay;
+    this.context.gameStateEventBus.publish("resume_game");
+  }
+
+  restartGame() {
+    this.currentState = this.gameStates.inPlay;
+    this.context.gameStateEventBus.publish("restart_game");
+  }
 
   gameOver() {
     // audio.audio.volume = 0.25;

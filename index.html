@@ -27,13 +27,31 @@
 
     <script src="./G.js"></script>
     <script src="./Workers/landscapeWorker.js"></script>
+
     <script src="./Util/UTIL.js"></script>
+    <script src="./Util/LightEventBus/EventBus.js"></script>
+
     <script src="./AudioManager/AudioManager.js"></script>
+
     <script src="./GameStateManager/GameStateManager.js"></script>
+
     <script src="./Levels/LevelZero.js"></script>
+
+    <script src="HealthManager/HealthManager.js"></script>
+
     <script src="./RewardGenerationManager/Coin.js"></script>
     <script src="./RewardGenerationManager/RewardGenerationManager.js"></script>
+
+    <script src="./LandscapeGenerationManager/Landscape.js"></script>
+    <script src="./LandscapeGenerationManager/LandscapeTiles/LandscapeOne/LandscapeOne.js"></script>
     <script src="./LandscapeGenerationManager/LandscapeGenerationManagement.js"></script>
+
+    <script src="UIManager/BaseUIComponent.js"></script>
+    <script src="UIManager/UIComponents/GameIntroComponent.js"></script>
+    <script src="UIManager/UIComponents/GamePlayComponent.js"></script>
+    <script src="UIManager/UIComponents/GamePausedComponent.js"></script>
+    <script src="UIManager/UIManager.js"></script>
+
     <script src="./ScoreManager/ScoreManager.js"></script>
     <script src="./Player/Player.js"></script>
     <script src="World/World.js"></script>
@@ -51,7 +69,93 @@
     />
   </head>
   <body>
+    <!-- =============================================== STATIC SCREEN NOISE =============================================== -->
+
+    <div id="page_static"></div>
+    <!-- =============================================== STATIC SCREEN NOISE =============================================== -->
+
+    <!-- =============================================== GAME INTRO SCREEN START =============================================== -->
+    <div id="intro-screen">
+      <div id="game-title">BERLIN RUNNER</div>
+      <div id="instructions">
+        <span style="font-size: 36px">INSTRUCTIONS</span>
+        <div style="text-align: center">
+          MOVE: A|S|D<br />
+          JUMP: SPACE<br />
+          MUTE/UNMUTE : M
+        </div>
+      </div>
+
+      <div id="start-game-button">START GAME</div>
+      <div style="display: flex; flex-direction: row">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
+    <!-- =============================================== GAME INTRO SCREEN END=============================================== -->
+
+    <!-- =============================================== GAME PLAY SCREEN START=============================================== -->
+    <div id="in-play-screen">
+      <div id="pause-button-holder">
+        <span class="material-symbols-outlined" id="pause-button"> pause </span>
+      </div>
+
+      <div class="score">SCORE: &nbsp;&nbsp;<span id="score_text">0</span></div>
+      <div class="health">HEALTH: <span id="haelth-value">=)</span> %</div>
+    </div>
+    <!-- =============================================== GAME PLAY SCREEN END=============================================== -->
+
+    <!-- =============================================== GAME PAUSED SCREEN START=============================================== -->
+    <div id="paused-screen">
+      <div id="game-title">BERLIN RUNNER</div>
+
+      <div class="button-holder" style="display: flex; flex-direction: row">
+        <div id="resume-button">RESUME GAME</div>
+        <div id="restart-button">RESTART LEVEL</div>
+      </div>
+      <div style="display: flex; flex-direction: row"></div>
+      <span
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 0 5px;
+        "
+      >
+        <span class="material-symbols-outlined mute-icon" id="mute">
+          volume_off
+        </span>
+        <div
+          id="audio_status_text"
+          class="mute-icon-text"
+          style="color: greenyellow"
+        >
+          MUTED
+        </div>
+      </span>
+    </div>
+    <!-- =============================================== GAME PAUSED SCREEN END=============================================== -->
+
+    <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
     <div id="webgl"></div>
+    <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
   </body>
 
   <script src="app.js"></script>

@@ -1,3 +1,5 @@
+// const { EventBus } = require("./Util/LightEventBus/EventBus");
+
 const textures = {
   sky: new THREE.TextureLoader().load("assets/textures/sky.png", (texture) => {
     texture.wrapS = THREE.RepeatWrapping;
@@ -21,6 +23,27 @@ class Game {
     document.body.appendChild(this.stats.dom);
 
     this.G = new G();
+
+    this.gameStateEventBus = new EventBus();
+    this.gameStateManager = new GameStateManager(this);
+
+    this.scoreEventBus = new EventBus();
+    this.gameScoreManager = new ScoreManager(this);
+
+    this.scoreWorker = new Worker("./Workers/scoreWorker.js");
+    this.scoreWorker.postMessage({});
+    this.scoreWorker.onmessage = (e) => {
+      this.gameScoreManager.update();
+    };
+
+    this.playerHealthEventBus = new EventBus();
+    this.playerHealthManager = new HealthManager(this);
+    this.healthWorker = new Worker("./Workers/healthWorker.js");
+    this.healthWorker.postMessage({});
+    this.healthWorker.onmessage = (e) => {
+      this.playerHealthManager.update();
+    };
+
     this.gameWorld = new World(this);
     this.G.scene = this.gameWorld.scene;
     this.audioManager = new AudioManager(this);
@@ -32,10 +55,10 @@ class Game {
     this.landscapeWorker.postMessage({});
 
     this.landscapeWorker.onmessage = (e) => {
-      console.log("GOT MESSAGE BACK FROM WORKER ");
-
       this.lanscapeManager.update();
     };
+
+    this.uiManager = new UIManager(this);
   }
 
   animate() {

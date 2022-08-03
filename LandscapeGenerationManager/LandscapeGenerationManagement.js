@@ -24,6 +24,8 @@ class LandscapeGenerationManager {
       this.model.clone(),
       this.model.clone(),
       this.model.clone(),
+      this.model.clone(),
+      this.model.clone(),
     ];
 
     this.z = -this.modelLength * this.landscapesArray.length;
@@ -47,14 +49,15 @@ class LandscapeGenerationManager {
     this.rewardManager = new RewardGenerationManagement(this.context);
   }
 
-  async loadLandscape() {
+  /* async loadLandscape() {
     let { model } = await UTIL.loadModel("/assets/models/landscape_1.glb");
 
     return model.children[0];
-  }
+  } */
 
   async initLandscape() {
-    this.model = await this.loadLandscape();
+    this.model = await new LandscapeOne("zabaleta");
+    /* await this.loadLandscape();
     let lanscapeMap = this.model.material.map;
 
     this.model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
@@ -72,7 +75,7 @@ class LandscapeGenerationManager {
       this.model.material.wireframe = this.settings.renderWireframe;
     } else {
       this.model.material.map = lanscapeMap;
-    }
+    } */
   }
 
   update() {

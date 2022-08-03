@@ -51,7 +51,8 @@
     />
   </head>
   <body>
-    <!-- <div id="page_static"></div>
+    <div id="page_static"></div>
+
     <div id="intro-screen">
       <div id="game-title">BERLIN RUNNER</div>
       <div id="instructions">
@@ -63,7 +64,7 @@
         </div>
       </div>
 
-      <div id="pressMe">START GAME</div>
+      <div id="start-game-button">START GAME</div>
       <div style="display: flex; flex-direction: row">
         <span
           style="
@@ -182,20 +183,25 @@
           </div>
         </span>
       </div>
-    </div> -->
+    </div>
+
+    <div id="in-play-screen">
+      <div id="pause-button-holder">
+        <span class="material-symbols-outlined" id="pause-button"> pause </span>
+      </div>
+
+      <div class="score">
+        SCORE: &nbsp;&nbsp;<span id="score_text">^)^</span>
+      </div>
+      <div class="health">HEALTH:100%</div>
+    </div>
 
     <div id="webgl"></div>
 
-    <!-- <div class="title">
+    <div class="title">
       RUNNER DEMO V.1.0.0 <br />MADE WITH LOVE BY
       <span style="color: tomato">XAR</span>
-    </div> -->
-
-    <!-- <div id="pause-button-holder">
-      <span class="material-symbols-outlined" id="pause-button"> pause </span>
     </div>
-    <div class="score">SCORE: &nbsp;&nbsp;<span id="score_text">^)^</span></div> -->
-    <!-- <div class="health">HEALTH:100%</div> -->
   </body>
 
   <script>

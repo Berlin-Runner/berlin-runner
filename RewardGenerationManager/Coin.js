@@ -22,7 +22,7 @@ class Coin {
 
     this.coinGroup = new THREE.Group();
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 3; i++) {
       let coinClone = this.coinMesh.clone();
       coinClone.position.z = i * 1.25;
       this.coinGroup.add(coinClone);

@@ -173,10 +173,10 @@ canvas {
   text-shadow: -3px 3px black;
 }
 
-#pressMe,
+#start-game-button,
 #restart-game,
-#resume,
-#restart {
+#resume-button,
+#restart-button {
   /* display: inline; */
   margin: 5px;
   font-weight: 800;
