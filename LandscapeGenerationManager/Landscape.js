@@ -1,7 +1,5 @@
 class Landscape {
-  constructor(name) {
-    this.name = name;
-  }
+  constructor() {}
 
   async loadLandscape(url) {
     let { model } = await UTIL.loadModel(url);

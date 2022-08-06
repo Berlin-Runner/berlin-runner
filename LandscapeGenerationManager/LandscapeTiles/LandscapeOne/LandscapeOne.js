@@ -1,7 +1,6 @@
 class LandscapeOne extends Landscape {
-  constructor(name) {
-    super(name);
-    console.log(`creating landcape ${name}`);
+  constructor() {
+    super();
     this.landscapeModelFileUrl =
       "/LandscapeGenerationManager/LandscapeTiles/LandscapeOne/Model/landscape_1.glb";
     return this.initLandscape(this.landscapeModelFileUrl);

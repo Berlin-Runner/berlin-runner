@@ -1,6 +1,7 @@
 class LandscapeGenerationManager {
-  constructor(context) {
+  constructor(context, opts = null) {
     this.context = context;
+    this.opts = opts;
 
     this.scene = this.context.gameWorld.scene;
     this.model = null;
@@ -18,15 +19,21 @@ class LandscapeGenerationManager {
   }
 
   async init() {
-    await this.initLandscape();
+    // await this.initLandscape();
 
-    this.landscapesArray = [
-      this.model.clone(),
-      this.model.clone(),
-      this.model.clone(),
-      this.model.clone(),
-      this.model.clone(),
-    ];
+    if (this.opts != null) {
+      console.log("constructing the city using tiles from level");
+      this.landscapesArray = this.opts.tiles;
+    } else {
+      console.log("NO CITY TILES PASSED");
+      /*   this.landscapesArray = [
+        this.model.clone(),
+        this.model.clone(),
+        this.model.clone(),
+        this.model.clone(),
+        this.model.clone(),
+      ]; */
+    }
 
     this.z = -this.modelLength * this.landscapesArray.length;
 
@@ -43,43 +50,15 @@ class LandscapeGenerationManager {
     let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
     this.city.position.z = cityCenter;
+    this.rewardManager = null;
 
     this.scene.add(this.city);
 
     this.rewardManager = new RewardGenerationManagement(this.context);
   }
 
-  /* async loadLandscape() {
-    let { model } = await UTIL.loadModel("/assets/models/landscape_1.glb");
-
-    return model.children[0];
-  } */
-
-  async initLandscape() {
-    this.model = await new LandscapeOne("zabaleta");
-    /* await this.loadLandscape();
-    let lanscapeMap = this.model.material.map;
-
-    this.model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
-      class: THREE.CustomMaterial,
-
-      vertex: {
-        transformEnd: UTIL.getFoldableShader(),
-      },
-    });
-
-    this.model.material.uniforms.map.value = lanscapeMap;
-
-    if (this.settings.renderWireframe) {
-      this.model.material.uniforms.diffuse.value = new THREE.Color("green");
-      this.model.material.wireframe = this.settings.renderWireframe;
-    } else {
-      this.model.material.map = lanscapeMap;
-    } */
-  }
-
   update() {
-    if (!this.model || !this.settings.recycleCityTiles) return;
+    if (!this.settings.recycleCityTiles) return;
 
     let currentMesh =
       this.city.children[this.counter % this.landscapesArray.length];
@@ -93,5 +72,9 @@ class LandscapeGenerationManager {
   updateCityMeshPoistion() {
     if (this.city && this.settings.moveCity)
       this.city.position.z += this.modelLength * this.delta.getDelta();
+  }
+
+  dispose() {
+    this.city.visible = false;
   }
 }

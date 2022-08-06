@@ -1,5 +1,3 @@
-// const { EventBus } = require("./Util/LightEventBus/EventBus");
-
 const textures = {
   sky: new THREE.TextureLoader().load("assets/textures/sky.png", (texture) => {
     texture.wrapS = THREE.RepeatWrapping;
@@ -8,6 +6,18 @@ const textures = {
     texture.magFilter = THREE.NearestFilter;
   }),
 };
+
+class LevelManager {
+  static async SetCurrentLevel(context, level) {
+    await level.city.awake();
+    context.currentLevel = level;
+  }
+
+  static ChangeLevel(currentLevel, nextLevel) {
+    // DO OTHER OPERATIONS LIKE SETTIG GAME STATE AND STUFF HERE, =)
+    currentLevel.end();
+  }
+}
 
 class Game {
   constructor() {
@@ -24,9 +34,32 @@ class Game {
 
     this.G = new G();
 
+    this.initGameState();
+    this.initScoreSystem();
+    this.initHealthSystem();
+    this.initGameScene();
+    this.initPlayerInstance();
+    this.initLevels();
+
+    this.uiManager = new UIManager(this);
+  }
+
+  initGameScene() {
+    this.gameWorld = new World(this);
+    this.G.scene = this.gameWorld.scene;
+    this.audioManager = new AudioManager(this);
+  }
+
+  initPlayerInstance() {
+    this.playerInstance = new Player(this);
+  }
+
+  initGameState() {
     this.gameStateEventBus = new EventBus();
     this.gameStateManager = new GameStateManager(this);
+  }
 
+  initScoreSystem() {
     this.scoreEventBus = new EventBus();
     this.gameScoreManager = new ScoreManager(this);
 
@@ -35,7 +68,9 @@ class Game {
     this.scoreWorker.onmessage = (e) => {
       this.gameScoreManager.update();
     };
+  }
 
+  initHealthSystem() {
     this.playerHealthEventBus = new EventBus();
     this.playerHealthManager = new HealthManager(this);
     this.healthWorker = new Worker("./Workers/healthWorker.js");
@@ -43,37 +78,32 @@ class Game {
     this.healthWorker.onmessage = (e) => {
       this.playerHealthManager.update();
     };
+  }
 
-    this.gameWorld = new World(this);
-    this.G.scene = this.gameWorld.scene;
-    this.audioManager = new AudioManager(this);
-    this.lanscapeManager = new LandscapeGenerationManager(this);
-    this.playerInstance = new Player(this);
+  initLevels() {
+    this.levelZero = new LevelZero(this);
+    this.levelZero.activeLevel = true;
 
-    this.landscapeWorker = new Worker("./Workers/landscapeWorker.js");
+    this.currentLevel = this.levelZero;
 
-    this.landscapeWorker.postMessage({});
+    window.addEventListener("keypress", (e) => {
+      if (e.code === "KeyN") {
+        console.log("NEW LEVEL");
+        this.currentLevel.end();
+      }
+    });
 
-    this.landscapeWorker.onmessage = (e) => {
-      this.lanscapeManager.update();
-    };
-
-    this.uiManager = new UIManager(this);
+    // this.currentLevel.start();
   }
 
   animate() {
-    /* 
-    setTimeout(() => {
-    requestAnimationFrame(this.animate.bind(this));
-    }, 1000 / 60);
-     */
-
     requestAnimationFrame(this.animate.bind(this));
 
     this.stats.begin();
 
     this.gameWorld.update();
-    this.lanscapeManager.updateCityMeshPoistion();
+    this.currentLevel.update();
+
     this.playerInstance.update();
 
     this.stats.end();
