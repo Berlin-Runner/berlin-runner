@@ -20,15 +20,6 @@ class GamePausedComponent extends BaseUIComponent {
   }
 
   setupEventBusSubscriptions() {
-    /* this.scoreBus.subscribe("update_score", (score) => {
-      this.upadteScore(score);
-    });
-
-    this.healthBus.subscribe("update_health", (health) => {
-      this.updateHealth(health);
-    });
-    */
-
     this.stateBus.subscribe("pause_game", () => {
       this.showComponent();
       this.showStatic();

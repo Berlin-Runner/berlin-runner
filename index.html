@@ -54,6 +54,7 @@
     <script src="UIManager/UIComponents/GameIntroComponent.js"></script>
     <script src="UIManager/UIComponents/GamePlayComponent.js"></script>
     <script src="UIManager/UIComponents/GamePausedComponent.js"></script>
+    <script src="UIManager/UIComponents/GameOverComponent.js"></script>
     <script src="UIManager/UIManager.js"></script>
 
     <script src="./ScoreManager/ScoreManager.js"></script>
@@ -156,6 +157,42 @@
       </span>
     </div>
     <!-- =============================================== GAME PAUSED SCREEN END=============================================== -->
+
+    <!-- =============================================== GAME OVER SCREEN START=============================================== -->
+    <div id="game-over-screen">
+      <div id="game-title">
+        =(, you just died!, <br />
+        <span style="color: blueviolet">(strictly for tetsing purposes)</span>
+      </div>
+      <div id="final-score-holder">
+        FINAL SCORE:<span id="game-over-final-score"></span>
+      </div>
+
+      <div id="restart-level-button">RESTART</div>
+      <div id="back-to-home-button">HOME</div>
+      <div style="display: flex; flex-direction: row">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
+    <!-- =============================================== GAME OVER SCREEN END=============================================== -->
 
     <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
     <div id="webgl"></div>

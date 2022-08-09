@@ -16,6 +16,10 @@ class ScoreManager {
     this.stateBus.subscribe("restart_game", () => {
       this.score = 0;
     });
+
+    this.stateBus.subscribe("back_to_home", () => {
+      this.score = 0;
+    });
   }
 
   formatScore(score) {
@@ -28,6 +32,7 @@ class ScoreManager {
 
   update() {
     if (this.stateManager.currentState === "in_play") {
+      if (this.score >= 3) this.stateManager.gameOver();
       this.score++;
       this.context.scoreEventBus.publish(
         "update_score",

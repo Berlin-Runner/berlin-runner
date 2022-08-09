@@ -174,7 +174,8 @@ canvas {
 }
 
 #start-game-button,
-#restart-game,
+#restart-level-button,
+#back-to-home-button,
 #resume-button,
 #restart-button {
   /* display: inline; */

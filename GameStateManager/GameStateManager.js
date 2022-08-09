@@ -17,13 +17,16 @@ class GameStateManager {
     this.currentState = this.gameStates.notStartedYet;
   }
 
+  resetState() {
+    this.currentState = this.gameStates.notStartedYet;
+    this.context.gameStateEventBus.publish("back_to_home");
+  }
+
   startGame() {
     console.log("SWITCHING GAME STATE TO PLAYING");
     this.currentState = this.gameStates.inPlay;
     this.context.gameStateEventBus.publish("start_game");
   }
-
-  enterPlay() {}
 
   pauseGame() {
     console.log("pausing game");
@@ -42,19 +45,9 @@ class GameStateManager {
   }
 
   gameOver() {
-    // audio.audio.volume = 0.25;
-    audioManager.setVolume(0.25);
-    runAction.crossFadeTo(deadAction, 1, true).play();
-    runAction.stop();
-    stopAction.crossFadeFrom(deadAction, 0.25, true).play();
-    deadAction.stop();
-    currentState = gameStates.over;
-    setTimeout(() => {
-      game_over_screen.style.display = "flex";
-      page_static.style.display = "flex";
-      final_score.innerText = currentScore;
-      currentScore = 0;
-    }, 1.25 * 1000);
+    console.log("the game is over son");
+    this.currentState = this.gameStates.game_over;
+    this.context.gameStateEventBus.publish("game_over");
   }
 
   update() {}

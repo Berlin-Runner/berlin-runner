@@ -3,6 +3,7 @@ class BaseUIComponent {
     this.context = context;
     this.stateManager = this.context.gameStateManager;
     this.stateBus = this.context.gameStateEventBus;
+    this.scoreManager = this.context.gameScoreManager;
     this.scoreBus = this.context.scoreEventBus;
     this.healthBus = this.context.playerHealthEventBus;
     this.uiComponent = document.getElementById(id);

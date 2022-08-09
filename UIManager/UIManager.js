@@ -27,5 +27,11 @@ class UIManager {
       this.context
     );
     this.gamePausedComponent.hideComponent();
+
+    this.gameOverComponent = new GameOverComponent(
+      "game-over-screen",
+      this.context
+    );
+    this.gameOverComponent.hideComponent();
   }
 }

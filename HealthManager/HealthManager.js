@@ -18,6 +18,10 @@ class HealthManager {
     this.stateBus.subscribe("restart_game", () => {
       this.healthValue = 100;
     });
+
+    this.stateBus.subscribe("back_to_home", () => {
+      this.healthValue = 100;
+    });
   }
 
   formatHealth(health) {

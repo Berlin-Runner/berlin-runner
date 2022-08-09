@@ -28,6 +28,11 @@ class GameIntroComponent extends BaseUIComponent {
       this.hideComponent();
       this.hideStatic();
     });
+
+    this.stateBus.subscribe("back_to_home", () => {
+      this.showComponent();
+      this.showStatic();
+    });
   }
 
   startGame() {
