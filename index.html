@@ -36,15 +36,15 @@
     <script src="./GameStateManager/GameStateManager.js"></script>
 
     <script src="./Levels/Level.js"></script>
-    <script src="./Levels/LevelZero.js"></script>
-    <script src="./Levels/LevelOne.js"></script>
+    <script src="./Levels/LevelZero/LevelZero.js"></script>
+    <script src="./Levels/LevelOne/LevelOne.js"></script>
 
     <script src="HealthManager/HealthManager.js"></script>
 
     <script src="./RewardGenerationManager/Coin.js"></script>
     <script src="./RewardGenerationManager/RewardGenerationManager.js"></script>
 
-    <script src="./CIty/City.js"></script>
+    <script src="./City/City.js"></script>
 
     <script src="./LandscapeGenerationManager/Landscape.js"></script>
     <script src="./LandscapeGenerationManager/LandscapeTiles/LandscapeOne/LandscapeOne.js"></script>
@@ -52,10 +52,10 @@
     <script src="./LandscapeGenerationManager/LandscapeGenerationManagement.js"></script>
 
     <script src="UIManager/BaseUIComponent.js"></script>
-    <script src="UIManager/UIComponents/GameIntroComponent.js"></script>
-    <script src="UIManager/UIComponents/GamePlayComponent.js"></script>
-    <script src="UIManager/UIComponents/GamePausedComponent.js"></script>
-    <script src="UIManager/UIComponents/GameOverComponent.js"></script>
+    <script src="UIManager/CommonUIComponents/GameIntroComponent.js"></script>
+    <script src="UIManager/CommonUIComponents/GamePlayComponent.js"></script>
+    <script src="UIManager/CommonUIComponents/GamePausedComponent.js"></script>
+    <script src="UIManager/CommonUIComponents/GameOverComponent.js"></script>
     <script src="UIManager/UIManager.js"></script>
 
     <script src="./ScoreManager/ScoreManager.js"></script>
@@ -115,9 +115,9 @@
         </span>
       </div>
     </div>
-    <!-- =============================================== GAME INTRO SCREEN END=============================================== -->
+    <!-- =============================================== GAME INTRO SCREEN END =============================================== -->
 
-    <!-- =============================================== GAME PLAY SCREEN START=============================================== -->
+    <!-- =============================================== GAME PLAY SCREEN START =============================================== -->
     <div id="in-play-screen">
       <div id="pause-button-holder">
         <span class="material-symbols-outlined" id="pause-button"> pause </span>
@@ -126,9 +126,9 @@
       <div class="score">SCORE: &nbsp;&nbsp;<span id="score_text">0</span></div>
       <div class="health">HEALTH: <span id="haelth-value">=)</span> %</div>
     </div>
-    <!-- =============================================== GAME PLAY SCREEN END=============================================== -->
+    <!-- =============================================== GAME PLAY SCREEN END =============================================== -->
 
-    <!-- =============================================== GAME PAUSED SCREEN START=============================================== -->
+    <!-- =============================================== GAME PAUSED SCREEN START =============================================== -->
     <div id="paused-screen">
       <div id="game-title">BERLIN RUNNER</div>
 
@@ -157,9 +157,9 @@
         </div>
       </span>
     </div>
-    <!-- =============================================== GAME PAUSED SCREEN END=============================================== -->
+    <!-- =============================================== GAME PAUSED SCREEN END =============================================== -->
 
-    <!-- =============================================== GAME OVER SCREEN START=============================================== -->
+    <!-- =============================================== GAME OVER SCREEN START =============================================== -->
     <div id="game-over-screen">
       <div id="game-title">
         =(, you just died!, <br />
@@ -193,7 +193,82 @@
         </span>
       </div>
     </div>
-    <!-- =============================================== GAME OVER SCREEN END=============================================== -->
+    <!-- =============================================== GAME OVER SCREEN END =============================================== -->
+
+    <!-- *********************************************** LEVEL UIs START , :) *********************************************** -->
+    <!-- =============================================== LEVEL ZERO SCREENS START =============================================== -->
+    <div id="level-zero-intro-screen">
+      <div class="level-title">LEVEL ONE, =)</div>
+      <div id="instructions">
+        <span style="font-size: 36px">OBJECTIVES</span>
+        <div style="text-align: center">
+          WELCOME TO THE FIRST LEVEL<br />
+          AVOID OBSTACLES, COLLECT COINS, GET
+          <span class="level-objective">?</span> SCORE POINTS, *_* <br />
+          GAME WILL START IN: <br />
+          <span class="level-countdown-timer" style="font-size: 64px">;)</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: row; margin: 10px">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div id="level-zero-complete-screen" style="display: none">
+      <div class="level-complete-title">LEVEL ONE COMPLETE!, =)</div>
+      <div id="instructions">
+        <span style="font-size: 36px">YOU'VE MADE IT</span>
+        <!-- <div style="text-align: center">
+          WELCOME TO THE FIRST LEVEL<br />
+          AVOID OBSTACLES, COLLECT COINS, GET 15 SCORE POINTS, *_* <br />
+          GAME WILL START IN: <br />
+          <span id="countdown-timer" style="font-size: 64px">;)</span>
+        </div> -->
+      </div>
+
+      <div style="display: flex; flex-direction: row; margin: 10px">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
+    <!-- =============================================== LEVEL ZERO SCREENS START =============================================== -->
+    <!-- *********************************************** LEVEL UIs END , :( *********************************************** -->
 
     <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
     <div id="webgl"></div>

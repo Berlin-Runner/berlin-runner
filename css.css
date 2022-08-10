@@ -140,7 +140,8 @@ canvas {
   text-shadow: -2px 2px white;
 }
 
-#level-one-intro-screen {
+#level-zero-intro-screen,
+#level-zero-complete-screen {
   display: none;
   width: 100vw;
   height: 100vh;
@@ -202,7 +203,9 @@ canvas {
   text-shadow: -4px 4px black;
 }
 
-#game-title {
+.level-title,
+#game-title,
+.level-complete-title {
   color: aquamarine;
   font-weight: 900;
   font-size: 100px;

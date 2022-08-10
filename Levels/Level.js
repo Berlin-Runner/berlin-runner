@@ -3,6 +3,8 @@ class Level {
 
   constructor(context, opts) {
     this.context = context;
+    this.stateBus = this.context.gameStateEventBus;
+    this.stateManager = this.context.gameStateManager;
     this.activeLevel = false;
     this.levelInfo = opts.levelInfo;
 

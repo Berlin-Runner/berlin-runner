@@ -32,7 +32,8 @@ class ScoreManager {
 
   update() {
     if (this.stateManager.currentState === "in_play") {
-      if (this.score >= 3) this.stateManager.gameOver();
+      if (this.score >= this.context.currentLevel.levelInfo.levelScoreObjcetive)
+        this.stateManager.gameOver();
       this.score++;
       this.context.scoreEventBus.publish(
         "update_score",

@@ -23,9 +23,14 @@ class GameStateManager {
   }
 
   startGame() {
-    console.log("SWITCHING GAME STATE TO PLAYING");
-    this.currentState = this.gameStates.inPlay;
+    console.log("SWITCHING GAME STATE TO STARTED");
+    this.currentState = this.gameStates.started;
     this.context.gameStateEventBus.publish("start_game");
+  }
+
+  enterPlay() {
+    this.currentState = this.gameStates.inPlay;
+    this.context.gameStateEventBus.publish("enter_play");
   }
 
   pauseGame() {

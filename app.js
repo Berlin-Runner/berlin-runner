@@ -26,6 +26,8 @@ class Game {
   }
 
   init() {
+    this.renderGraphics = true;
+
     this.time = new THREE.Clock();
 
     this.stats = new Stats();
@@ -98,6 +100,8 @@ class Game {
 
   animate() {
     requestAnimationFrame(this.animate.bind(this));
+
+    if (!this.renderGraphics) return;
 
     this.stats.begin();
 
