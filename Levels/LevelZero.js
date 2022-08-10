@@ -1,16 +1,13 @@
-class LevelZero {
+class LevelZero extends Level {
   constructor(context) {
-    this.context = context;
-    this.activeLevel = false;
-    this.levelInfo = {
-      levelName: "levelZero",
-      levelIndex: 0,
+    let opts = {
+      levelInfo: {
+        levelName: "levelZero",
+        levelIndex: 0,
+      },
     };
-    console.log("this is level zero");
 
-    // this.city = null;
-
-    this.nextLevel = null;
+    super(context, opts);
 
     this.awake();
   }
@@ -45,14 +42,8 @@ class LevelZero {
     // delete all the other things
   }
 
-  end() {
-    console.log("transitioning to the next level");
-    this.activeLevel = false;
-    this.dispose();
-
-    this.nextLevel = new LevelOne(this.context);
-    this.nextLevel.activeLevel = true;
-    this.context.currentLevel = this.nextLevel;
+  end(nextLevel) {
+    super.end(nextLevel);
   }
 
   update() {
