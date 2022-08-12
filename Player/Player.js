@@ -19,7 +19,8 @@ class Player {
 
   init() {
     this.addPlayerMesh();
-    this.setupPlayerMovementKeyListners();
+    this.movementManager = new MovementFSM(this.context, this.player);
+    // this.setupPlayerMovementKeyListners();
   }
 
   async loadPlayerModel() {
@@ -64,27 +65,27 @@ class Player {
     this.scene.add(this.player);
   }
 
-  setupPlayerMovementKeyListners() {
-    window.addEventListener("keypress", (e) => {
-      if (!this.player) return;
-      switch (e.code) {
-        case "KeyA":
-          gsap.to(this.player.position, { x: -2, duration: 0.5 });
-          break;
+  // setupPlayerMovementKeyListners() {
+  //   window.addEventListener("keypress", (e) => {
+  //     if (!this.player) return;
+  //     switch (e.code) {
+  //       case "KeyA":
+  //         gsap.to(this.player.position, { x: -2, duration: 0.5 });
+  //         break;
 
-        case "KeyD":
-          gsap.to(this.player.position, { x: 2, duration: 0.5 });
-          break;
+  //       case "KeyD":
+  //         gsap.to(this.player.position, { x: 2, duration: 0.5 });
+  //         break;
 
-        case "KeyS":
-          gsap.to(this.player.position, { x: 0, duration: 0.5 });
-          break;
+  //       case "KeyS":
+  //         gsap.to(this.player.position, { x: 0, duration: 0.5 });
+  //         break;
 
-        default:
-          break;
-      }
-    });
-  }
+  //       default:
+  //         break;
+  //     }
+  //   });
+  // }
 
   jumpPlayer() {
     let vAngle = 0;
