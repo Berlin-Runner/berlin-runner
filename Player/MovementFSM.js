@@ -12,10 +12,29 @@ class MovementFSM {
     };
 
     this.currentPlayerLane = this.lanes.center;
-    this.listenForInputs();
+    this.listenForKeyboardInputs();
+    this.listenForSwipeInputs();
   }
 
-  listenForInputs() {
+  listenForSwipeInputs() {
+    let hammertime = new Hammer(document.getElementById("webgl"), {});
+
+    hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+
+    hammertime.on("swipeleft", (e) => {
+      this.moveLeft();
+    });
+
+    hammertime.on("swiperight", (e) => {
+      this.moveRight();
+    });
+
+    hammertime.on("swipeup", (e) => {
+      this.jump();
+    });
+  }
+
+  listenForKeyboardInputs() {
     window.addEventListener("keypress", (e) => {
       switch (e.code) {
         case "KeyA":
@@ -26,10 +45,18 @@ class MovementFSM {
           this.moveRight();
           break;
 
+        case "Space":
+          this.jump();
+
         default:
           break;
       }
     });
+  }
+
+  jump() {
+    // TODO
+    console.log("must be jumping");
   }
 
   moveToCenter() {
@@ -64,4 +91,24 @@ class MovementFSM {
         break;
     }
   }
+
+  update() {
+    // plug in any updates needed here
+  }
 }
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++
+/* 
+  jumpPlayer() {
+    let vAngle = 0;
+    vAngle += speed;
+    player.position.y = Math.sin(vAngle) + 1.38;
+  } */
+
+/* setupJumpListner() {
+    window.addEventListener("keypress", (e) => {
+      if (e.code === "Space") {
+        this.jumpPlayer(0.05);
+      }
+    });
+  } */

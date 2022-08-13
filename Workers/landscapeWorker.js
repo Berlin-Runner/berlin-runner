@@ -18,7 +18,7 @@ class LandscapeWorker {
 
   updateLandscape() {
     while (true) {
-      this.wait(1 * 1000);
+      this.wait(2 * 1000);
       postMessage("");
     }
     close();

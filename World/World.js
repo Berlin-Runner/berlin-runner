@@ -14,7 +14,7 @@ class World {
       1000.0
     );
 
-    this.camera.position.set(0, 1, 4);
+    // this.camera.position.set(0, 1.5, 4);
 
     this.scene = new THREE.Scene();
     this.scene.background = textures.sky;
@@ -35,7 +35,7 @@ class World {
       this.renderer.domElement
     );
 
-    this.controls.enabled = true;
+    this.controls.enabled = false;
 
     this.composer = new THREE.EffectComposer(this.renderer);
 

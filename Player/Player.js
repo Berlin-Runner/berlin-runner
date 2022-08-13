@@ -19,8 +19,8 @@ class Player {
 
   init() {
     this.addPlayerMesh();
+    this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
     this.movementManager = new MovementFSM(this.context, this.player);
-    // this.setupPlayerMovementKeyListners();
   }
 
   async loadPlayerModel() {
@@ -65,55 +65,13 @@ class Player {
     this.scene.add(this.player);
   }
 
-  // setupPlayerMovementKeyListners() {
-  //   window.addEventListener("keypress", (e) => {
-  //     if (!this.player) return;
-  //     switch (e.code) {
-  //       case "KeyA":
-  //         gsap.to(this.player.position, { x: -2, duration: 0.5 });
-  //         break;
-
-  //       case "KeyD":
-  //         gsap.to(this.player.position, { x: 2, duration: 0.5 });
-  //         break;
-
-  //       case "KeyS":
-  //         gsap.to(this.player.position, { x: 0, duration: 0.5 });
-  //         break;
-
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }
-
-  jumpPlayer() {
-    let vAngle = 0;
-    vAngle += speed;
-    player.position.y = Math.sin(vAngle) + 1.38;
-  }
-
-  setupJumpListner() {
-    window.addEventListener("keypress", (e) => {
-      if (e.code === "Space") {
-        this.jumpPlayer(0.05);
-      }
-    });
-  }
-
-  updateCamera() {
-    if (!this.camera || !this.player) return;
-    this.camera.position.x = this.player.position.x;
-    this.camera.position.y = this.player.position.y + 1.125;
-    this.camera.position.z = this.player.position.z + 4.5;
-    this.camera.lookAt(this.player.position);
-  }
-
   update() {
     /* 
     // commented out the enable handsfree mode 
     if (this.player) this.player.position.z -= 0.125;
     this.updateCamera(); */
+    this.thirdPersonCamera.update();
     if (this.mixer) this.mixer.update(this.context.time.getDelta());
+    if (this.movementManager) this.movementManager.update();
   }
 }

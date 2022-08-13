@@ -19,20 +19,11 @@ class LandscapeGenerationManager {
   }
 
   async init() {
-    // await this.initLandscape();
-
     if (this.opts != null) {
       console.log("constructing the city using tiles from level");
       this.landscapesArray = this.opts.tiles;
     } else {
       console.log("NO CITY TILES PASSED");
-      /*   this.landscapesArray = [
-        this.model.clone(),
-        this.model.clone(),
-        this.model.clone(),
-        this.model.clone(),
-        this.model.clone(),
-      ]; */
     }
 
     this.z = -this.modelLength * this.landscapesArray.length;
@@ -50,6 +41,7 @@ class LandscapeGenerationManager {
     let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
     this.city.position.z = cityCenter;
+    // this.context.playerInstance.position.z = cityCenter;
     this.rewardManager = null;
 
     this.scene.add(this.city);
@@ -65,13 +57,14 @@ class LandscapeGenerationManager {
     this.counter++;
 
     currentMesh.position.z = this.z;
-    this.rewardManager.placeReward(this.z, this.city);
+    if (this.counter % 3 === 0)
+      this.rewardManager.placeReward(this.z, this.city);
     this.z -= this.modelLength;
   }
 
   updateCityMeshPoistion() {
     if (this.city && this.settings.moveCity)
-      this.city.position.z += this.modelLength * this.delta.getDelta();
+      this.city.position.z += (this.modelLength / 2) * this.delta.getDelta();
   }
 
   dispose() {
