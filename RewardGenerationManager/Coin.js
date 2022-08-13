@@ -6,7 +6,7 @@ class Coin {
   }
 
   init() {
-    let coinGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16);
+    let coinGeo = new THREE.CylinderGeometry(0.125, 0.25, 0.1, 16);
     let coinMaterial = THREE.extendMaterial(THREE.MeshStandardMaterial, {
       class: THREE.CustomMaterial,
 
