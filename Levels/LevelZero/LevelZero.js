@@ -4,7 +4,7 @@ class LevelZero extends Level {
       levelInfo: {
         levelName: "levelZero",
         levelIndex: 0,
-        levelScoreObjcetive: 4,
+        levelScoreObjcetive: 20,
       },
     };
 
