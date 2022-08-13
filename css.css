@@ -102,6 +102,14 @@ canvas {
   z-index: 90;
 }
 
+.full-screen {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 #intro-screen {
   width: 100vw;
   height: 100vh;
