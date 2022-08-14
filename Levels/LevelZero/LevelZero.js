@@ -33,6 +33,8 @@ class LevelZero extends Level {
     this.levelIntroUI.style.display = "flex";
     this.levelObjective.innerText = this.levelInfo.levelScoreObjcetive;
 
+    this.init();
+
     level_one_coundown_intervalID = setInterval(() => {
       this.levelStartCountDown.innerText = countDownTimer;
       countDownTimer--;
@@ -40,13 +42,12 @@ class LevelZero extends Level {
 
     setTimeout(() => {
       clearInterval(level_one_coundown_intervalID);
-      this.init();
+      this.levelIntroUI.style.display = "none";
       this.stateManager.enterPlay();
     }, (countDownTimer + 1) * 1000);
   }
 
   async init() {
-    this.levelIntroUI.style.display = "none";
     console.log(`${this.levelInfo.levelName} is waking up`);
     let tileOne = await new LandscapeOne();
     let tileTwo = await new LandscapeTwo();
@@ -56,9 +57,9 @@ class LevelZero extends Level {
         tileOne.clone(),
         tileOne.clone(),
         tileOne.clone(),
-        tileTwo.clone(),
-        tileTwo.clone(),
-        tileTwo.clone(),
+        tileOne.clone(),
+        tileOne.clone(),
+        tileOne.clone(),
       ],
     };
 

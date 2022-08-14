@@ -18,7 +18,7 @@ class LandscapeGenerationManager {
     this.init();
   }
 
-  async init() {
+  init() {
     if (this.opts != null) {
       console.log("constructing the city using tiles from level");
       this.landscapesArray = this.opts.tiles;

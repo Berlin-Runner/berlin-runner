@@ -20,6 +20,7 @@ class Player {
   init() {
     this.addPlayerMesh();
     this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
+    this.cameraFollow = false;
     this.movementManager = new MovementFSM(this.context, this.player);
   }
 
@@ -66,11 +67,7 @@ class Player {
   }
 
   update() {
-    /* 
-    // commented out the enable handsfree mode 
-    if (this.player) this.player.position.z -= 0.125;
-    this.updateCamera(); */
-    this.thirdPersonCamera.update();
+    if (this.cameraFollow) this.thirdPersonCamera.update();
     if (this.mixer) this.mixer.update(this.context.time.getDelta());
     if (this.movementManager) this.movementManager.update();
   }
