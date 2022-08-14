@@ -35,7 +35,7 @@ class World {
       this.renderer.domElement
     );
 
-    this.controls.enabled = true;
+    this.controls.enabled = false;
 
     this.composer = new THREE.EffectComposer(this.renderer);
 
