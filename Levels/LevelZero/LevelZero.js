@@ -49,21 +49,22 @@ class LevelZero extends Level {
 
   async init() {
     console.log(`${this.levelInfo.levelName} is waking up`);
-    let tileOne = await new LandscapeOne();
-    let tileTwo = await new LandscapeTwo();
-    let opts = {
-      name: "berlin",
-      tiles: [
-        tileOne.clone(),
-        tileOne.clone(),
-        tileOne.clone(),
-        tileOne.clone(),
-        tileOne.clone(),
-        tileOne.clone(),
-      ],
-    };
+    let tileOne = new LandscapeOne();
+    tileOne.then((res) => {
+      this.cityopts = {
+        name: "berlin",
+        tiles: [
+          res.clone(),
+          res.clone(),
+          res.clone(),
+          res.clone(),
+          res.clone(),
+          res.clone(),
+        ],
+      };
 
-    this.city = new City(this.context, opts);
+      this.city = new City(this.context, this.cityopts);
+    });
 
     console.log(`everything is ready for ${this.levelInfo.levelName}`);
   }
