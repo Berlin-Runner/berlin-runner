@@ -37,7 +37,7 @@ class World {
 
     this.controls.enabled = false;
 
-    this.composer = new THREE.EffectComposer(this.renderer);
+    // this.composer = new THREE.EffectComposer(this.renderer);
 
     let ambLight = new THREE.AmbientLight("#fff", 0.75);
     this.scene.add(ambLight);
@@ -46,7 +46,7 @@ class World {
     moonLight.position.set(0, 2.5, 0);
     this.scene.add(moonLight);
 
-    this.composer.setSize(window.innerWidth, window.innerHeight);
+    /*     this.composer.setSize(window.innerWidth, window.innerHeight);
     this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
     const params = {
       shape: 1,
@@ -66,7 +66,7 @@ class World {
       params
     );
 
-    this.composer.addPass(halftonePass);
+    this.composer.addPass(halftonePass); */
   }
 
   setupResize() {
@@ -84,6 +84,7 @@ class World {
 
   update() {
     if (this.controls.enabled) this.controls.update();
-    this.composer.render();
+    // this.composer.render();
+    this.renderer.render(this.scene, this.camera);
   }
 }
