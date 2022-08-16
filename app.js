@@ -65,7 +65,7 @@ class Game {
     this.scoreEventBus = new EventBus();
     this.gameScoreManager = new ScoreManager(this);
 
-    this.scoreWorker = new Worker("./Workers/scoreWorker.js");
+    this.scoreWorker = new Worker("./workers/scoreWorker.js");
     this.scoreWorker.postMessage({});
     this.scoreWorker.onmessage = (e) => {
       this.gameScoreManager.update();
@@ -75,7 +75,7 @@ class Game {
   initHealthSystem() {
     this.playerHealthEventBus = new EventBus();
     this.playerHealthManager = new HealthManager(this);
-    this.healthWorker = new Worker("./Workers/healthWorker.js");
+    this.healthWorker = new Worker("./workers/healthWorker.js");
     this.healthWorker.postMessage({});
     this.healthWorker.onmessage = (e) => {
       this.playerHealthManager.update();

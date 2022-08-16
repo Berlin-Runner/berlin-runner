@@ -1,8 +1,8 @@
-class LandscapeOne extends Landscape {
+class LandscapeTwo extends Landscape {
   constructor() {
     super();
     this.landscapeModelFileUrl =
-      "/LandscapeGenerationManager/LandscapeTiles/LandscapeOne/Model/landscape_1.glb";
+      "modules/LandscapeGenerationManager/LandscapeTiles/LandscapeTwo/Model/landscape_2.glb";
     return this.initLandscape(this.landscapeModelFileUrl);
   }
 

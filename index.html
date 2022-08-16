@@ -8,9 +8,14 @@
 
     <link rel="stylesheet" href="css.css" />
 
+    <!-- =============================================== LIB IMPORTS =============================================== -->
     <script src="libs/three.js"></script>
 
     <script src="libs/ExtendMaterial.js"></script>
+
+    <script src="libs/gsap.js"></script>
+    <script src="libs/stats.js"></script>
+    <script src="libs/hammer.js"></script>
 
     <script src="libs/BokehShader.js"></script>
     <script src="libs/CopyShader.js"></script>
@@ -22,50 +27,50 @@
     <script src="libs/HalftonePass.js"></script>
     <script src="libs/GLTFLoader.js"></script>
     <script src="libs/OrbitControls.js"></script>
-    <script src="libs/gsap.js"></script>
-    <script src="libs/stats.js"></script>
-    <script src="libs/hammer.js"></script>
+    <!-- =============================================== LIB IMPORTS =============================================== -->
 
-    <script src="./G.js"></script>
-    <script src="./Workers/landscapeWorker.js"></script>
+    <!-- =============================================== MODULE IMPORTS =============================================== -->
+    <script src="/G.js"></script>
+    <script src="workers/landscapeWorker.js"></script>
 
-    <script src="./Util/UTIL.js"></script>
-    <script src="./Util/LightEventBus/EventBus.js"></script>
+    <script src="modules/Util/UTIL.js"></script>
+    <script src="modules/Util/LightEventBus/EventBus.js"></script>
 
-    <script src="./AudioManager/AudioManager.js"></script>
+    <script src="modules/AudioManager/AudioManager.js"></script>
 
-    <script src="./GameStateManager/GameStateManager.js"></script>
+    <script src="modules/GameStateManager/GameStateManager.js"></script>
 
-    <script src="./Levels/Level.js"></script>
-    <script src="./Levels/LevelZero/LevelZero.js"></script>
-    <script src="./Levels/LevelOne/LevelOne.js"></script>
+    <script src="modules/Levels/Level.js"></script>
+    <script src="modules/Levels/LevelZero/LevelZero.js"></script>
+    <script src="modules/Levels/LevelOne/LevelOne.js"></script>
 
-    <script src="HealthManager/HealthManager.js"></script>
+    <script src="modules/HealthManager/HealthManager.js"></script>
 
-    <script src="./RewardGenerationManager/Coin.js"></script>
-    <script src="./RewardGenerationManager/RewardGenerationManager.js"></script>
+    <script src="modules/RewardGenerationManager/Coin.js"></script>
+    <script src="modules/RewardGenerationManager/RewardGenerationManager.js"></script>
 
-    <script src="./City/City.js"></script>
+    <script src="modules/City/City.js"></script>
 
-    <script src="./LandscapeGenerationManager/Landscape.js"></script>
-    <script src="./LandscapeGenerationManager/LandscapeTiles/LandscapeOne/LandscapeOne.js"></script>
-    <script src="./LandscapeGenerationManager/LandscapeTiles/LandscapeTwo/LandscapeTwo.js"></script>
-    <script src="./LandscapeGenerationManager/LandscapeGenerationManagement.js"></script>
+    <script src="modules/LandscapeGenerationManager/Landscape.js"></script>
+    <script src="modules/LandscapeGenerationManager/LandscapeTiles/LandscapeOne/LandscapeOne.js"></script>
+    <script src="modules/LandscapeGenerationManager/LandscapeTiles/LandscapeTwo/LandscapeTwo.js"></script>
+    <script src="modules/LandscapeGenerationManager/LandscapeGenerationManagement.js"></script>
 
-    <script src="UIManager/BaseUIComponent.js"></script>
-    <script src="UIManager/CommonUIComponents/GameIntroComponent.js"></script>
-    <script src="UIManager/CommonUIComponents/GamePlayComponent.js"></script>
-    <script src="UIManager/CommonUIComponents/GamePausedComponent.js"></script>
-    <script src="UIManager/CommonUIComponents/GameOverComponent.js"></script>
-    <script src="UIManager/UIManager.js"></script>
+    <script src="modules/UIManager/BaseUIComponent.js"></script>
+    <script src="modules/UIManager/CommonUIComponents/GameIntroComponent.js"></script>
+    <script src="modules/UIManager/CommonUIComponents/GamePlayComponent.js"></script>
+    <script src="modules/UIManager/CommonUIComponents/GamePausedComponent.js"></script>
+    <script src="modules/UIManager/CommonUIComponents/GameOverComponent.js"></script>
+    <script src="modules/UIManager/UIManager.js"></script>
 
-    <script src="./ScoreManager/ScoreManager.js"></script>
+    <script src="modules/ScoreManager/ScoreManager.js"></script>
 
-    <script src="./Player/MovementFSM.js"></script>
-    <script src="./Player/Camera3rdPerson.js"></script>
-    <script src="./Player/Player.js"></script>
+    <script src="modules/Player/MovementFSM.js"></script>
+    <script src="modules/Player/Camera3rdPerson.js"></script>
+    <script src="modules/Player/Player.js"></script>
 
-    <script src="World/World.js"></script>
+    <script src="modules/World/World.js"></script>
+    <!-- =============================================== MODULE IMPORTS =============================================== -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

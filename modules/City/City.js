@@ -14,7 +14,7 @@ class City {
       tiles: this.opts.tiles,
     });
 
-    this.landscapeWorker = new Worker("../Workers/landscapeWorker.js");
+    this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
 
     this.start();
   }
