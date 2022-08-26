@@ -1,9 +1,9 @@
 class G {
   constructor() {
-    this.G = { scene: undefined };
+    this.G = { scene: undefined, DEVICE_TYPE: "desktop", POINTER_LOCKED: true };
   }
 
-  static getG() {
+  getG() {
     return this.G;
   }
 }

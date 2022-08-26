@@ -1,11 +1,7 @@
-const textures = {
-  sky: new THREE.TextureLoader().load("assets/textures/sky.png", (texture) => {
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.minFilter = THREE.NearestFilter;
-    texture.magFilter = THREE.NearestFilter;
-  }),
-};
+import { World } from "./libs/cannon-es.js";
+
+import { PhysicsManager } from "./modules/PhysicsManager/index.js";
+import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
 
 class LevelManager {
   static async SetCurrentLevel(context, level) {
@@ -21,12 +17,30 @@ class LevelManager {
 
 class Game {
   constructor() {
+    this.textures = {
+      sky: new THREE.TextureLoader().load(
+        "assets/textures/sky.png",
+        (texture) => {
+          texture.wrapS = THREE.RepeatWrapping;
+          texture.wrapT = THREE.RepeatWrapping;
+          texture.minFilter = THREE.NearestFilter;
+          texture.magFilter = THREE.NearestFilter;
+        }
+      ),
+    };
     console.log("THIS IS THE GAME");
+
+    this.globalSettings = {
+      renderCannonDebug: true,
+    };
+
     this.init();
   }
 
   init() {
     this.renderGraphics = true;
+
+    this.Body = new World();
 
     this.time = new THREE.Clock();
 
@@ -34,7 +48,8 @@ class Game {
     this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
     document.body.appendChild(this.stats.dom);
 
-    this.G = new G();
+    this._g = new G();
+    this.G = this._g.getG();
 
     this.initGameState();
     this.initScoreSystem();
@@ -43,11 +58,15 @@ class Game {
     this.initPlayerInstance();
     this.initLevels();
 
+    this.physicsManager = new PhysicsManager(this);
+
+    this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
+
     this.uiManager = new UIManager(this);
   }
 
   initGameScene() {
-    this.gameWorld = new World(this);
+    this.gameWorld = new World_(this);
     this.G.scene = this.gameWorld.scene;
     this.audioManager = new AudioManager(this);
   }
@@ -103,12 +122,21 @@ class Game {
 
     if (!this.renderGraphics) return;
 
+    if (true) {
+      this.world.step(1 / 30, this.time);
+
+      if (this.globalSettings.renderCannonDebug) {
+        this.cannonDebugger.update();
+      }
+    }
+
     this.stats.begin();
 
     this.gameWorld.update();
     this.currentLevel.update();
 
     this.playerInstance.update();
+    if (this.playerInstance && this.sphereBody) this.physicsManager.update();
 
     this.stats.end();
   }

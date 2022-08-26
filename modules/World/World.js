@@ -1,4 +1,4 @@
-class World {
+class World_ {
   constructor(context) {
     this.context = context;
     this.init();
@@ -17,7 +17,8 @@ class World {
     this.camera.position.set(0, 1.5, 4);
 
     this.scene = new THREE.Scene();
-    this.scene.background = textures.sky;
+    // this.scene.background = this.context.textures.sky;
+    this.scene.background = "#000";
 
     const near = 0.1;
     const far = 100;
@@ -35,7 +36,7 @@ class World {
       this.renderer.domElement
     );
 
-    this.controls.enabled = false;
+    this.controls.enabled = true;
 
     // this.composer = new THREE.EffectComposer(this.renderer);
 

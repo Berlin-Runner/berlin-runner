@@ -20,7 +20,7 @@ class Player {
   init() {
     this.addPlayerMesh();
     this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
-    this.cameraFollow = true;
+    this.cameraFollow = false;
     this.movementManager = new MovementFSM(this.context, this.player);
   }
 
