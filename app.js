@@ -3,6 +3,8 @@ import { World } from "./libs/cannon-es.js";
 import { PhysicsManager } from "./modules/PhysicsManager/index.js";
 import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
 
+import { Player } from "./modules/Player/Player.js";
+
 class LevelManager {
   static async SetCurrentLevel(context, level) {
     await level.city.awake();
@@ -43,6 +45,7 @@ class Game {
     this.Body = new World();
 
     this.time = new THREE.Clock();
+    this.time_physics = new THREE.Clock();
 
     this.stats = new Stats();
     this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
@@ -51,14 +54,14 @@ class Game {
     this._g = new G();
     this.G = this._g.getG();
 
+    this.physicsManager = new PhysicsManager(this);
+
     this.initGameState();
     this.initScoreSystem();
     this.initHealthSystem();
     this.initGameScene();
-    this.initPlayerInstance();
     this.initLevels();
-
-    this.physicsManager = new PhysicsManager(this);
+    this.initPlayerInstance();
 
     this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
 
@@ -123,7 +126,7 @@ class Game {
     if (!this.renderGraphics) return;
 
     if (true) {
-      this.world.step(1 / 30, this.time);
+      this.world.step(1 / 30, this.time_physics.getDelta());
 
       if (this.globalSettings.renderCannonDebug) {
         this.cannonDebugger.update();
@@ -136,7 +139,7 @@ class Game {
     this.currentLevel.update();
 
     this.playerInstance.update();
-    if (this.playerInstance && this.sphereBody) this.physicsManager.update();
+    if (this.playerInstance && this.sphereBody) this.playerInstance.update();
 
     this.stats.end();
   }

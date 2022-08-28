@@ -1,3 +1,4 @@
+import { MovementFSM } from "./MovementFSM.js";
 class Player {
   constructor(context) {
     this.context = context;
@@ -72,3 +73,5 @@ class Player {
     if (this.movementManager) this.movementManager.update();
   }
 }
+
+export { Player };

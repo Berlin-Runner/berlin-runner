@@ -1,3 +1,15 @@
+import {
+  Vec3,
+  World,
+  SplitSolver,
+  Material,
+  ContactMaterial,
+  Body,
+  Plane,
+  GSSolver,
+  Sphere,
+  Box,
+} from "../../libs/cannon-es.js";
 class MovementFSM {
   constructor(context, player) {
     this.context = context;
@@ -5,15 +17,88 @@ class MovementFSM {
 
     this.tweenDuration = 0.75;
 
+    this.canJump = true;
+    this.jumpVelocity = 6;
+
     this.lanes = {
       center: 0,
       left: -1,
       right: 1,
     };
 
+    this.settings = {
+      worldAllowSleep: true,
+      useSplitSolver: false,
+
+      gravity: new THREE.Vector3(0, -9.8, 0),
+
+      globalContactMaterial: {
+        friction: 0.1,
+        restitution: 0.3,
+      },
+
+      playerColliderRadius: 0.6,
+      playerColliderMass: 1,
+      // playerInitialPosition: new Vec3(-2, 20, 20),
+      playerInitialPosition: new Vec3(0, 0, 0),
+      playerLinearDampeneingFactor: 0.95,
+    };
+
     this.currentPlayerLane = this.lanes.center;
+
+    this.initCharachterCollider();
+
+    this.cannonBody = this.context.sphereBody;
+    this.setupEventListners();
+
+    this.velocity = this.context.sphereBody.velocity;
+
     this.listenForKeyboardInputs();
     this.listenForSwipeInputs();
+  }
+
+  initCharachterCollider() {
+    const size = 1;
+    const halfExtents = new Vec3(size / 4, size / 2, size / 4);
+    const boxShape = new Box(halfExtents);
+    const boxBody = new Body({ mass: 1, shape: boxShape });
+    this.radius = this.settings.playerColliderRadius;
+    this.sphereShape = new Sphere(this.radius);
+    this.context.sphereBody = new Body({
+      mass: this.settings.playerColliderMass,
+      material: this.physicsMaterial,
+    });
+    this.context.sphereBody.addShape(boxShape);
+    this.context.sphereBody.position = this.settings.playerInitialPosition;
+    this.context.sphereBody.linearDamping =
+      this.settings.playerLinearDampeneingFactor;
+    this.context.sphereBody.allowSleep = false;
+    this.context.world.addBody(this.context.sphereBody);
+  }
+
+  setupEventListners() {
+    const contactNormal = new Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
+    const upAxis = new Vec3(0, 1, 0);
+    this.cannonBody.addEventListener("collide", (event) => {
+      const { contact } = event;
+
+      // contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
+      // We do not yet know which one is which! Let's check.
+      if (contact.bi.id === this.cannonBody.id) {
+        // bi is the player body, flip the contact normal
+        contact.ni.negate(contactNormal);
+      } else {
+        // bi is something else. Keep the normal as it is
+        contactNormal.copy(contact.ni);
+      }
+
+      // If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
+      if (contactNormal.dot(upAxis) > 0.5) {
+        console.log("collision is heard");
+        // Use a "good" threshold value between 0 and 1 here!
+        this.canJump = true;
+      }
+    });
   }
 
   listenForSwipeInputs() {
@@ -47,6 +132,7 @@ class MovementFSM {
 
         case "Space":
           this.jump();
+          break;
 
         default:
           break;
@@ -56,7 +142,11 @@ class MovementFSM {
 
   jump() {
     // TODO
-    console.log("must be jumping");
+    if (this.canJump) {
+      console.log("jumping");
+      this.velocity.y = this.jumpVelocity;
+    }
+    this.canJump = false;
   }
 
   moveToCenter() {
@@ -92,8 +182,19 @@ class MovementFSM {
     }
   }
 
+  updatePlayerColliderPosition() {
+    this.context.sphereBody.position.x =
+      this.context.playerInstance.player.position.x;
+
+    this.context.playerInstance.player.position.y =
+      this.context.sphereBody.position.y - 0.5;
+    this.context.sphereBody.position.z =
+      this.context.playerInstance.player.position.z;
+  }
+
   update() {
-    // plug in any updates needed here
+    this.updatePlayerColliderPosition();
+    if (this.velocity.y < 0.75) this.canJump = true;
   }
 }
 
@@ -112,3 +213,5 @@ class MovementFSM {
       }
     });
   } */
+
+export { MovementFSM };

@@ -47,7 +47,7 @@ class PhysicsManager {
     };
 
     this.initWorld();
-    this.initCharachterCollider();
+    // this.initCharachterCollider();
 
     // this.initBallShooter();
 
@@ -98,10 +98,10 @@ class PhysicsManager {
       shape: new Plane(),
     });
     this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
-    // this.context.world.addBody(this.groundBody);
+    this.context.world.addBody(this.groundBody);
   }
 
-  initCharachterCollider() {
+  /* initCharachterCollider() {
     const size = 1;
     const halfExtents = new Vec3(size / 4, size / 2, size / 4);
     const boxShape = new Box(halfExtents);
@@ -120,19 +120,8 @@ class PhysicsManager {
     this.context.sphereBody.allowSleep = false;
     this.context.world.addBody(this.context.sphereBody);
   }
-
-  updatePlayerColliderPosition() {
-    this.context.sphereBody.position.x =
-      this.context.playerInstance.player.position.x;
-    this.context.sphereBody.position.y =
-      this.context.playerInstance.player.position.y + 0.75;
-    this.context.sphereBody.position.z =
-      this.context.playerInstance.player.position.z;
-  }
-
-  update() {
-    this.updatePlayerColliderPosition();
-  }
+ */
+  /*  */
 
   cannonifyMeshAutoHull(
     meshToBeCanonified,
