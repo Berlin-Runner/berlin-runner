@@ -121,7 +121,9 @@ class Game {
   }
 
   animate() {
-    requestAnimationFrame(this.animate.bind(this));
+    setTimeout(() => {
+      requestAnimationFrame(this.animate.bind(this));
+    }, 1000 / 60);
 
     if (!this.renderGraphics) return;
 
@@ -129,7 +131,7 @@ class Game {
       this.world.step(1 / 30, this.time_physics.getDelta());
 
       if (this.globalSettings.renderCannonDebug) {
-        this.cannonDebugger.update();
+        // this.cannonDebugger.update();
       }
     }
 

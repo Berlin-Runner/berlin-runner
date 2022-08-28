@@ -84,7 +84,7 @@ class World_ {
   }
 
   update() {
-    if (this.controls.enabled) this.controls.update();
+    // if (this.controls.enabled) this.controls.update();
     // this.composer.render();
     this.renderer.render(this.scene, this.camera);
   }

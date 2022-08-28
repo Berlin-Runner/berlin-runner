@@ -18,7 +18,7 @@ class MovementFSM {
     this.tweenDuration = 0.75;
 
     this.canJump = true;
-    this.jumpVelocity = 6;
+    this.jumpVelocity = 16;
 
     this.lanes = {
       center: 0,
