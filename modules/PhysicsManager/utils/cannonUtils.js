@@ -1,4 +1,3 @@
-// import * as THREE from "three";
 import { Vec3, Trimesh, ConvexPolyhedron } from "../../../libs/cannon-es.js";
 class CannonUtils {
   static CreateTrimesh(geometry) {

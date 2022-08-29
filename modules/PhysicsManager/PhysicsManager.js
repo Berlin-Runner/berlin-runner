@@ -7,18 +7,8 @@ import {
   Body,
   Plane,
   GSSolver,
-  Sphere,
-  Box,
 } from "../../libs/cannon-es.js";
 import CannonUtils from "./utils/cannonUtils.js";
-
-/* import {
-  Ray,
-  SphereBufferGeometry,
-  MeshLambertMaterial,
-  Mesh,
-  Vector3,
-} from "three"; */
 
 class PhysicsManager {
   constructor(context) {

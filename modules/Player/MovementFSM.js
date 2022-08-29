@@ -1,15 +1,4 @@
-import {
-  Vec3,
-  World,
-  SplitSolver,
-  Material,
-  ContactMaterial,
-  Body,
-  Plane,
-  GSSolver,
-  Sphere,
-  Box,
-} from "../../libs/cannon-es.js";
+import { Vec3, Body, Sphere, Box } from "../../libs/cannon-es.js";
 class MovementFSM {
   constructor(context, player) {
     this.context = context;
@@ -27,19 +16,8 @@ class MovementFSM {
     };
 
     this.settings = {
-      worldAllowSleep: true,
-      useSplitSolver: false,
-
-      gravity: new THREE.Vector3(0, -9.8, 0),
-
-      globalContactMaterial: {
-        friction: 0.1,
-        restitution: 0.3,
-      },
-
       playerColliderRadius: 0.6,
       playerColliderMass: 1,
-      // playerInitialPosition: new Vec3(-2, 20, 20),
       playerInitialPosition: new Vec3(0, 0, 0),
       playerLinearDampeneingFactor: 0.95,
     };
@@ -197,21 +175,5 @@ class MovementFSM {
     if (this.velocity.y < 0.75) this.canJump = true;
   }
 }
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++
-/* 
-  jumpPlayer() {
-    let vAngle = 0;
-    vAngle += speed;
-    player.position.y = Math.sin(vAngle) + 1.38;
-  } */
-
-/* setupJumpListner() {
-    window.addEventListener("keypress", (e) => {
-      if (e.code === "Space") {
-        this.jumpPlayer(0.05);
-      }
-    });
-  } */
 
 export { MovementFSM };
