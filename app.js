@@ -4,19 +4,6 @@ import { PhysicsManager } from "./modules/PhysicsManager/index.js";
 import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
 
 import { Player } from "./modules/Player/Player.js";
-
-class LevelManager {
-  static async SetCurrentLevel(context, level) {
-    await level.city.awake();
-    context.currentLevel = level;
-  }
-
-  static ChangeLevel(currentLevel, nextLevel) {
-    // DO OTHER OPERATIONS LIKE SETTIG GAME STATE AND STUFF HERE, =)
-    currentLevel.end();
-  }
-}
-
 class Game {
   constructor() {
     this.textures = {
@@ -87,21 +74,21 @@ class Game {
     this.scoreEventBus = new EventBus();
     this.gameScoreManager = new ScoreManager(this);
 
-    this.scoreWorker = new Worker("./workers/scoreWorker.js");
+    /*     this.scoreWorker = new Worker("./workers/scoreWorker.js");
     this.scoreWorker.postMessage({});
     this.scoreWorker.onmessage = (e) => {
       this.gameScoreManager.update();
-    };
+    }; */
   }
 
   initHealthSystem() {
     this.playerHealthEventBus = new EventBus();
     this.playerHealthManager = new HealthManager(this);
-    this.healthWorker = new Worker("./workers/healthWorker.js");
+    /*  this.healthWorker = new Worker("./workers/healthWorker.js");
     this.healthWorker.postMessage({});
     this.healthWorker.onmessage = (e) => {
       this.playerHealthManager.update();
-    };
+    }; */
   }
 
   initLevels() {
@@ -131,7 +118,7 @@ class Game {
       this.world.step(1 / 30, this.time_physics.getDelta());
 
       if (this.globalSettings.renderCannonDebug) {
-        // this.cannonDebugger.update();
+        this.cannonDebugger.update();
       }
     }
 
