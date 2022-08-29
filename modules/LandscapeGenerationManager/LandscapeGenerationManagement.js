@@ -57,8 +57,8 @@ class LandscapeGenerationManager {
     this.counter++;
 
     currentMesh.position.z = this.z;
-    if (this.counter % 3 === 0)
-      this.rewardManager.placeReward(this.z, this.city);
+    /*  if (this.counter % 3 === 0)
+      this.rewardManager.placeReward(this.z, this.city); */
     this.z -= this.modelLength;
   }
 
