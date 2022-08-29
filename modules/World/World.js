@@ -17,8 +17,8 @@ class World_ {
     this.camera.position.set(0, 1.5, 4);
 
     this.scene = new THREE.Scene();
-    // this.scene.background = this.context.textures.sky;
-    this.scene.background = "#000";
+    this.scene.background = this.context.textures.sky;
+    // this.scene.background = "#000";
 
     const near = 0.1;
     const far = 100;
@@ -38,36 +38,12 @@ class World_ {
 
     this.controls.enabled = false;
 
-    // this.composer = new THREE.EffectComposer(this.renderer);
-
     let ambLight = new THREE.AmbientLight("#fff", 0.75);
     this.scene.add(ambLight);
 
     let moonLight = new THREE.DirectionalLight("#fff", 1.75);
     moonLight.position.set(0, 2.5, 0);
     this.scene.add(moonLight);
-
-    /*     this.composer.setSize(window.innerWidth, window.innerHeight);
-    this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
-    const params = {
-      shape: 1,
-      radius: 1,
-      rotateR: Math.PI / 12,
-      rotateB: (Math.PI / 12) * 2,
-      rotateG: (Math.PI / 12) * 3,
-      scatter: 0,
-      blending: 0.2,
-      blendingMode: 1,
-      greyscale: false,
-      disable: false,
-    };
-    const halftonePass = new THREE.HalftonePass(
-      window.innerWidth,
-      window.innerHeight,
-      params
-    );
-
-    this.composer.addPass(halftonePass); */
   }
 
   setupResize() {
@@ -84,8 +60,7 @@ class World_ {
   }
 
   update() {
-    // if (this.controls.enabled) this.controls.update();
-    // this.composer.render();
+    if (this.controls.enabled) this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }
 }

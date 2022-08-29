@@ -41,16 +41,11 @@ class PhysicsManager {
 
       playerColliderRadius: 0.6,
       playerColliderMass: 0.25,
-      // playerInitialPosition: new Vec3(-2, 20, 20),
       playerInitialPosition: new Vec3(0, 0.75, 0),
       playerLinearDampeneingFactor: 0.95,
     };
 
     this.initWorld();
-    // this.initCharachterCollider();
-
-    // this.initBallShooter();
-
     // this.addClassSettings();
   }
 
@@ -100,28 +95,6 @@ class PhysicsManager {
     this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
     this.context.world.addBody(this.groundBody);
   }
-
-  /* initCharachterCollider() {
-    const size = 1;
-    const halfExtents = new Vec3(size / 4, size / 2, size / 4);
-    const boxShape = new Box(halfExtents);
-    const boxBody = new Body({ mass: 1, shape: boxShape });
-    // world.addBody(boxBody);
-    this.radius = this.settings.playerColliderRadius;
-    this.sphereShape = new Sphere(this.radius);
-    this.context.sphereBody = new Body({
-      mass: this.settings.playerColliderMass,
-      material: this.physicsMaterial,
-    });
-    this.context.sphereBody.addShape(boxShape);
-    this.context.sphereBody.position = this.settings.playerInitialPosition;
-    this.context.sphereBody.linearDamping =
-      this.settings.playerLinearDampeneingFactor;
-    this.context.sphereBody.allowSleep = false;
-    this.context.world.addBody(this.context.sphereBody);
-  }
- */
-  /*  */
 
   cannonifyMeshAutoHull(
     meshToBeCanonified,
