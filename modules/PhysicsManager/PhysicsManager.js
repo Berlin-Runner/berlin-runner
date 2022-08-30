@@ -20,7 +20,7 @@ class PhysicsManager {
 
     this.settings = {
       worldAllowSleep: true,
-      useSplitSolver: false,
+      useSplitSolver: true,
 
       gravity: new THREE.Vector3(0, -9.8 * 2, 0),
 
