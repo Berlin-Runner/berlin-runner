@@ -4,10 +4,10 @@ class MovementFSM {
     this.context = context;
     this.player = player;
 
-    this.tweenDuration = 0.75;
+    this.tweenDuration = 0.6;
 
     this.canJump = true;
-    this.jumpVelocity = 16;
+    this.jumpVelocity = 10;
 
     this.lanes = {
       center: 0,
@@ -17,7 +17,7 @@ class MovementFSM {
 
     this.settings = {
       playerColliderRadius: 0.6,
-      playerColliderMass: 1,
+      playerColliderMass: 50,
       playerInitialPosition: new Vec3(0, 0, 0),
       playerLinearDampeneingFactor: 0.95,
     };
@@ -36,19 +36,13 @@ class MovementFSM {
   }
 
   initCharachterCollider() {
-    const size = 1;
     const halfExtents = new Vec3(0.2, 0.6, 0.2);
     const boxShape = new Box(halfExtents);
-    // const boxBody = new Body({ mass: 1, shape: boxShape });
-    // this.radius = this.settings.playerColliderRadius;
-    // this.sphereShape = new Sphere(this.radius);
     this.context.playerCollider = new Body({
       mass: this.settings.playerColliderMass,
       material: this.physicsMaterial,
     });
     this.context.playerCollider.addShape(boxShape);
-    // console.log(this.context.playerInstance.player.position);
-    // this.context.playerCollider.position = this.settings.playerInitialPosition;
     this.context.playerCollider.position = threeToCannonVec3(
       this.player.position
     );
@@ -131,8 +125,17 @@ class MovementFSM {
     this.canJump = false;
   }
 
+  moveObjectToPosition(object, position, duration) {
+    gsap.to(object.position, {
+      x: position,
+      duration,
+      ease: "power2.inOut",
+    });
+  }
+
   moveToCenter() {
-    gsap.to(this.player.position, { x: 0, duration: this.tweenDuration });
+    this.moveObjectToPosition(this.player, 0, this.tweenDuration);
+    this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.8);
     this.currentPlayerLane = this.lanes.center;
   }
 
@@ -144,7 +147,8 @@ class MovementFSM {
         this.moveToCenter();
         break;
       case this.lanes.center:
-        gsap.to(this.player.position, { x: -2, duration: this.tweenDuration });
+        this.moveObjectToPosition(this.player, -2.5, this.tweenDuration);
+        this.moveObjectToPosition(this.context.gameWorld.camera, -2.75, 0.8);
         this.currentPlayerLane = this.lanes.left;
         break;
     }
@@ -158,7 +162,8 @@ class MovementFSM {
         this.moveToCenter();
         break;
       case this.lanes.center:
-        gsap.to(this.player.position, { x: 2, duration: this.tweenDuration });
+        this.moveObjectToPosition(this.player, 2.5, this.tweenDuration);
+        this.moveObjectToPosition(this.context.gameWorld.camera, 2.75, 0.8);
         this.currentPlayerLane = this.lanes.right;
         break;
     }
