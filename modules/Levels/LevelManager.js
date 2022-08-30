@@ -9,3 +9,5 @@ class LevelManager {
     currentLevel.end();
   }
 }
+
+export { LevelManager };

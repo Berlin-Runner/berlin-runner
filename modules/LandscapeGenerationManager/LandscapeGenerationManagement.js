@@ -1,3 +1,4 @@
+import { RewardGenerationManagement } from "../RewardGenerationManager/RewardGenerationManager.js";
 class LandscapeGenerationManager {
   constructor(context, opts = null) {
     this.context = context;
@@ -57,8 +58,8 @@ class LandscapeGenerationManager {
     this.counter++;
 
     currentMesh.position.z = this.z;
-    /*  if (this.counter % 3 === 0)
-      this.rewardManager.placeReward(this.z, this.city); */
+    if (this.counter % 5 === 0)
+      this.rewardManager.placeReward(this.z, this.city);
     this.z -= this.modelLength;
   }
 
@@ -71,3 +72,5 @@ class LandscapeGenerationManager {
     this.city.visible = false;
   }
 }
+
+export { LandscapeGenerationManager };

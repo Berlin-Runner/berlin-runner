@@ -1,3 +1,5 @@
+import { Coin } from "./Coin.js";
+import { UTIL } from "../Util/UTIL.js";
 class RewardGenerationManagement {
   constructor(context) {
     this.context = context;
@@ -23,3 +25,5 @@ class RewardGenerationManagement {
     meshToPlace.add(reward);
   }
 }
+
+export { RewardGenerationManagement };

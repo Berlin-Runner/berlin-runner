@@ -1,3 +1,4 @@
+import { Level } from "../Level.js";
 class LevelOne extends Level {
   constructor(context) {
     let opts = {
@@ -45,3 +46,5 @@ class LevelOne extends Level {
     this.city.update();
   }
 }
+
+export { LevelOne };

@@ -30,3 +30,5 @@ class EventBus {
     );
   }
 }
+
+export { EventBus };

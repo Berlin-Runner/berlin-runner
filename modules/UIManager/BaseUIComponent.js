@@ -32,3 +32,5 @@ class BaseUIComponent {
     });
   }
 }
+
+export { BaseUIComponent };

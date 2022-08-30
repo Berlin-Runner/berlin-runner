@@ -1,3 +1,4 @@
+import { Landscape } from "../../Landscape.js";
 class LandscapeOne extends Landscape {
   constructor() {
     super();
@@ -13,3 +14,5 @@ class LandscapeOne extends Landscape {
     */
   }
 }
+
+export { LandscapeOne };

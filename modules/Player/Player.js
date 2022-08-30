@@ -1,4 +1,8 @@
 import { MovementFSM } from "./MovementFSM.js";
+import { Camer3rdPerson } from "./Camera3rdPerson.js";
+
+import { UTIL } from "../Util/UTIL.js";
+
 class Player {
   constructor(context) {
     this.context = context;

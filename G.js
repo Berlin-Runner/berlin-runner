@@ -7,3 +7,5 @@ class G {
     return this.G;
   }
 }
+
+export { G };

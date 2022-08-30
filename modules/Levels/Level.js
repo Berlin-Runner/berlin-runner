@@ -23,3 +23,5 @@ class Level {
     this.context.currentLevel = this.nextLevel;
   }
 }
+
+export { Level };

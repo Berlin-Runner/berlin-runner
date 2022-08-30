@@ -60,3 +60,5 @@ class AudioManager {
     this.audio.volume = volume;
   }
 }
+
+export { AudioManager };

@@ -57,3 +57,5 @@ class GameStateManager {
 
   update() {}
 }
+
+export { GameStateManager };

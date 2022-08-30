@@ -1,3 +1,7 @@
+import { GameIntroComponent } from "./CommonUIComponents/GameIntroComponent.js";
+import { GamePlayComponent } from "./CommonUIComponents/GamePlayComponent.js";
+import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js";
+import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
 class UIManager {
   constructor(context) {
     this.context = context;
@@ -35,3 +39,5 @@ class UIManager {
     this.gameOverComponent.hideComponent();
   }
 }
+
+export { UIManager };

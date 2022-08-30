@@ -1,3 +1,5 @@
+import { UTIL } from "../Util/UTIL.js";
+
 class Landscape {
   constructor() {}
 
@@ -26,3 +28,5 @@ class Landscape {
     return model;
   }
 }
+
+export { Landscape };

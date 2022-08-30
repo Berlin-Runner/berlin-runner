@@ -4,6 +4,19 @@ import { PhysicsManager } from "./modules/PhysicsManager/index.js";
 import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
 
 import { Player } from "./modules/Player/Player.js";
+
+import { G } from "./G.js";
+
+import { EventBus } from "./modules/Util/LightEventBus/EventBus.js";
+import { GameStateManager } from "./modules/GameStateManager/GameStateManager.js";
+
+import { ScoreManager } from "./modules/ScoreManager/ScoreManager.js";
+import { HealthManager } from "./modules/HealthManager/HealthManager.js";
+import { World_ } from "./modules/World/World.js";
+import { AudioManager } from "./modules/AudioManager/AudioManager.js";
+import { LevelZero } from "./modules/Levels/LevelZero/LevelZero.js";
+import { UIManager } from "./modules/UIManager/UIManager.js";
+
 class Game {
   constructor() {
     this.textures = {

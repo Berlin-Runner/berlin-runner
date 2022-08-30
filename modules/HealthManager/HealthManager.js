@@ -50,3 +50,5 @@ class HealthManager {
     }
   }
 }
+
+export { HealthManager };

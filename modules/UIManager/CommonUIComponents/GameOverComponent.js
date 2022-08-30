@@ -1,3 +1,4 @@
+import { BaseUIComponent } from "../BaseUIComponent.js";
 class GameOverComponent extends BaseUIComponent {
   constructor(id, context) {
     super(id, context);
@@ -50,3 +51,5 @@ class GameOverComponent extends BaseUIComponent {
     this.stateManager.resetState();
   }
 }
+
+export { GameOverComponent };

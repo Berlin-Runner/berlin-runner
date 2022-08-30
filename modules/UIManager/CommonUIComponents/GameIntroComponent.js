@@ -1,3 +1,4 @@
+import { BaseUIComponent } from "../BaseUIComponent.js";
 class GameIntroComponent extends BaseUIComponent {
   constructor(id, context) {
     super(id, context);
@@ -46,3 +47,5 @@ class GameIntroComponent extends BaseUIComponent {
      HAS ITS OWN EVENT LISTENER AND DO ITS OWN IMPLEMENTATION OF MUTING AND UNMUTING */
   }
 }
+
+export { GameIntroComponent };

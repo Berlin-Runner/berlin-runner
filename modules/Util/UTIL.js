@@ -47,3 +47,5 @@ class UTIL {
     return foldableShader;
   }
 }
+
+export { UTIL };

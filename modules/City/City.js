@@ -1,3 +1,4 @@
+import { LandscapeGenerationManager } from "../LandscapeGenerationManager/LandscapeGenerationManagement.js";
 class City {
   constructor(context, opts) {
     this.context = context;
@@ -35,3 +36,5 @@ class City {
     this.landscapeManager.updateCityMeshPoistion();
   }
 }
+
+export { City };

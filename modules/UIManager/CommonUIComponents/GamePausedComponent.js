@@ -1,3 +1,4 @@
+import { BaseUIComponent } from "../BaseUIComponent.js";
 class GamePausedComponent extends BaseUIComponent {
   constructor(id, context) {
     super(id, context);
@@ -46,3 +47,5 @@ class GamePausedComponent extends BaseUIComponent {
     this.stateManager.restartGame();
   }
 }
+
+export { GamePausedComponent };

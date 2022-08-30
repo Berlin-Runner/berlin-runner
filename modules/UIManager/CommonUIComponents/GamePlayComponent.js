@@ -1,3 +1,4 @@
+import { BaseUIComponent } from "../BaseUIComponent.js";
 class GamePlayComponent extends BaseUIComponent {
   constructor(id, context) {
     super(id, context);
@@ -54,3 +55,5 @@ class GamePlayComponent extends BaseUIComponent {
     this.healthValueHolder.innerText = health;
   }
 }
+
+export { GamePlayComponent };

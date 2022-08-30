@@ -64,3 +64,5 @@ class World_ {
     this.renderer.render(this.scene, this.camera);
   }
 }
+
+export { World_ };
