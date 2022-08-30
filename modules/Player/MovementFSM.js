@@ -1,4 +1,4 @@
-import { Vec3, Body, Sphere, Box } from "../../libs/cannon-es.js";
+import { Vec3, Body, Sphere, Box, Quaternion } from "../../libs/cannon-es.js";
 class MovementFSM {
   constructor(context, player) {
     this.context = context;
@@ -26,10 +26,10 @@ class MovementFSM {
 
     this.initCharachterCollider();
 
-    this.cannonBody = this.context.sphereBody;
+    this.cannonBody = this.context.playerCollider;
     this.setupEventListners();
 
-    this.velocity = this.context.sphereBody.velocity;
+    this.velocity = this.context.playerCollider.velocity;
 
     this.listenForKeyboardInputs();
     this.listenForSwipeInputs();
@@ -39,19 +39,19 @@ class MovementFSM {
     const size = 1;
     const halfExtents = new Vec3(size / 4, size / 2, size / 4);
     const boxShape = new Box(halfExtents);
-    const boxBody = new Body({ mass: 1, shape: boxShape });
-    this.radius = this.settings.playerColliderRadius;
-    this.sphereShape = new Sphere(this.radius);
-    this.context.sphereBody = new Body({
+    // const boxBody = new Body({ mass: 1, shape: boxShape });
+    // this.radius = this.settings.playerColliderRadius;
+    // this.sphereShape = new Sphere(this.radius);
+    this.context.playerCollider = new Body({
       mass: this.settings.playerColliderMass,
       material: this.physicsMaterial,
     });
-    this.context.sphereBody.addShape(boxShape);
-    this.context.sphereBody.position = this.settings.playerInitialPosition;
-    this.context.sphereBody.linearDamping =
+    this.context.playerCollider.addShape(boxShape);
+    this.context.playerCollider.position = this.settings.playerInitialPosition;
+    this.context.playerCollider.linearDamping =
       this.settings.playerLinearDampeneingFactor;
-    this.context.sphereBody.allowSleep = false;
-    this.context.world.addBody(this.context.sphereBody);
+    this.context.playerCollider.allowSleep = false;
+    this.context.world.addBody(this.context.playerCollider);
   }
 
   setupEventListners() {
@@ -161,18 +161,22 @@ class MovementFSM {
   }
 
   updatePlayerColliderPosition() {
-    this.context.sphereBody.position.x =
+    this.context.playerCollider.position.x =
       this.context.playerInstance.player.position.x;
 
     this.context.playerInstance.player.position.y =
-      this.context.sphereBody.position.y - 0.5;
-    this.context.sphereBody.position.z =
+      this.context.playerCollider.position.y - 0.5;
+    this.context.playerCollider.position.z =
       this.context.playerInstance.player.position.z;
+
+    this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
   }
 
   update() {
     this.updatePlayerColliderPosition();
     if (this.velocity.y < 0.75) this.canJump = true;
+    if (this.context.playerInstance.player.position.y > 0.75)
+      this.canJump = false;
   }
 }
 
