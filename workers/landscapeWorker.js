@@ -17,11 +17,12 @@ class LandscapeWorker {
   }
 
   updateLandscape() {
-    while (true) {
-      this.wait(2 * 1000);
-      postMessage("");
-    }
+    // while (true) {
     close();
+    this.wait(2 * 1000);
+    postMessage("");
+    this.updateLandscape();
+    // }
   }
 }
 
