@@ -15,13 +15,14 @@ class Player {
 
     this.player = null;
 
+    this.cameraFollow = true;
+
     this.init();
   }
 
   init() {
     this.addPlayerMesh();
     this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
-    this.cameraFollow = true;
     this.movementManager = new MovementFSM(this.context, this.player);
   }
 
@@ -46,6 +47,7 @@ class Player {
     this.player.add(playerMesh);
     this.player.rotation.set(0, Math.PI, 0);
     this.player.scale.setScalar(0.25);
+    // this.player.position.y = -0.5;
 
     this.player.addEventListener("collide", () => {
       "THE PLAYER HAS COLLIDED";
