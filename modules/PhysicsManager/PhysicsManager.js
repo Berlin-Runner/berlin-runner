@@ -52,7 +52,7 @@ class PhysicsManager {
 
     this.solver = new GSSolver();
     if (this.deviceType === "desktop") {
-      this.solver.iterations = 7;
+      this.solver.iterations = 9;
     } else if (this.deviceType === "mobile") {
       this.solver.iterations = 3;
     }

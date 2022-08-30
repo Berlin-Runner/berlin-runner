@@ -115,7 +115,7 @@ class Game {
     if (!this.renderGraphics) return;
 
     if (true) {
-      this.world.step(1 / 30, this.time_physics.getDelta());
+      this.world.step(1 / 60, this.time_physics.getDelta());
 
       if (this.globalSettings.renderCannonDebug) {
         this.cannonDebugger.update();
