@@ -1,29 +1,48 @@
 import { Coin } from "./Coin.js";
 import { UTIL } from "../Util/UTIL.js";
+import { Vec3 } from "../../libs/cannon-es.js";
 class RewardGenerationManagement {
   constructor(context) {
     this.context = context;
     this.scene = this.context.gameWorld.scene;
+
+    this.modelLength = 37;
+
+    this.delta = new THREE.Clock();
+
+    this.coinPositionsX = [-2.5, 0, 2.5];
+    this.coinPositionsY = [0.6, 1.2];
     this.init();
   }
 
-  init() {
-    this.coin = new Coin();
-    this.allRewardsGenerated = new THREE.Group();
-  }
+  init() {}
 
   placeReward(z, meshToPlace) {
-    let reward = this.coin.getCoinGroup().clone();
+    let placementPostion = new THREE.Vector3(
+      this.coinPositionsX[UTIL.randomIntFromInterval(0, 2)],
+      this.coinPositionsY[UTIL.randomIntFromInterval(0, 1)],
+      z
+    );
 
-    reward.position.z = z;
-    reward.position.x =
-      this.coin.coinPositionsX[UTIL.randomIntFromInterval(0, 2)];
-    reward.position.y =
-      this.coin.coinPositionsY[UTIL.randomIntFromInterval(0, 1)];
+    console.log(placementPostion);
+    let reward = new Coin(this.context, placementPostion);
+    reward = reward.coinMesh;
+    // reward.position.copy(cannonToThreeVec3(placementPostion));
+    // reward.collider.position = placementPostion;
+    console.log(reward);
 
-    this.allRewardsGenerated.add(reward);
-    meshToPlace.add(reward);
+    this.scene.add(reward);
   }
+
+  update() {}
+}
+
+function threeToCannonVec3(cannonvec3) {
+  return new Vec3(cannonvec3.x, cannonvec3.y, cannonvec3.z);
+}
+
+function cannonToThreeVec3(cannonvec3) {
+  return new THREE.Vector3(cannonvec3.x, cannonvec3.y, cannonvec3.z);
 }
 
 export { RewardGenerationManagement };

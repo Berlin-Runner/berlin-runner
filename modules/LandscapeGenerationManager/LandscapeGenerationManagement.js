@@ -48,24 +48,35 @@ class LandscapeGenerationManager {
     this.scene.add(this.city);
 
     this.rewardManager = new RewardGenerationManagement(this.context);
+
+    this.update();
+    this.updateCityMeshPoistion();
   }
 
   update() {
+    setTimeout(() => {
+      requestAnimationFrame(this.update.bind(this));
+    }, 2 * 1000);
     if (!this.settings.recycleCityTiles) return;
 
     let currentMesh =
       this.city.children[this.counter % this.landscapesArray.length];
     this.counter++;
 
-    currentMesh.position.z = this.z;
-    if (this.counter % 5 === 0)
+    if (this.counter % 1 === 0)
       this.rewardManager.placeReward(this.z, this.city);
+
+    currentMesh.position.z = this.z;
+
     this.z -= this.modelLength;
   }
 
   updateCityMeshPoistion() {
+    requestAnimationFrame(this.updateCityMeshPoistion.bind(this));
+
     if (this.city && this.settings.moveCity)
       this.city.position.z += (this.modelLength / 2) * this.delta.getDelta();
+    this.rewardManager.update();
   }
 
   dispose() {

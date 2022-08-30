@@ -69,6 +69,7 @@ class Game {
   }
 
   initGameScene() {
+    this.audioEventBus = new EventBus();
     this.gameWorld = new World_(this);
     this.G.scene = this.gameWorld.scene;
     this.audioManager = new AudioManager(this);

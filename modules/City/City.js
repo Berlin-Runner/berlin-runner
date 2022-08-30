@@ -17,7 +17,7 @@ class City {
 
     this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
 
-    this.start();
+    // this.start();
   }
 
   start() {
@@ -33,7 +33,7 @@ class City {
   }
 
   update() {
-    this.landscapeManager.updateCityMeshPoistion();
+    // this.landscapeManager.updateCityMeshPoistion();
   }
 }
 

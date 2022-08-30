@@ -6,6 +6,12 @@ class AudioManager {
     this.audio = new Audio(this.audioUrl);
     this.isMute = true;
 
+    this.dingUrl = "./assets/sounds/ding.mp3";
+    this.dingSound = new Audio(this.dingUrl);
+    this.dingSound.loop = false;
+    this.dingSound.volume = 1;
+    this.dingSound.load();
+
     this.muteIcons = document.getElementsByClassName("mute-icon");
     this.muteIconText = document.getElementsByClassName("mute-icon-text");
 
@@ -18,6 +24,15 @@ class AudioManager {
     this.audio.volume = 0.5;
     this.audio.play();
     this.audio.muted = this.isMute;
+
+    this.setupEventSubscriptions();
+  }
+
+  setupEventSubscriptions() {
+    this.context.audioEventBus.subscribe("ding", () => {
+      console.log("dinging");
+      this.dingSound.play();
+    });
   }
 
   setupMuteListener() {
