@@ -37,7 +37,7 @@ class MovementFSM {
 
   initCharachterCollider() {
     const size = 1;
-    const halfExtents = new Vec3(size / 4, size / 2, size / 4);
+    const halfExtents = new Vec3(0.2, 0.6, 0.2);
     const boxShape = new Box(halfExtents);
     // const boxBody = new Body({ mass: 1, shape: boxShape });
     // this.radius = this.settings.playerColliderRadius;
@@ -47,7 +47,11 @@ class MovementFSM {
       material: this.physicsMaterial,
     });
     this.context.playerCollider.addShape(boxShape);
-    this.context.playerCollider.position = this.settings.playerInitialPosition;
+    // console.log(this.context.playerInstance.player.position);
+    // this.context.playerCollider.position = this.settings.playerInitialPosition;
+    this.context.playerCollider.position = threeToCannonVec3(
+      this.player.position
+    );
     this.context.playerCollider.linearDamping =
       this.settings.playerLinearDampeneingFactor;
     this.context.playerCollider.allowSleep = false;
@@ -165,7 +169,8 @@ class MovementFSM {
       this.context.playerInstance.player.position.x;
 
     this.context.playerInstance.player.position.y =
-      this.context.playerCollider.position.y - 0.5;
+      this.context.playerCollider.position.y - 0.6;
+
     this.context.playerCollider.position.z =
       this.context.playerInstance.player.position.z;
 
@@ -178,6 +183,22 @@ class MovementFSM {
     if (this.context.playerInstance.player.position.y > 0.75)
       this.canJump = false;
   }
+}
+
+function cannonToThreeVec3(cannonvec3) {
+  return new THREE.Vector3(
+    cannonToThreejsVec3.x,
+    cannonToThreejsVec3.y,
+    cannonToThreejsVec3.z
+  );
+}
+
+function threeToCannonVec3(cannonvec3) {
+  return new Vec3(
+    threeToCannonVec3.x,
+    threeToCannonVec3.y,
+    threeToCannonVec3.z
+  );
 }
 
 export { MovementFSM };
