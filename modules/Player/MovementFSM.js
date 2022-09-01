@@ -5,6 +5,7 @@ class MovementFSM {
     this.player = player;
 
     this.tweenDuration = 0.75;
+    this.cameraTweenDuration = 0.85;
 
     this.canJump = true;
     this.jumpVelocity = 10;
@@ -129,13 +130,17 @@ class MovementFSM {
     gsap.to(object.position, {
       x: position,
       duration,
-      ease: "power2.inOut",
+      // ease: "power2.inOut",
     });
   }
 
   moveToCenter() {
     this.moveObjectToPosition(this.player, 0, this.tweenDuration);
-    this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.85);
+    this.moveObjectToPosition(
+      this.context.gameWorld.camera,
+      0,
+      this.cameraTweenDuration
+    );
     this.currentPlayerLane = this.lanes.center;
   }
 
@@ -148,7 +153,11 @@ class MovementFSM {
         break;
       case this.lanes.center:
         this.moveObjectToPosition(this.player, -2.5, this.tweenDuration);
-        this.moveObjectToPosition(this.context.gameWorld.camera, -2.75, 0.85);
+        this.moveObjectToPosition(
+          this.context.gameWorld.camera,
+          -2.75,
+          this.cameraTweenDuration
+        );
         this.currentPlayerLane = this.lanes.left;
         break;
     }
@@ -163,7 +172,11 @@ class MovementFSM {
         break;
       case this.lanes.center:
         this.moveObjectToPosition(this.player, 2.5, this.tweenDuration);
-        this.moveObjectToPosition(this.context.gameWorld.camera, 2.75, 0.85);
+        this.moveObjectToPosition(
+          this.context.gameWorld.camera,
+          2.75,
+          this.cameraTweenDuration
+        );
         this.currentPlayerLane = this.lanes.right;
         break;
     }
