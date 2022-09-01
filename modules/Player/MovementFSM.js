@@ -130,7 +130,7 @@ class MovementFSM {
     gsap.to(object.position, {
       x: position,
       duration,
-      // ease: "power2.inOut",
+      ease: "power4.out",
     });
   }
 
