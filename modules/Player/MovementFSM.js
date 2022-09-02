@@ -122,6 +122,11 @@ class MovementFSM {
     if (this.canJump) {
       console.log("jumping");
       this.velocity.y = this.jumpVelocity;
+      /*  gsap.to(this.velocity, {
+        y: this.jumpVelocity,
+        duration: 0.1,
+        ease: "power3.in",
+      }); */
     }
     this.canJump = false;
   }
