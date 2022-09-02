@@ -69,7 +69,7 @@ class Game {
 
     this.uiManager = new UIManager(this);
 
-    this.addClassSettings();
+    // this.addClassSettings();
   }
 
   initGameScene() {
