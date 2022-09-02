@@ -7,6 +7,7 @@ class ScoreManager {
     this.score = 0;
 
     this.init();
+    this.update();
   }
 
   init() {
@@ -38,6 +39,10 @@ class ScoreManager {
   }
 
   update() {
+    setTimeout(() => {
+      requestAnimationFrame(this.update.bind(this));
+    }, 1000 / 2);
+
     if (this.stateManager.currentState === "in_play") {
       if (this.score >= this.context.currentLevel.levelInfo.levelScoreObjcetive)
         this.stateManager.gameOver();

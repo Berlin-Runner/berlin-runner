@@ -73,7 +73,7 @@ class Coin {
   }
 
   attachCoinCollider(colliderPosition) {
-    const halfExtents = new Vec3(0.25, 0.25, 0.25);
+    const halfExtents = new Vec3(0.25, 0.25, 0.2);
     const boxShape = new Box(halfExtents);
     let coinCollider = new Body({
       mass: this.settings.coinColliderMass,
@@ -107,6 +107,7 @@ class Coin {
         // contact.ni.negate(contactNormal);
         this.scoreBus.publish("add-score", 1 / 4);
         this.audioComponent.play();
+        return;
       } else {
         // bi is something else. Keep the normal as it is
         contactNormal.copy(contact.ni);
