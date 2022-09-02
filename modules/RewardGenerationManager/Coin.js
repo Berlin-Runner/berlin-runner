@@ -6,9 +6,14 @@ import {
   Quaternion,
   BODY_TYPES,
 } from "../../libs/cannon-es.js";
+import { BaseAudioComponent } from "../AudioManager/BaseAudioComponent.js";
+
 class Coin {
   constructor(context, spawnPosition) {
     this.context = context;
+
+    this.scoreBus = this.context.scoreEventBus;
+
     this.spawnPosition = spawnPosition;
     this.coinPositionsX = [-2.5, 0, 2.5];
     this.coinPositionsY = [0.6, 1.2];
@@ -21,6 +26,13 @@ class Coin {
     this.settings = {
       coinColliderMass: 0.0,
     };
+
+    this.audioComponent = new BaseAudioComponent(this.context, {
+      url: "./assets/sounds/ding.mp3",
+      isMute: false,
+      doesLoop: false,
+      volume: 0.75,
+    });
 
     this.init();
   }
@@ -84,14 +96,17 @@ class Coin {
     const fwdAxis = new Vec3(0, 0, 1);
     collider.addEventListener("collide", (event) => {
       const { contact } = event;
-      console.log("collision is heard from the coin");
-      this.context.audioEventBus.publish("ding");
+
+      this.scoreBus.publish("add-score", 1 / 4);
+      this.audioComponent.play();
 
       // contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
       // We do not yet know which one is which! Let's check.
-      if (contact.bi.id === collider.id) {
+      if (contact.bi.id === this.context.playerCollider.id) {
         // bi is the player body, flip the contact normal
-        contact.ni.negate(contactNormal);
+        // contact.ni.negate(contactNormal);
+        this.scoreBus.publish("add-score", 1 / 4);
+        this.audioComponent.play();
       } else {
         // bi is something else. Keep the normal as it is
         contactNormal.copy(contact.ni);
