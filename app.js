@@ -17,6 +17,8 @@ import { AudioManager } from "./modules/AudioManager/AudioManager.js";
 import { LevelZero } from "./modules/Levels/LevelZero/LevelZero.js";
 import { UIManager } from "./modules/UIManager/UIManager.js";
 
+import * as dat from "/libs/dat.gui.module.js";
+
 class Game {
   constructor() {
     this.textures = {
@@ -42,7 +44,7 @@ class Game {
   init() {
     this.renderGraphics = true;
 
-    this.Body = new World();
+    this.gui = new dat.GUI();
 
     this.time = new THREE.Clock();
     this.time_physics = new THREE.Clock();
@@ -66,6 +68,8 @@ class Game {
     this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
 
     this.uiManager = new UIManager(this);
+
+    this.addClassSettings();
   }
 
   initGameScene() {
@@ -121,6 +125,19 @@ class Game {
     // this.currentLevel.start();
   }
 
+  addClassSettings() {
+    let classSettings = this.gui.addFolder("GLOBAL SETTINGS");
+    classSettings.open();
+    classSettings
+      .add(this.globalSettings, "renderCannonDebug")
+      .onChange((value) => {
+        console.log(
+          "render physics : " + this.globalSettings.renderCannonDebug
+        );
+        this.globalSettings.renderCannonDebug = value;
+      });
+  }
+
   animate() {
     setTimeout(() => {
       requestAnimationFrame(this.animate.bind(this));
@@ -132,7 +149,10 @@ class Game {
       this.world.step(1 / 60, this.time_physics.getDelta());
 
       if (this.globalSettings.renderCannonDebug) {
+        console.log("debugging physics");
+
         this.cannonDebugger.update();
+        this.cannonDebugger.color = new THREE.Color(0, 0, 0, 0);
       }
     }
 
