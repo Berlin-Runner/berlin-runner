@@ -18,13 +18,13 @@ function CannonDebugger(scene, world, _temp) {
     onUpdate,
   } = _temp === void 0 ? {} : _temp;
 
-  let renderingStates = {
+  /*   let renderingStates = {
     renderNone: "none",
     renderCameraColliderOnly: "camera",
     renderEnvironmentCollidersOnly: "envt",
   };
 
-  let renderingState = "";
+  let renderingState = ""; */
 
   const _meshes = [];
 
@@ -298,7 +298,7 @@ function CannonDebugger(scene, world, _temp) {
       please use a tiny finite state machihne thingy in the future, its okay
       for now, =)
       */
-      if (renderingState == renderingStates.renderNone) {
+      /*  if (renderingState == renderingStates.renderNone) {
         break;
       } else if (renderingState == renderingStates.renderCameraColliderOnly) {
         if (body.index != 1) continue;
@@ -306,7 +306,7 @@ function CannonDebugger(scene, world, _temp) {
         renderingState == renderingStates.renderEnvironmentCollidersOnly
       ) {
         if (body.index == 1) continue;
-      }
+      } */
       /* 
       if (
         customSetting.renderCameraCollider &&
