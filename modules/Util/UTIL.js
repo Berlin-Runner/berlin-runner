@@ -9,46 +9,46 @@ const foldableShader = `
 `;
 
 class UTIL {
-  static async sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+	static async sleep(ms) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
 
-  static wait(ms) {
-    const start = Date.now();
-    let now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
-  }
+	static wait(ms) {
+		const start = Date.now();
+		let now = start;
+		while (now - start < ms) {
+			now = Date.now();
+		}
+	}
 
-  static randomIntFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+	static randomIntFromInterval(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
 
-  static async loadModel(url) {
-    return new Promise((resolve, reject) => {
-      loader.load(
-        url,
-        (gltf) => {
-          let result = { model: gltf.scene, animations: gltf.animations };
-          resolve(result);
-        },
-        (progress) => {
-          //   console.log(progress);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
+	static async loadModel(url) {
+		return new Promise((resolve, reject) => {
+			loader.load(
+				url,
+				(gltf) => {
+					let result = { model: gltf.scene, animations: gltf.animations };
+					resolve(result);
+				},
+				(progress) => {
+					//   console.log(progress);
+				},
+				(err) => {
+					reject(err);
+				}
+			);
+		});
+	}
 
-  static getFoldableShader() {
-    return foldableShader;
-  }
+	static getFoldableShader() {
+		return foldableShader;
+	}
 }
 
-/* 
+/*
 THIS IS TEST CODE FROM MY NEW MBPÍ
 */
 
