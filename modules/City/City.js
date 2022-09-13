@@ -1,40 +1,40 @@
 import { LandscapeGenerationManager } from "../LandscapeGenerationManager/LandscapeGenerationManagement.js";
 class City {
-  constructor(context, opts) {
-    this.context = context;
-    this.opts = opts;
-    this.name = this.opts.name;
+	constructor(context, opts) {
+		this.context = context;
+		this.opts = opts;
+		this.name = this.opts.name;
 
-    console.log(`${this.name} has woken up `);
+		console.log(`${this.name} has woken up `);
 
-    this.awake();
-  }
+		this.awake();
+	}
 
-  awake() {
-    this.landscapeManager = new LandscapeGenerationManager(this.context, {
-      tiles: this.opts.tiles,
-    });
+	awake() {
+		this.landscapeManager = new LandscapeGenerationManager(this.context, {
+			tiles: this.opts.tiles,
+		});
 
-    this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
+		this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
 
-    // this.start();
-  }
+		// this.start();
+	}
 
-  start() {
-    this.landscapeWorker.postMessage({});
+	start() {
+		this.landscapeWorker.postMessage({});
 
-    this.landscapeWorker.onmessage = () => {
-      this.landscapeManager.update();
-    };
-  }
+		this.landscapeWorker.onmessage = () => {
+			this.landscapeManager.update();
+		};
+	}
 
-  dispose() {
-    this.landscapeManager.dispose();
-  }
+	dispose() {
+		this.landscapeManager.dispose();
+	}
 
-  update() {
-    // this.landscapeManager.updateCityMeshPoistion();
-  }
+	update() {
+		// this.landscapeManager.updateCityMeshPoistion();
+	}
 }
 
 export { City };
