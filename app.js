@@ -32,7 +32,7 @@ class Game {
 				}
 			),
 		};
-		console.log("THIS IS THE GAME");
+		// console.log("THIS IS THE GAME");
 
 		this.globalSettings = {
 			renderCannonDebug: true,
@@ -44,6 +44,7 @@ class Game {
 	init() {
 		this.renderGraphics = true;
 
+		this.settingEventBus = new EventBus();
 		this.gui = new dat.GUI();
 
 		this.time = new THREE.Clock();
@@ -117,7 +118,7 @@ class Game {
 
 		window.addEventListener("keypress", (e) => {
 			if (e.code === "KeyN") {
-				console.log("NEW LEVEL");
+				// console.log("NEW LEVEL");
 				this.currentLevel.end();
 			}
 		});
@@ -131,9 +132,9 @@ class Game {
 		classSettings
 			.add(this.globalSettings, "renderCannonDebug")
 			.onChange((value) => {
-				console.log(
-					"render physics : " + this.globalSettings.renderCannonDebug
-				);
+				// console.log(
+				// 	"render physics : " + this.globalSettings.renderCannonDebug
+				// );
 				this.globalSettings.renderCannonDebug = value;
 			});
 	}
@@ -146,10 +147,10 @@ class Game {
 		if (!this.renderGraphics) return;
 
 		if (true) {
-			this.world.step(1 / 60, this.time_physics.getDelta());
+			this.world.step(1 / 80, this.time_physics.getDelta());
 
 			if (this.globalSettings.renderCannonDebug) {
-				console.log("debugging physics");
+				// console.log("debugging physics");
 
 				this.cannonDebugger.update();
 				this.cannonDebugger.color = new THREE.Color(0, 0, 0, 0);
