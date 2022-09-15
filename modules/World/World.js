@@ -4,6 +4,7 @@ class World_ {
 		this.init();
 		this.resize();
 		this.setupResize();
+		this.addClassSettings();
 	}
 
 	init() {
@@ -62,6 +63,20 @@ class World_ {
 	update() {
 		if (this.controls.enabled) this.controls.update();
 		this.renderer.render(this.scene, this.camera);
+	}
+
+	addClassSettings() {
+		this.localSettings = this.context.gui.addFolder("WORLD SETTINGS");
+
+		this.localSettings
+			.add(this.controls, "enabled")
+			.onChange((value) => {
+				this.controls.enabled = value;
+				this.context.settingEventBus.publish("go-hands-free", value);
+			})
+			.name("hands-free");
+
+		this.localSettings.open();
 	}
 }
 
