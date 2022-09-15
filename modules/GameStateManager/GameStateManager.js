@@ -23,7 +23,7 @@ class GameStateManager {
 	}
 
 	startGame() {
-		console.log("SWITCHING GAME STATE TO STARTED");
+		// console.log("SWITCHING GAME STATE TO STARTED");
 		this.currentState = this.gameStates.started;
 		this.context.gameStateEventBus.publish("start_game");
 	}
@@ -34,7 +34,7 @@ class GameStateManager {
 	}
 
 	pauseGame() {
-		console.log("pausing game");
+		// console.log("pausing game");
 		this.currentState = this.gameStates.paused;
 		this.context.gameStateEventBus.publish("pause_game");
 	}
@@ -50,7 +50,7 @@ class GameStateManager {
 	}
 
 	gameOver() {
-		console.log("the game is over son");
+		// console.log("the game is over son");
 		this.currentState = this.gameStates.game_over;
 		this.context.gameStateEventBus.publish("game_over");
 	}

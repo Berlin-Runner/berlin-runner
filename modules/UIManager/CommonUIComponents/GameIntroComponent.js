@@ -2,7 +2,7 @@ import { BaseUIComponent } from "../BaseUIComponent.js";
 class GameIntroComponent extends BaseUIComponent {
 	constructor(id, context) {
 		super(id, context);
-		console.log("setting up Game intro Screen");
+		// console.log("setting up Game intro Screen");
 		this.startGameButton = document.getElementById("start-game-button");
 		this.setUpComponentEventListners();
 		this.setupEventBusSubscriptions();
@@ -10,7 +10,7 @@ class GameIntroComponent extends BaseUIComponent {
 
 	setUpComponentEventListners() {
 		this.startGameButton.addEventListener("click", () => {
-			console.log("start button pressed");
+			// console.log("start button pressed");
 			this.startGame();
 		});
 
@@ -24,7 +24,7 @@ class GameIntroComponent extends BaseUIComponent {
 	}
 
 	setupEventBusSubscriptions() {
-		console.log(this.stateBus);
+		// console.log(this.stateBus);
 		this.stateBus.subscribe("start_game", () => {
 			this.hideComponent();
 			this.hideStatic();
@@ -37,7 +37,7 @@ class GameIntroComponent extends BaseUIComponent {
 	}
 
 	startGame() {
-		console.log("start game function");
+		// console.log("start game function");
 		this.stateManager.startGame();
 	}
 

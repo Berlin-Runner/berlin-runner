@@ -51,7 +51,7 @@ class LevelZero extends Level {
 	}
 
 	async init() {
-		console.log(`${this.levelInfo.levelName} is waking up`);
+		// console.log(`${this.levelInfo.levelName} is waking up`);
 		let tileOne = new LandscapeOne();
 		tileOne.then((res) => {
 			this.cityopts = {
@@ -69,11 +69,11 @@ class LevelZero extends Level {
 			this.city = new City(this.context, this.cityopts);
 		});
 
-		console.log(`everything is ready for ${this.levelInfo.levelName}`);
+		// console.log(`everything is ready for ${this.levelInfo.levelName}`);
 	}
 
 	start() {
-		console.log(`starting level : ${this.levelInfo.levelIndex}`);
+		// console.log(`starting level : ${this.levelInfo.levelIndex}`);
 	}
 
 	dispose() {

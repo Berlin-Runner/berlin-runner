@@ -16,7 +16,7 @@ class PhysicsManager {
 
 		this.deviceType = this.context.G.DEVICE_TYPE;
 
-		console.log(this.context.G.DEVICE_TYPE);
+		// console.log(this.context.G.DEVICE_TYPE);
 
 		this.settings = {
 			worldAllowSleep: true,
@@ -40,7 +40,7 @@ class PhysicsManager {
 	}
 
 	initWorld() {
-		console.log(this.deviceType);
+		// console.log(this.deviceType);
 		this.context.world = new World({});
 
 		this.context.world.allowSleep = this.settings.worldAllowSleep;
@@ -121,7 +121,7 @@ class PhysicsManager {
 		collisionFilterGroup = 1
 	) {
 		if (!meshToBeCanonified) {
-			console.log(`uh oh the mesh ${meshName} seems to be problematic`);
+			// console.log(`uh oh the mesh ${meshName} seems to be problematic`);
 			return;
 		}
 

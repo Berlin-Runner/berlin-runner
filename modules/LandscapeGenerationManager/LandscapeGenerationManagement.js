@@ -21,10 +21,10 @@ class LandscapeGenerationManager {
 
 	init() {
 		if (this.opts != null) {
-			console.log("constructing the city using tiles from level");
+			// console.log("constructing the city using tiles from level");
 			this.landscapesArray = this.opts.tiles;
 		} else {
-			console.log("NO CITY TILES PASSED");
+			// console.log("NO CITY TILES PASSED");
 		}
 
 		this.z = -this.modelLength * this.landscapesArray.length;

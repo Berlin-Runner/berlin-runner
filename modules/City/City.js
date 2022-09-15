@@ -5,7 +5,7 @@ class City {
 		this.opts = opts;
 		this.name = this.opts.name;
 
-		console.log(`${this.name} has woken up `);
+		// console.log(`${this.name} has woken up `);
 
 		this.awake();
 	}

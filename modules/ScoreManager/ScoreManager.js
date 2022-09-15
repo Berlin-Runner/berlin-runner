@@ -24,7 +24,7 @@ class ScoreManager {
 		});
 
 		this.scoreBus.subscribe("add-score", (value) => {
-			console.log("adding score value of " + value + " man");
+			// console.log("adding score value of " + value + " man");
 			this.score += value;
 			this.scoreBus.publish("update_score", this.formatScore(this.score));
 		});

@@ -5,12 +5,12 @@ import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
 class UIManager {
 	constructor(context) {
 		this.context = context;
-		console.log("UI manager has woken up");
+		// console.log("UI manager has woken up");
 		this.setupUIComponents();
 	}
 
 	setupUIComponents() {
-		console.log("Setting up UI components");
+		// console.log("Setting up UI components");
 		this.gameIntroComponent = new GameIntroComponent(
 			"intro-screen",
 			this.context
