@@ -82,21 +82,7 @@ canvas {
 	text-shadow: -5px 5px black;
 	border-radius: 4px;
 }
-.title {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	font-size: 30px;
-	z-index: 103;
-	font-weight: 900;
-	/* padding: 10px; */
-	/* border: 5px solid red; */
-	font-family: "VT323", monospace;
-	color: aliceblue;
-	text-shadow: -3px 3px black;
-	border-radius: 4px;
-	writing-mode: vertical-rl;
-}
+/* ß */
 
 #webgl {
 	z-index: 90;
@@ -230,4 +216,11 @@ canvas {
 	pointer-events: none;
 	transform: translateZ(0);
 	background-image: url("./assets/gifs/static.gif");
+}
+
+.dg {
+	z-index: 9999 !important;
+	font-family: "Courier New", Courier, monospace !important;
+	font-size: 16px !important;
+	font-weight: 800 !important;
 }
