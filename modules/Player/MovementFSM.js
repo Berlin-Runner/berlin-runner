@@ -16,66 +16,14 @@ class MovementFSM {
 			right: 1,
 		};
 
-		this.settings = {
-			playerColliderRadius: 0.6,
-			playerColliderMass: 50,
-			playerInitialPosition: new Vec3(0, 0, 0),
-			playerLinearDampeneingFactor: 0.95,
-		};
-
 		this.currentPlayerLane = this.lanes.center;
-
-		this.initCharachterCollider();
-
-		this.cannonBody = this.context.playerCollider;
-		this.setupEventListners();
 
 		this.velocity = this.context.playerCollider.velocity;
 
 		this.listenForKeyboardInputs();
 		this.listenForSwipeInputs();
-	}
 
-	initCharachterCollider() {
-		const halfExtents = new Vec3(0.2, 0.6, 0.2);
-		const boxShape = new Box(halfExtents);
-		this.context.playerCollider = new Body({
-			mass: this.settings.playerColliderMass,
-			material: this.physicsMaterial,
-		});
-		this.context.playerCollider.addShape(boxShape);
-		this.context.playerCollider.position = threeToCannonVec3(
-			this.player.position
-		);
-		this.context.playerCollider.linearDamping =
-			this.settings.playerLinearDampeneingFactor;
-		this.context.playerCollider.allowSleep = false;
-		this.context.world.addBody(this.context.playerCollider);
-	}
-
-	setupEventListners() {
-		const contactNormal = new Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
-		const upAxis = new Vec3(0, 1, 0);
-		this.cannonBody.addEventListener("collide", (event) => {
-			const { contact } = event;
-
-			// contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
-			// We do not yet know which one is which! Let's check.
-			if (contact.bi.id === this.cannonBody.id) {
-				// bi is the player body, flip the contact normal
-				contact.ni.negate(contactNormal);
-			} else {
-				// bi is something else. Keep the normal as it is
-				contactNormal.copy(contact.ni);
-			}
-
-			// If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
-			if (contactNormal.dot(upAxis) > 0.5) {
-				console.log("collision is heard");
-				// Use a "good" threshold value between 0 and 1 here!
-				this.canJump = true;
-			}
-		});
+		this.addClassSettings();
 	}
 
 	listenForSwipeInputs() {
@@ -205,6 +153,10 @@ class MovementFSM {
 		if (this.velocity.y < 0.75) this.canJump = true;
 		if (this.context.playerInstance.player.position.y > 0.75)
 			this.canJump = false;
+	}
+
+	addClassSettings() {
+		this.localSettings = this.context.gui.addFolder("PLAYER-MOVEMENT-SETTINGS");
 	}
 }
 
