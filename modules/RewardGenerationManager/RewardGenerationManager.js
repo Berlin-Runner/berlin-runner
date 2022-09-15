@@ -11,11 +11,20 @@ class RewardGenerationManagement {
 		this.delta = new THREE.Clock();
 
 		this.coinPositionsX = [-2.5, 0, 2.5];
-		this.coinPositionsY = [0.6, 1.2];
+		this.coinPositionsY = [1, 2.25];
 		this.init();
 	}
 
-	init() {}
+	init() {
+		this.coinindex = 0;
+
+		this.totalCoins = 20;
+		this.coins = [];
+
+		for (let index = 0; index < this.totalCoins; index++) {
+			this.coins[index] = new Coin(this.context);
+		}
+	}
 
 	placeReward(z, meshToPlace) {
 		let placementPostion = new THREE.Vector3(
@@ -24,12 +33,14 @@ class RewardGenerationManagement {
 			z
 		);
 
-		console.log(placementPostion);
-		let reward = new Coin(this.context, placementPostion);
+		// console.log(placementPostion);
+		let reward = this.coins[this.coinindex % this.totalCoins];
+		reward.updatePosition(placementPostion);
+		this.coinindex++;
 		reward = reward.coinMesh;
 		// reward.position.copy(cannonToThreeVec3(placementPostion));
 		// reward.collider.position = placementPostion;
-		console.log(reward);
+		// console.log(reward);
 
 		this.scene.add(reward);
 	}
