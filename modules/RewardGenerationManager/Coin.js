@@ -15,8 +15,6 @@ class Coin {
 		this.scoreBus = this.context.scoreEventBus;
 
 		this.spawnPosition = spawnPosition;
-		this.coinPositionsX = [-2.5, 0, 2.5];
-		this.coinPositionsY = [0.6, 1.2];
 
 		this.allColliders = [];
 		this.modelLength = 37;
@@ -31,10 +29,12 @@ class Coin {
 			url: "./assets/sounds/ding.mp3",
 			isMute: false,
 			doesLoop: false,
-			volume: 0.75,
+			volume: 0.125,
 		});
 
 		this.init();
+
+		this.addClassSettings();
 	}
 
 	init() {
@@ -66,7 +66,7 @@ class Coin {
     } */
 
 		// this.initCoinCollider();
-		console.log(this.spawnPosition);
+		// console.log(this.spawnPosition);
 
 		this.attachCoinCollider(this.spawnPosition);
 		this.update();
@@ -86,7 +86,7 @@ class Coin {
 		this.context.world.addBody(coinCollider);
 		this.allColliders.push(coinCollider);
 		this.collider = coinCollider;
-		console.log(coinCollider.position);
+		// console.log(coinCollider.position);
 		this.setupEventListners(coinCollider);
 	}
 
@@ -107,6 +107,7 @@ class Coin {
 				// contact.ni.negate(contactNormal);
 				this.scoreBus.publish("add-score", 1 / 4);
 				this.audioComponent.play();
+				this.coinMesh.visible = false;
 				return;
 			} else {
 				// bi is something else. Keep the normal as it is
@@ -115,7 +116,7 @@ class Coin {
 
 			// If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
 			if (contactNormal.dot(upAxis) > 0.5) {
-				console.log("collision is heard from the coin");
+				// console.log("collision is heard from the coin");
 				// Use a "good" threshold value between 0 and 1 here!
 				this.canJump = true;
 			}
@@ -133,6 +134,13 @@ class Coin {
 		return this.coinMesh;
 	}
 
+	updatePosition(placementPostion) {
+		this.collider.position.z = placementPostion.z;
+		this.coinMesh.position.x = placementPostion.x;
+		this.coinMesh.position.y = placementPostion.y;
+		console.log(this.coinMesh.position);
+	}
+
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
@@ -140,6 +148,15 @@ class Coin {
 		this.coinMesh.position.z = this.collider.position.z;
 		this.collider.position.y = this.coinMesh.position.y;
 		this.collider.position.x = this.coinMesh.position.x;
+	}
+
+	addClassSettings() {
+		/* this.localSettings = this.context.gui.addFolder("COIN SETTINGS");
+		this.localSettings
+			.add(this.audioComponent, "volume", 0, 1, 0.0124)
+			.onChange((value) => {
+				this.audioComponent.volume = value;
+			}); */
 	}
 }
 
