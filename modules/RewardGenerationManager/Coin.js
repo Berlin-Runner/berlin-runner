@@ -50,7 +50,7 @@ class Coin {
 		coinMaterial.uniforms.diffuse.value = new THREE.Color("yellow");
 
 		this.coinMesh = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh.position.copy(this.spawnPosition);
+		// this.coinMesh.position.copy(this.spawnPosition);
 		// this.coinMesh.position.z = -10;
 		// console.log(this.coinMesh.position);
 		this.coinMesh.rotation.set(90 * (Math.PI / 180), 0, 0);
@@ -138,7 +138,6 @@ class Coin {
 		this.collider.position.z = placementPostion.z;
 		this.coinMesh.position.x = placementPostion.x;
 		this.coinMesh.position.y = placementPostion.y;
-		console.log(this.coinMesh.position);
 	}
 
 	update() {

@@ -22,7 +22,7 @@ class RewardGenerationManagement {
 		this.coins = [];
 
 		for (let index = 0; index < this.totalCoins; index++) {
-			this.coins[index] = new Coin(this.context);
+			this.coins[index] = new Coin(this.context, new THREE.Vector3(0, 0, -999));
 		}
 	}
 
@@ -35,6 +35,7 @@ class RewardGenerationManagement {
 
 		// console.log(placementPostion);
 		let reward = this.coins[this.coinindex % this.totalCoins];
+		console.log("CURRENT COIN INDEX IS :" + (this.coinindex % this.totalCoins));
 		reward.updatePosition(placementPostion);
 		this.coinindex++;
 		reward = reward.coinMesh;
@@ -43,6 +44,7 @@ class RewardGenerationManagement {
 		// console.log(reward);
 
 		this.scene.add(reward);
+		// meshToPlace.add(reward);
 	}
 
 	update() {}
