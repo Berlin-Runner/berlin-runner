@@ -18,7 +18,7 @@ class RewardGenerationManagement {
 	init() {
 		this.coinindex = 0;
 
-		this.totalCoins = 20;
+		this.totalCoins = 100;
 		this.coins = [];
 
 		for (let index = 0; index < this.totalCoins; index++) {
