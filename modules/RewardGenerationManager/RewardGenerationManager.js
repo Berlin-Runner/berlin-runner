@@ -35,7 +35,7 @@ class RewardGenerationManagement {
 
 		// console.log(placementPostion);
 		let reward = this.coins[this.coinindex % this.totalCoins];
-		console.log("CURRENT COIN INDEX IS :" + (this.coinindex % this.totalCoins));
+		// console.log("CURRENT COIN INDEX IS :" + (this.coinindex % this.totalCoins));
 		reward.updatePosition(placementPostion);
 		this.coinindex++;
 		reward = reward.coinMesh;
