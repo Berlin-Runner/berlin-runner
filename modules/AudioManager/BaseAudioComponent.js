@@ -13,7 +13,7 @@ class BaseAudioComponent {
 	init() {
 		this.sound = new Audio(this.audioUrl);
 		this.sound.muted = this.isMute;
-		this.sound.loop = this.doesLoop;
+		this.sound.loop = this.loop;
 		this.sound.volume = this.volume;
 
 		this.sound.load();
