@@ -1,5 +1,6 @@
 import { RewardGenerationManagement } from "../RewardGenerationManager/RewardGenerationManager.js";
 import { ObstacleGenerationManager } from "../ObstacleGenerationManager/ObstacleGenerationManager.js";
+import { FirstAidGenerationManager } from "../FirstAidManager/FirstAidGenerationManager.js";
 class LandscapeGenerationManager {
 	constructor(context, opts = null) {
 		this.context = context;
@@ -50,6 +51,9 @@ class LandscapeGenerationManager {
 
 		this.rewardManager = new RewardGenerationManagement(this.context);
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
+		this.FirstAidGenerationManager = new FirstAidGenerationManager(
+			this.context
+		);
 
 		this.update();
 		this.updateCityMeshPoistion();
@@ -67,7 +71,14 @@ class LandscapeGenerationManager {
 
 		if (this.counter % 1 === 0) {
 			this.rewardManager.placeReward(this.z, this.city);
+		}
+
+		if (this.counter % 2 === 0) {
 			this.obstacleManager.placeObstacles(this.z);
+		}
+
+		if (this.counter % 7 == 0) {
+			this.FirstAidGenerationManager.placeKits(this.z);
 		}
 
 		currentMesh.position.z = this.z;
