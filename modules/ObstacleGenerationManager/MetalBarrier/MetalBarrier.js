@@ -15,6 +15,7 @@ class MetalBarrier extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
 		this.modelLength = 37;
+		this.spawnPosition = spawnPosition;
 
 		this.delta = new THREE.Clock();
 
@@ -36,9 +37,8 @@ class MetalBarrier extends Obstacle {
 		// this.obstacleMesh = null;
 		this.metalBarrier = this.initObstacle(this.modelUrl);
 		this.metalBarrier.then((res) => {
-			console.log(res);
 			// res.scale.setScalar(0.25);
-			res.position.set(0, 0.525, -5);
+			res.position.set(0, 0.525, this.spawnPosition.z);
 			res.rotation.set(0, (90 * Math.PI) / 180, 0);
 			this.context.gameWorld.scene.add(res);
 
@@ -69,27 +69,20 @@ class MetalBarrier extends Obstacle {
 	}
 
 	setupEventListners(collider) {
-		console.log(collider);
-		console.log("setting up collision logic");
 		const contactNormal = new Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
 		const upAxis = new Vec3(0, 1, 0);
 		const fwdAxis = new Vec3(0, 0, 1);
 		this.collider.addEventListener("collide", (event) => {
 			const { contact } = event;
-			console.log("yayayayayayay");
-
-			// this.scoreBus.publish("add-score", 1 / 4);
-			// this.audioComponent.play();
 
 			// contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
 			// We do not yet know which one is which! Let's check.
 			if (contact.bi.id === this.context.playerCollider.id) {
 				// bi is the player body, flip the contact normal
-				// contact.ni.negate(contactNormal);
-				// this.scoreBus.publish("add-score", 1 / 4);
+
+				this.healthBus.publish("add-damage", 1 / 4);
 				this.audioComponent.play();
 				this.metalBarrier.visible = false;
-				console.log("collided with the player");
 				return;
 			} else {
 				// bi is something else. Keep the normal as it is

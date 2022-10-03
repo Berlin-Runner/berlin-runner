@@ -1,4 +1,5 @@
 import { BaseUIComponent } from "../BaseUIComponent.js";
+
 class GamePlayComponent extends BaseUIComponent {
 	constructor(id, context) {
 		super(id, context);
@@ -6,7 +7,7 @@ class GamePlayComponent extends BaseUIComponent {
 		// this.pauseButton = document.getElementById("pause-button");
 		this.pauseButton = new BaseUIComponent("pause-button", this.context);
 		this.scoreHolder = document.getElementById("score_text");
-		this.healthValueHolder = document.getElementById("haelth-value");
+		this.healthValueHolder = document.getElementById("health-value");
 
 		this.setUpComponentEventListners();
 		this.setupEventBusSubscriptions();

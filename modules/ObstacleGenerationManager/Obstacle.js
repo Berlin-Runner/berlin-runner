@@ -3,6 +3,7 @@ import { UTIL } from "../Util/UTIL.js";
 class Obstacle {
 	constructor(context) {
 		this.context = context;
+		this.healthBus = this.context.playerHealthEventBus;
 	}
 
 	async loadObstacle(url) {
@@ -13,7 +14,7 @@ class Obstacle {
 
 	async initObstacle(url) {
 		let model = await this.loadObstacle(url);
-		let lanscapeMap = model.material.map;
+		let obstacleMap = model.material.map;
 
 		model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
 			class: THREE.CustomMaterial,
@@ -23,9 +24,9 @@ class Obstacle {
 			},
 		});
 
-		model.material.uniforms.map.value = lanscapeMap;
+		model.material.uniforms.map.value = obstacleMap;
 
-		model.material.map = lanscapeMap;
+		model.material.map = obstacleMap;
 
 		return model;
 	}
