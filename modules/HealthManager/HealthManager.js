@@ -8,6 +8,7 @@ class HealthManager {
 		this.healthValue = 100;
 
 		this.init();
+		this.update();
 	}
 
 	init() {
@@ -22,6 +23,15 @@ class HealthManager {
 		this.stateBus.subscribe("back_to_home", () => {
 			this.healthValue = 100;
 		});
+
+		this.healthBus.subscribe("add-damage", (amount) => {
+			this.damageByAmount(amount);
+		});
+
+		this.healthBus.subscribe("add-healing", (amount) => {
+			console.log("healing by " + amount + " amount");
+			this.healByAmount(amount);
+		});
 	}
 
 	formatHealth(health) {
@@ -33,7 +43,8 @@ class HealthManager {
 	}
 
 	healByAmount(healAmount) {
-		this.healthValue += healAmount;
+		// this.healthValue += healAmount;÷
+		this.healthValue += 1;
 	}
 
 	damageByAmount(damageAmount) {
@@ -41,8 +52,11 @@ class HealthManager {
 	}
 
 	update() {
+		setTimeout(() => {
+			requestAnimationFrame(this.update.bind(this));
+		}, 1000 / 10);
+
 		if (this.stateManager.currentState === "in_play") {
-			this.healthValue -= 0.01;
 			this.healthBus.publish(
 				"update_health",
 				this.formatHealth(this.healthValue)
