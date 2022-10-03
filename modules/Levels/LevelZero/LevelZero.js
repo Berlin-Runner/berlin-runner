@@ -1,13 +1,16 @@
 import { Level } from "../Level.js";
 import { LandscapeOne } from "../../LandscapeGenerationManager/LandscapeTiles/LandscapeOne/LandscapeOne.js";
 import { City } from "../../City/City.js";
+
+import { BaseAudioComponent } from "../../AudioManager/BaseAudioComponent.js";
+
 class LevelZero extends Level {
 	constructor(context) {
 		let opts = {
 			levelInfo: {
 				levelName: "levelZero",
 				levelIndex: 0,
-				levelScoreObjcetive: 20,
+				levelScoreObjcetive: 40,
 			},
 		};
 
@@ -21,6 +24,13 @@ class LevelZero extends Level {
 		this.levelCompleteUI = document.getElementById(
 			"level-zero-complete-screen"
 		);
+
+		this.runningSound = new BaseAudioComponent(this.context, {
+			url: "./assets/sounds/running.mp3",
+			isMute: false,
+			doesLoop: true,
+			volume: 1,
+		});
 
 		this.stateBus.subscribe("start_game", () => {
 			if (this.activeLevel) {
@@ -47,6 +57,7 @@ class LevelZero extends Level {
 			clearInterval(level_one_coundown_intervalID);
 			this.levelIntroUI.style.display = "none";
 			this.stateManager.enterPlay();
+			this.runningSound.play();
 		}, (countDownTimer + 1) * 1000);
 	}
 

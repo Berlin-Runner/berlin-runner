@@ -1,4 +1,5 @@
 import { Vec3, Body, Sphere, Box, Quaternion } from "../../libs/cannon-es.js";
+import { BaseAudioComponent } from "../AudioManager/BaseAudioComponent.js";
 class MovementFSM {
 	constructor(context, player) {
 		this.context = context;
@@ -24,6 +25,16 @@ class MovementFSM {
 		this.listenForSwipeInputs();
 
 		this.addClassSettings();
+
+		this.jumpAudio = new BaseAudioComponent(this.context, {
+			url: "./assets/sounds/jump.mp3",
+			isMute: false,
+			doesLoop: false,
+			volume: 0.05,
+		});
+
+		this.jumpSound = new Audio("./assets/sounds/jump.mp3");
+		this.jumpSound.load();
 	}
 
 	listenForSwipeInputs() {
@@ -68,6 +79,7 @@ class MovementFSM {
 	jump() {
 		// TODO
 		if (this.canJump) {
+			this.jumpAudio.play();
 			console.log("jumping");
 			this.velocity.y = this.jumpVelocity;
 			/*  gsap.to(this.velocity, {
