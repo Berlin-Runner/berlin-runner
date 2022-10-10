@@ -15,17 +15,19 @@ class City {
 			tiles: this.opts.tiles,
 		});
 
-		this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
+		// this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
 
-		// this.start();
+		this.start();
 	}
 
 	start() {
-		this.landscapeWorker.postMessage({});
+		// this.landscapeWorker.postMessage({});
 
-		this.landscapeWorker.onmessage = () => {
-			this.landscapeManager.update();
-		};
+		// this.landscapeWorker.onmessage = () => {
+		this.landscapeManager.update();
+		this.landscapeManager.updateCityMeshPoistion();
+		this.landscapeManager.updatePlacements();
+		// };
 	}
 
 	dispose() {
