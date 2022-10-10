@@ -9,6 +9,8 @@ class LandscapeGenerationManager {
 		this.scene = this.context.gameWorld.scene;
 		this.model = null;
 
+		this.delta = new THREE.Clock();
+
 		this.counter = 0;
 		this.modelLength = 37;
 
@@ -17,6 +19,10 @@ class LandscapeGenerationManager {
 			moveCity: true,
 			recycleCityTiles: true,
 		};
+
+		this.updateSpeedFactor = 4;
+
+		this.placementPosition = 0;
 
 		this.init();
 	}
@@ -43,55 +49,59 @@ class LandscapeGenerationManager {
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
-		this.city.position.z = cityCenter;
+		this.city.position.z = cityCenter - this.modelLength * 4;
 		// this.context.playerInstance.position.z = cityCenter;
-		this.rewardManager = null;
 
 		this.scene.add(this.city);
 
 		this.rewardManager = new RewardGenerationManagement(this.context);
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
-		this.FirstAidGenerationManager = new FirstAidGenerationManager(
+		this.firstAidGenerationManager = new FirstAidGenerationManager(
 			this.context
 		);
-
-		this.update();
-		this.updateCityMeshPoistion();
 	}
 
 	update() {
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
-		}, 2 * 1000);
-		if (!this.settings.recycleCityTiles) return;
+		}, this.updateSpeedFactor * 1000);
+		// if (!this.settings.recycleCityTiles) return;
 
 		let currentMesh =
 			this.city.children[this.counter % this.landscapesArray.length];
 		this.counter++;
-
-		if (this.counter % 1 === 0) {
-			this.rewardManager.placeReward(this.z, this.city);
-		}
-
-		if (this.counter % 2 === 0) {
-			this.obstacleManager.placeObstacles(this.z);
-		}
-
-		if (this.counter % 7 == 0) {
-			this.FirstAidGenerationManager.placeKits(this.z);
-		}
 
 		currentMesh.position.z = this.z;
 
 		this.z -= this.modelLength;
 	}
 
+	updatePlacements() {
+		setTimeout(() => {
+			requestAnimationFrame(this.updatePlacements.bind(this));
+		}, this.updateSpeedFactor * 1000);
+
+		this.placementPosition -= this.modelLength * 2;
+
+		if (this.counter % 1 === 0) {
+			this.rewardManager.placeReward(this.placementPosition);
+		}
+
+		if (this.counter % 2 === 0) {
+			this.obstacleManager.placeObstacles(this.placementPosition);
+		}
+
+		if (this.counter % 3 == 0) {
+			this.firstAidGenerationManager.placeKits(this.placementPosition);
+		}
+	}
+
 	updateCityMeshPoistion() {
 		requestAnimationFrame(this.updateCityMeshPoistion.bind(this));
 
 		if (this.city && this.settings.moveCity)
-			this.city.position.z += (this.modelLength / 2) * this.delta.getDelta();
-		this.rewardManager.update();
+			this.city.position.z +=
+				this.modelLength * (1 / this.updateSpeedFactor) * this.delta.getDelta();
 	}
 
 	dispose() {
