@@ -14,7 +14,11 @@ class Obstacle {
 
 	async initObstacle(url) {
 		let model = await this.loadObstacle(url);
-		let obstacleMap = model.material.map;
+
+		let obstacleMap = null;
+		if (model.material.map) {
+			obstacleMap = model.material.map;
+		}
 
 		model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
 			class: THREE.CustomMaterial,
