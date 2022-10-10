@@ -9,6 +9,8 @@ class FirstAidGenerationManager {
 		this.delta = new THREE.Clock();
 		this.firstAidPlacementPositionX = [-2.5, 0, 2.5];
 
+		this.placementPosition = new THREE.Vector3(0, 0, 0);
+
 		this.init();
 	}
 
@@ -18,25 +20,23 @@ class FirstAidGenerationManager {
 		this.kits = [];
 
 		let initialSpawnPosition = new THREE.Vector3(0, 0.75, -2000);
+		let firstAidKit = new FirstAidKit(this.context, initialSpawnPosition);
 
 		for (let index = 0; index < this.totalKits; index++) {
-			this.kits[index] = new FirstAidKit(this.context, initialSpawnPosition);
+			this.kits.push(firstAidKit.clone());
 		}
 	}
 
 	placeKits(zPos) {
-		let placementPosition = new THREE.Vector3(
-			this.firstAidPlacementPositionX[UTIL.randomIntFromInterval[(0, 2)]],
-			0,
-			zPos
-		);
+		this.placementPosition.x =
+			this.firstAidPlacementPositionX[UTIL.randomIntFromInterval(0, 2)];
+
+		console.log(UTIL.randomIntFromInterval(0, 2));
+		this.placementPosition.z = zPos;
 
 		let kit = this.kits[this.kitIndex % this.totalKits];
-		kit.updatePosition(placementPosition);
+		kit.updatePosition(this.placementPosition);
 		this.kitIndex++;
-
-		// obstacle = obstacle.obstacleMesh;
-		// // this.scene.add(obstacle);
 	}
 }
 

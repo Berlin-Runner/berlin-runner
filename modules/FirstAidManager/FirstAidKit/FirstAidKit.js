@@ -97,19 +97,26 @@ class FirstAidKit extends FirstAid {
 		if (!this.collider) return;
 
 		this.collider.position.z = placementPostion.z;
-		this.kitMesh.position.x = placementPostion.x;
+		this.collider.position.x = placementPostion.x;
+
+		console.log(placementPostion);
 		// this.obstacleMesh.position.y = placementPostion.y;);
 	}
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		this.kitMesh.rotation.y += 0.1;
+		this.kitMesh.rotation.y += 0.05;
 
 		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
 		this.kitMesh.position.z = this.collider.position.z;
-		this.collider.position.y = this.kitMesh.position.y;
-		this.collider.position.x = this.kitMesh.position.x;
+		this.kitMesh.position.x = this.collider.position.x;
+		// this.collider.position.y = this.kitMesh.position.y;
+		// this.collider.position.x = this.kitMesh.position.x;
+	}
+
+	clone() {
+		return new FirstAidKit(this.context, this.spawnPosition);
 	}
 }
 
