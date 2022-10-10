@@ -82,7 +82,7 @@ class MetalBarrier extends Obstacle {
 
 				this.healthBus.publish("add-damage", 1 / 4);
 				this.audioComponent.play();
-				this.metalBarrier.visible = false;
+				// this.metalBarrier.visible = false;
 				return;
 			} else {
 				// bi is something else. Keep the normal as it is

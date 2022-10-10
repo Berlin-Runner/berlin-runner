@@ -25,9 +25,9 @@ class Player {
 			playerScale: 0.25,
 
 			colliderDimensions: new Vec3(0.2, 0.6, 0.2),
-			playerColliderMass: 50,
+			playerColliderMass: 167,
 			playerInitialPosition: new Vec3(0, 0, 0),
-			playerLinearDampeneingFactor: 0.95,
+			playerLinearDampeneingFactor: 0,
 		};
 
 		this.init();
@@ -50,7 +50,8 @@ class Player {
 
 	initCharachterCollider() {
 		const halfExtents = this.settings.colliderDimensions;
-		const boxShape = new Box(halfExtents);
+		// const boxShape = new Box(halfExtents);
+		const boxShape = new Sphere(0.6);
 		this.context.playerCollider = new Body({
 			mass: this.settings.playerColliderMass,
 			material: this.physicsMaterial,

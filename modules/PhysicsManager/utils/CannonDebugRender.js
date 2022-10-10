@@ -97,7 +97,10 @@ function CannonDebugger(scene, world, _temp) {
 			positions.push(v2.x, v2.y, v2.z);
 		}
 
-		geometry.setAttribute("position", new Float32BufferAttribute(positions, 3));
+		geometry.setAttribute(
+			"position",
+			new THREE.Float32BufferAttribute(positions, 3)
+		);
 		geometry.computeBoundingSphere();
 		geometry.computeVertexNormals();
 		return geometry;

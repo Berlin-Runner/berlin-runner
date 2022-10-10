@@ -22,7 +22,7 @@ class PhysicsManager {
 			worldAllowSleep: true,
 			useSplitSolver: true,
 
-			gravity: new THREE.Vector3(0, -9.8 * 2, 0),
+			gravity: new THREE.Vector3(0, -9.8 * 3, 0),
 
 			globalContactMaterial: {
 				friction: 0.1,
