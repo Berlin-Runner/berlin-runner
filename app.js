@@ -151,9 +151,8 @@ class Game {
 
 			if (this.globalSettings.renderCannonDebug) {
 				// console.log("debugging physics");
-
-				this.cannonDebugger.update();
-				this.cannonDebugger.color = new THREE.Color(0, 0, 0, 0);
+				// this.cannonDebugger.update();
+				// this.cannonDebugger.color = new THREE.Color(0, 0, 0, 0);
 			}
 		}
 
