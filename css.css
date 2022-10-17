@@ -177,12 +177,17 @@ canvas {
 	color: greenyellow;
 	padding: 6px 10px;
 	outline: none;
-	border: 1px solid bisque;
+	border: 3px solid bisque;
 	background-color: transparent;
 	text-shadow: -4px 4px black;
 	/* border-radius: 5px; */
 	cursor: crosshair;
 }
+
+#start-game-button:hover {
+	color: aqua;
+}
+
 #instructions {
 	color: aliceblue;
 	font-family: "VT323", monospace;
