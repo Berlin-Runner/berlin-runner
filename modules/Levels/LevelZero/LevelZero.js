@@ -48,13 +48,26 @@ class LevelZero extends Level {
 
 		this.init();
 
-		level_one_coundown_intervalID = setInterval(() => {
+		let globalId = null;
+
+		let pageLoadFunction = () => {
+			setTimeout(() => {
+				this.levelStartCountDown.innerText = countDownTimer;
+				countDownTimer--;
+				globalId = requestAnimationFrame(pageLoadFunction);
+			}, 1000);
+		};
+
+		requestAnimationFrame(pageLoadFunction);
+
+		/* level_one_coundown_intervalID = setInterval(() => {
 			this.levelStartCountDown.innerText = countDownTimer;
 			countDownTimer--;
-		}, 1 * 1000);
+		}, 1 * 1000); */
 
 		setTimeout(() => {
-			clearInterval(level_one_coundown_intervalID);
+			cancelAnimationFrame(globalId);
+			// clearInterval(level_one_coundown_intervalID);
 			this.levelIntroUI.style.display = "none";
 			this.stateManager.enterPlay();
 			this.runningSound.play();
