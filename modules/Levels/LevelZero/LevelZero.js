@@ -16,6 +16,7 @@ class LevelZero extends Level {
 
 		super(context, opts);
 
+		this.start();
 		this.levelIntroUI = document.getElementById("level-zero-intro-screen");
 		this.levelStartCountDown = this.levelIntroUI.querySelector(
 			".level-countdown-timer"
@@ -41,12 +42,9 @@ class LevelZero extends Level {
 
 	async awake() {
 		let countDownTimer = 4;
-		let level_one_coundown_intervalID;
 
 		this.levelIntroUI.style.display = "flex";
 		this.levelObjective.innerText = this.levelInfo.levelScoreObjcetive;
-
-		this.init();
 
 		let globalId = null;
 
@@ -86,24 +84,19 @@ class LevelZero extends Level {
 					res.clone(),
 					res.clone(),
 					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
 				],
 			};
 
 			this.city = new City(this.context, this.cityopts);
+			console.log("city is ready boss");
 		});
 
 		// console.log(`everything is ready for ${this.levelInfo.levelName}`);
 	}
 
-	start() {
+	async start() {
 		// console.log(`starting level : ${this.levelInfo.levelIndex}`);
+		this.init();
 	}
 
 	dispose() {

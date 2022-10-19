@@ -32,7 +32,7 @@ class PhysicsManager {
 			playerColliderRadius: 0.45,
 			playerColliderMass: 67,
 			playerInitialPosition: new Vec3(0, 0.75, 0),
-			playerLinearDampeneingFactor: 1,
+			playerLinearDampeneingFactor: 0,
 		};
 
 		this.initWorld();
@@ -56,12 +56,12 @@ class PhysicsManager {
 		} else if (this.deviceType === "mobile") {
 			this.solver.iterations = 1;
 		}
-		this.solver.tolerance = 1;
+		// this.solver.tolerance = 0.1;
 		if (this.settings.useSplitSolver) {
 			this.context.world.solver = new SplitSolver(this.solver);
 		} else {
-			this.context.world.solver = new SplitSolver(this.solver);
-			// this.context.world.solver = this.solver;
+			// this.context.world.solver = new SplitSolver(this.solver);
+			this.context.world.solver = this.solver;
 		}
 
 		this.context.world.gravity = this.settings.gravity;

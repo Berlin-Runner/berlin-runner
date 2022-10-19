@@ -132,9 +132,6 @@ class Game {
 		classSettings
 			.add(this.globalSettings, "renderCannonDebug")
 			.onChange((value) => {
-				// console.log(
-				// 	"render physics : " + this.globalSettings.renderCannonDebug
-				// );
 				this.globalSettings.renderCannonDebug = value;
 			});
 	}
@@ -147,7 +144,7 @@ class Game {
 		if (!this.renderGraphics) return;
 
 		if (true) {
-			this.world.step(1 / 120);
+			this.world.step(1 / 120, this.time_physics.getDelta());
 
 			if (this.globalSettings.renderCannonDebug) {
 				console.log("debugging physics");

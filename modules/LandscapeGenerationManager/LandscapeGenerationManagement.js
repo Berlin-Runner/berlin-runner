@@ -49,7 +49,7 @@ class LandscapeGenerationManager {
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
-		this.city.position.z = cityCenter - this.modelLength * 4;
+		this.city.position.z = cityCenter - this.modelLength;
 		// this.context.playerInstance.position.z = cityCenter;
 
 		this.scene.add(this.city);
