@@ -22,17 +22,17 @@ class PhysicsManager {
 			worldAllowSleep: true,
 			useSplitSolver: true,
 
-			gravity: new THREE.Vector3(0, -9.8 * 3, 0),
+			gravity: new THREE.Vector3(0, -9.8 * 5, 0),
 
 			globalContactMaterial: {
-				friction: 0.1,
-				restitution: 0.3,
+				friction: 0,
+				restitution: 0.9,
 			},
 
-			playerColliderRadius: 0.6,
-			playerColliderMass: 0.25,
+			playerColliderRadius: 0.45,
+			playerColliderMass: 67,
 			playerInitialPosition: new Vec3(0, 0.75, 0),
-			playerLinearDampeneingFactor: 0.95,
+			playerLinearDampeneingFactor: 1,
 		};
 
 		this.initWorld();
@@ -56,7 +56,7 @@ class PhysicsManager {
 		} else if (this.deviceType === "mobile") {
 			this.solver.iterations = 1;
 		}
-		this.solver.tolerance = 0.1;
+		this.solver.tolerance = 1;
 		if (this.settings.useSplitSolver) {
 			this.context.world.solver = new SplitSolver(this.solver);
 		} else {
