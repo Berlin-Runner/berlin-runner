@@ -27,18 +27,20 @@ class GameIntroComponent extends BaseUIComponent {
 		// console.log(this.stateBus);
 		this.stateBus.subscribe("start_game", () => {
 			this.hideComponent();
-			this.hideStatic();
+			// this.hideStatic();
 		});
 
 		this.stateBus.subscribe("back_to_home", () => {
 			this.showComponent();
-			this.showStatic();
+			// this.showStatic();
 		});
 	}
 
 	startGame() {
-		// console.log("start game function");
-		this.stateManager.startGame();
+		console.log("showing the picker");
+		this.hideComponent();
+
+		this.stateManager.showPicker();
 	}
 
 	muteToggle() {
