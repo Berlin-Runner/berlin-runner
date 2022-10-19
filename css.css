@@ -6,6 +6,28 @@ body {
 	margin: 0 !important;
 }
 
+/* Works on Firefox */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: blue transparent;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: aquamarine;
+	border-radius: 0px;
+	height: 1px;
+	border: 6px solid black;
+}
+
 footer,
 a,
 canvas {
@@ -97,6 +119,7 @@ canvas {
 }
 
 #intro-screen {
+	display: none;
 	width: 100vw;
 	height: 100vh;
 	position: fixed;
@@ -228,4 +251,101 @@ canvas {
 	font-family: "Courier New", Courier, monospace !important;
 	font-size: 16px !important;
 	font-weight: 800 !important;
+}
+
+.district-picker {
+	background: black;
+	/* position: absolute; */
+
+	/* overflow-x: auto; */
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.district-picker .banner {
+	position: relative;
+	font-size: 108px;
+	color: aquamarine;
+	text-shadow: -1px 1px violet;
+	border-bottom: 3px solid aliceblue;
+}
+
+.district-picker .districts-holder {
+	/* border: 1px blueviolet solid; */
+
+	height: 40vh;
+	overflow-x: scroll;
+	scroll-behavior: smooth;
+	/* position: absolute; */
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: no-wrap;
+	/* justify-content: center; */
+	align-items: center;
+	gap: 10px;
+}
+
+.district {
+	height: 85%;
+	width: 320px;
+	/* position: absolute; */
+
+	flex: none;
+
+	/* border: 2px solid green; */
+
+	/* margin: 0 10px; */
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.district .district-name {
+	color: cadetblue;
+	text-shadow: -1px 1px violet;
+	font-size: 32px;
+}
+
+.district .district-image {
+	height: 80%;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	/* border: px solid rebeccapurple; */
+}
+
+.district .district-image img {
+	object-fit: contain;
+	height: 100%;
+	width: 100%;
+}
+
+.district .district-image .coming-soon {
+	color: grey;
+	font-size: 64px;
+	margin: auto;
+	text-align: center;
+}
+
+.district .district-enter-button {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.district .district-enter-button button {
+	font-size: 36px;
+	background-color: transparent;
+	color: aquamarine;
+	border: 1px solid gray;
+	width: 75%;
+
+	cursor: crosshair;
 }
