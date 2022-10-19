@@ -4,6 +4,7 @@ class GameStateManager {
 
 		this.gameStates = {
 			notStartedYet: "not_started",
+			pickingDistrict: "picking-district",
 			started: "started",
 			inPlay: "in_play",
 			paused: "paused",
@@ -22,10 +23,15 @@ class GameStateManager {
 		this.context.gameStateEventBus.publish("back_to_home");
 	}
 
-	startGame() {
+	showPicker() {
+		this.currentState = this.gameStates.pickingDistrict;
+		this.context.gameStateEventBus.publish("pick-district");
+	}
+
+	startGame(districtIndex) {
 		// console.log("SWITCHING GAME STATE TO STARTED");
 		this.currentState = this.gameStates.started;
-		this.context.gameStateEventBus.publish("start_game");
+		this.context.gameStateEventBus.publish("start_game", districtIndex);
 	}
 
 	enterPlay() {
