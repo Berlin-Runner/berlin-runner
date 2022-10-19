@@ -54,7 +54,7 @@ class Coin {
 	}
 
 	attachCoinCollider(colliderPosition) {
-		const halfExtents = new Vec3(0.25, 0.25, 0.2);
+		const halfExtents = new Vec3(0.25, 0.25, 0.02);
 		const boxShape = new Box(halfExtents);
 		let coinCollider = new Body({
 			mass: this.settings.coinColliderMass,

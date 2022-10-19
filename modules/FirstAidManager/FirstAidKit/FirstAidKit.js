@@ -49,7 +49,7 @@ class FirstAidKit extends FirstAid {
 	}
 
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(0.3, 0.3, 0.2);
+		const halfExtents = new Vec3(0.3, 0.3, 0.02);
 		const boxShape = new Box(halfExtents);
 		let kitCollider = new Body({
 			mass: this.settings.mass,

@@ -30,7 +30,7 @@ class PhysicsManager {
 			},
 
 			playerColliderRadius: 0.45,
-			playerColliderMass: 67,
+			playerColliderMass: 0.35,
 			playerInitialPosition: new Vec3(0, 0.75, 0),
 			playerLinearDampeneingFactor: 0,
 		};

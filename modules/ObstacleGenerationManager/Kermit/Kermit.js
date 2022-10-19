@@ -72,12 +72,12 @@ class Kermit extends Obstacle {
     gotta refactor this method to take in a glb collider and stuff
     */
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(0.3, 0.5, 0.2);
+		const halfExtents = new Vec3(0.3, 0.75, 0.01);
 		const boxShape = new Box(halfExtents);
 		let kermitCollider = new Body({
 			mass: this.settings.kermitColliderMass,
 			material: this.physicsMaterial,
-			type: BODY_TYPES.KINEMATIC,
+			type: Body.KINEMATIC,
 		});
 		kermitCollider.addShape(boxShape);
 		kermitCollider.position.z = parentMesh.position.z;

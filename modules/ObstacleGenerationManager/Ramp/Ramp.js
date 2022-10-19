@@ -79,7 +79,7 @@ class Ramp extends Obstacle {
     gotta refactor this method to take in a glb collider and stuff
     */
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(0.7, 0.35, 0.2);
+		const halfExtents = new Vec3(0.7, 0.35, 0.02);
 		const boxShape = new Box(halfExtents);
 		let rampCollider = new Body({
 			mass: this.settings.rampColliderMass,

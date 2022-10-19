@@ -52,7 +52,7 @@ class MetalBarrier extends Obstacle {
 	}
 
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(0.7, 0.35, 0.2);
+		const halfExtents = new Vec3(0.7, 0.35, 0.002);
 		const boxShape = new Box(halfExtents);
 		let obstacleCollider = new Body({
 			mass: this.settings.obstacleColliderMass,

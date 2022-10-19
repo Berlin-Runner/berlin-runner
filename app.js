@@ -145,6 +145,7 @@ class Game {
 
 		if (true) {
 			this.world.step(1 / 120, this.time_physics.getDelta());
+			// this.world.fixedStep();
 
 			if (this.globalSettings.renderCannonDebug) {
 				console.log("debugging physics");
