@@ -2,6 +2,7 @@ import { GameIntroComponent } from "./CommonUIComponents/GameIntroComponent.js";
 import { GamePlayComponent } from "./CommonUIComponents/GamePlayComponent.js";
 import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js";
 import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
+import { DistrictPickerComponent } from "./CommonUIComponents/DistrictPickerComponent.js";
 class UIManager {
 	constructor(context) {
 		this.context = context;
@@ -10,13 +11,17 @@ class UIManager {
 	}
 
 	setupUIComponents() {
-		// console.log("Setting up UI components");
 		this.gameIntroComponent = new GameIntroComponent(
 			"intro-screen",
 			this.context
 		);
 		this.gameIntroComponent.showComponent();
 		this.gameIntroComponent.showStatic();
+
+		this.districtPicker = new DistrictPickerComponent(
+			"district-picker",
+			this.context
+		);
 
 		this.gamePlayComponent = new GamePlayComponent(
 			"in-play-screen",
