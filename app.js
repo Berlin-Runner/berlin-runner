@@ -140,9 +140,9 @@ class Game {
 	}
 
 	animate() {
-		setTimeout(() => {
-			requestAnimationFrame(this.animate.bind(this));
-		}, 1000 / 60);
+		// setTimeout(() => {
+		requestAnimationFrame(this.animate.bind(this));
+		// }, 1000 / 60);
 
 		if (!this.renderGraphics) return;
 

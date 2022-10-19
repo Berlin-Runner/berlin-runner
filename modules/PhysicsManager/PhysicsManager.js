@@ -52,15 +52,16 @@ class PhysicsManager {
 
 		this.solver = new GSSolver();
 		if (this.deviceType === "desktop") {
-			this.solver.iterations = 9;
+			this.solver.iterations = 12;
 		} else if (this.deviceType === "mobile") {
-			this.solver.iterations = 3;
+			this.solver.iterations = 7;
 		}
 		this.solver.tolerance = 0.1;
 		if (this.settings.useSplitSolver) {
 			this.context.world.solver = new SplitSolver(this.solver);
 		} else {
-			this.context.world.solver = this.solver;
+			this.context.world.solver = new SplitSolver(this.solver);
+			// this.context.world.solver = this.solver;
 		}
 
 		this.context.world.gravity = this.settings.gravity;
