@@ -2,8 +2,10 @@ const loader = new THREE.GLTFLoader();
 const foldableShader = `
   vec4 vWorld = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
 
+  float curveAmount = 0.00125;
+
   vWorld -= cameraPosition.y;
-  vec3 vShift = vec3(.0, pow2(vWorld.z) * - .00125, pow2(vWorld.z) * .00001 * 0.0001);
+  vec3 vShift = vec3( pow2(vWorld.z) * - curveAmount * .675, pow2(vWorld.z) * - curveAmount, pow2(vWorld.z) * .00000000 );
 
   transformed += vShift;
 `;
