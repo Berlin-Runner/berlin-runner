@@ -157,7 +157,7 @@ class MovementFSM {
 		this.context.playerCollider.position.z =
 			this.context.playerInstance.player.position.z;
 
-		this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
+		// this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
 	}
 
 	update() {

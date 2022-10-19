@@ -77,10 +77,11 @@ class Kermit extends Obstacle {
 		let kermitCollider = new Body({
 			mass: this.settings.kermitColliderMass,
 			material: this.physicsMaterial,
+			type: BODY_TYPES.KINEMATIC,
 		});
 		kermitCollider.addShape(boxShape);
 		kermitCollider.position.z = parentMesh.position.z;
-		kermitCollider.position.y = parentMesh.position.y + 1;
+		// kermitCollider.position.y = parentMesh.position.y + 1;
 
 		this.context.world.addBody(kermitCollider);
 		this.collider = kermitCollider;
@@ -117,7 +118,7 @@ class Kermit extends Obstacle {
 
 		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
 		this.kermitMesh.position.z = this.collider.position.z;
-		this.collider.position.y = this.kermitMesh.position.y;
+		this.collider.position.y = this.kermitMesh.position.y + 1;
 		this.collider.position.x = this.kermitMesh.position.x;
 
 		if (this.mixer) this.mixer.update(this.time.getDelta());
