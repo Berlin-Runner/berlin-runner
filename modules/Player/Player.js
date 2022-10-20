@@ -22,7 +22,7 @@ class Player {
 
 		this.settings = {
 			cameraFollow: true,
-			playerScale: 0.25,
+			playerScale: 0.275,
 
 			colliderDimensions: new Vec3(0.2, 0.6, 0.2),
 			playerColliderMass: 167,
@@ -120,10 +120,6 @@ class Player {
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(this.settings.playerScale);
-
-		this.player.addEventListener("collide", () => {
-			"THE PLAYER HAS COLLIDED";
-		});
 
 		this.runClip = THREE.AnimationClip.findByName(clips, "RUN");
 		this.haltClip = THREE.AnimationClip.findByName(clips, "SALSA");

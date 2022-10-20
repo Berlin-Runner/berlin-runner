@@ -1,13 +1,6 @@
 import { FirstAid } from "../FirstAid.js";
 
-import {
-	Vec3,
-	Body,
-	Sphere,
-	Box,
-	Quaternion,
-	BODY_TYPES,
-} from "../../../libs/cannon-es.js";
+import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 
 import { BaseAudioComponent } from "../../AudioManager/BaseAudioComponent.js";
 
@@ -15,10 +8,10 @@ class FirstAidKit extends FirstAid {
 	constructor(context, spawnPosition) {
 		super(context);
 
+		this.delta = new THREE.Clock();
+
 		this.modelLength = 37;
 		this.spawnPosition = spawnPosition;
-
-		this.delta = new THREE.Clock();
 
 		this.settings = {
 			mass: 0,
@@ -35,7 +28,6 @@ class FirstAidKit extends FirstAid {
 			"modules/FirstAidManager/FirstAidKit/model/first-aid-kit.glb";
 
 		this.firdtAidKit = this.initFirstAidKit(this.modelUrl).then((res) => {
-			console.log("sup freak bitches");
 			res.position.set(0, 0.5, this.spawnPosition.z);
 
 			this.scene.add(res);
@@ -44,7 +36,7 @@ class FirstAidKit extends FirstAid {
 
 			this.attachCollider(res);
 
-			this.update();
+			requestAnimationFrame(this.update.bind(this));
 		});
 	}
 
@@ -99,7 +91,6 @@ class FirstAidKit extends FirstAid {
 		this.collider.position.z = placementPostion.z;
 		this.collider.position.x = placementPostion.x;
 
-		console.log(placementPostion);
 		// this.obstacleMesh.position.y = placementPostion.y;);
 	}
 
