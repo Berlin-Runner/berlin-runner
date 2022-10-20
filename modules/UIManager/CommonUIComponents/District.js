@@ -6,7 +6,6 @@ class District extends BaseUIComponent {
 
 		this.districtIndex = districtIndex;
 		this.enterButton = this.uiComponent.querySelector(".enter-button");
-		console.log(this.enterButton);
 
 		this.init();
 	}
@@ -17,9 +16,7 @@ class District extends BaseUIComponent {
 	}
 
 	setupEventListeners() {
-		console.log("setting up events");
 		this.enterButton.addEventListener("click", () => {
-			console.log(`Opening district #${this.districtIndex}`);
 			this.stateManager.startGame(this.districtIndex);
 		});
 	}

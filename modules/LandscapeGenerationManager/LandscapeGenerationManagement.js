@@ -20,7 +20,7 @@ class LandscapeGenerationManager {
 			recycleCityTiles: true,
 		};
 
-		this.updateSpeedFactor = 4;
+		this.updateSpeedFactor = 3.5; //use this to make things move faster
 
 		this.placementPosition = 0;
 
@@ -32,12 +32,9 @@ class LandscapeGenerationManager {
 			// console.log("constructing the city using tiles from level");
 			this.landscapesArray = this.opts.tiles;
 		} else {
-			// console.log("NO CITY TILES PASSED");
 		}
 
 		this.z = -this.modelLength * this.landscapesArray.length;
-
-		this.delta = new THREE.Clock();
 
 		this.city = new THREE.Object3D();
 
@@ -50,7 +47,6 @@ class LandscapeGenerationManager {
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
 		this.city.position.z = cityCenter - this.modelLength;
-		// this.context.playerInstance.position.z = cityCenter;
 
 		this.scene.add(this.city);
 
@@ -65,7 +61,6 @@ class LandscapeGenerationManager {
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
 		}, this.updateSpeedFactor * 1000);
-		// if (!this.settings.recycleCityTiles) return;
 
 		let currentMesh =
 			this.city.children[this.counter % this.landscapesArray.length];

@@ -37,7 +37,7 @@ class GameIntroComponent extends BaseUIComponent {
 	}
 
 	startGame() {
-		console.log("showing the picker");
+		// console.log("showing the picker");
 		this.hideComponent();
 
 		this.stateManager.showPicker();

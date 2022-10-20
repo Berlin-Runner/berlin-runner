@@ -16,8 +16,6 @@ class PhysicsManager {
 
 		this.deviceType = this.context.G.DEVICE_TYPE;
 
-		// console.log(this.context.G.DEVICE_TYPE);
-
 		this.settings = {
 			worldAllowSleep: true,
 			useSplitSolver: true,
@@ -36,11 +34,9 @@ class PhysicsManager {
 		};
 
 		this.initWorld();
-		// this.addClassSettings();
 	}
 
 	initWorld() {
-		// console.log(this.deviceType);
 		this.context.world = new World({});
 
 		this.context.world.allowSleep = this.settings.worldAllowSleep;
@@ -56,11 +52,10 @@ class PhysicsManager {
 		} else if (this.deviceType === "mobile") {
 			this.solver.iterations = 1;
 		}
-		// this.solver.tolerance = 0.1;
+
 		if (this.settings.useSplitSolver) {
 			this.context.world.solver = new SplitSolver(this.solver);
 		} else {
-			// this.context.world.solver = new SplitSolver(this.solver);
 			this.context.world.solver = this.solver;
 		}
 
@@ -78,7 +73,10 @@ class PhysicsManager {
 		);
 
 		this.context.world.addContactMaterial(this.physics_physics);
+		this.addGround();
+	}
 
+	addGround() {
 		this.groundBody = new Body({
 			type: Body.STATIC,
 			shape: new Plane(),
@@ -92,8 +90,7 @@ class PhysicsManager {
 		hullType,
 		bodyType,
 		bodyMaterial,
-		bodyMass,
-		collisionFilterGroup = 1
+		bodyMass
 	) {
 		let canonifiedMesh = threeToCannon(meshToBeCanonified, { type: hullType });
 
@@ -122,14 +119,13 @@ class PhysicsManager {
 		collisionFilterGroup = 1
 	) {
 		if (!meshToBeCanonified) {
-			// console.log(`uh oh the mesh ${meshName} seems to be problematic`);
+			console.log(`uh oh the mesh ${meshName} seems to be problematic`);
 			return;
 		}
 
 		let shape = CannonUtils.CreateTrimesh(meshToBeCanonified.geometry);
 		shape.scale.copy(scale);
 
-		// shape.scale.set(0.75, 0.75, 0.75);
 		let meshBody = new Body({
 			type: bodyType,
 			material: bodyMaterial,
@@ -147,8 +143,7 @@ class PhysicsManager {
 
 	cannonifyMeshWithCustomConvexHull(
 		customConvexHullGeometry,
-		meshToBeCanonified,
-		collisionFilterGroup = 1
+		meshToBeCanonified
 	) {
 		let shape = CannonUtils.CreateTrimesh(customConvexHullGeometry.geometry);
 
@@ -160,8 +155,6 @@ class PhysicsManager {
 
 		customConvexHullBody.position.copy(meshToBeCanonified.position);
 		customConvexHullBody.quaternion.set(0, 0, 0, 1);
-
-		// console.log(customConvexHullBody);
 
 		this.context.world.addBody(customConvexHullBody);
 	}
@@ -282,26 +275,6 @@ class PhysicsManager {
 	// Linear mapping from range <a1, a2> to range <b1, b2>
 	mapLinear(x, a1, a2, b1, b2) {
 		return b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
-	}
-}
-
-class Ball {
-	constructor(body, mesh, active) {
-		this.body = body;
-		this.mesh = mesh;
-		this.active = active;
-
-		// this.autoDestructSequence();
-	}
-
-	autoDestructSequence() {
-		setTimeout(() => {
-			// console.log("DESTROYING MEIN SELF");
-			this.mesh.geometry.dispose();
-			this.mesh.material.dispose();
-			this.body.removeShape();
-			this.body.sleep();
-		}, 1 * 1000);
 	}
 }
 

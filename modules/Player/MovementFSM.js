@@ -9,7 +9,7 @@ class MovementFSM {
 		this.cameraTweenDuration = 0.85;
 
 		this.canJump = true;
-		this.jumpVelocity = 10;
+		this.jumpVelocity = 12;
 
 		this.lanes = {
 			center: 0,
@@ -77,16 +77,10 @@ class MovementFSM {
 	}
 
 	jump() {
-		// TODO
 		if (this.canJump) {
 			this.jumpAudio.play();
 			console.log("jumping");
 			this.velocity.y = this.jumpVelocity;
-			/*  gsap.to(this.velocity, {
-        y: this.jumpVelocity,
-        duration: 0.1,
-        ease: "power3.in",
-      }); */
 		}
 		this.canJump = false;
 	}
@@ -156,8 +150,6 @@ class MovementFSM {
 
 		this.context.playerCollider.position.z =
 			this.context.playerInstance.player.position.z;
-
-		// this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
 	}
 
 	update() {
@@ -170,22 +162,6 @@ class MovementFSM {
 	addClassSettings() {
 		this.localSettings = this.context.gui.addFolder("PLAYER-MOVEMENT-SETTINGS");
 	}
-}
-
-function cannonToThreeVec3(cannonvec3) {
-	return new THREE.Vector3(
-		cannonToThreejsVec3.x,
-		cannonToThreejsVec3.y,
-		cannonToThreejsVec3.z
-	);
-}
-
-function threeToCannonVec3(cannonvec3) {
-	return new Vec3(
-		threeToCannonVec3.x,
-		threeToCannonVec3.y,
-		threeToCannonVec3.z
-	);
 }
 
 export { MovementFSM };

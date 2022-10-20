@@ -31,7 +31,6 @@ class FirstAidGenerationManager {
 		this.placementPosition.x =
 			this.firstAidPlacementPositionX[UTIL.randomIntFromInterval(0, 2)];
 
-		console.log(UTIL.randomIntFromInterval(0, 2));
 		this.placementPosition.z = zPos;
 
 		let kit = this.kits[this.kitIndex % this.totalKits];

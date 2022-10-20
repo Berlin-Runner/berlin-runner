@@ -88,10 +88,7 @@ class LevelZero extends Level {
 			};
 
 			this.city = new City(this.context, this.cityopts);
-			console.log("city is ready boss");
 		});
-
-		// console.log(`everything is ready for ${this.levelInfo.levelName}`);
 	}
 
 	async start() {

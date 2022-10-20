@@ -9,7 +9,7 @@ class FirstAid {
 	async loadFirstAidKit(url) {
 		let { model } = await UTIL.loadModel(url);
 
-		console.log(model);
+		// console.log(model);
 
 		return model;
 	}

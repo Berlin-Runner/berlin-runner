@@ -8,7 +8,7 @@ class HealthManager {
 		this.healthValue = 100;
 
 		this.init();
-		this.update();
+		requestAnimationFrame(this.update.bind(this));
 	}
 
 	init() {

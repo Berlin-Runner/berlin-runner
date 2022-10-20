@@ -12,39 +12,52 @@ class World_ {
 			60,
 			window.innerWidth / window.innerHeight,
 			0.1,
-			1000.0
+			200.0
 		);
-
 		this.camera.position.set(0, 1.5, 4);
 
 		this.scene = new THREE.Scene();
 		this.scene.background = this.context.textures.sky;
-		// this.scene.background = "#000";
 
-		const near = 0.1;
-		const far = 100;
+		/* const near = 0.1;
+		const far = 125;
 		const color = "#ccc";
-		this.scene.fog = new THREE.Fog(color, near, far);
+		this.scene.fog = new THREE.Fog(color, near, far); */
 
 		this.canvas = document.getElementById("webgl");
 
-		this.renderer = new THREE.WebGLRenderer({ antialias: true });
+		this.renderer = new THREE.WebGLRenderer({
+			antialias: true,
+			powerPreference: "high-performance",
+		});
+
+		/* let pixelRatio = window.devicePixelRatio;
+		let AA = true;
+		if (pixelRatio > 1) {
+			AA = false;
+		} */
+
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
+		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
+
+		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		this.canvas.appendChild(this.renderer.domElement);
 
 		this.controls = new THREE.OrbitControls(
 			this.camera,
 			this.renderer.domElement
 		);
-
 		this.controls.enabled = false;
 
-		let ambLight = new THREE.AmbientLight("#fff", 0.75);
+		let ambLight = new THREE.AmbientLight("#ddd", 0.75);
 		this.scene.add(ambLight);
 
-		let moonLight = new THREE.DirectionalLight("#fff", 1.75);
-		moonLight.position.set(0, 2.5, 0);
-		this.scene.add(moonLight);
+		/* let hemiLight = new THREE.HemisphereLight(0xfff, 0xfff, 2);
+		this.scene.add(hemiLight); */
+
+		let sunLight = new THREE.DirectionalLight("#fff", 1);
+		sunLight.position.set(0, 1.5, 1);
+		this.scene.add(sunLight);
 	}
 
 	setupResize() {

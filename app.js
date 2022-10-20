@@ -1,5 +1,3 @@
-import { World } from "./libs/cannon-es.js";
-
 import { PhysicsManager } from "./modules/PhysicsManager/index.js";
 import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
 
@@ -32,10 +30,9 @@ class Game {
 				}
 			),
 		};
-		// console.log("THIS IS THE GAME");
 
 		this.globalSettings = {
-			renderCannonDebug: true,
+			renderCannonDebug: false,
 		};
 
 		this.init();
@@ -48,10 +45,11 @@ class Game {
 		this.gui = new dat.GUI();
 
 		this.time = new THREE.Clock();
-		this.time_physics = new THREE.Clock();
+		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
 
+		// adding stats UI
 		this.stats = new Stats();
-		this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+		this.stats.showPanel(0);
 		document.body.appendChild(this.stats.dom);
 
 		this._g = new G();
@@ -69,19 +67,6 @@ class Game {
 		this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
 
 		this.uiManager = new UIManager(this);
-
-		// this.addClassSettings();
-	}
-
-	initGameScene() {
-		this.audioEventBus = new EventBus();
-		this.gameWorld = new World_(this);
-		this.G.scene = this.gameWorld.scene;
-		this.audioManager = new AudioManager(this);
-	}
-
-	initPlayerInstance() {
-		this.playerInstance = new Player(this);
 	}
 
 	initGameState() {
@@ -110,20 +95,22 @@ class Game {
     }; */
 	}
 
+	initGameScene() {
+		this.audioEventBus = new EventBus();
+		this.gameWorld = new World_(this);
+		this.G.scene = this.gameWorld.scene;
+		this.audioManager = new AudioManager(this);
+	}
+
 	initLevels() {
 		this.levelZero = new LevelZero(this);
 		this.levelZero.activeLevel = true;
 
 		this.currentLevel = this.levelZero;
+	}
 
-		window.addEventListener("keypress", (e) => {
-			if (e.code === "KeyN") {
-				// console.log("NEW LEVEL");
-				this.currentLevel.end();
-			}
-		});
-
-		// this.currentLevel.start();
+	initPlayerInstance() {
+		this.playerInstance = new Player(this);
 	}
 
 	addClassSettings() {
@@ -137,34 +124,26 @@ class Game {
 	}
 
 	animate() {
-		// setTimeout(() => {
-		requestAnimationFrame(this.animate.bind(this));
-		// }, 1000 / 60);
-
-		if (!this.renderGraphics) return;
-
-		if (true) {
-			this.world.step(1 / 120, this.time_physics.getDelta());
-			// this.world.fixedStep();
-
-			if (this.globalSettings.renderCannonDebug) {
-				console.log("debugging physics");
-				// this.cannonDebugger.update();
-				this.cannonDebugger.color = new THREE.Color(0, 0, 0, 0);
-			}
-		}
-
 		this.stats.begin();
 
-		this.gameWorld.update();
-		this.currentLevel.update();
+		requestAnimationFrame(this.animate.bind(this));
+		if (!this.renderGraphics) return;
 
-		this.playerInstance.update();
-		if (this.playerInstance && this.sphereBody) this.playerInstance.update();
+		this.world.step(1 / 120, this.time_physics.getDelta());
+
+		if (this.globalSettings.renderCannonDebug) {
+			this.cannonDebugger.update();
+		}
+
+		requestAnimationFrame(this.gameWorld.update.bind(this.gameWorld));
+		this.currentLevel.update();
+		requestAnimationFrame(this.playerInstance.update.bind(this.playerInstance));
 
 		this.stats.end();
+
+		// console.table(this.gameWorld.renderer.info);
 	}
 }
 
 let gameInstance = new Game();
-gameInstance.animate();
+requestAnimationFrame(gameInstance.animate.bind(gameInstance));

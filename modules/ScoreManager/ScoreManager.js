@@ -7,7 +7,7 @@ class ScoreManager {
 		this.score = 0;
 
 		this.init();
-		this.update();
+		requestAnimationFrame(this.update.bind(this));
 	}
 
 	init() {

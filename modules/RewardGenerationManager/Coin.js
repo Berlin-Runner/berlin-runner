@@ -59,7 +59,7 @@ class Coin {
 		let coinCollider = new Body({
 			mass: this.settings.coinColliderMass,
 			material: this.physicsMaterial,
-			// type: BODY_TYPES.STATIC,
+			type: Body.STATIC,
 		});
 		coinCollider.addShape(boxShape);
 		coinCollider.position = new Vec3(

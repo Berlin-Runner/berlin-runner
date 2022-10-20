@@ -5,8 +5,6 @@ class City {
 		this.opts = opts;
 		this.name = this.opts.name;
 
-		// console.log(`${this.name} has woken up `);
-
 		this.awake();
 	}
 
@@ -15,19 +13,19 @@ class City {
 			tiles: this.opts.tiles,
 		});
 
-		// this.landscapeWorker = new Worker("../workers/landscapeWorker.js");
-
 		this.start();
 	}
 
 	start() {
-		// this.landscapeWorker.postMessage({});
-
-		// this.landscapeWorker.onmessage = () => {
-		this.landscapeManager.update();
-		this.landscapeManager.updateCityMeshPoistion();
-		this.landscapeManager.updatePlacements();
-		// };
+		requestAnimationFrame(
+			this.landscapeManager.update.bind(this.landscapeManager)
+		);
+		requestAnimationFrame(
+			this.landscapeManager.updateCityMeshPoistion.bind(this.landscapeManager)
+		);
+		requestAnimationFrame(
+			this.landscapeManager.updatePlacements.bind(this.landscapeManager)
+		);
 	}
 
 	dispose() {

@@ -17,14 +17,12 @@ class DistrictPickerComponent extends BaseUIComponent {
 	setUpComponentEventListners() {}
 
 	setupEventBusSubscriptions() {
-		// console.log(this.stateBus);
 		this.stateBus.subscribe("start_game", () => {
 			this.hideComponent();
 			this.hideStatic();
 		});
 
 		this.stateBus.subscribe("pick-district", () => {
-			console.log("showing the picker");
 			this.showComponent();
 			this.showStatic();
 		});

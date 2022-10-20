@@ -41,7 +41,7 @@ class Ramp extends Obstacle {
 
 			// this.attachCollider(res);
 			this.cannonifyMeshGeometry(res, "ramp", BODY_TYPES.KINEMATIC, 1);
-			this.update();
+			requestAnimationFrame(this.update.bind(this));
 		});
 	}
 
@@ -96,7 +96,6 @@ class Ramp extends Obstacle {
 	}
 
 	setupEventListners() {
-		console.log("hii");
 		const contactNormal = new Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
 		const upAxis = new Vec3(0, 1, 0);
 		const fwdAxis = new Vec3(0, 0, 1);
@@ -106,7 +105,6 @@ class Ramp extends Obstacle {
 			// contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
 			// We do not yet know which one is which! Let's check.
 			if (contact.bi.id === this.context.playerCollider.id) {
-				console.log("encountered a slant ramp");
 				// bi is the player body, flip the contact normal
 				return;
 			} else {

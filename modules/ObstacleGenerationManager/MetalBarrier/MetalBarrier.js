@@ -47,7 +47,7 @@ class MetalBarrier extends Obstacle {
 			// console.log(this.context);
 
 			this.attachCollider(res);
-			this.update();
+			requestAnimationFrame(this.update.bind(this));
 		});
 	}
 

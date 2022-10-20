@@ -1,17 +1,7 @@
 import { Obstacle } from "../Obstacle.js";
 import { UTIL } from "../../Util/UTIL.js";
 
-import {
-	Vec3,
-	Body,
-	Sphere,
-	Box,
-	Quaternion,
-	BODY_TYPES,
-} from "../../../libs/cannon-es.js";
-
-import { BaseAudioComponent } from "../../AudioManager/BaseAudioComponent.js";
-import CannonUtils from "../../Util/CannonUtils.js";
+import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 
 class Kermit extends Obstacle {
 	constructor(context, spawnPosition) {
@@ -39,14 +29,12 @@ class Kermit extends Obstacle {
 		let kermitMesh = this.kermitFull.model;
 		let kermitAnimations = this.kermitFull.animations;
 
-		console.log(kermitAnimations);
-
 		this.mixer = new THREE.AnimationMixer(kermitMesh);
 		let clips = kermitAnimations;
 
 		kermitMesh.position.set(0, 0, this.spawnPosition.z);
 		this.kermitMesh = kermitMesh;
-		console.log(this.kermitMesh);
+
 		this.scene.add(this.kermitMesh);
 
 		this.runClip = THREE.AnimationClip.findByName(clips, "Skeleton_Running");
@@ -59,7 +47,7 @@ class Kermit extends Obstacle {
 		if (this.runAction) this.runAction.play();
 
 		this.attachCollider(this.kermitMesh);
-		this.update();
+		requestAnimationFrame(this.update.bind(this));
 	}
 
 	async loadObstacle(url) {
@@ -99,7 +87,6 @@ class Kermit extends Obstacle {
 			// contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
 			// We do not yet know which one is which! Let's check.
 			if (contact.bi.id === this.context.playerCollider.id) {
-				console.log("encountered a Kermit");
 				// bi is the player body, flip the contact normal
 				return;
 			}
