@@ -1,19 +1,20 @@
-import { PhysicsManager } from "./modules/PhysicsManager/index.js";
-import CannonDebugger from "./modules/PhysicsManager/utils/CannonDebugRender.js";
+import { PhysicsManager } from "./modules/Core/PhysicsManager/index.js";
 
-import { Player } from "./modules/Player/Player.js";
+import CannonDebugger from "./modules/core/PhysicsManager/utils/CannonDebugRender.js";
+
+import { Player } from "./modules/GameComponents/Player/Player.js";
 
 import { G } from "./G.js";
 
 import { EventBus } from "./modules/Util/LightEventBus/EventBus.js";
-import { GameStateManager } from "./modules/GameStateManager/GameStateManager.js";
+import { GameStateManager } from "./modules/GameComponents/GameStateManager/GameStateManager.js";
 
-import { ScoreManager } from "./modules/ScoreManager/ScoreManager.js";
-import { HealthManager } from "./modules/HealthManager/HealthManager.js";
-import { World_ } from "./modules/World/World.js";
-import { AudioManager } from "./modules/AudioManager/AudioManager.js";
-import { LevelZero } from "./modules/Levels/LevelZero/LevelZero.js";
-import { UIManager } from "./modules/UIManager/UIManager.js";
+import { ScoreManager } from "./modules//GameComponents/ScoreManager/ScoreManager.js";
+import { HealthManager } from "./modules//GameComponents/HealthManager/HealthManager.js";
+import { World_ } from "./modules//GameComponents/World/World.js";
+import { AudioManager } from "./modules/Core/AudioManager/AudioManager.js";
+import { LevelZero } from "./modules/GameComponents/Levels/LevelZero/LevelZero.js";
+import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 
 import * as dat from "/libs/dat.gui.module.js";
 
@@ -43,6 +44,7 @@ class Game {
 
 		this.settingEventBus = new EventBus();
 		this.gui = new dat.GUI();
+		this.gui.close();
 
 		this.time = new THREE.Clock();
 		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
