@@ -133,9 +133,9 @@ class Game {
 
 		this.world.step(1 / 120, this.time_physics.getDelta());
 
-		if (this.globalSettings.renderCannonDebug) {
+		/* if (this.globalSettings.renderCannonDebug) {
 			this.cannonDebugger.update();
-		}
+		} */
 
 		requestAnimationFrame(this.gameWorld.update.bind(this.gameWorld));
 		this.currentLevel.update();
