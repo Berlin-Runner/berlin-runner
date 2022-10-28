@@ -1,6 +1,6 @@
 import { PhysicsManager } from "./modules/Core/PhysicsManager/index.js";
 
-import CannonDebugger from "./modules/core/PhysicsManager/utils/CannonDebugRender.js";
+import CannonDebugger from "./modules/Core/PhysicsManager/utils/CannonDebugRender.js";
 
 import { Player } from "./modules/GameComponents/Player/Player.js";
 
@@ -133,9 +133,9 @@ class Game {
 
 		this.world.step(1 / 120, this.time_physics.getDelta());
 
-		/* if (this.globalSettings.renderCannonDebug) {
+		if (this.globalSettings.renderCannonDebug) {
 			this.cannonDebugger.update();
-		} */
+		}
 
 		requestAnimationFrame(this.gameWorld.update.bind(this.gameWorld));
 		this.currentLevel.update();
