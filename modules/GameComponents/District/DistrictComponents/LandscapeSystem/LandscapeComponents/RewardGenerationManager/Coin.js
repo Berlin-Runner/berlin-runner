@@ -6,7 +6,7 @@ import {
 	Quaternion,
 	BODY_TYPES,
 } from "../../../../../../../libs/cannon-es.js";
-import { BaseAudioComponent } from "/modules/core/AudioManager/BaseAudioComponent.js";
+import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 
 class Coin {
 	constructor(context, spawnPosition) {

@@ -2,7 +2,7 @@ import { Obstacle } from "../Obstacle.js";
 
 import { Vec3, Body, Box } from "../../../../../../../../libs/cannon-es.js";
 
-import { BaseAudioComponent } from "/modules/core/AudioManager/BaseAudioComponent.js";
+import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 
 class MetalBarrier extends Obstacle {
 	constructor(context, spawnPosition) {
