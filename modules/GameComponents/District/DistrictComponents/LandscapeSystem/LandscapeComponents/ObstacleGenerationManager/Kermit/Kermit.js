@@ -17,7 +17,7 @@ class Kermit extends Obstacle {
 		};
 
 		this.modelUrl =
-			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Kermit/Model/skeleton.glb";
+			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Kermit/Model/car.glb";
 
 		this.loadKermit();
 	}
@@ -26,24 +26,25 @@ class Kermit extends Obstacle {
 		this.kermitFull = await this.loadObstacle(this.modelUrl);
 
 		let kermitMesh = this.kermitFull.model;
-		let kermitAnimations = this.kermitFull.animations;
+		// let kermitAnimations = this.kermitFull.animations;
 
-		this.mixer = new THREE.AnimationMixer(kermitMesh);
-		let clips = kermitAnimations;
+		// this.mixer = new THREE.AnimationMixer(kermitMesh);
+		// let clips = kermitAnimations;
 
-		kermitMesh.position.set(0, 0, this.spawnPosition.z);
+		// kermitMesh.position.set(0, 0, this.spawnPosition.z);
+		kermitMesh.scale.setScalar(0.75);
 		this.kermitMesh = kermitMesh;
 
 		this.scene.add(this.kermitMesh);
 
-		this.runClip = THREE.AnimationClip.findByName(clips, "Skeleton_Running");
+		// this.runClip = THREE.AnimationClip.findByName(clips, "Skeleton_Running");
 
-		if (this.mixer) {
-			this.runAction = this.mixer.clipAction(this.runClip);
-			this.runAction.timeScale = 1.75;
-		}
+		// if (this.mixer) {
+		// 	this.runAction = this.mixer.clipAction(this.runClip);
+		// 	this.runAction.timeScale = 1.75;
+		// }
 
-		if (this.runAction) this.runAction.play();
+		// if (this.runAction) this.runAction.play();
 
 		this.attachCollider(this.kermitMesh);
 		requestAnimationFrame(this.update.bind(this));
@@ -102,12 +103,13 @@ class Kermit extends Obstacle {
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
+		this.collider.position.z +=
+			(this.modelLength / 2) * this.delta.getDelta() * 2;
 		this.kermitMesh.position.z = this.collider.position.z;
 		this.collider.position.y = this.kermitMesh.position.y + 1;
 		this.collider.position.x = this.kermitMesh.position.x;
 
-		if (this.mixer) this.mixer.update(this.time.getDelta());
+		// if (this.mixer) this.mixer.update(this.time.getDelta());
 	}
 
 	clone() {
