@@ -7,6 +7,7 @@ import {
 	BODY_TYPES,
 } from "../../../../../../../libs/cannon-es.js";
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
+import { UTIL } from "../../../../../../Util/UTIL.js";
 
 class Coin {
 	constructor(context, spawnPosition) {
@@ -41,6 +42,19 @@ class Coin {
 		let coinGeo = new THREE.CylinderGeometry(0.125, 0.25, 0.1, 16);
 		let coinMaterial = THREE.extendMaterial(THREE.MeshStandardMaterial, {
 			class: THREE.CustomMaterial,
+			vertex: {
+				transformEnd: `
+				vec4 vWorld = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+
+				float curveAmount = 0.00125;
+
+				vWorld -= cameraPosition.y;
+				// vec3 vShift = vec3( pow2(vWorld.z) * - curveAmount * .675, pow2(vWorld.z) * - curveAmount, pow2(vWorld.z) * .00000000 );
+				vec3 vShift = vec3( 0.0, pow2(vWorld.x) * - curveAmount,  0.0 );
+
+				transformed += vShift;
+			  `,
+			},
 		});
 		coinMaterial.uniforms.diffuse.value = new THREE.Color("blue");
 		this.coinMesh = new THREE.Mesh(coinGeo, coinMaterial);

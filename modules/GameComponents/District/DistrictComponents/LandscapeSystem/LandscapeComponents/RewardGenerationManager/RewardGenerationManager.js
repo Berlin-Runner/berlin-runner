@@ -1,6 +1,7 @@
 import { Coin } from "./Coin.js";
 import { UTIL } from "../../../../../../Util/UTIL.js";
 import { Vec3 } from "../../../../../../../libs/cannon-es.js";
+import { Beer } from "./beer/Beer.js";
 class RewardGenerationManagement {
 	constructor(context) {
 		this.context = context;
@@ -23,10 +24,12 @@ class RewardGenerationManagement {
 		this.totalCoins = 20;
 		this.coins = [];
 
-		let coin = new Coin(this.context, this.spawnPosition);
+		// let coin = new Coin(this.context, this.spawnPosition);
+		let beer = new Beer(this.context, this.spawnPosition);
 
 		for (let index = 0; index < this.totalCoins; index++) {
-			this.coins.push(coin.clone());
+			// this.coins.push(coin.clone());
+			this.coins.push(beer.clone());
 		}
 	}
 
@@ -40,7 +43,7 @@ class RewardGenerationManagement {
 		let reward = this.coins[this.coinindex % this.totalCoins];
 		reward.updatePosition(this.placementPostion);
 		this.coinindex++;
-		reward = reward.coinMesh;
+		// reward = reward.coinMesh;
 	}
 
 	update() {}
