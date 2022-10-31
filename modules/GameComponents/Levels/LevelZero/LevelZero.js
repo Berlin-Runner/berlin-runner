@@ -85,6 +85,13 @@ class LevelZero extends Level {
 					res.clone(),
 					res.clone(),
 					res.clone(),
+
+					res.clone(),
+					res.clone(),
+					res.clone(),
+					res.clone(),
+					res.clone(),
+					res.clone(),
 				],
 			};
 
