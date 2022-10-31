@@ -22,7 +22,7 @@ class LandscapeGenerationManager {
 
 		this.updateSpeedFactor = 3.5; //use this to make things move faster
 
-		this.placementPosition = 0;
+		this.placementPosition = -800;
 
 		this.init();
 	}
@@ -46,7 +46,7 @@ class LandscapeGenerationManager {
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
-		this.city.position.z = cityCenter - this.modelLength;
+		this.city.position.z = cityCenter - this.modelLength * 5;
 
 		this.scene.add(this.city);
 
@@ -76,7 +76,7 @@ class LandscapeGenerationManager {
 			requestAnimationFrame(this.updatePlacements.bind(this));
 		}, this.updateSpeedFactor * 1000);
 
-		this.placementPosition -= this.modelLength * 2;
+		this.placementPosition = -300;
 
 		if (this.counter % 1 === 0) {
 			this.rewardManager.placeReward(this.placementPosition);

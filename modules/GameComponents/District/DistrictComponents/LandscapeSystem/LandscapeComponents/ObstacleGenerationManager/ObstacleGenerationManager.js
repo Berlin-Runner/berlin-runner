@@ -40,6 +40,7 @@ class ObstacleGenerationManager {
 	}
 
 	placeObstacles(zPos) {
+		zPos = zPos * 5;
 		let placementPosition = new THREE.Vector3(
 			this.obstaclePositionX[UTIL.randomIntFromInterval(0, 2)],
 			0,
