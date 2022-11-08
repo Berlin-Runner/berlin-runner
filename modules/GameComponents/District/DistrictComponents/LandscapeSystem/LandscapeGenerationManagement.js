@@ -9,6 +9,8 @@ class LandscapeGenerationManager {
 		this.scene = this.context.gameWorld.scene;
 		this.model = null;
 
+		this.gameState = this.context.gameStateManager;
+
 		this.delta = new THREE.Clock();
 
 		this.counter = 0;
@@ -58,45 +60,51 @@ class LandscapeGenerationManager {
 	}
 
 	update() {
+		if (this.gameState.currentState == "in_play") {
+			let currentMesh =
+				this.city.children[this.counter % this.landscapesArray.length];
+			this.counter++;
+
+			currentMesh.position.z = this.z;
+
+			this.z -= this.modelLength;
+		}
+
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
 		}, this.updateSpeedFactor * 1000);
-
-		let currentMesh =
-			this.city.children[this.counter % this.landscapesArray.length];
-		this.counter++;
-
-		currentMesh.position.z = this.z;
-
-		this.z -= this.modelLength;
 	}
 
 	updatePlacements() {
+		if (this.gameState.currentState == "in_play") {
+			this.placementPosition = -300;
+
+			if (this.counter % 1 === 0) {
+				this.rewardManager.placeReward(this.placementPosition);
+			}
+
+			if (this.counter % 2 === 0) {
+				this.obstacleManager.placeObstacles(this.placementPosition);
+			}
+
+			if (this.counter % 3 == 0) {
+				this.firstAidGenerationManager.placeKits(this.placementPosition);
+			}
+		}
 		setTimeout(() => {
 			requestAnimationFrame(this.updatePlacements.bind(this));
 		}, this.updateSpeedFactor * 1000);
-
-		this.placementPosition = -300;
-
-		if (this.counter % 1 === 0) {
-			this.rewardManager.placeReward(this.placementPosition);
-		}
-
-		if (this.counter % 2 === 0) {
-			this.obstacleManager.placeObstacles(this.placementPosition);
-		}
-
-		if (this.counter % 3 == 0) {
-			this.firstAidGenerationManager.placeKits(this.placementPosition);
-		}
 	}
 
 	updateCityMeshPoistion() {
 		requestAnimationFrame(this.updateCityMeshPoistion.bind(this));
-
-		if (this.city && this.settings.moveCity)
-			this.city.position.z +=
-				this.modelLength * (1 / this.updateSpeedFactor) * this.delta.getDelta();
+		if (this.gameState.currentState == "in_play") {
+			if (this.city && this.settings.moveCity)
+				this.city.position.z +=
+					this.modelLength *
+					(1 / this.updateSpeedFactor) *
+					this.delta.getDelta();
+		}
 	}
 
 	dispose() {
