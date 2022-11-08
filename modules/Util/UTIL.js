@@ -6,6 +6,7 @@ const foldableShader = `
 
   vWorld -= cameraPosition.y;
 //   vec3 vShift = vec3( pow2(vWorld.z) * - curveAmount * .675, pow2(vWorld.z) * - curveAmount, pow2(vWorld.z) * .00000000 );
+//   vec3 vShift = vec3(pow2(vWorld.z) * - curveAmount , 0. , 0.);
   vec3 vShift = vec3(0. , 0. , 0.);
 
   transformed += vShift;
