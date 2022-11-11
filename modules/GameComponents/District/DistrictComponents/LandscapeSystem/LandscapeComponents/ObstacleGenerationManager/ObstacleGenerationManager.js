@@ -1,5 +1,5 @@
 import { UTIL } from "../../../../../../Util/UTIL.js";
-import { Kermit } from "./Kermit/Kermit.js";
+import { Car } from "./Car/Car.js";
 import { MetalBarrier } from "./MetalBarrier/MetalBarrier.js";
 import { Ramp } from "./Ramp/Ramp.js";
 
@@ -19,13 +19,11 @@ class ObstacleGenerationManager {
 		this.totalObstacles = 20;
 		this.obstacles = [];
 		this.ramps = [];
-		this.kermits = [];
-
-		// this.metalBarrier = new MetalBarrier(this.context);
+		this.cars = [];
 
 		let initialSpawnPosition = new THREE.Vector3(0, 0, -2000);
 		let ramp = new Ramp(this.context, initialSpawnPosition);
-		let kermit = new Kermit(this.context, initialSpawnPosition);
+		let car = new Car(this.context, initialSpawnPosition);
 
 		for (let index = 0; index < this.totalObstacles; index++) {
 			this.obstacles[index] = new MetalBarrier(
@@ -35,7 +33,7 @@ class ObstacleGenerationManager {
 
 			this.ramps[index] = ramp.clone();
 
-			this.kermits.push(kermit.clone());
+			this.cars.push(car.clone());
 		}
 	}
 
@@ -57,8 +55,8 @@ class ObstacleGenerationManager {
 		slantRamp.updatePosition(placementPosition);
 
 		placementPosition.z += 38;
-		let kermitBoy = this.kermits[this.obstacleIndex % this.totalObstacles];
-		kermitBoy.updatePosition(placementPosition);
+		let currentCar = this.cars[this.obstacleIndex % this.totalObstacles];
+		currentCar.updatePosition(placementPosition);
 
 		this.obstacleIndex++;
 	}

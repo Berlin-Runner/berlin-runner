@@ -9,8 +9,8 @@ class Camer3rdPerson {
 
 	update() {
 		if (!this.camera || !this.player) return;
-		this.camera.position.y = this.player.position.y + 1.75;
-		this.camera.position.z = this.player.position.z + 3.5;
+		this.camera.position.y = this.player.position.y + 4.75;
+		this.camera.position.z = this.player.position.z + 8.5;
 	}
 }
 

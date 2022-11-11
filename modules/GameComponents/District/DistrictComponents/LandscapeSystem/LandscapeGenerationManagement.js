@@ -14,7 +14,7 @@ class LandscapeGenerationManager {
 		this.delta = new THREE.Clock();
 
 		this.counter = 0;
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
 
 		this.settings = {
 			renderWireframe: false,
@@ -24,7 +24,7 @@ class LandscapeGenerationManager {
 
 		this.updateSpeedFactor = 3.5; //use this to make things move faster
 
-		this.placementPosition = -800;
+		this.placementPosition = -80;
 
 		this.init();
 	}
@@ -48,7 +48,7 @@ class LandscapeGenerationManager {
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
-		this.city.position.z = cityCenter - this.modelLength * 5;
+		this.city.position.z = cityCenter - this.modelLength;
 
 		this.scene.add(this.city);
 
@@ -77,7 +77,7 @@ class LandscapeGenerationManager {
 
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
-			this.placementPosition = -300;
+			// this.placementPosition = 0;
 
 			if (this.counter % 1 === 0) {
 				this.rewardManager.placeReward(this.placementPosition);
@@ -87,7 +87,7 @@ class LandscapeGenerationManager {
 				this.obstacleManager.placeObstacles(this.placementPosition);
 			}
 
-			if (this.counter % 3 == 0) {
+			if (this.counter % 5 == 0) {
 				this.firstAidGenerationManager.placeKits(this.placementPosition);
 			}
 		}

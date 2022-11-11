@@ -14,7 +14,7 @@ import CannonUtils from "../../../../../../../Core/PhysicsManager/utils/cannonUt
 class Ramp extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
 		this.spawnPosition = spawnPosition;
 
 		this.delta = new THREE.Clock();

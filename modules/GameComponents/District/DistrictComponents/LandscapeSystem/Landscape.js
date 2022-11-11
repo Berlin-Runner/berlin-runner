@@ -24,6 +24,7 @@ class Landscape {
 		// model.material.uniforms.map.value = lanscapeMap;
 
 		// model.material.map = lanscapeMap;
+		console.log(model);
 
 		return model;
 	}

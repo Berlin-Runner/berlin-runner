@@ -12,9 +12,9 @@ class World_ {
 			60,
 			window.innerWidth / window.innerHeight,
 			0.1,
-			200.0
+			500.0
 		);
-		this.camera.position.set(0, 1.5, 4);
+		// this.camera.position.set(0, 4.5, 7);
 
 		this.scene = new THREE.Scene();
 		this.scene.background = this.context.textures.sky;

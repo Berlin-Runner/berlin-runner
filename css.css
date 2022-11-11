@@ -349,3 +349,13 @@ canvas {
 
 	cursor: crosshair;
 }
+
+.district .district-enter-button .coming-soon-button {
+	font-size: 36px;
+	background-color: transparent;
+	color: grey;
+	border: 1px solid gray;
+	width: 75%;
+
+	cursor: not-allowed;
+}

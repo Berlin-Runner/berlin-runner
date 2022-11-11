@@ -41,7 +41,7 @@ class LevelZero extends Level {
 	}
 
 	async awake() {
-		let countDownTimer = 4;
+		let countDownTimer = 2;
 
 		this.levelIntroUI.style.display = "flex";
 		this.levelObjective.innerText = this.levelInfo.levelScoreObjcetive;
@@ -79,13 +79,6 @@ class LevelZero extends Level {
 			this.cityopts = {
 				name: "berlin",
 				tiles: [
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-
 					res.clone(),
 					res.clone(),
 					res.clone(),

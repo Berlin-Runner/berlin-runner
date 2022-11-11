@@ -22,11 +22,11 @@ class Player {
 
 		this.settings = {
 			cameraFollow: true,
-			playerScale: 0.275,
+			playerScale: 0.225,
 
 			colliderDimensions: new Vec3(0.2, 0.6, 0.2),
 			playerColliderMass: 167,
-			playerInitialPosition: new Vec3(0, 0, 0),
+			playerInitialPosition: new Vec3(0, 0.6, 0),
 			playerLinearDampeneingFactor: 0,
 		};
 
@@ -51,7 +51,7 @@ class Player {
 	initCharachterCollider() {
 		const halfExtents = this.settings.colliderDimensions;
 		// const boxShape = new Box(halfExtents);
-		const boxShape = new Sphere(0.6);
+		const boxShape = new Sphere(0.5);
 		this.context.playerCollider = new Body({
 			mass: this.settings.playerColliderMass,
 			material: this.physicsMaterial,

@@ -153,7 +153,7 @@ class MovementFSM {
 			this.context.playerInstance.player.position.x;
 
 		this.context.playerInstance.player.position.y =
-			this.context.playerCollider.position.y - 0.6;
+			this.context.playerCollider.position.y - 0.3;
 
 		this.context.playerCollider.position.z =
 			this.context.playerInstance.player.position.z;

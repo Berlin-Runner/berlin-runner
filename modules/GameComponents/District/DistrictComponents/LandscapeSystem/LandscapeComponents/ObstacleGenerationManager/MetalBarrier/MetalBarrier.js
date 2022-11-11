@@ -7,7 +7,7 @@ import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponen
 class MetalBarrier extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
 		this.spawnPosition = spawnPosition;
 
 		this.delta = new THREE.Clock();

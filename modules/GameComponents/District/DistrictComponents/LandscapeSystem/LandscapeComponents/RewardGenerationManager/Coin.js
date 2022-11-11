@@ -18,7 +18,7 @@ class Coin {
 
 		this.spawnPosition = spawnPosition;
 
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
 
 		this.delta = new THREE.Clock();
 
