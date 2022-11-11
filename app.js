@@ -219,5 +219,5 @@ class BerlinRunnerTextLogo {
 	}
 }
 
-let berlinRunnerLogo = new BerlinRunnerTextLogo();
-requestAnimationFrame(berlinRunnerLogo.animate.bind(berlinRunnerLogo));
+// let berlinRunnerLogo = new BerlinRunnerTextLogo();
+// requestAnimationFrame(berlinRunnerLogo.animate.bind(berlinRunnerLogo));
