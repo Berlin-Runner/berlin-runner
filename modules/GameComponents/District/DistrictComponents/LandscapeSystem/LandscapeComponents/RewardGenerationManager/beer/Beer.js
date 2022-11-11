@@ -6,7 +6,7 @@ import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponen
 class Beer extends Reward {
 	constructor(context, spawnPosition) {
 		super(context);
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
 		this.spawnPosition = spawnPosition;
 
 		this.delta = new THREE.Clock();
@@ -41,7 +41,7 @@ class Beer extends Reward {
 	}
 
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(0.7, 0.35, 0.002);
+		const halfExtents = new Vec3(0.3, 0.3, 0.002);
 		const boxShape = new Box(halfExtents);
 		let obstacleCollider = new Body({
 			mass: this.settings.obstacleColliderMass,
@@ -49,7 +49,7 @@ class Beer extends Reward {
 		});
 		obstacleCollider.addShape(boxShape);
 		obstacleCollider.position.z = parentMesh.position.z;
-		obstacleCollider.position.y = parentMesh.position.y;
+		obstacleCollider.position.y = parentMesh.position.y + 0.1;
 
 		this.context.world.addBody(obstacleCollider);
 		this.collider = obstacleCollider;
@@ -100,7 +100,7 @@ class Beer extends Reward {
 
 		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
 		this.beerMesh.position.z = this.collider.position.z;
-		this.collider.position.y = this.beerMesh.position.y;
+		// this.collider.position.y = this.beerMesh.position.y;
 		this.collider.position.x = this.beerMesh.position.x;
 
 		this.beerMesh.rotation.y = this.delta.getDelta();

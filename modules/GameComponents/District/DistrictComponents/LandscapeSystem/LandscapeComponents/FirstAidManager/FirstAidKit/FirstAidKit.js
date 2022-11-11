@@ -10,7 +10,8 @@ class FirstAidKit extends FirstAid {
 
 		this.delta = new THREE.Clock();
 
-		this.modelLength = 37;
+		this.modelLength = this.context.G.TILE_LENGTH;
+
 		this.spawnPosition = spawnPosition;
 
 		this.settings = {
