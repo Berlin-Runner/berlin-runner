@@ -22,6 +22,7 @@ class Camer3rdPerson {
 			},
 		];
 
+		this.currentIndex = 1;
 		this.currentCameraOffsetProfile = this.cameraOffsetProfiles[1];
 
 		this.addClassSettings();
@@ -38,14 +39,16 @@ class Camer3rdPerson {
 	addClassSettings() {
 		let classSettings = this.context.gui.addFolder("CAMERA OFFSET PROFILE");
 		classSettings
-			.add(this, "currentCameraOffsetProfile", {
+			.add(this, "currentIndex", {
 				BIRDS_EYE_VIEW: 0,
 				NORMAL_VIEW: 1,
 			})
 			.onChange((value) => {
 				console.log(value);
+				this.currentIndex = value;
 				this.currentCameraOffsetProfile = this.cameraOffsetProfiles[value];
-			});
+			})
+			.name("CURRENT.PROFILE");
 	}
 }
 
