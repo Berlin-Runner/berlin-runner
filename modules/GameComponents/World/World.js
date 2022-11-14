@@ -41,6 +41,7 @@ class World_ {
 		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
 
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
+		this.renderer.textureEncoding = THREE.sRGBEncoding;
 		this.canvas.appendChild(this.renderer.domElement);
 
 		this.controls = new THREE.OrbitControls(

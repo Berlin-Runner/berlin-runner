@@ -2,6 +2,7 @@ import { Level } from "../Level.js";
 import { LandscapeOne } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeOne/LandscapeOne.js";
 import { LandscapeTwo } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTwo/LandscapeTwo.js";
 import { LandscapeThree } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeThree/LandscapeThree.js";
+import { LandscapeFour } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeFour/LandscapeFour.js";
 import { District } from "../../District/District.js";
 
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
@@ -79,17 +80,23 @@ class LevelZero extends Level {
 		let tileOne = await new LandscapeOne();
 		let tileTwo = await new LandscapeTwo();
 		let tileThree = await new LandscapeThree();
+		let tileFour = await new LandscapeFour();
 		this.cityopts = {
 			name: "berlin",
 			tiles: [
-				tileOne.clone(),
-				tileTwo.clone(),
-				tileThree.clone(),
-				tileTwo.clone(),
-				tileOne.clone(),
-				tileThree.clone(),
-				tileOne.clone(),
-				tileTwo.clone(),
+				// tileOne.clone(),
+				// tileTwo.clone(),
+				// tileThree.clone(),
+				// tileTwo.clone(),
+
+				tileFour.clone(),
+				tileFour.clone(),
+				tileFour.clone(),
+				tileFour.clone(),
+				// tileOne.clone(),
+				// tileThree.clone(),
+				// tileOne.clone(),
+				// tileTwo.clone(),
 				// tileOne.clone(),
 				// tileThree.clone(),
 				// tileTwo.clone(),

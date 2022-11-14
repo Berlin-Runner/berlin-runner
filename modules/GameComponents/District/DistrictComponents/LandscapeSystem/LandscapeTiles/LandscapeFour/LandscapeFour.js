@@ -1,9 +1,9 @@
 import { Landscape } from "../../Landscape.js";
-class LandscapeTwo extends Landscape {
+class LandscapeFour extends Landscape {
 	constructor() {
 		super();
 		this.landscapeModelFileUrl =
-			"modules/GameComponents/District/DistrictComponents/LandscapeSystem//LandscapeTiles/LandscapeTwo/Model/tiles.2.2.glb";
+			"modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeFour/Model/tiles.4.glb";
 		return this.initLandscape(this.landscapeModelFileUrl);
 	}
 
@@ -15,4 +15,4 @@ class LandscapeTwo extends Landscape {
 	}
 }
 
-export { LandscapeTwo };
+export { LandscapeFour };
