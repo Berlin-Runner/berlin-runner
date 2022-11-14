@@ -3,7 +3,7 @@ class LandscapeThree extends Landscape {
 	constructor() {
 		super();
 		this.landscapeModelFileUrl =
-			"modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeThree/Model/tiles.3.glb";
+			"modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeThree/Model/tiles.3.2.glb";
 		return this.initLandscape(this.landscapeModelFileUrl);
 	}
 
