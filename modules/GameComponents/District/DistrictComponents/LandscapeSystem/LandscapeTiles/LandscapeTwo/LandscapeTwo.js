@@ -3,7 +3,7 @@ class LandscapeTwo extends Landscape {
 	constructor() {
 		super();
 		this.landscapeModelFileUrl =
-			"modules/GameComponents/District/DistrictComponents/LandscapeSystem//LandscapeTiles/LandscapeTwo/Model/landscape_2.glb";
+			"modules/GameComponents/District/DistrictComponents/LandscapeSystem//LandscapeTiles/LandscapeTwo/Model/tiles.2.glb";
 		return this.initLandscape(this.landscapeModelFileUrl);
 	}
 

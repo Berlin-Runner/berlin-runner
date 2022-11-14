@@ -1,5 +1,7 @@
 import { Level } from "../Level.js";
 import { LandscapeOne } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeOne/LandscapeOne.js";
+import { LandscapeTwo } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTwo/LandscapeTwo.js";
+import { LandscapeThree } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeThree/LandscapeThree.js";
 import { District } from "../../District/District.js";
 
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
@@ -74,22 +76,47 @@ class LevelZero extends Level {
 
 	async init() {
 		// console.log(`${this.levelInfo.levelName} is waking up`);
-		let tileOne = new LandscapeOne();
-		tileOne.then((res) => {
-			this.cityopts = {
-				name: "berlin",
-				tiles: [
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-					res.clone(),
-				],
-			};
+		let tileOne = await new LandscapeOne();
+		let tileTwo = await new LandscapeTwo();
+		let tileThree = await new LandscapeThree();
+		this.cityopts = {
+			name: "berlin",
+			tiles: [
+				tileOne.clone(),
+				tileTwo.clone(),
+				tileThree.clone(),
+				tileTwo.clone(),
+				tileOne.clone(),
+				tileThree.clone(),
+				tileOne.clone(),
+				tileTwo.clone(),
+				// tileOne.clone(),
+				// tileThree.clone(),
+				// tileTwo.clone(),
+				// tileThree.clone(),
 
-			this.city = new District(this.context, this.cityopts);
-		});
+				// tileOne.clone(),
+				// tileOne.clone(),
+			],
+		};
+
+		this.city = new District(this.context, this.cityopts);
+
+		// tileOne.then((res) => {
+		// 	this.cityopts = {
+		// 		name: "berlin",
+		// 		tiles: [
+		// 			res.clone(),
+		// 			res.clone(),
+		// 			res.clone(),
+		// 			res.clone(),
+		// 			res.clone(),
+		// 			res.clone(),
+		// 		],
+		// 	};
+
+		// 	this.city = new District(this.context, this.cityopts);
+		// });
 	}
 
 	async start() {

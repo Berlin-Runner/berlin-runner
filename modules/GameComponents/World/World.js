@@ -9,10 +9,10 @@ class World_ {
 
 	init() {
 		this.camera = new THREE.PerspectiveCamera(
-			60,
+			80,
 			window.innerWidth / window.innerHeight,
 			0.1,
-			500.0
+			1000.0
 		);
 		// this.camera.position.set(0, 4.5, 7);
 

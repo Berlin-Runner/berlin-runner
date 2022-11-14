@@ -3,7 +3,7 @@ class LandscapeOne extends Landscape {
 	constructor() {
 		super();
 		this.landscapeModelFileUrl =
-			"modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeOne/Model/tile1_optimized.glb";
+			"modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeOne/Model/tiles.1.glb";
 		return this.initLandscape(this.landscapeModelFileUrl);
 	}
 
