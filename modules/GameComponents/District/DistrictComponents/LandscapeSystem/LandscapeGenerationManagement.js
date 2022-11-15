@@ -78,18 +78,15 @@ class LandscapeGenerationManager {
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
 			// this.placementPosition = 0;
-
-			if (this.counter % 1 === 0) {
-				this.rewardManager.placeReward(this.placementPosition);
-			}
-
-			if (this.counter % 2 === 0) {
-				this.obstacleManager.placeObstacles(this.placementPosition);
-			}
-
-			if (this.counter % 5 == 0) {
-				this.firstAidGenerationManager.placeKits(this.placementPosition);
-			}
+			// if (this.counter % 1 === 0) {
+			// 	this.rewardManager.placeReward(this.placementPosition);
+			// }
+			// if (this.counter % 2 === 0) {
+			// 	this.obstacleManager.placeObstacles(this.placementPosition);
+			// }
+			// if (this.counter % 5 == 0) {
+			// 	this.firstAidGenerationManager.placeKits(this.placementPosition);
+			// }
 		}
 		setTimeout(() => {
 			requestAnimationFrame(this.updatePlacements.bind(this));
