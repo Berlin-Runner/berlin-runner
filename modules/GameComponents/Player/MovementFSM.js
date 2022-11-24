@@ -167,12 +167,12 @@ class MovementFSM {
 					}
 				);
 				this.currentPlayerLane = this.lanes.left;
-				// this.moveObjectToPosition(
-				// 	this.context.gameWorld.camera,
-				// 	-2.75,
-				// 	this.cameraTweenDuration
-				// 	// this.pullBackToCenter()
-				// );
+				this.moveObjectToPosition(
+					this.context.gameWorld.camera,
+					-2.75,
+					this.cameraTweenDuration
+					// this.pullBackToCenter()
+				);
 
 				break;
 		}
@@ -196,12 +196,12 @@ class MovementFSM {
 						this.currentPlayerLane = this.lanes.center;
 					}
 				);
-				// this.moveObjectToPosition(
-				// 	this.context.gameWorld.camera,
-				// 	2.75,
-				// 	this.cameraTweenDuration
-				// 	// this.pullBackToCenter()
-				// );
+				this.moveObjectToPosition(
+					this.context.gameWorld.camera,
+					2.75,
+					this.cameraTweenDuration
+					// this.pullBackToCenter()
+				);
 				this.currentPlayerLane = this.lanes.right;
 				break;
 		}
