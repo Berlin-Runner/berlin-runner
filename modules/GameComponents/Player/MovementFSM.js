@@ -59,6 +59,10 @@ class MovementFSM {
 			this.moveRight();
 		});
 
+		hammertime.on("swipedown", (e) => {
+			this.context.zenBenActions[5].play();
+		});
+
 		hammertime.on("swipeup", (e) => {
 			this.jump();
 		});

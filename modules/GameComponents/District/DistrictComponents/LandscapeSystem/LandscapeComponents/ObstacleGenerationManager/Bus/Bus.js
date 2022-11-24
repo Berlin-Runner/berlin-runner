@@ -90,7 +90,7 @@ class Bus extends Obstacle {
 	}
 
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(1.75, 0.75, 6);
+		const halfExtents = new Vec3(1.75, 0.75, 1);
 		const boxShape = new Box(halfExtents);
 		let carCollider = new Body({
 			// mass: this.settings.carColliderMass,
