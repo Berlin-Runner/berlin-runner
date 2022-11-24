@@ -131,8 +131,7 @@ class Bus extends Obstacle {
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		this.collider.position.z +=
-			(this.modelLength / 2) * this.delta.getDelta() * 1.75;
+		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
 		this.carMesh.position.z = this.collider.position.z;
 		// this.collider.position.y = this.carMesh.position.y + 1;
 		this.collider.position.x = this.carMesh.position.x;
