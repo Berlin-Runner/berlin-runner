@@ -165,8 +165,8 @@ class MovementFSM {
 					-2.5,
 					this.tweenDuration,
 					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 0.5);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.5);
+						this.moveObjectToPosition(this.context.playerCollider, 0, 1);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 1);
 						this.currentPlayerLane = this.lanes.center;
 					}
 				);
@@ -195,8 +195,8 @@ class MovementFSM {
 					2.5,
 					this.tweenDuration,
 					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 0.5);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.5);
+						this.moveObjectToPosition(this.context.playerCollider, 0, 1);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 1);
 						this.currentPlayerLane = this.lanes.center;
 					}
 				);
