@@ -1,6 +1,4 @@
-import { RewardGenerationManagement } from "./LandscapeComponents/RewardGenerationManager/RewardGenerationManager.js";
 import { ObstacleGenerationManager } from "./LandscapeComponents/ObstacleGenerationManager/ObstacleGenerationManager.js";
-import { FirstAidGenerationManager } from "./LandscapeComponents/FirstAidManager/FirstAidGenerationManager.js";
 class LandscapeGenerationManager {
 	constructor(context, opts = null) {
 		this.context = context;
@@ -22,7 +20,7 @@ class LandscapeGenerationManager {
 			recycleCityTiles: true,
 		};
 
-		this.updateSpeedFactor = 3.5; //use this to make things move faster
+		this.updateSpeedFactor = 7.5; //use this to make things move faster
 
 		this.placementPosition = -80;
 
@@ -52,11 +50,7 @@ class LandscapeGenerationManager {
 
 		this.scene.add(this.city);
 
-		this.rewardManager = new RewardGenerationManagement(this.context);
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
-		this.firstAidGenerationManager = new FirstAidGenerationManager(
-			this.context
-		);
 	}
 
 	update() {
@@ -77,16 +71,9 @@ class LandscapeGenerationManager {
 
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
-			// this.placementPosition = 0;
-			// if (this.counter % 1 === 0) {
-			// 	this.rewardManager.placeReward(this.placementPosition);
-			// }
-			// if (this.counter % 2 === 0) {
-			// 	this.obstacleManager.placeObstacles(this.placementPosition);
-			// }
-			// if (this.counter % 5 == 0) {
-			// 	this.firstAidGenerationManager.placeKits(this.placementPosition);
-			// }
+			if (this.counter % 2 === 0) {
+				this.obstacleManager.placeObstacles(this.placementPosition);
+			}
 		}
 		setTimeout(() => {
 			requestAnimationFrame(this.updatePlacements.bind(this));

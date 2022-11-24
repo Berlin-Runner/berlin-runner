@@ -47,6 +47,17 @@ canvas {
 	font-family: "VT323", monospace;
 }
 
+.game-title-3d {
+	/* border: white 2px solid; */
+	width: 400px;
+	height: 200px;
+	background: url("/assets/gifs/berlin-runner-close-up.gif");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+}
+
 #mute {
 	font-size: 32px;
 	color: greenyellow;
@@ -175,7 +186,7 @@ canvas {
 	position: fixed;
 	top: 0;
 	left: 0;
-	background-color: rgba(105, 105, 105, 0.075);
+	background-color: rgba(75, 75, 75, 0.7);
 	z-index: 101;
 	display: flex;
 	justify-content: center;
@@ -202,7 +213,7 @@ canvas {
 	outline: none;
 	border: 3px solid bisque;
 	background-color: transparent;
-	text-shadow: -4px 4px black;
+	text-shadow: -2px 2px white;
 	/* border-radius: 5px; */
 	cursor: crosshair;
 }
@@ -227,6 +238,7 @@ canvas {
 	font-size: 50px;
 	font-family: "VT323", monospace;
 	border-bottom: 6px aqua solid;
+	border-top: 6px aqua solid;
 	margin: 5px;
 	text-shadow: -2px 2px white;
 }

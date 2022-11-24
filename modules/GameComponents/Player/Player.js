@@ -1,4 +1,10 @@
-import { Vec3, Body, Sphere } from "../../../libs/cannon-es.js";
+import {
+	Vec3,
+	Body,
+	Sphere,
+	Cylinder,
+	BODY_TYPES,
+} from "../../../libs/cannon-es.js";
 import { MovementFSM } from "./MovementFSM.js";
 import { Camer3rdPerson } from "./Camera3rdPerson.js";
 
@@ -22,11 +28,12 @@ class Player {
 
 		this.settings = {
 			cameraFollow: true,
-			playerScale: 0.3,
+			// playerScale: 0.8,
+			playerScale: 0.8,
 
 			colliderDimensions: new Vec3(0.2, 0.6, 0.2),
-			playerColliderMass: 167,
-			playerInitialPosition: new Vec3(0, 0.6, 0),
+			playerColliderMass: 100,
+			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
 		};
 
@@ -49,14 +56,35 @@ class Player {
 	}
 
 	initCharachterCollider() {
+		// create a capsule
+
+		const radiusTop = 0.25;
+		const radiusBottom = 0.25;
+		const height = 2;
+		const numSegments = 12;
+		const cylinderShape = new Cylinder(
+			radiusTop,
+			radiusBottom,
+			height,
+			numSegments
+		);
+		// const cylinderBody = new CANNON.Body({ mass: 1, shape: cylinderShape });
+		// world.addBody(cylinderBody);
+
 		const halfExtents = this.settings.colliderDimensions;
 		// const boxShape = new Box(halfExtents);
 		const boxShape = new Sphere(0.5);
 		this.context.playerCollider = new Body({
 			mass: this.settings.playerColliderMass,
+			// mass: 0,
 			material: this.physicsMaterial,
+			// type: BODY_TYPES.DYNAMIC,
 		});
-		this.context.playerCollider.addShape(boxShape);
+		this.context.playerCollider.quaternion.setFromAxisAngle(
+			new Vec3(0, 1, 0),
+			90
+		);
+		this.context.playerCollider.addShape(cylinderShape);
 		this.context.playerCollider.position = threeToCannonVec3(
 			this.player.position
 		);
@@ -101,7 +129,7 @@ class Player {
 
 	async loadPlayerModel() {
 		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/coach.glb"
+			"/assets/models/zen-ben.glb"
 		);
 
 		return { model, animations };
@@ -120,18 +148,35 @@ class Player {
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(this.settings.playerScale);
+		this.player.position.copy(this.settings.playerInitialPosition);
 
-		this.runClip = THREE.AnimationClip.findByName(clips, "RUN");
-		this.haltClip = THREE.AnimationClip.findByName(clips, "SALSA");
-		this.deadClip = THREE.AnimationClip.findByName(clips, "SALSA");
+		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
+		this.fallClip = THREE.AnimationClip.findByName(clips, "Fall");
+		this.deadClip = THREE.AnimationClip.findByName(clips, "Dying");
+		this.idleClip = THREE.AnimationClip.findByName(clips, "Idle");
+		this.jumpClip = THREE.AnimationClip.findByName(clips, "Jump");
+		this.slideClip = THREE.AnimationClip.findByName(clips, "Sliding");
 
 		if (this.mixer) {
 			this.runAction = this.mixer.clipAction(this.runClip);
-			this.stopAction = this.mixer.clipAction(this.haltClip);
+			this.fallAction = this.mixer.clipAction(this.fallClip);
 			this.deadAction = this.mixer.clipAction(this.deadClip);
+			this.ideleAction = this.mixer.clipAction(this.idleClip);
+			this.jumpAction = this.mixer.clipAction(this.jumpClip);
+			this.jumpAction.setLoop(THREE.LoopOnce, 1);
+			this.slideAction = this.mixer.clipAction(this.slideClip);
+			this.slideAction.setLoop(THREE.LoopOnce, 1);
 		}
 
-		this.deadAction.setLoop(THREE.LoopOnce);
+		this.context.zenBenActions = [
+			this.runAction,
+			this.fallAction,
+			this.deadAction,
+			this.ideleAction,
+			this.jumpAction,
+			this.slideAction,
+		];
+
 		this.runAction.play();
 
 		this.scene.add(this.player);

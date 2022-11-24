@@ -6,6 +6,8 @@
 	Quaternion,
 } from "../../../libs/cannon-es.js";
  */
+import { Quaternion } from "../../../libs/cannon-es.js";
+// import { Quaternion÷ } from "../../../libs/cannon-es";
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 class MovementFSM {
 	constructor(context, player) {
@@ -63,18 +65,44 @@ class MovementFSM {
 	}
 
 	listenForKeyboardInputs() {
-		window.addEventListener("keypress", (e) => {
+		window.addEventListener("keydown", (e) => {
 			switch (e.code) {
+				case "KeyS":
+					this.context.zenBenActions[5].play();
+					break;
 				case "KeyA":
 					this.moveLeft();
+
 					break;
 
 				case "KeyD":
 					this.moveRight();
+
 					break;
 
 				case "Space":
 					this.jump();
+					break;
+
+				default:
+					break;
+			}
+		});
+
+		window.addEventListener("keyup", (e) => {
+			switch (e.code) {
+				case "KeyA":
+					this.moveLeft();
+
+					break;
+
+				case "KeyD":
+					this.moveRight();
+
+					break;
+
+				case "Space":
+					// this.context.zenBenActions[4].stop();
 					break;
 
 				default:
@@ -86,21 +114,24 @@ class MovementFSM {
 	jump() {
 		if (this.canJump) {
 			this.jumpAudio.play();
+			this.context.zenBenActions[4].play();
 			console.log("jumping");
 			this.velocity.y = this.jumpVelocity;
 		}
 		this.canJump = false;
 	}
 
-	moveObjectToPosition(object, position, duration) {
+	moveObjectToPosition(object, position, duration, finishCallBack) {
 		gsap.to(object.position, {
 			x: position,
 			duration,
 			ease: "power4.out",
+			onComplete: finishCallBack,
 		});
 	}
 
 	moveToCenter() {
+		console.log("moving to center");
 		this.moveObjectToPosition(this.player, 0, this.tweenDuration);
 		this.moveObjectToPosition(
 			this.context.gameWorld.camera,
@@ -110,21 +141,39 @@ class MovementFSM {
 		this.currentPlayerLane = this.lanes.center;
 	}
 
+	pullBackToCenter() {
+		this.moveObjectToPosition(this.context.playerCollider, 0, 0.1);
+		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.1);
+		this.currentPlayerLane = this.lanes.center;
+	}
+
 	moveLeft() {
 		switch (this.currentPlayerLane) {
 			case this.lanes.left:
-				break;
+				return;
+
 			case this.lanes.right:
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
-				this.moveObjectToPosition(this.player, -2.5, this.tweenDuration);
 				this.moveObjectToPosition(
-					this.context.gameWorld.camera,
-					-2.75,
-					this.cameraTweenDuration
+					this.context.playerCollider,
+					-2.5,
+					this.tweenDuration,
+					() => {
+						this.moveObjectToPosition(this.context.playerCollider, 0, 0.5);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.5);
+						this.currentPlayerLane = this.lanes.center;
+					}
 				);
 				this.currentPlayerLane = this.lanes.left;
+				// this.moveObjectToPosition(
+				// 	this.context.gameWorld.camera,
+				// 	-2.75,
+				// 	this.cameraTweenDuration
+				// 	// this.pullBackToCenter()
+				// );
+
 				break;
 		}
 	}
@@ -137,26 +186,38 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
-				this.moveObjectToPosition(this.player, 2.5, this.tweenDuration);
 				this.moveObjectToPosition(
-					this.context.gameWorld.camera,
-					2.75,
-					this.cameraTweenDuration
+					this.context.playerCollider,
+					2.5,
+					this.tweenDuration,
+					() => {
+						this.moveObjectToPosition(this.context.playerCollider, 0, 0.5);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.5);
+						this.currentPlayerLane = this.lanes.center;
+					}
 				);
+				// this.moveObjectToPosition(
+				// 	this.context.gameWorld.camera,
+				// 	2.75,
+				// 	this.cameraTweenDuration
+				// 	// this.pullBackToCenter()
+				// );
 				this.currentPlayerLane = this.lanes.right;
 				break;
 		}
 	}
 
 	updatePlayerColliderPosition() {
-		this.context.playerCollider.position.x =
-			this.context.playerInstance.player.position.x;
+		this.context.playerInstance.player.position.x =
+			this.context.playerCollider.position.x;
 
 		this.context.playerInstance.player.position.y =
-			this.context.playerCollider.position.y - 0.3;
+			this.context.playerCollider.position.y - 1;
 
 		this.context.playerCollider.position.z =
 			this.context.playerInstance.player.position.z;
+
+		this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
 	}
 
 	update() {

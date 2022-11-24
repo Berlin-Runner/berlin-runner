@@ -1,16 +1,7 @@
 import { Level } from "../Level.js";
-import { LandscapeOne } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeOne/LandscapeOne.js";
-import { LandscapeTwo } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTwo/LandscapeTwo.js";
-import { LandscapeThree } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeThree/LandscapeThree.js";
-import { LandscapeFour } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeFour/LandscapeFour.js";
 import { District } from "../../District/District.js";
-
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
-import { LandscapeFive } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeFive/LandscapeFive.js";
-import { LandscapeSix } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeSix/LandscapeSix.js";
-
-import { LandscapeSeven } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeSeven/LandscapeSeven.js";
-import { LandscapeEight } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeEight/LandscapeEight.js";
+import { LandscapeTile } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js";
 class LevelZero extends Level {
 	constructor(context) {
 		let opts = {
@@ -81,14 +72,17 @@ class LevelZero extends Level {
 
 	async init() {
 		// console.log(`${this.levelInfo.levelName} is waking up`);
-		let tileOne = await new LandscapeOne();
-		let tileTwo = await new LandscapeTwo();
-		let tileThree = await new LandscapeThree();
-		let tileFour = await new LandscapeFour();
-		let tileFive = await new LandscapeFive();
-		let tileSix = await new LandscapeSix();
-		let tileSeven = await new LandscapeSeven();
-		let tileEight = await new LandscapeEight();
+		let tileOne = await new LandscapeTile("assets/models/tiles/tiles.1.2.glb");
+		let tileTwo = await new LandscapeTile("assets/models/tiles/tiles.2.3.glb");
+		let tileThree = await new LandscapeTile(
+			"assets/models/tiles/tiles.3.2.glb"
+		);
+		let tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
+		let tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
+		let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.2.glb");
+		let tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
+
+		let tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
 		this.cityopts = {
 			name: "berlin",
 			tiles: [
@@ -122,9 +116,6 @@ class LevelZero extends Level {
 				tileEight.clone(),
 				tileThree.clone(),
 				tileFive.clone(),
-
-				// tileOne.clone(),
-				// tileOne.clone(),
 			],
 		};
 

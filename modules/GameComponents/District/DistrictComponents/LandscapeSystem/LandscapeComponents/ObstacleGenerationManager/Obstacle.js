@@ -15,22 +15,22 @@ class Obstacle {
 	async initObstacle(url) {
 		let model = await this.loadObstacle(url);
 
-		let obstacleMap = null;
-		if (model.material.map) {
-			obstacleMap = model.material.map;
-		}
+		// let obstacleMap = null;
+		// if (model.material.map) {
+		// 	obstacleMap = model.material.map;
+		// }
 
-		model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
-			class: THREE.CustomMaterial,
+		// model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
+		// 	class: THREE.CustomMaterial,
 
-			vertex: {
-				transformEnd: UTIL.getFoldableShader(),
-			},
-		});
+		// 	vertex: {
+		// 		transformEnd: UTIL.getFoldableShader(),
+		// 	},
+		// });
 
-		model.material.uniforms.map.value = obstacleMap;
+		// model.material.uniforms.map.value = obstacleMap;
 
-		model.material.map = obstacleMap;
+		// model.material.map = obstacleMap;
 
 		return model;
 	}
