@@ -60,7 +60,14 @@ class MovementFSM {
 		});
 
 		hammertime.on("swipedown", (e) => {
-			this.context.zenBenActions[5].play();
+			this.context.playerInstance.fadeToAction(5, 0.2);
+			this.context.mixer.addEventListener("finished", () => {
+				this.context.mixer.removeEventListener(
+					"finished",
+					this.context.playerInstance.restore
+				);
+				this.context.playerInstance.fadeToAction(0, 0.01);
+			});
 		});
 
 		hammertime.on("swipeup", (e) => {
