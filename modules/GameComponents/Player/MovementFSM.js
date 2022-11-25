@@ -72,7 +72,14 @@ class MovementFSM {
 		window.addEventListener("keydown", (e) => {
 			switch (e.code) {
 				case "KeyS":
-					this.context.zenBenActions[5].play();
+					this.context.playerInstance.fadeToAction(5, 0.2);
+					this.context.mixer.addEventListener("finished", () => {
+						this.context.mixer.removeEventListener(
+							"finished",
+							this.context.playerInstance.restore
+						);
+						this.context.playerInstance.fadeToAction(0, 0.01);
+					});
 					break;
 				case "KeyA":
 					this.moveLeft();
@@ -106,7 +113,6 @@ class MovementFSM {
 					break;
 
 				case "Space":
-					// this.context.zenBenActions[4].stop();
 					break;
 
 				default:
@@ -117,8 +123,14 @@ class MovementFSM {
 
 	jump() {
 		if (this.canJump) {
+			this.context.playerInstance.fadeToAction(4, 0.2);
+			this.context.mixer.addEventListener(
+				"finished",
+				this.context.playerInstance.restore()
+			);
+
 			this.jumpAudio.play();
-			this.context.zenBenActions[4].play();
+
 			console.log("jumping");
 			this.velocity.y = this.jumpVelocity;
 		}
@@ -227,8 +239,13 @@ class MovementFSM {
 	update() {
 		this.updatePlayerColliderPosition();
 		if (this.velocity.y < 0.75) this.canJump = true;
-		if (this.context.playerInstance.player.position.y > 0.75)
+		if (
+			this.context.playerInstance &&
+			this.context.playerInstance.player.position.y > 0.75
+		) {
+			// this.context.playerInstance.fadeToAction(0, 0.5);
 			this.canJump = false;
+		}
 	}
 
 	addClassSettings() {

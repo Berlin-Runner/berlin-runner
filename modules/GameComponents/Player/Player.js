@@ -143,6 +143,7 @@ class Player {
 		let playerAnimation = playerModelFull.animations;
 
 		this.mixer = new THREE.AnimationMixer(playerMesh);
+		this.context.mixer = this.mixer;
 		let clips = playerAnimation;
 
 		this.player.add(playerMesh);
@@ -177,9 +178,35 @@ class Player {
 			this.slideAction,
 		];
 
-		this.runAction.play();
+		this.context.currentAction = this.runAction;
+		this.context.currentPlayerAnimationState = 0;
+
+		this.context.currentAction.play();
 
 		this.scene.add(this.player);
+	}
+
+	fadeToAction(index, duration) {
+		if (!this.context.zenBenActions) return;
+		this.context.previousAction = this.context.currentAction;
+		this.context.currentAction = this.context.zenBenActions[index];
+
+		if (this.context.previousAction != this.context.currentAction) {
+			this.context.previousAction.fadeOut(duration);
+		}
+
+		this.context.currentAction
+			.reset()
+			.setEffectiveTimeScale(1)
+			.setEffectiveWeight(1)
+			.fadeIn(duration)
+			.play();
+	}
+
+	restore() {
+		this.context.mixer.removeEventListener("finished", this.restore);
+
+		this.fadeToAction(this.context.currentPlayerAnimationState, 1);
 	}
 
 	update() {
