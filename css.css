@@ -51,7 +51,7 @@ canvas {
 	/* border: white 2px solid; */
 	width: 400px;
 	height: 200px;
-	background: url("/assets/gifs/berlin-runner-close-up.gif");
+	background: url("/assets/gifs/zen-ben.gif");
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -237,8 +237,8 @@ canvas {
 	font-weight: 900;
 	font-size: 50px;
 	font-family: "VT323", monospace;
-	border-bottom: 6px aqua solid;
-	border-top: 6px aqua solid;
+	/* border-bottom: 6px aqua solid;
+	border-top: 6px aqua solid; */
 	margin: 5px;
 	text-shadow: -2px 2px white;
 }
