@@ -2,6 +2,7 @@ import {
 	Vec3,
 	Body,
 	Sphere,
+	Box,
 	Cylinder,
 	BODY_TYPES,
 } from "../../../libs/cannon-es.js";
@@ -31,7 +32,7 @@ class Player {
 			// playerScale: 0.8,
 			playerScale: 0.8,
 
-			colliderDimensions: new Vec3(0.2, 0.6, 0.2),
+			colliderDimensions: new Vec3(0.2, 1, 0.0001),
 			playerColliderMass: 100,
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
@@ -72,8 +73,8 @@ class Player {
 		// world.addBody(cylinderBody);
 
 		const halfExtents = this.settings.colliderDimensions;
-		// const boxShape = new Box(halfExtents);
-		const boxShape = new Sphere(0.5);
+		const boxShape = new Box(halfExtents);
+		// const boxShape = new Sphere(0.5);
 		this.context.playerCollider = new Body({
 			mass: this.settings.playerColliderMass,
 			// mass: 0,
@@ -84,7 +85,7 @@ class Player {
 			new Vec3(0, 1, 0),
 			90
 		);
-		this.context.playerCollider.addShape(cylinderShape);
+		this.context.playerCollider.addShape(boxShape);
 		this.context.playerCollider.position = threeToCannonVec3(
 			this.player.position
 		);
@@ -203,17 +204,21 @@ class Player {
 			.play();
 	}
 
-	restore() {
-		this.context.mixer.removeEventListener("finished", this.restore);
+	restore(restoreDuration) {
+		// this.context.mixer.removeEventListener("finished", this.restore);
 
-		this.fadeToAction(this.context.currentPlayerAnimationState, 1);
+		this.fadeToAction(
+			this.context.currentPlayerAnimationState,
+			restoreDuration
+		);
 	}
 
 	update() {
 		if (this.settings.cameraFollow) {
 			this.thirdPersonCamera.update();
 		}
-		if (this.mixer) this.mixer.update(this.context.time.getDelta());
+		if (this.mixer != undefined && this.mixer != null)
+			this.mixer.update(this.context.time.getDelta());
 		if (this.movementManager) this.movementManager.update();
 	}
 

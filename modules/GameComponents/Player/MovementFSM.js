@@ -60,14 +60,7 @@ class MovementFSM {
 		});
 
 		hammertime.on("swipedown", (e) => {
-			this.context.playerInstance.fadeToAction(5, 0.2);
-			this.context.mixer.addEventListener("finished", () => {
-				this.context.mixer.removeEventListener(
-					"finished",
-					this.context.playerInstance.restore
-				);
-				this.context.playerInstance.fadeToAction(0, 0.01);
-			});
+			this.slide();
 		});
 
 		hammertime.on("swipeup", (e) => {
@@ -79,14 +72,7 @@ class MovementFSM {
 		window.addEventListener("keydown", (e) => {
 			switch (e.code) {
 				case "KeyS":
-					this.context.playerInstance.fadeToAction(5, 0.2);
-					this.context.mixer.addEventListener("finished", () => {
-						this.context.mixer.removeEventListener(
-							"finished",
-							this.context.playerInstance.restore
-						);
-						this.context.playerInstance.fadeToAction(0, 0.01);
-					});
+					this.slide();
 					break;
 				case "KeyA":
 					this.moveLeft();
@@ -128,17 +114,22 @@ class MovementFSM {
 		});
 	}
 
+	slide() {
+		this.context.playerInstance.fadeToAction(5, 0.2);
+		this.context.mixer.addEventListener("finished", () => {
+			this.context.playerInstance.fadeToAction(0, 0);
+		});
+	}
+
 	jump() {
 		if (this.canJump) {
 			this.context.playerInstance.fadeToAction(4, 0.2);
-			this.context.mixer.addEventListener(
-				"finished",
-				this.context.playerInstance.restore()
-			);
+			this.context.mixer.addEventListener("finished", () => {
+				this.context.playerInstance.fadeToAction(0, 0.01);
+			});
 
 			this.jumpAudio.play();
 
-			console.log("jumping");
 			this.velocity.y = this.jumpVelocity;
 		}
 		this.canJump = false;
@@ -164,12 +155,6 @@ class MovementFSM {
 		this.currentPlayerLane = this.lanes.center;
 	}
 
-	pullBackToCenter() {
-		this.moveObjectToPosition(this.context.playerCollider, 0, 0.1);
-		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.1);
-		this.currentPlayerLane = this.lanes.center;
-	}
-
 	moveLeft() {
 		switch (this.currentPlayerLane) {
 			case this.lanes.left:
@@ -179,22 +164,21 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
-				this.moveObjectToPosition(
-					this.context.playerCollider,
-					-2.5,
-					this.tweenDuration,
-					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 1);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 1);
-						this.currentPlayerLane = this.lanes.center;
-					}
-				);
 				this.currentPlayerLane = this.lanes.left;
 				this.moveObjectToPosition(
 					this.context.gameWorld.camera,
 					-2.75,
 					this.cameraTweenDuration
-					// this.pullBackToCenter()
+				);
+				this.moveObjectToPosition(
+					this.context.playerCollider,
+					-2.5,
+					this.tweenDuration,
+					() => {
+						this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
+						this.currentPlayerLane = this.lanes.center;
+					}
 				);
 
 				break;
@@ -209,23 +193,22 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
+				this.currentPlayerLane = this.lanes.right;
+				this.moveObjectToPosition(
+					this.context.gameWorld.camera,
+					2.75,
+					this.cameraTweenDuration
+				);
 				this.moveObjectToPosition(
 					this.context.playerCollider,
 					2.5,
 					this.tweenDuration,
 					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 1);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 1);
+						this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
+						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
 						this.currentPlayerLane = this.lanes.center;
 					}
 				);
-				this.moveObjectToPosition(
-					this.context.gameWorld.camera,
-					2.75,
-					this.cameraTweenDuration
-					// this.pullBackToCenter()
-				);
-				this.currentPlayerLane = this.lanes.right;
 				break;
 		}
 	}
@@ -250,7 +233,6 @@ class MovementFSM {
 			this.context.playerInstance &&
 			this.context.playerInstance.player.position.y > 0.75
 		) {
-			// this.context.playerInstance.fadeToAction(0, 0.5);
 			this.canJump = false;
 		}
 	}
