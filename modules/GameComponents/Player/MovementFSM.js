@@ -44,6 +44,13 @@ class MovementFSM {
 
 		this.jumpSound = new Audio("./assets/sounds/jump.mp3");
 		this.jumpSound.load();
+
+		this.keysDown = {
+			left: false,
+			right: false,
+			space: false,
+			slide: false,
+		};
 	}
 
 	listenForSwipeInputs() {
@@ -72,19 +79,23 @@ class MovementFSM {
 		window.addEventListener("keydown", (e) => {
 			switch (e.code) {
 				case "KeyS":
+					this.keysDown.slide = true;
 					this.slide();
 					break;
 				case "KeyA":
+					this.keysDown.left = true;
 					this.moveLeft();
 
 					break;
 
 				case "KeyD":
+					this.keysDown.right = true;
 					this.moveRight();
 
 					break;
 
 				case "Space":
+					this.keysDown.jump = true;
 					this.jump();
 					break;
 
@@ -95,17 +106,23 @@ class MovementFSM {
 
 		window.addEventListener("keyup", (e) => {
 			switch (e.code) {
+				case "KeyS":
+					this.keysDown.slide = false;
+					break;
 				case "KeyA":
-					this.moveLeft();
+					this.keysDown.left = false;
+					this.pullToCenter();
 
 					break;
 
 				case "KeyD":
-					this.moveRight();
+					this.keysDown.right = false;
+					this.pullToCenter();
 
 					break;
 
 				case "Space":
+					this.keysDown.jump = false;
 					break;
 
 				default:
@@ -155,6 +172,12 @@ class MovementFSM {
 		this.currentPlayerLane = this.lanes.center;
 	}
 
+	pullToCenter() {
+		this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
+		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
+		this.currentPlayerLane = this.lanes.center;
+	}
+
 	moveLeft() {
 		switch (this.currentPlayerLane) {
 			case this.lanes.left:
@@ -175,9 +198,8 @@ class MovementFSM {
 					-2.5,
 					this.tweenDuration,
 					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
-						this.currentPlayerLane = this.lanes.center;
+						if (this.keysDown.left) return;
+						this.pullToCenter();
 					}
 				);
 
@@ -204,9 +226,8 @@ class MovementFSM {
 					2.5,
 					this.tweenDuration,
 					() => {
-						this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
-						this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
-						this.currentPlayerLane = this.lanes.center;
+						if (this.keysDown.right) return;
+						this.pullToCenter();
 					}
 				);
 				break;

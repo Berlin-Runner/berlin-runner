@@ -30,7 +30,7 @@ class Player {
 		this.settings = {
 			cameraFollow: true,
 			// playerScale: 0.8,
-			playerScale: 0.8,
+			playerScale: 0.75,
 
 			colliderDimensions: new Vec3(0.2, 1, 0.0001),
 			playerColliderMass: 100,

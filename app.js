@@ -35,7 +35,7 @@ class Game {
 		};
 
 		this.globalSettings = {
-			renderCannonDebug: false,
+			renderCannonDebug: true,
 		};
 
 		this.init();
