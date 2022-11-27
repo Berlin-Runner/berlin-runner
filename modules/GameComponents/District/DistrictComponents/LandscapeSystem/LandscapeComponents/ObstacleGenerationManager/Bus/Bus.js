@@ -31,7 +31,7 @@ class Bus extends Obstacle {
 		});
 
 		this.modelUrl =
-			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/bus.glb";
+			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses.glb";
 
 		this.loadCar();
 	}
@@ -43,7 +43,7 @@ class Bus extends Obstacle {
 
 		this.carFull.then((res) => {
 			// res.model.scale.setScalar(0.75);
-			res.model.position.y += 1.5;
+			// res.model.position.y += 1.5;
 			this.carMesh = res.model;
 
 			this.scene.add(this.carMesh);
@@ -90,16 +90,17 @@ class Bus extends Obstacle {
 	}
 
 	attachCollider(parentMesh) {
-		const halfExtents = new Vec3(1.75, 0.75, 1);
+		const halfExtents = new Vec3(1.75, 0.75, 6);
 		const boxShape = new Box(halfExtents);
 		let carCollider = new Body({
 			// mass: this.settings.carColliderMass,
 			material: this.physicsMaterial,
-			type: Body.STATIC,
+			// type: Body.STATIC,
+			mass: 0,
 		});
 		carCollider.addShape(boxShape);
 		carCollider.position.z = parentMesh.position.z;
-		carCollider.position.x = parentMesh.position.x + 0.2;
+		// carCollider.position.x += 1;
 		carCollider.position.y = parentMesh.position.y + 0.1;
 
 		this.context.world.addBody(carCollider);
@@ -133,8 +134,8 @@ class Bus extends Obstacle {
 
 		this.collider.position.z += (this.modelLength / 2) * this.delta.getDelta();
 		this.carMesh.position.z = this.collider.position.z;
-		// this.collider.position.y = this.carMesh.position.y + 1;
-		this.collider.position.x = this.carMesh.position.x;
+		this.collider.position.y = this.carMesh.position.y + 1;
+		this.collider.position.x = this.carMesh.position.x + 0.25;
 
 		// if (this.mixer) this.mixer.update(this.time.getDelta());
 	}
