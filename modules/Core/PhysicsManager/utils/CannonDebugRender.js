@@ -1,14 +1,4 @@
 import { Vec3, Quaternion, Shape } from "../../../../libs/cannon-es.js";
-/* import {
-  MeshBasicMaterial,
-  SphereGeometry,
-  BoxGeometry,
-  PlaneGeometry,
-  Mesh,
-  CylinderGeometry,
-  BufferGeometry,
-  Float32BufferAttribute,
-} from "three"; */
 
 function CannonDebugger(scene, world, _temp) {
 	let {
@@ -17,14 +7,6 @@ function CannonDebugger(scene, world, _temp) {
 		onInit,
 		onUpdate,
 	} = _temp === void 0 ? {} : _temp;
-
-	/*   let renderingStates = {
-    renderNone: "none",
-    renderCameraColliderOnly: "camera",
-    renderEnvironmentCollidersOnly: "envt",
-  };
-
-  let renderingState = ""; */
 
 	const _meshes = [];
 
@@ -296,32 +278,6 @@ function CannonDebugger(scene, world, _temp) {
 		let meshIndex = 0;
 
 		for (const body of world.bodies) {
-			/*
-      Dear future me, you did this because of a rapidly approaching deadline,
-      please use a tiny finite state machihne thingy in the future, its okay
-      for now, =)
-      */
-			/*  if (renderingState == renderingStates.renderNone) {
-        break;
-      } else if (renderingState == renderingStates.renderCameraColliderOnly) {
-        if (body.index != 1) continue;
-      } else if (
-        renderingState == renderingStates.renderEnvironmentCollidersOnly
-      ) {
-        if (body.index == 1) continue;
-      } */
-			/*
-      if (
-        customSetting.renderCameraCollider &&
-        !customSetting.renderEnvironment
-      ) {
-        if (body.index != 1) continue;
-      } else if (
-        !customSetting.renderCameraCollider &&
-        customSetting.renderEnvironment
-      ) {
-        if (body.index == 1) continue;
-      } */
 			for (let i = 0; i !== body.shapes.length; i++) {
 				const shape = body.shapes[i];
 				const didCreateNewMesh = updateMesh(meshIndex, shape);
