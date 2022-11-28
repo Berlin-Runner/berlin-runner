@@ -8,6 +8,7 @@ class BaseAudioComponent {
 		this.volume = opts.volume;
 
 		this.init();
+		this.context.audioManager.audioSources.push(this);
 	}
 
 	init() {
