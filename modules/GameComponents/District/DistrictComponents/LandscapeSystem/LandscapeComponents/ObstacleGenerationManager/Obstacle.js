@@ -7,31 +7,13 @@ class Obstacle {
 	}
 
 	async loadObstacle(url) {
-		let { model } = await UTIL.loadModel(url);
+		let { model, animations } = await UTIL.loadModel(url);
 
-		return model.children[0];
+		return { model, animations };
 	}
 
 	async initObstacle(url) {
 		let model = await this.loadObstacle(url);
-
-		// let obstacleMap = null;
-		// if (model.material.map) {
-		// 	obstacleMap = model.material.map;
-		// }
-
-		// model.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
-		// 	class: THREE.CustomMaterial,
-
-		// 	vertex: {
-		// 		transformEnd: UTIL.getFoldableShader(),
-		// 	},
-		// });
-
-		// model.material.uniforms.map.value = obstacleMap;
-
-		// model.material.map = obstacleMap;
-
 		return model;
 	}
 }
