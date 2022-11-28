@@ -111,13 +111,13 @@ class MovementFSM {
 					break;
 				case "KeyA":
 					this.keysDown.left = false;
-					this.pullToCenter();
+					// this.pullToCenter();
 
 					break;
 
 				case "KeyD":
 					this.keysDown.right = false;
-					this.pullToCenter();
+					// this.pullToCenter();
 
 					break;
 
@@ -157,13 +157,33 @@ class MovementFSM {
 			x: position,
 			duration,
 			ease: "power4.out",
-			onComplete: finishCallBack,
+			onComplete: () => {
+				setTimeout(finishCallBack, 400);
+			},
+		});
+	}
+
+	rotateObject(object, angle) {
+		gsap.to(object.rotation, {
+			y: angle,
+			duration: this.tweenDuration / 8,
+			ease: "power4.out",
+			onComplete: () => {
+				gsap.to(object.rotation, {
+					y: Math.PI,
+					duration: this.tweenDuration / 2,
+				});
+			},
 		});
 	}
 
 	moveToCenter() {
 		console.log("moving to center");
-		this.moveObjectToPosition(this.player, 0, this.tweenDuration);
+		this.moveObjectToPosition(
+			this.context.playerCollider,
+			0,
+			this.tweenDuration
+		);
 		this.moveObjectToPosition(
 			this.context.gameWorld.camera,
 			0,
@@ -187,7 +207,9 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
+				console.log(this.player.rotation);
 				this.currentPlayerLane = this.lanes.left;
+				this.rotateObject(this.player, Math.PI * 1.25);
 				this.moveObjectToPosition(
 					this.context.gameWorld.camera,
 					-2.75,
@@ -215,6 +237,7 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
+				this.rotateObject(this.player, Math.PI * 0.75);
 				this.currentPlayerLane = this.lanes.right;
 				this.moveObjectToPosition(
 					this.context.gameWorld.camera,
