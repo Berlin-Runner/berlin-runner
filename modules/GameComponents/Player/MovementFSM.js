@@ -111,14 +111,10 @@ class MovementFSM {
 					break;
 				case "KeyA":
 					this.keysDown.left = false;
-					// this.pullToCenter();
-
 					break;
 
 				case "KeyD":
 					this.keysDown.right = false;
-					// this.pullToCenter();
-
 					break;
 
 				case "Space":
@@ -144,9 +140,7 @@ class MovementFSM {
 			this.context.mixer.addEventListener("finished", () => {
 				this.context.playerInstance.fadeToAction(0, 0.01);
 			});
-
 			this.jumpAudio.play();
-
 			this.velocity.y = this.jumpVelocity;
 		}
 		this.canJump = false;
@@ -158,7 +152,7 @@ class MovementFSM {
 			duration,
 			ease: "power4.out",
 			onComplete: () => {
-				setTimeout(finishCallBack, 400);
+				setTimeout(finishCallBack, 500);
 			},
 		});
 	}
@@ -166,7 +160,7 @@ class MovementFSM {
 	rotateObject(object, angle) {
 		gsap.to(object.rotation, {
 			y: angle,
-			duration: this.tweenDuration / 8,
+			duration: this.tweenDuration / 6,
 			ease: "power4.out",
 			onComplete: () => {
 				gsap.to(object.rotation, {

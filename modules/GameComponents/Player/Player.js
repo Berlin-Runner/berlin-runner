@@ -79,7 +79,6 @@ class Player {
 			mass: this.settings.playerColliderMass,
 			// mass: 0,
 			material: this.physicsMaterial,
-			// type: BODY_TYPES.DYNAMIC,
 		});
 		this.context.playerCollider.quaternion.setFromAxisAngle(
 			new Vec3(0, 1, 0),
