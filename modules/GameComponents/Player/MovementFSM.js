@@ -1,13 +1,4 @@
-/* import {
-	Vec3,
-	Body,
-	Sphere,
-	Box,
-	Quaternion,
-} from "../../../libs/cannon-es.js";
- */
 import { Quaternion } from "../../../libs/cannon-es.js";
-// import { Quaternion÷ } from "../../../libs/cannon-es";
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 class MovementFSM {
 	constructor(context, player) {
@@ -183,12 +174,21 @@ class MovementFSM {
 			0,
 			this.cameraTweenDuration
 		);
+		if (this.currentPlayerLane == this.lanes.left)
+			this.rotateObject(this.player, Math.PI * 0.75);
+		if (this.currentPlayerLane == this.lanes.right)
+			this.rotateObject(this.player, Math.PI * 1.25);
 		this.currentPlayerLane = this.lanes.center;
 	}
 
 	pullToCenter() {
 		this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
 		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
+
+		if (this.currentPlayerLane == this.lanes.left)
+			this.rotateObject(this.player, Math.PI * 0.75);
+		if (this.currentPlayerLane == this.lanes.right)
+			this.rotateObject(this.player, Math.PI * 1.25);
 		this.currentPlayerLane = this.lanes.center;
 	}
 
