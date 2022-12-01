@@ -32,7 +32,7 @@ class Player {
 			// playerScale: 0.8,
 			playerScale: 0.75,
 
-			colliderDimensions: new Vec3(0.2, 1, 0.0001),
+			colliderDimensions: new Vec3(0.2, 1, 0.2),
 			playerColliderMass: 100,
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
@@ -149,7 +149,7 @@ class Player {
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(this.settings.playerScale);
-		this.player.position.copy(this.settings.playerInitialPosition);
+		this.player.position.set(0, 0, 0);
 
 		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
 		this.fallClip = THREE.AnimationClip.findByName(clips, "Fall");

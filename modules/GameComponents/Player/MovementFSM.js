@@ -1,4 +1,4 @@
-import { Quaternion } from "../../../libs/cannon-es.js";
+import { Quaternion, Vec3 } from "../../../libs/cannon-es.js";
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 class MovementFSM {
 	constructor(context, player) {
@@ -9,6 +9,7 @@ class MovementFSM {
 		this.cameraTweenDuration = 0.85;
 
 		this.canJump = true;
+		this.canSlide = true;
 		this.jumpVelocity = 12;
 
 		this.lanes = {
@@ -42,6 +43,12 @@ class MovementFSM {
 			space: false,
 			slide: false,
 		};
+
+		this.resetToCenter = true;
+
+		this.moveToCenter();
+
+		this.isSliding = false;
 	}
 
 	listenForSwipeInputs() {
@@ -123,6 +130,31 @@ class MovementFSM {
 		this.context.mixer.addEventListener("finished", () => {
 			this.context.playerInstance.fadeToAction(0, 0);
 		});
+
+		this.isSliding = true;
+		// gsap.to(this.context.playerCollider.quaternion, { x: 0.707, duration: .5});
+		// this.context.playerCollider.quaternion.set(0.707, 0, 0, 1);
+		// this.context.playerCollider.quaternion.setFromAxisAngle(
+		// 	new Vec3(1, 0, 0),
+		// 	-90
+		// );
+
+		setTimeout(() => {
+			// this.context.playerCollider.quaternion.setFromAxisAngle(
+			// 	new Vec3(1, 0, 0),
+			// 	0
+			// );
+			this.player.position.y = 0;
+			this.isSliding = false;
+		}, 1200);
+		// if (this.canSlide) {
+		// 	this.context.playerCollider.quaternion.setFromAxisAngle(
+		// 		new Vec3(1, 0, 0),
+		// 		90
+		// 	);
+		// }
+
+		// this.canSlide = false;
 	}
 
 	jump() {
@@ -164,11 +196,7 @@ class MovementFSM {
 
 	moveToCenter() {
 		console.log("moving to center");
-		this.moveObjectToPosition(
-			this.context.playerCollider,
-			0,
-			this.tweenDuration
-		);
+		this.moveObjectToPosition(this.player, 0, this.tweenDuration);
 		this.moveObjectToPosition(
 			this.context.gameWorld.camera,
 			0,
@@ -182,7 +210,7 @@ class MovementFSM {
 	}
 
 	pullToCenter() {
-		this.moveObjectToPosition(this.context.playerCollider, 0, 0.75);
+		this.moveObjectToPosition(this.player, 0, 0.75);
 		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
 
 		if (this.currentPlayerLane == this.lanes.left)
@@ -201,7 +229,6 @@ class MovementFSM {
 				this.moveToCenter();
 				break;
 			case this.lanes.center:
-				console.log(this.player.rotation);
 				this.currentPlayerLane = this.lanes.left;
 				this.rotateObject(this.player, Math.PI * 1.25);
 				this.moveObjectToPosition(
@@ -209,15 +236,10 @@ class MovementFSM {
 					-2.75,
 					this.cameraTweenDuration
 				);
-				this.moveObjectToPosition(
-					this.context.playerCollider,
-					-2.5,
-					this.tweenDuration,
-					() => {
-						if (this.keysDown.left) return;
-						this.pullToCenter();
-					}
-				);
+				this.moveObjectToPosition(this.player, -2.5, this.tweenDuration, () => {
+					if (this.keysDown.left) return;
+					this.pullToCenter();
+				});
 
 				break;
 		}
@@ -238,30 +260,44 @@ class MovementFSM {
 					2.75,
 					this.cameraTweenDuration
 				);
-				this.moveObjectToPosition(
-					this.context.playerCollider,
-					2.5,
-					this.tweenDuration,
-					() => {
-						if (this.keysDown.right) return;
-						this.pullToCenter();
-					}
-				);
+				this.moveObjectToPosition(this.player, 2.5, this.tweenDuration, () => {
+					if (this.keysDown.right) return;
+					this.pullToCenter();
+				});
 				break;
 		}
 	}
 
 	updatePlayerColliderPosition() {
-		this.context.playerInstance.player.position.x =
-			this.context.playerCollider.position.x;
+		if (this.resetToCenter) {
+			this.context.playerInstance.player.position.set(
+				0,
+				this.context.playerInstance.player.position.y,
+				0
+			);
+			this.context.playerCollider.position.set(
+				0,
+				this.context.playerCollider.position.y,
+				0
+			);
 
-		this.context.playerInstance.player.position.y =
-			this.context.playerCollider.position.y - 1;
+			this.resetToCenter = false;
+
+			return;
+		}
+
+		this.context.playerCollider.position.x =
+			this.context.playerInstance.player.position.x;
+
+		if (!this.isSliding)
+			this.context.playerInstance.player.position.y =
+				this.context.playerCollider.position.y - 1;
 
 		this.context.playerCollider.position.z =
 			this.context.playerInstance.player.position.z;
 
-		this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
+		if (!this.isSliding)
+			this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
 	}
 
 	update() {
