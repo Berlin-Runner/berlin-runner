@@ -142,6 +142,20 @@ class Player {
 		let playerMesh = playerModelFull.model;
 		let playerAnimation = playerModelFull.animations;
 
+		this.context.__PM__ = playerMesh.children[0].children[1].children[0];
+		this.context.__PM__.geometry.computeBoundingBox();
+		this.context.playerBB = new THREE.Box3();
+		this.context.playerBB.setFromObject(this.context.__PM__);
+
+		console.log(playerMesh);
+		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
+		console.log(box);
+		this.context.gameWorld.scene.add(box);
+		// console.log("player BB");
+		console.log(this.context.__PM__);
+
+		this.context.__PM__.matrixWorldNeedsUpdate = true;
+
 		this.mixer = new THREE.AnimationMixer(playerMesh);
 		this.context.mixer = this.mixer;
 		let clips = playerAnimation;
@@ -150,6 +164,9 @@ class Player {
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(this.settings.playerScale);
 		this.player.position.set(0, 0, 0);
+
+		box.scale.setScalar(this.settings.playerScale);
+		box.position.set(0, 1, 0);
 
 		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
 		this.fallClip = THREE.AnimationClip.findByName(clips, "Fall");

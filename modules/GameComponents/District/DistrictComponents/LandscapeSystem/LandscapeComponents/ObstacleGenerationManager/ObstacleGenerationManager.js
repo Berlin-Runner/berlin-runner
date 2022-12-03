@@ -15,7 +15,7 @@ class ObstacleGenerationManager {
 
 	init() {
 		this.obstacleIndex = 0;
-		this.totalObstacles = 5;
+		this.totalObstacles = 1;
 
 		this.buses = [];
 
@@ -28,14 +28,14 @@ class ObstacleGenerationManager {
 	}
 
 	placeObstacles(zPos) {
-		zPos = zPos * 5;
+		// zPos = zPos * 5;
 		let placementPosition = new THREE.Vector3(
 			this.obstaclePositionX[UTIL.randomIntFromInterval(0, 2)],
 			0,
 			zPos
 		);
 
-		placementPosition.z += 38;
+		placementPosition.z += 10;
 		let currentBus = this.buses[this.obstacleIndex % this.totalObstacles];
 		currentBus.updatePosition(placementPosition);
 

@@ -34,6 +34,23 @@ class Bus extends Obstacle {
 		model.then((res) => {
 			this.busMesh = res.model;
 
+			let bus = this.busMesh.children[0];
+			// console.log(bus);
+
+			this.context.__BM__ = this.busMesh.children[0];
+			let busBB = new THREE.Box3();
+			busBB.setFromObject(bus);
+
+			const box = new THREE.Box3Helper(busBB, 0xff0000);
+			console.log(box);
+			this.context.gameWorld.scene.add(box);
+
+			// console.log("bus BB");
+			console.log(this.busMesh);
+
+			this.context.busBB = busBB;
+
+			// this.busMesh.children[0].material.wireframe = true;
 			this.scene.add(this.busMesh);
 			this.attachCollider(this.busMesh);
 
@@ -41,8 +58,7 @@ class Bus extends Obstacle {
 		});
 	}
 
-	attachCollider(parentMesh) {
-		// const halfExtents = new Vec3(1.75, 0.75, 6);
+	attachCollider() {
 		const halfExtents = new Vec3(0, 0, 0);
 		const boxShape = new Box(halfExtents);
 		let busCollider = new Body({
