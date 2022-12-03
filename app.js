@@ -166,7 +166,9 @@ class Game {
 
 	testForCollision() {
 		if (this.playerBB.intersectsBox(this.busBB)) {
-			console.log("player is ");
+			alert(
+				"PLAYER INTERSECT WITH BUS, detected from bounding box intersection"
+			);
 		}
 	}
 }
