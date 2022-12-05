@@ -153,6 +153,14 @@ class Game {
 
 let gameInstance = new Game();
 requestAnimationFrame(gameInstance.animate.bind(gameInstance));
+document.addEventListener("visibilitychange", function () {
+	if (document.hidden) {
+		// stop the animation
+	} else {
+		// resume the animation
+		requestAnimationFrame(gameInstance.animate.bind(gameInstance));
+	}
+});
 
 class BerlinRunnerTextLogo {
 	constructor() {

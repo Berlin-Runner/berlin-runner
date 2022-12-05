@@ -6,6 +6,7 @@ class Bus extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
 		this.spawnPosition = spawnPosition;
+		this.stateManager = this.context.gameStateManager;
 		this.stateBus = this.context.gameStateEventBus;
 
 		this.init();
@@ -110,6 +111,7 @@ class Bus extends Obstacle {
 	testForCollision() {
 		if (this.context.playerBB.intersectsBox(this.context.busBB)) {
 			this.stateBus.publish("player-crashed");
+			this.stateManager.gameOver();
 		}
 	}
 

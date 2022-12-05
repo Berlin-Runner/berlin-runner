@@ -58,6 +58,10 @@ class GameStateManager {
 	gameOver() {
 		// console.log("the game is over son");
 		this.currentState = this.gameStates.game_over;
+		this.context.playerInstance.fadeToAction(2, 1);
+		this.context.mixer.addEventListener("finished", () =>
+			this.context.playerInstance.fadeToAction(3, 1)
+		);
 		this.context.gameStateEventBus.publish("game_over");
 	}
 

@@ -134,6 +134,7 @@ class Player {
 			this.runAction = this.mixer.clipAction(this.runClip);
 			this.fallAction = this.mixer.clipAction(this.fallClip);
 			this.deadAction = this.mixer.clipAction(this.deadClip);
+			this.deadAction.setLoop(THREE.LoopOnce, 2);
 			this.ideleAction = this.mixer.clipAction(this.idleClip);
 			this.jumpAction = this.mixer.clipAction(this.jumpClip);
 			this.jumpAction.setLoop(THREE.LoopOnce, 1);
@@ -158,7 +159,7 @@ class Player {
 		this.scene.add(this.player);
 	}
 
-	fadeToAction(index, duration) {
+	fadeToAction(index, duration, timeScale = 1) {
 		if (!this.context.zenBenActions) return;
 		this.context.previousAction = this.context.currentAction;
 		this.context.currentAction = this.context.zenBenActions[index];
@@ -169,7 +170,7 @@ class Player {
 
 		this.context.currentAction
 			.reset()
-			.setEffectiveTimeScale(1)
+			.setEffectiveTimeScale(timeScale)
 			.setEffectiveWeight(1)
 			.fadeIn(duration)
 			.play();
