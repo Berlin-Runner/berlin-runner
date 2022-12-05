@@ -25,6 +25,13 @@ class GameOverComponent extends BaseUIComponent {
 	}
 
 	setupEventBusSubscriptions() {
+		this.stateBus.subscribe("player-crashed", () => {
+			this.finalScoreHolder.innerHTML = this.scoreManager.getScore();
+			this.stateBus.publish("game-over");
+			this.showComponent();
+			this.showStatic();
+		});
+
 		this.stateBus.subscribe("game_over", () => {
 			this.finalScoreHolder.innerHTML = this.scoreManager.getScore();
 			this.showComponent();

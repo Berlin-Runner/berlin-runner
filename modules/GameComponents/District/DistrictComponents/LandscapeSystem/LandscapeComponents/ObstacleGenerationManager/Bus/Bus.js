@@ -6,6 +6,7 @@ class Bus extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
 		this.spawnPosition = spawnPosition;
+		this.stateBus = this.context.gameStateEventBus;
 
 		this.init();
 	}
@@ -35,24 +36,17 @@ class Bus extends Obstacle {
 			this.busMesh = res.model;
 
 			let bus = this.busMesh.children[0];
-			// console.log(bus);
 
 			this.context.__BM__ = this.busMesh.children[0];
 			let busBB = new THREE.Box3();
-			busBB.setFromObject(bus);
+			this.context.busBB = busBB;
+			this.context.busBB.setFromObject(bus);
 
-			const box = new THREE.Box3Helper(busBB, 0xff0000);
-			console.log(box);
+			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
 			this.context.gameWorld.scene.add(box);
 
-			// console.log("bus BB");
-			console.log(this.busMesh);
-
-			this.context.busBB = busBB;
-
-			// this.busMesh.children[0].material.wireframe = true;
 			this.scene.add(this.busMesh);
-			this.attachCollider(this.busMesh);
+			// this.attachCollider(this.busMesh);
 
 			requestAnimationFrame(this.update.bind(this));
 		});
@@ -86,19 +80,37 @@ class Bus extends Obstacle {
 	}
 
 	updatePosition(placementPostion) {
-		if (!this.collider) return;
-		this.collider.position.z = placementPostion.z;
+		this.busMesh.position.z = placementPostion.z;
 		this.busMesh.position.x = placementPostion.x;
 	}
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		this.collider.position.z +=
+		// this.collider.position.z +=
+		// 	(this.modelLength / 2) * this.delta.getDelta() * 0.75;
+		this.busMesh.position.z +=
 			(this.modelLength / 2) * this.delta.getDelta() * 0.75;
-		this.busMesh.position.z = this.collider.position.z;
-		this.collider.position.y = this.busMesh.position.y + 1;
-		this.collider.position.x = this.busMesh.position.x + 0.25;
+		// this.collider.position.y = this.busMesh.position.y + 1;
+		// this.collider.position.x = this.busMesh.position.x + 0.25;
+
+		if (
+			this.context.playerBB &&
+			this.context.busBB &&
+			this.context.playerInstance
+		) {
+			this.context.busBB
+				.copy(this.context.__BM__.geometry.boundingBox)
+				.applyMatrix4(this.context.__BM__.matrixWorld);
+
+			this.testForCollision();
+		}
+	}
+
+	testForCollision() {
+		if (this.context.playerBB.intersectsBox(this.context.busBB)) {
+			this.stateBus.publish("player-crashed");
+		}
 	}
 
 	clone() {

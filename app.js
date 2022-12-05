@@ -144,32 +144,10 @@ class Game {
 		requestAnimationFrame(this.playerInstance.update.bind(this.playerInstance));
 
 		// console.log(this.playerInstance);
-		if (this.playerBB && this.busBB && this.playerInstance) {
-			// console.log(this.__PM__.matrixWorld);
-			// this.__PM__.updateWorldMatrix();
-			this.playerBB
-				.copy(this.__PM__.geometry.boundingBox)
-				.applyMatrix4(this.__PM__.matrixWorld);
-			// console.log(this.playerBB);
-
-			this.busBB
-				.copy(this.__BM__.geometry.boundingBox)
-				.applyMatrix4(this.__BM__.matrixWorld);
-
-			this.testForCollision();
-		}
 
 		this.stats.end();
 
 		// console.table(this.gameWorld.renderer.info);
-	}
-
-	testForCollision() {
-		if (this.playerBB.intersectsBox(this.busBB)) {
-			alert(
-				"PLAYER INTERSECT WITH BUS, detected from bounding box intersection"
-			);
-		}
 	}
 }
 

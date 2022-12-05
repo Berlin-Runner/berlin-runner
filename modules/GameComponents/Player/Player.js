@@ -29,8 +29,8 @@ class Player {
 
 		this.settings = {
 			cameraFollow: true,
-			// playerScale: 0.8,
-			playerScale: 0.75,
+
+			playerScale: 0.65,
 
 			colliderDimensions: new Vec3(0.2, 1, 0.2),
 			playerColliderMass: 100,
@@ -49,7 +49,6 @@ class Player {
 
 		this.cannonBody = this.context.playerCollider;
 
-		this.setupEventListners();
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
 		this.movementManager = new MovementFSM(this.context, this.player);
 
@@ -57,27 +56,10 @@ class Player {
 	}
 
 	initCharachterCollider() {
-		// create a capsule
-
-		const radiusTop = 0.25;
-		const radiusBottom = 0.25;
-		const height = 2;
-		const numSegments = 12;
-		const cylinderShape = new Cylinder(
-			radiusTop,
-			radiusBottom,
-			height,
-			numSegments
-		);
-		// const cylinderBody = new CANNON.Body({ mass: 1, shape: cylinderShape });
-		// world.addBody(cylinderBody);
-
 		const halfExtents = this.settings.colliderDimensions;
 		const boxShape = new Box(halfExtents);
-		// const boxShape = new Sphere(0.5);
 		this.context.playerCollider = new Body({
 			mass: this.settings.playerColliderMass,
-			// mass: 0,
 			material: this.physicsMaterial,
 		});
 		this.context.playerCollider.quaternion.setFromAxisAngle(
@@ -92,33 +74,6 @@ class Player {
 			this.settings.playerLinearDampeneingFactor;
 		this.context.playerCollider.allowSleep = false;
 		this.context.world.addBody(this.context.playerCollider);
-
-		// console.log(this.context.playerCollider);
-	}
-
-	setupEventListners() {
-		const contactNormal = new Vec3(); // Normal in the contact, pointing *out* of whatever the player touched
-		const upAxis = new Vec3(0, 1, 0);
-		this.cannonBody.addEventListener("collide", (event) => {
-			const { contact } = event;
-
-			// contact.bi and contact.bj are the colliding bodies, and contact.ni is the collision normal.
-			// We do not yet know which one is which! Let's check.
-			if (contact.bi.id === this.cannonBody.id) {
-				// bi is the player body, flip the contact normal
-				contact.ni.negate(contactNormal);
-			} else {
-				// bi is something else. Keep the normal as it is
-				contactNormal.copy(contact.ni);
-			}
-
-			// If contactNormal.dot(upAxis) is between 0 and 1, we know that the contact normal is somewhat in the up direction.
-			if (contactNormal.dot(upAxis) > 0.5) {
-				// console.log("collision is heard");
-				// Use a "good" threshold value between 0 and 1 here!
-				this.canJump = true;
-			}
-		});
 	}
 
 	setupEventSubscriptions() {
@@ -142,20 +97,6 @@ class Player {
 		let playerMesh = playerModelFull.model;
 		let playerAnimation = playerModelFull.animations;
 
-		this.context.__PM__ = playerMesh.children[0].children[1].children[0];
-		this.context.__PM__.geometry.computeBoundingBox();
-		this.context.playerBB = new THREE.Box3();
-		this.context.playerBB.setFromObject(this.context.__PM__);
-
-		console.log(playerMesh);
-		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
-		console.log(box);
-		this.context.gameWorld.scene.add(box);
-		// console.log("player BB");
-		console.log(this.context.__PM__);
-
-		this.context.__PM__.matrixWorldNeedsUpdate = true;
-
 		this.mixer = new THREE.AnimationMixer(playerMesh);
 		this.context.mixer = this.mixer;
 		let clips = playerAnimation;
@@ -165,8 +106,22 @@ class Player {
 		this.player.scale.setScalar(this.settings.playerScale);
 		this.player.position.set(0, 0, 0);
 
-		box.scale.setScalar(this.settings.playerScale);
-		box.position.set(0, 1, 0);
+		console.log(this.player);
+
+		this.context.__PM__ = playerMesh.children[0].children[1].children[0];
+		this.context.__PM__.geometry.computeBoundingBox();
+		this.context.playerBB = new THREE.Box3();
+		this.context.playerBB.setFromObject(this.context.__PM__);
+		console.log(this.context.playerBB);
+
+		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
+
+		this.context.gameWorld.scene.add(box);
+
+		this.context.__PM__.matrixWorldNeedsUpdate = true;
+
+		// box.scale.setScalar(this.settings.playerScale);
+		// box.position.set(0, 1, 0);
 
 		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
 		this.fallClip = THREE.AnimationClip.findByName(clips, "Fall");
@@ -221,8 +176,6 @@ class Player {
 	}
 
 	restore(restoreDuration) {
-		// this.context.mixer.removeEventListener("finished", this.restore);
-
 		this.fadeToAction(
 			this.context.currentPlayerAnimationState,
 			restoreDuration
@@ -236,15 +189,16 @@ class Player {
 		if (this.mixer != undefined && this.mixer != null)
 			this.mixer.update(this.context.time.getDelta());
 		if (this.movementManager) this.movementManager.update();
+
+		if (this.context.playerBB && this.context.playerInstance) {
+			this.context.playerBB
+				.copy(this.context.__PM__.geometry.boundingBox)
+				.applyMatrix4(this.context.__PM__.matrixWorld);
+		}
 	}
 
 	addClassSettings() {
 		this.localSettings = this.context.gui.addFolder("PLAYER SETTINGS");
-		/*
-		this.localSettings.add(this.settings, "cameraFollow").onChange((value) => {
-			this.settings.cameraFollow = value;
-			console.log(`camera follow : ${this.settings.cameraFollow}`);
-		}); */
 
 		this.localSettings
 			.add(this.settings, "playerScale", 0, 1)
