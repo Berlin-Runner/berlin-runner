@@ -30,7 +30,7 @@ class Player {
 		this.settings = {
 			cameraFollow: true,
 
-			playerScale: 0.65,
+			playerScale: 0.9,
 
 			colliderDimensions: new Vec3(0.2, 1, 0.2),
 			playerColliderMass: 100,
@@ -84,7 +84,7 @@ class Player {
 
 	async loadPlayerModel() {
 		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/zen-ben.glb"
+			"/assets/models/the-girl.glb"
 		);
 
 		return { model, animations };
@@ -108,17 +108,21 @@ class Player {
 
 		console.log(this.player);
 
-		this.context.__PM__ = playerMesh.children[0].children[1].children[0];
+		this.context.__PM__ = playerMesh.children[0].children[1];
+		console.log(this.context.__PM__);
+		// this.context.__PM__ = this.scene.getObjectByName("Character");
+		// console.log(playerMesh.children[0].children[1]);
 		this.context.__PM__.geometry.computeBoundingBox();
+		this.context.__PM__.scale.set(0.5, 0.75, 1);
 		this.context.playerBB = new THREE.Box3();
 		this.context.playerBB.setFromObject(this.context.__PM__);
 		console.log(this.context.playerBB);
 
 		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
 
-		this.context.gameWorld.scene.add(box);
+		// this.context.gameWorld.scene.add(box);x
 
-		this.context.__PM__.matrixWorldNeedsUpdate = true;
+		// this.context.__PM__.matrixWorldNeedsUpdate = true;
 
 		// box.scale.setScalar(this.settings.playerScale);
 		// box.position.set(0, 1, 0);
@@ -128,7 +132,7 @@ class Player {
 		this.deadClip = THREE.AnimationClip.findByName(clips, "Dying");
 		this.idleClip = THREE.AnimationClip.findByName(clips, "Idle");
 		this.jumpClip = THREE.AnimationClip.findByName(clips, "Jump");
-		this.slideClip = THREE.AnimationClip.findByName(clips, "Sliding");
+		this.slideClip = THREE.AnimationClip.findByName(clips, "Running slide");
 
 		if (this.mixer) {
 			this.runAction = this.mixer.clipAction(this.runClip);

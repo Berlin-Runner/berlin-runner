@@ -26,6 +26,25 @@ class District {
 		requestAnimationFrame(
 			this.landscapeManager.updatePlacements.bind(this.landscapeManager)
 		);
+
+		document.addEventListener("visibilitychange", () => {
+			if (document.hidden) {
+				// stop the animation
+			} else {
+				// resume the animation
+				requestAnimationFrame(
+					this.landscapeManager.update.bind(this.landscapeManager)
+				);
+				requestAnimationFrame(
+					this.landscapeManager.updateCityMeshPoistion.bind(
+						this.landscapeManager
+					)
+				);
+				requestAnimationFrame(
+					this.landscapeManager.updatePlacements.bind(this.landscapeManager)
+				);
+			}
+		});
 	}
 
 	dispose() {

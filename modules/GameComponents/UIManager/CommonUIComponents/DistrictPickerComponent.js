@@ -4,6 +4,9 @@ class DistrictPickerComponent extends BaseUIComponent {
 	constructor(id, context) {
 		super(id, context);
 
+		this.scoreHolder = document.getElementById("score-holder");
+		this.scoreHolder.style.display = "none";
+
 		this.setUpComponentEventListners();
 		this.setupEventBusSubscriptions();
 

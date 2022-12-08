@@ -44,12 +44,20 @@ class Bus extends Obstacle {
 			this.context.busBB.setFromObject(bus);
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
-			this.context.gameWorld.scene.add(box);
+			// this.context.gameWorld.scene.add(box);
 
 			this.scene.add(this.busMesh);
 			// this.attachCollider(this.busMesh);
 
 			requestAnimationFrame(this.update.bind(this));
+			document.addEventListener("visibilitychange", () => {
+				if (document.hidden) {
+					// stop the animation
+				} else {
+					// resume the animation
+					requestAnimationFrame(this.update.bind(this));
+				}
+			});
 		});
 	}
 
