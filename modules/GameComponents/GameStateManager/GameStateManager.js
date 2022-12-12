@@ -29,9 +29,7 @@ class GameStateManager {
 	}
 
 	startGame(districtIndex) {
-		// console.log("SWITCHING GAME STATE TO STARTED");
 		this.currentState = this.gameStates.started;
-		this.context.playerInstance.fadeToAction(0, 0.1);
 		this.context.gameStateEventBus.publish("start_game", districtIndex);
 	}
 
@@ -39,36 +37,26 @@ class GameStateManager {
 		this.currentState = this.gameStates.inPlay;
 		this.scoreContainer = document.getElementById("score-holder");
 		this.scoreContainer.style.display = "flex";
-		this.context.playerInstance.fadeToAction(0, 0.1);
 		this.context.gameStateEventBus.publish("enter_play");
 	}
 
 	pauseGame() {
-		// console.log("pausing game");
 		this.currentState = this.gameStates.paused;
-		this.context.playerInstance.fadeToAction(3, 0.1);
 		this.context.gameStateEventBus.publish("pause_game");
 	}
 
 	resumeGame() {
-		this.context.playerInstance.fadeToAction(0, 0.1);
 		this.currentState = this.gameStates.inPlay;
 		this.context.gameStateEventBus.publish("resume_game");
 	}
 
 	restartGame() {
-		this.context.playerInstance.fadeToAction(0, 0.1);
 		this.currentState = this.gameStates.inPlay;
 		this.context.gameStateEventBus.publish("restart_game");
 	}
 
 	gameOver() {
-		// console.log("the game is over son");
 		this.currentState = this.gameStates.game_over;
-		this.context.playerInstance.fadeToAction(2, 1);
-		this.context.mixer.addEventListener("finished", () =>
-			this.context.playerInstance.fadeToAction(3, 1)
-		);
 		this.context.gameStateEventBus.publish("game_over");
 	}
 
