@@ -125,44 +125,40 @@ class MovementFSM {
 		});
 	}
 
-	slide() {
+	playSlideAnimation() {
 		this.context.animationManager.fadeToAction("slideAction", 0.2);
+		this.context.currentPlayerState =
+			this.context.playerAnimationStates.sliding;
 		this.context.mixer.addEventListener("finished", () => {
 			this.context.animationManager.fadeToAction("runAction", 0);
+			this.context.currentPlayerState =
+				this.context.playerAnimationStates.running;
 		});
+	}
 
+	slide() {
+		this.playSlideAnimation();
 		this.isSliding = true;
-		// gsap.to(this.context.playerCollider.quaternion, { x: 0.707, duration: .5});
-		// this.context.playerCollider.quaternion.set(0.707, 0, 0, 1);
-		// this.context.playerCollider.quaternion.setFromAxisAngle(
-		// 	new Vec3(1, 0, 0),
-		// 	-90
-		// );
-
 		setTimeout(() => {
-			// this.context.playerCollider.quaternion.setFromAxisAngle(
-			// 	new Vec3(1, 0, 0),
-			// 	0
-			// );
 			this.player.position.y = 0;
 			this.isSliding = false;
 		}, 1200);
-		// if (this.canSlide) {
-		// 	this.context.playerCollider.quaternion.setFromAxisAngle(
-		// 		new Vec3(1, 0, 0),
-		// 		90
-		// 	);
-		// }
+	}
 
-		// this.canSlide = false;
+	playJumpAnimation() {
+		this.context.animationManager.fadeToAction("jumpAction", 0.2);
+		this.context.currentPlayerState =
+			this.context.playerAnimationStates.jumping;
+		this.context.mixer.addEventListener("finished", () => {
+			this.context.animationManager.fadeToAction("runAction", 0.01);
+			this.context.currentPlayerState =
+				this.context.playerAnimationStates.running;
+		});
 	}
 
 	jump() {
 		if (this.canJump) {
-			this.context.animationManager.fadeToAction("jumpAction", 0.2);
-			this.context.mixer.addEventListener("finished", () => {
-				this.context.animationManager.fadeToAction("runAction", 0.01);
-			});
+			this.playJumpAnimation();
 			this.jumpAudio.play();
 			this.velocity.y = this.jumpVelocity;
 		}
@@ -195,7 +191,6 @@ class MovementFSM {
 	}
 
 	moveToCenter() {
-		console.log("moving to center");
 		this.moveObjectToPosition(this.player, 0, this.tweenDuration);
 		this.moveObjectToPosition(
 			this.context.gameWorld.camera,

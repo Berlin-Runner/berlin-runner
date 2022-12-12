@@ -104,7 +104,11 @@ class AnimationFSM {
 			sliding: 5,
 		};
 
+		this.context.playerAnimationStates = this.playerAnimationStates;
+
 		this.currentState = this.playerAnimationStates.running;
+		this.context.currentPlayerState = this.currentState;
+
 		this.init();
 	}
 
@@ -120,35 +124,46 @@ class AnimationFSM {
 		this.stateBus.subscribe("start_game", () => {
 			this.manager.fadeToAction("runAction", 0.1);
 			this.currentState = this.playerAnimationStates.running;
+			this.updatePlayerState();
 		});
 
 		this.stateBus.subscribe("enter_play", () => {
 			this.manager.fadeToAction("runAction", 0.1);
 			this.currentState = this.playerAnimationStates.running;
+			this.updatePlayerState();
 		});
 
 		this.stateBus.subscribe("pause_game", () => {
 			this.manager.fadeToAction("idleAction", 0.1);
 			this.currentState = this.playerAnimationStates.idle;
+			this.updatePlayerState();
 		});
 
 		this.stateBus.subscribe("resume_game", () => {
 			this.manager.fadeToAction("runAction", 0.1);
 			this.currentState = this.playerAnimationStates.running;
+			this.updatePlayerState();
 		});
 
 		this.stateBus.subscribe("restart_game", () => {
 			this.manager.fadeToAction("runAction", 0.1);
 			this.currentState = this.playerAnimationStates.running;
+			this.updatePlayerState();
 		});
 
 		this.stateBus.subscribe("game_over", () => {
 			this.manager.fadeToAction("fallAction", 1);
 			this.currentState = this.playerAnimationStates.falling;
+			this.updatePlayerState();
 			this.context.mixer.addEventListener("finished", () => {
 				this.manager.fadeToAction("idleAction", 1);
 				this.currentState = this.playerAnimationStates.idle;
+				this.updatePlayerState();
 			});
 		});
+	}
+
+	updatePlayerState() {
+		this.context.currentPlayerState = this.currentState;
 	}
 }

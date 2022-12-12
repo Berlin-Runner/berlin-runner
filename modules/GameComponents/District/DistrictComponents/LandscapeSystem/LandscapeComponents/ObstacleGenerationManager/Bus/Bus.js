@@ -26,7 +26,7 @@ class Bus extends Obstacle {
 		});
 
 		this.modelUrl =
-			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses.glb";
+			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses_.glb";
 
 		this.loadCar();
 	}
@@ -36,18 +36,16 @@ class Bus extends Obstacle {
 		model.then((res) => {
 			this.busMesh = res.model;
 
-			let bus = this.busMesh.children[0];
-
-			this.context.__BM__ = this.busMesh.children[0];
+			this.context.__BM__ = this.busMesh.getObjectByName("aabb");
+			this.context.__BM__.visible = false;
 			let busBB = new THREE.Box3();
 			this.context.busBB = busBB;
-			this.context.busBB.setFromObject(bus);
+			this.context.busBB.setFromObject(this.context.__BM__);
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
-			// this.context.gameWorld.scene.add(box);
+			this.context.gameWorld.scene.add(box);
 
 			this.scene.add(this.busMesh);
-			// this.attachCollider(this.busMesh);
 
 			requestAnimationFrame(this.update.bind(this));
 			document.addEventListener("visibilitychange", () => {

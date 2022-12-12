@@ -1,11 +1,4 @@
-import {
-	Vec3,
-	Body,
-	Sphere,
-	Box,
-	Cylinder,
-	BODY_TYPES,
-} from "../../../libs/cannon-es.js";
+import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 import { MovementFSM } from "./MovementFSM.js";
 import { Camer3rdPerson } from "./Camera3rdPerson.js";
 
@@ -27,6 +20,8 @@ class Player {
 			playerColliderMass: 100,
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
+
+			debugAABB: true,
 		};
 
 		this.init();
@@ -73,6 +68,7 @@ class Player {
 
 	async loadPlayerModel() {
 		let { model, animations } = await UTIL.loadModel(
+			// "/assets/models/zen-ben.glb"
 			"/assets/models/the-girl.glb"
 		);
 
@@ -103,16 +99,17 @@ class Player {
 	}
 
 	initPlayerBB(playerMesh) {
-		this.context.__PM__ = playerMesh.getObjectByName("Character");
+		this.context.__PM__ = playerMesh.getObjectByName("aabb");
+		this.context.__PM__.visible = false;
 		console.log(this.context.__PM__);
 
 		this.context.__PM__.geometry.computeBoundingBox();
 		this.context.__PM__.scale.set(0.5, 0.75, 1);
 		this.context.playerBB = new THREE.Box3();
 		this.context.playerBB.setFromObject(this.context.__PM__);
-		console.log(this.context.playerBB);
 
 		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
+		if (this.settings.debugAABB) this.scene.add(box);
 	}
 
 	update() {
