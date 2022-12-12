@@ -126,9 +126,9 @@ class MovementFSM {
 	}
 
 	slide() {
-		this.context.playerInstance.fadeToAction(5, 0.2);
+		this.context.animationManager.fadeToAction("slideAction", 0.2);
 		this.context.mixer.addEventListener("finished", () => {
-			this.context.playerInstance.fadeToAction(0, 0);
+			this.context.animationManager.fadeToAction("runAction", 0);
 		});
 
 		this.isSliding = true;
@@ -159,9 +159,9 @@ class MovementFSM {
 
 	jump() {
 		if (this.canJump) {
-			this.context.playerInstance.fadeToAction(4, 0.2);
+			this.context.animationManager.fadeToAction("jumpAction", 0.2);
 			this.context.mixer.addEventListener("finished", () => {
-				this.context.playerInstance.fadeToAction(0, 0.01);
+				this.context.animationManager.fadeToAction("runAction", 0.01);
 			});
 			this.jumpAudio.play();
 			this.velocity.y = this.jumpVelocity;
