@@ -371,3 +371,28 @@ canvas {
 
 	cursor: not-allowed;
 }
+
+.in-game-debug {
+	background-color: black;
+	color: greenyellow;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+
+	width: 100%;
+	height: 100px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.in-game-debug .debug-container {
+	display: flex;
+	height: 100%;
+}
+
+.__debug-box {
+	border: 1px red solid;
+	flex: 1;
+	padding: 5px;
+}

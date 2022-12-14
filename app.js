@@ -38,6 +38,15 @@ class Game {
 			renderCannonDebug: false,
 		};
 
+		this.temp_animations = [
+			"running",
+			"falling",
+			"dying, =(",
+			"idle",
+			"jumping",
+			"sliding",
+		];
+
 		this.init();
 	}
 
@@ -129,6 +138,45 @@ class Game {
 
 	animate() {
 		this.stats.begin();
+
+		if (this.gameWorld.scene.getObjectByName("Water")) {
+			let childPosition = new THREE.Vector3();
+			this.gameWorld.scene
+				.getObjectByName("Water")
+				.getWorldPosition(childPosition);
+
+			document.getElementById("dist-to-river").innerText = Math.round(
+				this.__PM__.position.distanceTo(childPosition)
+			);
+		}
+
+		if (this.gameWorld.scene.getObjectByName("TrainStation")) {
+			let childPosition = new THREE.Vector3();
+			this.gameWorld.scene
+				.getObjectByName("TrainStation")
+				.getWorldPosition(childPosition);
+
+			document.getElementById("dist-to-bridge").innerText = Math.round(
+				this.__PM__.position.distanceTo(childPosition)
+			);
+		}
+
+		if (this.gameWorld.scene.getObjectByName("bus-left")) {
+			let childPosition = new THREE.Vector3();
+			this.gameWorld.scene
+				.getObjectByName("bus-left")
+				.getWorldPosition(childPosition);
+
+			document.getElementById("dist-to-bus").innerText = Math.round(
+				this.__PM__.position.distanceTo(childPosition)
+			);
+		}
+
+		document.getElementById("current-game-state").innerText =
+			this.gameStateManager.currentState;
+
+		document.getElementById("active-player-animation").innerText =
+			this.temp_animations[this.currentPlayerState];
 
 		requestAnimationFrame(this.animate.bind(this));
 		if (!this.renderGraphics) return;
