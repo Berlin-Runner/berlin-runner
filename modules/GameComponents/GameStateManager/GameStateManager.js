@@ -56,7 +56,7 @@ class GameStateManager {
 	}
 
 	gameOver() {
-		this.currentState = this.gameStates.game_over;
+		this.currentState = this.gameStates.over;
 		this.context.gameStateEventBus.publish("game_over");
 	}
 

@@ -79,7 +79,7 @@ class LevelZero extends Level {
 		);
 		let tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
 		let tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
-		let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.2.glb");
+		let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.3.glb");
 		let tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
 
 		let tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
@@ -88,34 +88,34 @@ class LevelZero extends Level {
 			tiles: [
 				tileFive.clone(),
 				tileOne.clone(),
-				tileTwo.clone(),
+				// tileTwo.clone(),
 				tileEight.clone(),
-				tileFour.clone(),
-				tileSeven.clone(),
+				// tileFour.clone(),
+				// tileSeven.clone(),
 				tileThree.clone(),
-				tileTwo.clone(),
+				// tileTwo.clone(),
+				// tileFour.clone(),
+				tileOne.clone(),
+				tileEight.clone(),
+				// tileSix.clone(),
+				tileEight.clone(),
+				tileThree.clone(),
+				// tileFive.clone(),
+				// tileSeven.clone(),
 				tileFour.clone(),
+				// tileFour.clone(),
+				tileSeven.clone(),
+				tileOne.clone(),
+				tileTwo.clone(),
+				// tileFive.clone(),
 				tileOne.clone(),
 				tileEight.clone(),
 				tileSix.clone(),
-				tileEight.clone(),
+				// tileThree.clone(),
+				// tileTwo.clone(),
+				// tileEight.clone(),
 				tileThree.clone(),
-				tileFive.clone(),
-				tileSeven.clone(),
-				tileFour.clone(),
-				tileFour.clone(),
-				tileSeven.clone(),
-				tileOne.clone(),
-				tileTwo.clone(),
-				tileFive.clone(),
-				tileOne.clone(),
-				tileEight.clone(),
-				tileSix.clone(),
-				tileThree.clone(),
-				tileTwo.clone(),
-				tileEight.clone(),
-				tileThree.clone(),
-				tileFive.clone(),
+				// tileFive.clone(),
 			],
 		};
 

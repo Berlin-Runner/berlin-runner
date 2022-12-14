@@ -93,10 +93,11 @@ class Bus extends Obstacle {
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
-
+		if (!this.stateManager.currentState == "in_play") return;
 		// if (this.stateManager.currentState == "in_play") {
 		// this.collider.position.z +=
 		// 	(this.modelLength / 2) * this.delta.getDelta() * 0.75;
+
 		this.busMesh.position.z +=
 			(this.modelLength / 2) * this.delta.getDelta() * 0.75;
 		// this.collider.position.y = this.busMesh.position.y + 1;

@@ -22,9 +22,10 @@ class ObstacleGenerationManager {
 		let initialSpawnPosition = new THREE.Vector3(100, 100, 100);
 		let bus = new Bus(this.context, initialSpawnPosition);
 
-		for (let index = 0; index < this.totalObstacles; index++) {
-			this.buses.push(bus.clone());
-		}
+		this.buses.push(bus);
+		// for (let index = 0; index < this.totalObstacles; index++) {
+		// 	this.buses.push(bus.clone());
+		// }
 	}
 
 	placeObstacles(zPos) {
