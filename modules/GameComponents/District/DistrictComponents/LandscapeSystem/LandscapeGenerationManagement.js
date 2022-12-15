@@ -22,7 +22,7 @@ class LandscapeGenerationManager {
 
 		this.updateSpeedFactor = 7.5; //use this to make things move faster
 
-		this.placementPosition = -100;
+		this.placementPosition = -200;
 
 		this.init();
 	}
@@ -71,7 +71,7 @@ class LandscapeGenerationManager {
 
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
-			if (this.counter % 5 === 0) {
+			if (this.counter % 2 === 0) {
 				this.obstacleManager.placeObstacles(this.placementPosition);
 			}
 		}

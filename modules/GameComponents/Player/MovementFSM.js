@@ -126,11 +126,11 @@ class MovementFSM {
 	}
 
 	playSlideAnimation() {
-		this.context.animationManager.fadeToAction("slideAction", 0.2);
+		this.context.animationManager.fadeToAction("slideAction", 0.3);
 		this.context.currentPlayerState =
 			this.context.playerAnimationStates.sliding;
 		this.context.mixer.addEventListener("finished", () => {
-			this.context.animationManager.fadeToAction("runAction", 0);
+			this.context.animationManager.fadeToAction("runAction", -0.1);
 			this.context.currentPlayerState =
 				this.context.playerAnimationStates.running;
 		});
@@ -150,7 +150,7 @@ class MovementFSM {
 		this.context.currentPlayerState =
 			this.context.playerAnimationStates.jumping;
 		this.context.mixer.addEventListener("finished", () => {
-			this.context.animationManager.fadeToAction("runAction", 0.01);
+			this.context.animationManager.fadeToAction("runAction", -0.1);
 			this.context.currentPlayerState =
 				this.context.playerAnimationStates.running;
 		});

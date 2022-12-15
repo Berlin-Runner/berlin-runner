@@ -152,7 +152,7 @@ class AnimationFSM {
 		});
 
 		this.stateBus.subscribe("game_over", () => {
-			this.manager.fadeToAction("fallAction", 1);
+			this.manager.fadeToAction("deadAction", 1);
 			this.currentState = this.playerAnimationStates.falling;
 			this.updatePlayerState();
 			this.context.mixer.addEventListener("finished", () => {

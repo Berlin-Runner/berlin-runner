@@ -9,6 +9,8 @@ class Bus extends Obstacle {
 		this.stateManager = this.context.gameStateManager;
 		this.stateBus = this.context.gameStateEventBus;
 
+		this.updateSpeedFactor = 3.5;
+
 		this.init();
 	}
 
@@ -29,18 +31,22 @@ class Bus extends Obstacle {
 			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses_.glb";
 
 		this.loadCar();
+
+		this.setupEventSubscriber();
 	}
 
 	async loadCar() {
 		let model = this.initObstacle(this.modelUrl);
 		model.then((res) => {
 			this.busMesh = res.model;
+			this.busMesh.position.copy(this.spawnPosition);
 
 			this.context.__BM__ = this.busMesh.getObjectByName("aabb");
 			this.context.__BM__.visible = false;
 			let busBB = new THREE.Box3();
 			this.context.busBB = busBB;
 			this.context.busBB.setFromObject(this.context.__BM__);
+			// this.context.busBB.position = this.spawnPosition;
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
 			this.context.gameWorld.scene.add(box);
@@ -73,6 +79,13 @@ class Bus extends Obstacle {
 		this.setupEventListners(busCollider);
 	}
 
+	setupEventSubscriber() {
+		this.stateBus.subscribe("game_over", () => {
+			console.log("moving the bus back");
+			this.busMesh.position.z = -200;
+		});
+	}
+
 	setupEventListners() {
 		this.collider.addEventListener("collide", (event) => {
 			const { contact } = event;
@@ -93,30 +106,29 @@ class Bus extends Obstacle {
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
-		if (!this.stateManager.currentState == "in_play") return;
-		// if (this.stateManager.currentState == "in_play") {
-		// this.collider.position.z +=
-		// 	(this.modelLength / 2) * this.delta.getDelta() * 0.75;
 
-		this.busMesh.position.z +=
-			(this.modelLength / 2) * this.delta.getDelta() * 0.75;
-		// this.collider.position.y = this.busMesh.position.y + 1;
-		// this.collider.position.x = this.busMesh.position.x + 0.25;
-		// }
-		if (
-			this.context.playerBB &&
-			this.context.busBB &&
-			this.context.playerInstance
-		) {
-			this.context.busBB
-				.copy(this.context.__BM__.geometry.boundingBox)
-				.applyMatrix4(this.context.__BM__.matrixWorld);
+		if (this.stateManager.currentState === "in_play") {
+			this.busMesh.position.z +=
+				(this.modelLength / 2) *
+				this.delta.getDelta() *
+				(3 / this.updateSpeedFactor);
 
-			this.testForCollision();
+			if (
+				this.context.playerBB &&
+				this.context.busBB &&
+				this.context.playerInstance
+			) {
+				this.context.busBB
+					.copy(this.context.__BM__.geometry.boundingBox)
+					.applyMatrix4(this.context.__BM__.matrixWorld);
+
+				this.testForCollision();
+			}
 		}
 	}
 
 	testForCollision() {
+		if (!this.stateManager.currentState == "in_play") return;
 		if (this.context.playerBB.intersectsBox(this.context.busBB)) {
 			this.stateBus.publish("player-crashed");
 			this.stateManager.gameOver();
