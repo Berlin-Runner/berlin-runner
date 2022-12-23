@@ -139,15 +139,31 @@ class Game {
 	animate() {
 		this.stats.begin();
 
+		document.getElementById("player-is-jumping").innerText =
+			this.G.PLAYER_JUMPING;
+
 		if (this.gameWorld.scene.getObjectByName("Water")) {
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("Water")
 				.getWorldPosition(childPosition);
 
+			console.log(childPosition.z);
+
 			document.getElementById("dist-to-river").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
 			);
+
+			if (
+				childPosition.z < 0 &&
+				this.__PM__.position.distanceTo(childPosition) < 3 &&
+				this.__PM__.position.distanceTo(childPosition) > 2
+			) {
+				if (!this.G.PLAYER_JUMPING) console.log("not jumping");
+				document.getElementById("dist-to-river").style.color = "red";
+			} else {
+				document.getElementById("dist-to-river").style.color = "greenyellow";
+			}
 		}
 
 		if (this.gameWorld.scene.getObjectByName("TrainStation")) {

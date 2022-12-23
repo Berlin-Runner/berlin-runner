@@ -163,6 +163,7 @@ class MovementFSM {
 			this.velocity.y = this.jumpVelocity;
 		}
 		this.canJump = false;
+		this.context.G.PLAYER_JUMPING = !this.canJump;
 	}
 
 	moveObjectToPosition(object, position, duration, finishCallBack) {
@@ -304,6 +305,7 @@ class MovementFSM {
 		) {
 			this.canJump = false;
 		}
+		this.context.G.PLAYER_JUMPING = !this.canJump;
 	}
 
 	addClassSettings() {
