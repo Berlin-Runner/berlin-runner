@@ -159,7 +159,17 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition) < 3 &&
 				this.__PM__.position.distanceTo(childPosition) > 2
 			) {
-				if (!this.G.PLAYER_JUMPING) console.log("not jumping");
+				if (!this.G.PLAYER_JUMPING) {
+					this.gameStateManager.gameOver();
+					// this.__PM__.position.z -= 4;
+					this.animationManager.fadeToAction("fallAction", 0.2);
+					this.currentPlayerState = this.playerAnimationStates.falling;
+					this.mixer.addEventListener("finished", () => {
+						this.animationManager.fadeToAction("idleAction", -0.1);
+						this.currentPlayerState = this.playerAnimationStates.running;
+					});
+				}
+
 				document.getElementById("dist-to-river").style.color = "red";
 			} else {
 				document.getElementById("dist-to-river").style.color = "greenyellow";
