@@ -142,6 +142,9 @@ class Game {
 		document.getElementById("player-is-jumping").innerText =
 			this.G.PLAYER_JUMPING;
 
+		document.getElementById("player-is-sliding").innerText =
+			this.G.PLAYER_SLIDING;
+
 		if (this.gameWorld.scene.getObjectByName("Water")) {
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
@@ -162,6 +165,7 @@ class Game {
 				if (!this.G.PLAYER_JUMPING) {
 					this.gameStateManager.gameOver();
 					// this.__PM__.position.z -= 4;
+					// this.playerInstance.player.position.z -= 4;
 					this.animationManager.fadeToAction("fallAction", 0.2);
 					this.currentPlayerState = this.playerAnimationStates.falling;
 					this.mixer.addEventListener("finished", () => {
@@ -185,6 +189,28 @@ class Game {
 			document.getElementById("dist-to-bridge").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
 			);
+
+			if (
+				childPosition.z < 0 &&
+				this.__PM__.position.distanceTo(childPosition) < 4 &&
+				this.__PM__.position.distanceTo(childPosition) > 3
+			) {
+				if (!this.G.PLAYER_SLIDING) {
+					this.gameStateManager.gameOver();
+					// this.__PM__.position.z -= 4;
+					// this.playerInstance.player.position.z -= 4;
+					this.animationManager.fadeToAction("fallAction", 0.2);
+					this.currentPlayerState = this.playerAnimationStates.falling;
+					this.mixer.addEventListener("finished", () => {
+						this.animationManager.fadeToAction("idleAction", -0.1);
+						this.currentPlayerState = this.playerAnimationStates.running;
+					});
+				}
+
+				document.getElementById("dist-to-river").style.color = "red";
+			} else {
+				document.getElementById("dist-to-river").style.color = "greenyellow";
+			}
 		}
 
 		if (this.gameWorld.scene.getObjectByName("bus-left")) {

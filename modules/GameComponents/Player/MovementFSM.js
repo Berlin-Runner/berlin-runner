@@ -139,9 +139,11 @@ class MovementFSM {
 	slide() {
 		this.playSlideAnimation();
 		this.isSliding = true;
+		this.context.G.PLAYER_SLIDING = this.isSliding;
 		setTimeout(() => {
 			this.player.position.y = 0;
 			this.isSliding = false;
+			this.context.G.PLAYER_SLIDING = this.isSliding;
 		}, 1200);
 	}
 
