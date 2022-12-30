@@ -49,9 +49,9 @@ canvas {
 
 .game-title-3d {
 	/* border: white 2px solid; */
-	width: 400px;
-	height: 200px;
-	background: url("/assets/gifs/zen-ben.gif");
+	width: 700px;
+	height: 400px;
+	background: url("/assets/gifs/intro__.gif");
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -395,4 +395,124 @@ canvas {
 	border: 1px red solid;
 	flex: 1;
 	padding: 5px;
+}
+
+.character-picker {
+	/* z-index: 100000; */
+	background: black;
+	/* position: absolute; */
+
+	/* overflow-x: auto; */
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	flex-direction: column;
+}
+
+.character-picker .banner {
+	position: relative;
+	font-size: 108px;
+	color: aquamarine;
+	text-shadow: -1px 1px violet;
+	border-bottom: 3px solid aliceblue;
+}
+
+.character-picker .characters-holder {
+	border: solid red 1px;
+	height: 70vh;
+	/* width: 90%; */
+
+	overflow-x: scroll;
+	scroll-behavior: smooth;
+
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: no-wrap;
+	/* justify-content: center; */
+	align-items: center;
+	gap: 10px;
+}
+
+.character {
+	height: 80%;
+	border: solid green 3px;
+	width: 400px;
+
+	display: flex;
+	flex: none;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+}
+
+.character-display {
+	height: 80%;
+	border: solid white 3px;
+}
+
+.character-description {
+	height: 0%;
+	border: blue solid 3px;
+}
+.select-character {
+	height: 15%;
+	border: greenyellow solid 3px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.select-character button {
+	font-size: 36px;
+	background-color: transparent;
+	color: grey;
+	border: 1px solid gray;
+	width: 75%;
+
+	cursor: not-allowed;
+	/* align-self: flex-start; */
+	justify-self: flex-end;
+}
+
+.continue-button {
+	display: flex;
+	width: 90%;
+	justify-content: flex-end;
+}
+
+.charachter-continue-button {
+	font-size: 36px;
+	background-color: transparent;
+	color: grey;
+	border: 1px solid gray;
+	/* width: 75%; */
+
+	cursor: not-allowed;
+	/* align-self: flex-start; */
+	justify-self: flex-end;
+}
+
+#zen-ben-display {
+	/* width: 400px; */
+	/* height: 200px; */
+	background: url("/assets/gifs/zen-ben-idle.gif");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-clip: content-box;
+}
+
+#the-girl-display {
+	/* width: 400px; */
+	/* height: 200px; */
+	background: url("/assets/gifs/the-girl-idle.gif");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-clip: content-box;
 }
