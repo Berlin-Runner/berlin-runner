@@ -413,15 +413,15 @@ canvas {
 
 .character-picker .banner {
 	position: relative;
-	font-size: 108px;
+	font-size: 64px;
 	color: aquamarine;
 	text-shadow: -1px 1px violet;
 	border-bottom: 3px solid aliceblue;
 }
 
 .character-picker .characters-holder {
-	border: solid red 1px;
-	height: 70vh;
+	/* border: solid red 1px; */
+	height: 50vh;
 	/* width: 90%; */
 
 	overflow-x: scroll;
@@ -438,9 +438,9 @@ canvas {
 }
 
 .character {
-	height: 80%;
-	border: solid green 3px;
-	width: 400px;
+	height: 90%;
+	/* border: solid green 3px; */
+	width: 300px;
 
 	display: flex;
 	flex: none;
@@ -450,17 +450,33 @@ canvas {
 }
 
 .character-display {
-	height: 80%;
+	height: 90%;
 	border: solid white 3px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.character .character-display .coming-soon {
+	color: grey;
+	font-size: 64px;
+	margin: auto;
+	text-align: center;
 }
 
 .character-description {
-	height: 0%;
-	border: blue solid 3px;
+	text-align: center;
+	height: 5%;
+	color: aliceblue;
+	font-size: 32px;
+	font-weight: 700;
+	padding: 10px;
+	/* border: blue solid 3px; */
 }
 .select-character {
-	height: 15%;
-	border: greenyellow solid 3px;
+	height: 10%;
+	/* border: greenyellow solid 3px; */
 
 	display: flex;
 	align-items: center;
@@ -470,13 +486,21 @@ canvas {
 .select-character button {
 	font-size: 36px;
 	background-color: transparent;
-	color: grey;
+	color: greenyellow;
+	text-shadow: -1px 1px violet;
 	border: 1px solid gray;
 	width: 75%;
 
-	cursor: not-allowed;
+	cursor: crosshair;
 	/* align-self: flex-start; */
 	justify-self: flex-end;
+}
+
+.select-character .disabled {
+	color: grey;
+	text-shadow: -1px 1px white;
+	border: 1px solid gray;
+	cursor: not-allowed;
 }
 
 .continue-button {
@@ -486,13 +510,14 @@ canvas {
 }
 
 .charachter-continue-button {
-	font-size: 36px;
+	font-size: 48px;
 	background-color: transparent;
-	color: grey;
+	color: greenyellow;
+	text-shadow: -1px 1px violet;
 	border: 1px solid gray;
 	/* width: 75%; */
 
-	cursor: not-allowed;
+	cursor: crosshair;
 	/* align-self: flex-start; */
 	justify-self: flex-end;
 }

@@ -167,15 +167,12 @@
 
 		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
 
-		<div
-			id="character-picker"
-			class="full-screen character-picker"
-			style="display: flex"
-		>
-			<div class="banner">PICK CHARACTER</div>
+		<div id="character-picker" class="full-screen character-picker">
+			<div class="banner">PICK YOUR CHARACTER</div>
 
 			<div class="characters-holder">
 				<div class="character">
+					<div class="character-description">ZEN BEN</div>
 					<div class="character-display" id="zen-ben-display"></div>
 					<!-- <div class="character-description"></div> -->
 					<div class="select-character">
@@ -184,30 +181,29 @@
 				</div>
 
 				<div class="character">
+					<div class="character-description">THE GIRL</div>
 					<div class="character-display" id="the-girl-display"></div>
-					<!-- <div class="character-description"></div> -->
 					<div class="select-character">
 						<button class="select-character-button">SELECT</button>
 					</div>
 				</div>
 
 				<div class="character">
-					<div class="character-display"></div>
-					<div class="character-description"></div>
-				</div>
-
-				<div class="character">
-					<div class="character-display"></div>
-					<div class="character-description"></div>
+					<div class="character-description">NEW CHARACTER</div>
+					<div class="character-display">
+						<div class="coming-soon">COMING SOON :)</div>
+					</div>
+					<div class="select-character">
+						<button class="select-character-button disabled">SELECT</button>
+					</div>
 				</div>
 			</div>
-
 			<div class="continue-button">
 				<button
 					class="charachter-continue-button"
 					id="charachter-continue-button"
 				>
-					Continue
+					CONTINUE
 				</button>
 			</div>
 		</div>
@@ -227,7 +223,7 @@
 				HEALTH: <span id="health-value">=)</span> %
 			</div>
 
-			<div class="in-game-debug">
+			<div class="in-game-debug" style="display: none">
 				<div>GAME DEBUG PANEL</div>
 
 				<div class="debug-container">
