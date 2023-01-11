@@ -195,6 +195,19 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition) < 4 &&
 				this.__PM__.position.distanceTo(childPosition) > 3
 			) {
+				if (this.G.PLAYER_SLIDING) {
+					console.log(this.gameWorld.scene.getObjectByName("TrainStation"));
+					this.gameWorld.scene.getObjectByName(
+						"Train_Station001"
+					).material.wireframe = true;
+					this.gameWorld.scene.getObjectByName(
+						"Train_Station001_1"
+					).material.wireframe = true;
+					this.gameWorld.scene.getObjectByName(
+						"Train_Station001_2"
+					).material.wireframe = true;
+				} else {
+				}
 				if (!this.G.PLAYER_SLIDING) {
 					this.gameStateManager.gameOver();
 					// this.__PM__.position.z -= 4;
@@ -209,6 +222,15 @@ class Game {
 
 				document.getElementById("dist-to-river").style.color = "red";
 			} else {
+				this.gameWorld.scene.getObjectByName(
+					"Train_Station001"
+				).material.wireframe = false;
+				this.gameWorld.scene.getObjectByName(
+					"Train_Station001_1"
+				).material.wireframe = false;
+				this.gameWorld.scene.getObjectByName(
+					"Train_Station001_2"
+				).material.wireframe = false;
 				document.getElementById("dist-to-river").style.color = "greenyellow";
 			}
 		}
