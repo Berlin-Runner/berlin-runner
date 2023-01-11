@@ -438,7 +438,7 @@ canvas {
 }
 
 .character {
-	height: 90%;
+	height: 95%;
 	/* border: solid green 3px; */
 	width: 300px;
 
@@ -450,7 +450,7 @@ canvas {
 }
 
 .character-display {
-	height: 90%;
+	height: 100%;
 	border: solid white 3px;
 
 	display: flex;

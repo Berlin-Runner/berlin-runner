@@ -3,6 +3,7 @@ import { GamePlayComponent } from "./CommonUIComponents/GamePlayComponent.js";
 import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js";
 import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
 import { DistrictPickerComponent } from "./CommonUIComponents/DistrictPickerComponent.js";
+import CharacterPicker from "./CharacterPicker.js";
 class UIManager {
 	constructor(context) {
 		this.context = context;
@@ -20,6 +21,11 @@ class UIManager {
 
 		this.districtPicker = new DistrictPickerComponent(
 			"district-picker",
+			this.context
+		);
+
+		this.characterPicker = new CharacterPicker(
+			"character-picker",
 			this.context
 		);
 
