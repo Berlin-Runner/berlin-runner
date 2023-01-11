@@ -48,6 +48,8 @@ class LandscapeGenerationManager {
 
 		this.city.position.z = cityCenter - this.modelLength;
 
+		this.context.cityContainer = this.city;
+
 		this.scene.add(this.city);
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
@@ -71,13 +73,13 @@ class LandscapeGenerationManager {
 
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
-			if (this.counter % 2 === 0) {
-				this.obstacleManager.placeObstacles(this.placementPosition);
-			}
+			// if (this.counter % 2 === 0) {
+			this.obstacleManager.placeObstacles(this.placementPosition);
+			// }
 		}
 		setTimeout(() => {
 			requestAnimationFrame(this.updatePlacements.bind(this));
-		}, this.updateSpeedFactor * 1000);
+		}, 20 * 1000);
 	}
 
 	updateCityMeshPoistion() {

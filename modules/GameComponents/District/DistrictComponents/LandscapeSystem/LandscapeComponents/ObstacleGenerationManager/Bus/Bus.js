@@ -9,7 +9,7 @@ class Bus extends Obstacle {
 		this.stateManager = this.context.gameStateManager;
 		this.stateBus = this.context.gameStateEventBus;
 
-		this.updateSpeedFactor = 3.5;
+		this.updateSpeedFactor = 7.5;
 
 		this.init();
 	}
@@ -111,7 +111,7 @@ class Bus extends Obstacle {
 			this.busMesh.position.z +=
 				(this.modelLength / 2) *
 				this.delta.getDelta() *
-				(3 / this.updateSpeedFactor);
+				(7 / this.updateSpeedFactor);
 
 			if (
 				this.context.playerBB &&

@@ -58,6 +58,7 @@ class GameStateManager {
 
 	restartGame() {
 		this.currentState = this.gameStates.inPlay;
+		this.context.cityContainer.position.z += 30;
 		this.context.gameStateEventBus.publish("restart_game");
 	}
 
