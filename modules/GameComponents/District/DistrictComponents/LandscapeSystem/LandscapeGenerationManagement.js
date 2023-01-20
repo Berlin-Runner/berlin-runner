@@ -29,7 +29,6 @@ class LandscapeGenerationManager {
 
 	init() {
 		if (this.opts != null) {
-			// console.log("constructing the city using tiles from level");
 			this.landscapesArray = this.opts.tiles;
 		} else {
 		}
@@ -73,9 +72,9 @@ class LandscapeGenerationManager {
 
 	updatePlacements() {
 		if (this.gameState.currentState == "in_play") {
-			// if (this.counter % 2 === 0) {
-			this.obstacleManager.placeObstacles(this.placementPosition);
-			// }
+			if (this.counter % 3 === 0) {
+				this.obstacleManager.placeObstacles(this.placementPosition);
+			}
 		}
 		setTimeout(() => {
 			requestAnimationFrame(this.updatePlacements.bind(this));

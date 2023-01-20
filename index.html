@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="css.css" />
 
-		<!-- =============================================== LIB IMPORTS =============================================== -->
+		<!-- =============================================== LIB IMPORTS START =============================================== -->
 		<script src="libs/three.js"></script>
 
 		<script src="libs/ExtendMaterial.js"></script>
@@ -28,7 +28,7 @@
 		<script src="libs/HalftonePass.js"></script>
 		<script src="libs/GLTFLoader.js"></script>
 		<script src="libs/OrbitControls.js"></script>
-		<!-- =============================================== LIB IMPORTS =============================================== -->
+		<!-- =============================================== LIB IMPORTS END =============================================== -->
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,19 +44,15 @@
 	</head>
 	<body>
 		<!-- =============================================== STATIC SCREEN NOISE =============================================== -->
-
 		<div id="page_static" class="full-screen"></div>
 		<!-- =============================================== STATIC SCREEN NOISE =============================================== -->
 
 		<!-- =============================================== GAME INTRO SCREEN START =============================================== -->
 		<div id="intro-screen" class="full-screen">
 			<div id="game-title">
-				<!-- BERLIN RUNNER -->
-				<!-- <canvas id="game-title-3d"></canvas> -->
 				<div class="game-title-3d"></div>
 			</div>
 			<div id="instructions">
-				<!-- <span style="font-size: 36px">INSTRUCTIONS</span> -->
 				<div style="text-align: center; padding: 20px">
 					LANE: A|D&nbsp; | SLIDE: S&nbsp; | JUMP: SPACE&nbsp; | MUTE : M
 				</div>
@@ -166,32 +162,7 @@
 		<!-- =============================================== DISTRICT PICKER END =============================================== -->
 
 		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
-
 		<div id="character-picker" class="full-screen character-picker">
-			<!-- <div class="banner">PICK YOUR CHARACTER</div> -->
-
-			<!-- <div class="characters-holder">
-				<div class="character">
-					<div class="character-description">ZEN BEN</div>
-					<div class="character-display" id="zen-ben-display"></div>
-
-				</div>
-
-				<div class="character">
-					<div class="character-description">THE GIRL</div>
-					<div class="character-display" id="the-girl-display"></div>
-
-				</div>
-
-				<div class="character">
-					<div class="character-description">NEW CHARACTER</div>
-					<div class="character-display">
-						<div class="coming-soon">COMING SOON :)</div>
-					</div>
-
-				</div>
-			</div> -->
-
 			<div style="color: red; font-size: 32px">
 				THIS SECTION IS UNDER DEVELOPMENT
 			</div>
@@ -224,7 +195,6 @@
 				</button>
 			</div>
 		</div>
-
 		<!-- =============================================== CHARACHTER PICKER END =============================================== -->
 
 		<!-- =============================================== STAGE UI START =============================================== -->
@@ -382,12 +352,10 @@
 		<div id="level-zero-intro-screen" class="full-screen" style="display: none">
 			<div class="level-title">Friedrichshain-Kreuzberg</div>
 			<div id="instructions">
-				<span style="font-size: 36px">OBJECTIVES</span>
 				<div style="text-align: center">
 					WELCOME TO THE Friedrichshain-Kreuzberg DISTRICT<br />
 					HAVE FUN WITH CROISSANTS, FILTER COFFEE AND MUSTACHES<br />
-					AVOID OBSTACLES, COLLECT COINS, GET
-					<span class="level-objective">?</span> SCORE POINTS, *_* <br />
+					AVOID OBSTACLES, COLLECT COINS, HAVE FUN <br />
 					GAME WILL START IN: <br />
 					<span class="level-countdown-timer" style="font-size: 64px">;)</span
 					><br />

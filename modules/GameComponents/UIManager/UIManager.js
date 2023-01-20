@@ -4,10 +4,10 @@ import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js
 import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
 import { DistrictPickerComponent } from "./CommonUIComponents/DistrictPickerComponent.js";
 import CharacterPicker from "./CharacterPicker.js";
+import StageUI from "./StageUI.js";
 class UIManager {
 	constructor(context) {
 		this.context = context;
-		// console.log("UI manager has woken up");
 		this.setupUIComponents();
 	}
 
@@ -19,6 +19,7 @@ class UIManager {
 		this.gameIntroComponent.showComponent();
 		this.gameIntroComponent.showStatic();
 
+		this.stageUIComponent = new StageUI("stage-screen", this.context);
 		this.districtPicker = new DistrictPickerComponent(
 			"district-picker",
 			this.context

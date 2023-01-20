@@ -1,6 +1,4 @@
-import { Vec3, Box, Body } from "../../../../../../../../libs/cannon-es.js";
 import { Obstacle } from "../Obstacle.js";
-import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
 
 export default class Stage extends Obstacle {
 	constructor(context) {

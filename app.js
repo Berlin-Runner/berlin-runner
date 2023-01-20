@@ -136,15 +136,7 @@ class Game {
 			});
 	}
 
-	animate() {
-		this.stats.begin();
-
-		document.getElementById("player-is-jumping").innerText =
-			this.G.PLAYER_JUMPING;
-
-		document.getElementById("player-is-sliding").innerText =
-			this.G.PLAYER_SLIDING;
-
+	checkRiverIntersection() {
 		if (
 			this.gameStateManager.currentState != "game_over" &&
 			this.gameWorld.scene.getObjectByName("Water")
@@ -154,8 +146,6 @@ class Game {
 			this.gameWorld.scene
 				.getObjectByName("Water")
 				.getWorldPosition(childPosition);
-
-			// console.log(childPosition.z);
 
 			document.getElementById("dist-to-river").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
@@ -168,32 +158,19 @@ class Game {
 			) {
 				if (!this.G.PLAYER_JUMPING) {
 					this.gameStateManager.gameOver();
-					// this.__PM__.position.z -= 4;
-					// this.playerInstance.player.position.z -= 4;
-					// this.animationManager.prepareCrossFade(
-					// 	"runAction",
-					// 	"fallAction",
-					// 	0.1
-					// );
-					// this.currentPlayerState = this.playerAnimationStates.falling;
-					// this.gameStateEventBus.publish("game_over");
-					// this.mixer.addEventListener("finished", () => {
-					// 	this.animationManager.fadeToAction("idleAction", -0.1);
-					// 	this.currentPlayerState = this.playerAnimationStates.running;
-					// });
 				}
-
 				document.getElementById("dist-to-river").style.color = "red";
 			} else {
 				document.getElementById("dist-to-river").style.color = "greenyellow";
 			}
 		}
+	}
 
+	checkBridgeIntersection() {
 		if (
 			this.gameStateManager.currentState != "game_over" &&
 			this.gameWorld.scene.getObjectByName("TrainStation")
 		) {
-			// if (this.gameStateManager.currentState === "game_over");
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("TrainStation")
@@ -223,32 +200,6 @@ class Game {
 				}
 				if (!this.G.PLAYER_SLIDING) {
 					this.gameStateManager.gameOver();
-					// this.__PM__.position.z -= 4;
-					// this.playerInstance.player.position.z -= 4;
-
-					// this.animationManager.prepareCrossFade(
-					// 	"runAction",
-					// 	"fallAction",
-					// 	0.1
-					// );
-					// this.currentPlayerState = this.playerAnimationStates.falling;
-					// this.mixer.addEventListener("finished", () => {
-					// 	// this.animationManager.fadeToAction("runAction", -0.1);
-
-					// 	this.animationManager.prepareCrossFade(
-					// 		"fallAction",
-					// 		"runAction",
-					// 		0.4
-					// 	);
-					// 	this.currentPlayerState = this.playerAnimationStates.running;
-					// });
-
-					// this.animationManager.fadeToAction("fallAction", 0.2);
-					// this.currentPlayerState = this.playerAnimationStates.falling;
-					// this.mixer.addEventListener("finished", () => {
-					// 	this.animationManager.fadeToAction("idleAction", -0.1);
-					// 	this.currentPlayerState = this.playerAnimationStates.running;
-					// });
 				}
 
 				document.getElementById("dist-to-river").style.color = "red";
@@ -265,7 +216,14 @@ class Game {
 				document.getElementById("dist-to-river").style.color = "greenyellow";
 			}
 		}
+	}
 
+	updateStats() {
+		document.getElementById("player-is-jumping").innerText =
+			this.G.PLAYER_JUMPING;
+
+		document.getElementById("player-is-sliding").innerText =
+			this.G.PLAYER_SLIDING;
 		if (this.gameWorld.scene.getObjectByName("bus-left")) {
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
@@ -279,9 +237,17 @@ class Game {
 
 		document.getElementById("current-game-state").innerText =
 			this.gameStateManager.currentState;
-
 		document.getElementById("active-player-animation").innerText =
 			this.temp_animations[this.currentPlayerState];
+	}
+
+	animate() {
+		this.stats.begin();
+
+		this.checkRiverIntersection();
+		this.checkBridgeIntersection();
+
+		this.updateStats();
 
 		requestAnimationFrame(this.animate.bind(this));
 		if (!this.renderGraphics) return;
@@ -296,11 +262,7 @@ class Game {
 		this.currentLevel.update();
 		requestAnimationFrame(this.playerInstance.update.bind(this.playerInstance));
 
-		// console.log(this.playerInstance);
-
 		this.stats.end();
-
-		// console.table(this.gameWorld.renderer.info);
 	}
 }
 
@@ -381,6 +343,3 @@ class BerlinRunnerTextLogo {
 		}
 	}
 }
-
-// let berlinRunnerLogo = new BerlinRunnerTextLogo();
-// requestAnimationFrame(berlinRunnerLogo.animate.bind(berlinRunnerLogo));

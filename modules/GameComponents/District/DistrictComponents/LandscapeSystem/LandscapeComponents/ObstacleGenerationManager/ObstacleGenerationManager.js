@@ -23,17 +23,11 @@ class ObstacleGenerationManager {
 		let initialSpawnPosition = new THREE.Vector3(0, 0, -100);
 		let bus = new Bus(this.context, initialSpawnPosition);
 		this.stage = new Stage(this.context);
-		// let bus_ = new Bus(this.context, initialSpawnPosition);
 
 		this.buses.push(bus);
-		// this.buses.push(bus_);
-		// for (let index = 0; index < this.totalObstacles; index++) {
-		// 	this.buses.push(bus.clone());
-		// }
 	}
 
 	placeObstacles(zPos) {
-		// zPos = zPos * 5;
 		let placementPosition = new THREE.Vector3(
 			this.obstaclePositionX[UTIL.randomIntFromInterval(0, 2)],
 			0,
