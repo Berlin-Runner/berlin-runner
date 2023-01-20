@@ -7,6 +7,7 @@ class GameStateManager {
 			pickingDistrict: "picking-district",
 			pickingCharacter: "picking-character",
 			started: "started",
+			staged: "staged",
 			inPlay: "in_play",
 			paused: "paused",
 			over: "game_over",
@@ -16,6 +17,54 @@ class GameStateManager {
 	}
 
 	init() {
+		/*
+		gsap.to(object.position, {
+			x: position,
+			duration,
+			ease: "power4.out",
+			onComplete: () => {
+				setTimeout(finishCallBack, 500);
+			},
+		});
+		*/
+
+		document
+			.getElementById("display-character-picker")
+			.addEventListener("click", () => {
+				// alert("showing the picker");
+				document.getElementById("stage-screen").style.display = "none";
+				this.showCharacterPicker();
+			});
+
+		document
+			.getElementById("start-game-button-final")
+			.addEventListener("click", () => {
+				document.getElementById("stage-screen").style.display = "none";
+
+				this.context.startingStage.position.y = -10;
+
+				gsap.to(this.context.gameWorld.camera.rotation, {
+					y: Math.PI,
+					duration: 1,
+					onComplete: () => {
+						this.context.gameWorld.camera.lookAt(new THREE.Vector3(0, 2, 0));
+					},
+				});
+				gsap.to(this.context.gameWorld.camera.position, {
+					y: 2,
+					z: 4,
+					duration: 1.125,
+					// ease: "power4.out",
+					onComplete: () => {
+						this.enterPlay();
+					},
+				});
+				// this.context.gameWorld.camera.position.z = 4;
+				// this.context.gameWorld.camera.position.y = 2;
+
+				// alert("animate the camera and start the game");
+			});
+
 		this.currentState = this.gameStates.notStartedYet;
 	}
 
@@ -39,6 +88,18 @@ class GameStateManager {
 		this.context.gameStateEventBus.publish("start_game", districtIndex);
 	}
 
+	enterStage() {
+		document.getElementById("stage-screen").style.display = "flex";
+
+		this.currentState = this.gameStates.staged;
+		this.context.gameWorld.camera.position.z = -2;
+		this.context.gameWorld.camera.position.y = 1;
+		this.context.gameWorld.camera.lookAt(new THREE.Vector3(0, 1, 0));
+		console.log(this.context.gameWorld.camera.position);
+
+		this.context.gameStateEventBus.publish("enter_stage");
+	}
+
 	enterPlay() {
 		this.currentState = this.gameStates.inPlay;
 		this.scoreContainer = document.getElementById("score-holder");
@@ -58,7 +119,7 @@ class GameStateManager {
 
 	restartGame() {
 		this.currentState = this.gameStates.inPlay;
-		this.context.cityContainer.position.z += 1;
+		this.context.cityContainer.position.z += 2;
 		this.context.gameStateEventBus.publish("restart_game");
 	}
 

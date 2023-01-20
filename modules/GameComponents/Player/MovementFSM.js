@@ -126,11 +126,21 @@ class MovementFSM {
 	}
 
 	playSlideAnimation() {
-		this.context.animationManager.fadeToAction("slideAction", 0.3);
+		// this.context.animationManager.fadeToAction("slideAction", 0.3);
+		this.context.animationManager.prepareCrossFade(
+			"runAction",
+			"slideAction",
+			0.5
+		);
 		this.context.currentPlayerState =
 			this.context.playerAnimationStates.sliding;
 		this.context.mixer.addEventListener("finished", () => {
-			this.context.animationManager.fadeToAction("runAction", -0.1);
+			// this.context.animationManager.fadeToAction("runAction", -0.1);
+			this.context.animationManager.prepareCrossFade(
+				"slideAction",
+				"runAction",
+				0
+			);
 			this.context.currentPlayerState =
 				this.context.playerAnimationStates.running;
 		});
@@ -148,11 +158,24 @@ class MovementFSM {
 	}
 
 	playJumpAnimation() {
-		this.context.animationManager.fadeToAction("jumpAction", 0.2);
+		console.log(this.context.currentAction);
+		// this.context.animationManager.fadeToAction("jumpAction", 0.2);
+		this.context.animationManager.prepareCrossFade(
+			"runAction",
+			"jumpAction",
+			0.0
+		);
 		this.context.currentPlayerState =
 			this.context.playerAnimationStates.jumping;
+		this.context.currentAction = this.context.playerActions["jumpAction"];
 		this.context.mixer.addEventListener("finished", () => {
-			this.context.animationManager.fadeToAction("runAction", -0.1);
+			// this.context.animationManager.fadeToAction("runAction", -0.1);
+			console.log("JUMPING HAS FINISHED AND TRANSITIONING INTO RUNNING AGAIN");
+			this.context.animationManager.prepareCrossFade(
+				"jumpAction",
+				"runAction",
+				0.0
+			);
 			this.context.currentPlayerState =
 				this.context.playerAnimationStates.running;
 		});

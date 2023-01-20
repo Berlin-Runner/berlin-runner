@@ -1,6 +1,7 @@
 import { UTIL } from "../../../../../../Util/UTIL.js";
 
 import { Bus } from "./Bus/Bus.js";
+import Stage from "./Stage/Stage.js";
 
 class ObstacleGenerationManager {
 	constructor(context) {
@@ -21,6 +22,7 @@ class ObstacleGenerationManager {
 
 		let initialSpawnPosition = new THREE.Vector3(0, 0, -100);
 		let bus = new Bus(this.context, initialSpawnPosition);
+		this.stage = new Stage(this.context);
 		// let bus_ = new Bus(this.context, initialSpawnPosition);
 
 		this.buses.push(bus);

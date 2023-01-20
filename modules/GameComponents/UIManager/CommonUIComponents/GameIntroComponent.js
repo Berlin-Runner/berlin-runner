@@ -40,7 +40,7 @@ class GameIntroComponent extends BaseUIComponent {
 		// console.log("showing the picker");
 		this.hideComponent();
 
-		this.stateManager.showCharacterPicker();
+		this.stateManager.showDistrictPicker();
 	}
 
 	muteToggle() {

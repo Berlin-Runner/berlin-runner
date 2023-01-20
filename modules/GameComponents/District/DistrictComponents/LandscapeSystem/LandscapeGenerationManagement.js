@@ -20,7 +20,7 @@ class LandscapeGenerationManager {
 			recycleCityTiles: true,
 		};
 
-		this.updateSpeedFactor = 7.5; //use this to make things move faster
+		this.updateSpeedFactor = 3.5; //use this to make things move faster
 
 		this.placementPosition = -200;
 

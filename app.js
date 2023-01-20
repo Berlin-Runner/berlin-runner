@@ -145,13 +145,17 @@ class Game {
 		document.getElementById("player-is-sliding").innerText =
 			this.G.PLAYER_SLIDING;
 
-		if (this.gameWorld.scene.getObjectByName("Water")) {
+		if (
+			this.gameStateManager.currentState != "game_over" &&
+			this.gameWorld.scene.getObjectByName("Water")
+		) {
+			if (this.gameStateManager.currentState === "game_over") rurn;
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("Water")
 				.getWorldPosition(childPosition);
 
-			console.log(childPosition.z);
+			// console.log(childPosition.z);
 
 			document.getElementById("dist-to-river").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
@@ -166,12 +170,17 @@ class Game {
 					this.gameStateManager.gameOver();
 					// this.__PM__.position.z -= 4;
 					// this.playerInstance.player.position.z -= 4;
-					this.animationManager.fadeToAction("fallAction", 0.2);
-					this.currentPlayerState = this.playerAnimationStates.falling;
-					this.mixer.addEventListener("finished", () => {
-						this.animationManager.fadeToAction("idleAction", -0.1);
-						this.currentPlayerState = this.playerAnimationStates.running;
-					});
+					// this.animationManager.prepareCrossFade(
+					// 	"runAction",
+					// 	"fallAction",
+					// 	0.1
+					// );
+					// this.currentPlayerState = this.playerAnimationStates.falling;
+					// this.gameStateEventBus.publish("game_over");
+					// this.mixer.addEventListener("finished", () => {
+					// 	this.animationManager.fadeToAction("idleAction", -0.1);
+					// 	this.currentPlayerState = this.playerAnimationStates.running;
+					// });
 				}
 
 				document.getElementById("dist-to-river").style.color = "red";
@@ -180,7 +189,11 @@ class Game {
 			}
 		}
 
-		if (this.gameWorld.scene.getObjectByName("TrainStation")) {
+		if (
+			this.gameStateManager.currentState != "game_over" &&
+			this.gameWorld.scene.getObjectByName("TrainStation")
+		) {
+			// if (this.gameStateManager.currentState === "game_over");
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("TrainStation")
@@ -212,12 +225,30 @@ class Game {
 					this.gameStateManager.gameOver();
 					// this.__PM__.position.z -= 4;
 					// this.playerInstance.player.position.z -= 4;
-					this.animationManager.fadeToAction("fallAction", 0.2);
-					this.currentPlayerState = this.playerAnimationStates.falling;
-					this.mixer.addEventListener("finished", () => {
-						this.animationManager.fadeToAction("idleAction", -0.1);
-						this.currentPlayerState = this.playerAnimationStates.running;
-					});
+
+					// this.animationManager.prepareCrossFade(
+					// 	"runAction",
+					// 	"fallAction",
+					// 	0.1
+					// );
+					// this.currentPlayerState = this.playerAnimationStates.falling;
+					// this.mixer.addEventListener("finished", () => {
+					// 	// this.animationManager.fadeToAction("runAction", -0.1);
+
+					// 	this.animationManager.prepareCrossFade(
+					// 		"fallAction",
+					// 		"runAction",
+					// 		0.4
+					// 	);
+					// 	this.currentPlayerState = this.playerAnimationStates.running;
+					// });
+
+					// this.animationManager.fadeToAction("fallAction", 0.2);
+					// this.currentPlayerState = this.playerAnimationStates.falling;
+					// this.mixer.addEventListener("finished", () => {
+					// 	this.animationManager.fadeToAction("idleAction", -0.1);
+					// 	this.currentPlayerState = this.playerAnimationStates.running;
+					// });
 				}
 
 				document.getElementById("dist-to-river").style.color = "red";

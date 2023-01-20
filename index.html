@@ -168,24 +168,19 @@
 		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
 
 		<div id="character-picker" class="full-screen character-picker">
-			<div class="banner">PICK YOUR CHARACTER</div>
+			<!-- <div class="banner">PICK YOUR CHARACTER</div> -->
 
-			<div class="characters-holder">
+			<!-- <div class="characters-holder">
 				<div class="character">
 					<div class="character-description">ZEN BEN</div>
 					<div class="character-display" id="zen-ben-display"></div>
-					<!-- <div class="character-description"></div> -->
-					<!-- <div class="select-character"> -->
-					<!-- <button class="select-character-button">SELECT</button> -->
-					<!-- </div> -->
+
 				</div>
 
 				<div class="character">
 					<div class="character-description">THE GIRL</div>
 					<div class="character-display" id="the-girl-display"></div>
-					<!-- <div class="select-character"> -->
-					<!-- <button class="select-character-button">SELECT</button> -->
-					<!-- </div> -->
+
 				</div>
 
 				<div class="character">
@@ -193,22 +188,71 @@
 					<div class="character-display">
 						<div class="coming-soon">COMING SOON :)</div>
 					</div>
-					<!-- <div class="select-character"> -->
-					<!-- <button class="select-character-button disabled">SELECT</button> -->
-					<!-- </div> -->
+
+				</div>
+			</div> -->
+
+			<div style="color: red; font-size: 32px">
+				THIS SECTION IS UNDER DEVELOPMENT
+			</div>
+
+			<div
+				class="character-selector-buttons"
+				style="
+					width: 100%;
+					height: 70%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+				"
+			>
+				<div class="">
+					<button class="charachter-continue-button" id="">PREV</button>
+				</div>
+
+				<div class="">
+					<button class="charachter-continue-button" id="">NEXT</button>
 				</div>
 			</div>
+
 			<div class="continue-button">
 				<button
 					class="charachter-continue-button"
 					id="charachter-continue-button"
 				>
-					CONTINUE
+					DONE
 				</button>
 			</div>
 		</div>
 
 		<!-- =============================================== CHARACHTER PICKER END =============================================== -->
+
+		<!-- =============================================== STAGE UI START =============================================== -->
+		<div
+			id="stage-screen"
+			class="_ full-screen"
+			style="display: none; justify-content: center; align-items: flex-end"
+		>
+			<div
+				style="
+					color: white;
+					font-size: 128px;
+					z-index: 100000;
+					position: fixed;
+					bottom: 10%;
+					right: 50;
+				"
+			>
+				<button class="generic-button" id="">HOME</button>
+				<button class="generic-button" id="display-character-picker">
+					CHARACTER
+				</button>
+				<button class="start-game-button-final" id="start-game-button-final">
+					CONTINUE
+				</button>
+			</div>
+		</div>
+		<!-- =============================================== STAGE UI END =============================================== -->
 
 		<!-- =============================================== GAME PLAY SCREEN START =============================================== -->
 		<div id="in-play-screen" class="_">
@@ -217,7 +261,7 @@
 			</div>
 
 			<div class="score" id="score-holder">
-				SCORE: &nbsp;&nbsp;<span id="score_text">0</span>
+				SCORE: &nbsp;&nbsp;<span id="score_text" style="display: none">0</span>
 			</div>
 			<div class="health" style="display: none">
 				HEALTH: <span id="health-value">=)</span> %
@@ -303,7 +347,7 @@
 				=(, you just died!, <br />
 				<span style="color: blueviolet">(strictly for tetsing purposes)</span>
 			</div>
-			<div id="final-score-holder">
+			<div style="display: none" id="final-score-holder">
 				FINAL SCORE:<span id="game-over-final-score"></span>
 			</div>
 

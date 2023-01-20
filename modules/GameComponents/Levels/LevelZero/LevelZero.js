@@ -65,7 +65,7 @@ class LevelZero extends Level {
 			cancelAnimationFrame(globalId);
 			// clearInterval(level_one_coundown_intervalID);
 			this.levelIntroUI.style.display = "none";
-			this.stateManager.enterPlay();
+			this.stateManager.enterStage();
 			this.runningSound.play();
 		}, (countDownTimer + 1) * 1000);
 	}

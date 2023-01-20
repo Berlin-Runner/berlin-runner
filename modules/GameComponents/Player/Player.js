@@ -21,7 +21,9 @@ class Player {
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
 
-			debugAABB: true,
+			debugAABB: false,
+
+			player: "ben",
 		};
 
 		this.init();
@@ -30,7 +32,7 @@ class Player {
 	}
 
 	init() {
-		this.addPlayerMesh();
+		this.addPlayerMesh("lady");
 		this.initCharachterCollider();
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
@@ -66,7 +68,16 @@ class Player {
 		});
 	}
 
-	async loadPlayerModel() {
+	async loadBenModel() {
+		let { model, animations } = await UTIL.loadModel(
+			"/assets/models/zen-ben.glb"
+			// "/assets/models/the-girl.glb"
+		);
+
+		return { model, animations };
+	}
+
+	async loadLadyModel() {
 		let { model, animations } = await UTIL.loadModel(
 			// "/assets/models/zen-ben.glb"
 			"/assets/models/the-girl.glb"
@@ -75,9 +86,16 @@ class Player {
 		return { model, animations };
 	}
 
-	async addPlayerMesh() {
+	async addPlayerMesh(player) {
+		console.log("LOADING " + player);
+		let playerModelFull;
 		this.player = new THREE.Group();
-		let playerModelFull = await this.loadPlayerModel();
+		if (player === "ben") {
+			playerModelFull = await this.loadBenModel();
+			console.log(playerModelFull);
+		} else if (player === "lady") {
+			playerModelFull = await this.loadLadyModel();
+		}
 
 		let playerMesh = playerModelFull.model;
 		let playerAnimation = playerModelFull.animations;
@@ -127,6 +145,13 @@ class Player {
 
 	addClassSettings() {
 		this.localSettings = this.context.gui.addFolder("PLAYER SETTINGS");
+
+		this.localSettings
+			.add(this.settings, "player", { ben: "ben ", lady: "lady" })
+			.name("PLAYER")
+			.onChange((val) => {
+				this.addPlayerMesh(val);
+			});
 
 		this.localSettings
 			.add(this.settings, "playerScale", 0, 1)

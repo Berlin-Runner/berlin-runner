@@ -29,6 +29,7 @@ class Camer3rdPerson {
 	}
 
 	update() {
+		return;
 		if (!this.camera || !this.player) return;
 		this.camera.position.y =
 			this.player.position.y + this.currentCameraOffsetProfile.y;

@@ -197,10 +197,12 @@ canvas {
 }
 
 #start-game-button,
+#start-game-button-final,
 #restart-level-button,
 #back-to-home-button,
 #resume-button,
-#restart-button {
+#restart-button,
+.generic-button {
 	/* display: inline; */
 	margin: 5px;
 	font-weight: 800;
@@ -399,7 +401,7 @@ canvas {
 
 .character-picker {
 	/* z-index: 100000; */
-	background: black;
+	background: rgba(0, 0, 0, 0.125);
 	/* position: absolute; */
 
 	/* overflow-x: auto; */

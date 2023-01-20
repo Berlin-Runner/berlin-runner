@@ -49,7 +49,7 @@ class Bus extends Obstacle {
 			// this.context.busBB.position = this.spawnPosition;
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
-			this.context.gameWorld.scene.add(box);
+			// this.context.gameWorld.scene.add(box);
 
 			this.scene.add(this.busMesh);
 
