@@ -8,6 +8,7 @@ class LandscapeGenerationManager {
 		this.model = null;
 
 		this.gameState = this.context.gameStateManager;
+		this.stateBus = this.context.gameStateEventBus;
 
 		this.delta = new THREE.Clock();
 
@@ -21,6 +22,7 @@ class LandscapeGenerationManager {
 		};
 
 		this.updateSpeedFactor = 3.5; //use this to make things move faster
+		this.updateSpeedFactor_ = 1; //use this to make things move faster
 
 		this.placementPosition = -200;
 
@@ -52,6 +54,14 @@ class LandscapeGenerationManager {
 		this.scene.add(this.city);
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
+
+		this.setupEventSubscriptions();
+	}
+
+	setupEventSubscriptions() {
+		this.stateBus.subscribe("restart_game", () => {
+			this.updateSpeedFactor_ = 1;
+		});
 	}
 
 	update() {
@@ -68,6 +78,14 @@ class LandscapeGenerationManager {
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
 		}, this.updateSpeedFactor * 1000);
+
+		setTimeout(() => {
+			if (this.gameState.currentState != "in_play") return;
+			this.updateSpeedFactor_ += 0.125;
+			if (this.updateSpeedFactor_ > 2) return;
+
+			console.log("CURRENT UPDATE SCALE" + this.updateSpeedFactor_);
+		}, 20 * 1000);
 	}
 
 	updatePlacements() {
@@ -88,7 +106,8 @@ class LandscapeGenerationManager {
 				this.city.position.z +=
 					this.modelLength *
 					(1 / this.updateSpeedFactor) *
-					this.delta.getDelta();
+					this.delta.getDelta() *
+					this.updateSpeedFactor_;
 		}
 	}
 
