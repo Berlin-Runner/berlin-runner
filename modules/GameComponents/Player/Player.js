@@ -32,7 +32,7 @@ class Player {
 	}
 
 	init() {
-		this.addPlayerMesh("lady");
+		this.addPlayerMesh("ben");
 		this.initCharachterCollider();
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
@@ -70,7 +70,7 @@ class Player {
 
 	async loadBenModel() {
 		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/zen-ben.glb"
+			"/assets/models/zen-ben-v2.glb"
 			// "/assets/models/the-girl.glb"
 		);
 
@@ -87,7 +87,6 @@ class Player {
 	}
 
 	async addPlayerMesh(player) {
-		console.log("LOADING " + player);
 		let playerModelFull;
 		this.player = new THREE.Group();
 		if (player === "ben") {
@@ -104,7 +103,8 @@ class Player {
 
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
-		this.player.scale.setScalar(this.settings.playerScale);
+		// this.player.scale.setScalar(this.settings.playerScale);
+		this.player.scale.setScalar(45);
 		this.player.position.set(0, 0, 0);
 		this.scene.add(this.player);
 
@@ -119,7 +119,6 @@ class Player {
 	initPlayerBB(playerMesh) {
 		this.context.__PM__ = playerMesh.getObjectByName("aabb");
 		this.context.__PM__.visible = false;
-		console.log(this.context.__PM__);
 
 		this.context.__PM__.geometry.computeBoundingBox();
 		this.context.__PM__.scale.set(0.5, 0.75, 1);
