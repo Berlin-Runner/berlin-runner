@@ -81,7 +81,6 @@ class Bus extends Obstacle {
 
 	setupEventSubscriber() {
 		this.stateBus.subscribe("game_over", () => {
-			console.log("moving the bus back");
 			this.busMesh.position.z = -200;
 		});
 	}

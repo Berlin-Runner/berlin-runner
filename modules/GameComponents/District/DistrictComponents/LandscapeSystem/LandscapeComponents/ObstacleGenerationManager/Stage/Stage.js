@@ -28,6 +28,7 @@ export default class Stage extends Obstacle {
 			this.stageMesh = res.model;
 			this.stageMesh.position.copy(this.spawnPosition);
 			this.context.startingStage = this.stageMesh;
+			this.context.startingStage.visible = false;
 			this.scene.add(this.stageMesh);
 		});
 	}

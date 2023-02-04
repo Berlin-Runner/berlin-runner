@@ -21,7 +21,7 @@ class LandscapeGenerationManager {
 			recycleCityTiles: true,
 		};
 
-		this.updateSpeedFactor = 3.5; //use this to make things move faster
+		this.updateSpeedFactor = 0.25; //use this to make things move faster
 		this.updateSpeedFactor_ = 1; //use this to make things move faster
 
 		this.placementPosition = -200;
@@ -60,7 +60,7 @@ class LandscapeGenerationManager {
 
 	setupEventSubscriptions() {
 		this.stateBus.subscribe("restart_game", () => {
-			this.updateSpeedFactor_ = 1;
+			this.updateSpeedFactor = 0.25;
 		});
 	}
 
@@ -77,15 +77,15 @@ class LandscapeGenerationManager {
 
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
-		}, this.updateSpeedFactor * 1000);
+		}, (1 / this.updateSpeedFactor) * 1000);
 
 		setTimeout(() => {
 			if (this.gameState.currentState != "in_play") return;
-			this.updateSpeedFactor_ += 0.125;
-			if (this.updateSpeedFactor_ > 2) return;
+			this.updateSpeedFactor += 0.05;
+			if (this.updateSpeedFactor > 1) return;
 
 			console.log("CURRENT UPDATE SCALE" + this.updateSpeedFactor_);
-		}, 20 * 1000);
+		}, 10 * 1000);
 	}
 
 	updatePlacements() {
@@ -104,10 +104,7 @@ class LandscapeGenerationManager {
 		if (this.gameState.currentState == "in_play") {
 			if (this.city && this.settings.moveCity)
 				this.city.position.z +=
-					this.modelLength *
-					(1 / this.updateSpeedFactor) *
-					this.delta.getDelta() *
-					this.updateSpeedFactor_;
+					this.modelLength * 0.009 * this.updateSpeedFactor;
 		}
 	}
 

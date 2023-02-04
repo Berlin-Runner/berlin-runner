@@ -148,8 +148,6 @@ class MovementFSM {
 	}
 
 	playJumpAnimation() {
-		console.log(this.context.currentAction);
-
 		this.context.animationManager.prepareCrossFade("_", "jumpAction", 0.0);
 		this.context.currentPlayerState =
 			this.context.playerAnimationStates.jumping;

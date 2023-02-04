@@ -151,7 +151,6 @@ class AnimationFSM {
 		});
 
 		this.stateBus.subscribe("enter_stage", () => {
-			console.log("captured enter_stage ");
 			this.manager.prepareCrossFade("runAction", "idleAction", 0);
 			this.currentState = this.playerAnimationStates.idleAction;
 			this.updatePlayerState();
