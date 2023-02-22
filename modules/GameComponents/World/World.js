@@ -41,7 +41,9 @@ class World_ {
 		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
 
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
-		this.renderer.textureEncoding = THREE.sRGBEncoding;
+		// this.renderer.textureEncoding = THREE.sRGBEncoding;
+		this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+		this.renderer.physicallyCorrectLights = true;
 		this.canvas.appendChild(this.renderer.domElement);
 
 		this.controls = new THREE.OrbitControls(
@@ -50,15 +52,42 @@ class World_ {
 		);
 		this.controls.enabled = false;
 
-		let ambLight = new THREE.AmbientLight("#ddd", 0.75);
+		let ambLight = new THREE.AmbientLight("#ffffff", 2);
 		this.scene.add(ambLight);
 
 		/* let hemiLight = new THREE.HemisphereLight(0xfff, 0xfff, 2);
 		this.scene.add(hemiLight); */
 
-		let sunLight = new THREE.DirectionalLight("#fff", 1);
-		sunLight.position.set(0, 1.5, 1);
-		this.scene.add(sunLight);
+		// let sunLight = new THREE.DirectionalLight("#f00", 2);
+		// sunLight.position.set(0, 1.5, 1);
+		// this.scene.add(sunLight);
+
+		const sunlight = new THREE.DirectionalLight(0xffffff, 1);
+
+		// Set the position of the light to simulate the sun's position
+		sunlight.position.set(0, 1, 1);
+
+		// Set the color of the light to a warm yellow tone
+		sunlight.color.setHex(0xf9d71c);
+
+		// Set the intensity of the light to simulate the brightness of the sun
+		sunlight.intensity = 0.75;
+
+		// Set the castShadow property to true to enable shadows
+		sunlight.castShadow = true;
+
+		// Set the shadow properties to improve the quality of the shadows
+		sunlight.shadow.mapSize.width = 1024;
+		sunlight.shadow.mapSize.height = 1024;
+		sunlight.shadow.camera.near = 0.1;
+		sunlight.shadow.camera.far = 1000;
+		sunlight.shadow.camera.left = -500;
+		sunlight.shadow.camera.right = 500;
+		sunlight.shadow.camera.top = 500;
+		sunlight.shadow.camera.bottom = -500;
+
+		// Add the light to the scene
+		this.scene.add(sunlight);
 	}
 
 	setupResize() {

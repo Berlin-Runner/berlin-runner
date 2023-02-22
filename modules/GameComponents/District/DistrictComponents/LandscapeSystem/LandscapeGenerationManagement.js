@@ -35,19 +35,31 @@ class LandscapeGenerationManager {
 		} else {
 		}
 
-		this.z = -this.modelLength * this.landscapesArray.length;
+		console.log(this.landscapesArray);
 
 		this.city = new THREE.Object3D();
 
 		this.landscapesArray.forEach((child, index) => {
-			child.position.z -= (this.modelLength - 0) * index;
-
+			// console.log(child);
+			console.log(child);
+			child.position.z -= this.modelLength * index;
 			this.city.add(child);
 		});
+		this.z = -this.modelLength * this.landscapesArray.length;
+		console.log(this.city);
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
 		this.city.position.z = cityCenter - this.modelLength;
+
+		this.city.traverse((child) => {
+			if (child.isMesh) {
+				child.material.roughness = 0.8;
+				child.material.castShadow = true;
+				child.material.recieveShadow = true;
+			}
+		});
+		// this.city.position.set(0, 0, 0);
 
 		this.context.cityContainer = this.city;
 

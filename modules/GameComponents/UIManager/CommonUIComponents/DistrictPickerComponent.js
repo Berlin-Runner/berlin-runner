@@ -14,7 +14,7 @@ class DistrictPickerComponent extends BaseUIComponent {
 	}
 
 	setupDistricts() {
-		this.districtOne = new DistrictUI("district-one", this.context, 0);
+		// this.districtOne = new DistrictUI("district-one", this.context, 0);
 	}
 
 	setUpComponentEventListners() {}

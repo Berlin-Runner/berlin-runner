@@ -8,6 +8,8 @@ class G {
 
 			PLAYER_JUMPING: false,
 			PLAYER_SLIDING: false,
+
+			SELECTED_DISTRICT: 3,
 		};
 	}
 

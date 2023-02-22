@@ -30,13 +30,20 @@ export default class AnimationManager {
 
 	initializeAnimations(clips) {
 		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
-		this.fallClip = THREE.AnimationClip.findByName(clips, "Fall");
-		this.deadClip = THREE.AnimationClip.findByName(clips, "Dying");
+		this.fallClip =
+			THREE.AnimationClip.findByName(clips, "Fall") ||
+			THREE.AnimationClip.findByName(clips, "Falling");
+		this.deadClip =
+			THREE.AnimationClip.findByName(clips, "Dying") ||
+			THREE.AnimationClip.findByName(clips, "Die");
 		this.idleClip = THREE.AnimationClip.findByName(clips, "Idle");
-		this.jumpClip = THREE.AnimationClip.findByName(clips, "Jump");
+		this.jumpClip =
+			THREE.AnimationClip.findByName(clips, "Jump") ||
+			THREE.AnimationClip.findByName(clips, "Running Jump");
 		this.slideClip =
 			THREE.AnimationClip.findByName(clips, "Running slide") ||
-			THREE.AnimationClip.findByName(clips, "Sliding");
+			THREE.AnimationClip.findByName(clips, "Sliding") ||
+			THREE.AnimationClip.findByName(clips, "Running Slide");
 
 		if (this.mixer) {
 			this.runAction = this.mixer.clipAction(this.runClip);

@@ -6,12 +6,13 @@ import { UTIL } from "../../Util/UTIL.js";
 import AnimationManager from "./AnimationManager.js";
 
 class Player {
-	constructor(context) {
+	constructor(context, playerModel) {
 		this.context = context;
 		this.camera = this.context.gameWorld.camera;
 		this.scene = this.context.gameWorld.scene;
 
 		this.player = null;
+		this.playerModel = playerModel;
 
 		this.settings = {
 			cameraFollow: true,
@@ -21,7 +22,7 @@ class Player {
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
 
-			debugAABB: false,
+			debugAABB: true,
 
 			player: "ben",
 		};
@@ -29,10 +30,12 @@ class Player {
 		this.init();
 
 		this.addClassSettings();
+
+		// requestAnimationFrame(this.update.bind(this));
 	}
 
 	async init() {
-		await this.addPlayerMesh("ben");
+		await this.addPlayerMesh(this.playerModel);
 		this.initCharachterCollider();
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
@@ -93,16 +96,21 @@ class Player {
 	}
 
 	async addPlayerMesh(player) {
-		await this.initializePlayerModels();
+		// await this.initializePlayerModels();
 
 		let playerModelFullBen;
 		// let playerModelFullLady;
 		this.player = new THREE.Group();
+		this.player.position.set(0, 0, 0);
 		// if (player === "ben") {
 		// playerModelFull = await this.loadBenModel();
-		playerModelFullBen = this.ben;
-		playerModelFullBen.model.scale.setScalar(45);
-		playerModelFullBen.model.position.set(0, 0, 0);
+		// playerModelFullBen = this.ben;
+		// playerModelFullBen.model.scale.setScalar(45);
+		// playerModelFullBen.model.position.set(0, 0, 0);
+
+		let playerModelFull = player;
+		// playerModelFull.model.position.set(0, 0, 0);
+		// playerModelFull.model.scale.setScalar(1);
 		// console.log(playerModelFull);
 		// }
 		// else if (player === "lady") {
@@ -113,25 +121,24 @@ class Player {
 
 		// console.log(playerModelFull);
 
-		let playerMeshBen = playerModelFullBen.model;
+		let playerMesh = playerModelFull.model;
 		// let playerMeshLady = playerModelFullLady.model;
-		let playerAnimationBen = playerModelFullBen.animations;
+		let playerAnimation = playerModelFull.animations;
 		// let playerAnimationLady = playerModelFullLady.animations;
 
-		this.initPlayerBB(playerMeshBen);
+		this.initPlayerBB(playerMesh);
 		// this.initPlayerBB(playerMeshLady);
 
-		this.player.add(playerMeshBen);
+		this.player.add(playerMesh);
 		// this.player.add(playerMeshLady);
 		this.player.rotation.set(0, Math.PI, 0);
-		// this.player.scale.setScalar(this.settings.playerScale);
-		this.player.position.set(0, 0, 0);
+		this.player.scale.setScalar(0.25);
 		this.scene.add(this.player);
 
 		this.animationManager = new AnimationManager(
 			this.context,
-			playerMeshBen,
-			playerAnimationBen
+			playerMesh,
+			playerAnimation
 		);
 		// this.animationManagerLady = new AnimationManager(
 		// 	this.context,
@@ -157,7 +164,7 @@ class Player {
 	}
 
 	update() {
-		if (!this.player) return;
+		// if (!this.player) return;
 		if (this.settings.cameraFollow) {
 			this.thirdPersonCamera.update();
 		}
@@ -168,6 +175,8 @@ class Player {
 				.copy(this.context.__PM__.geometry.boundingBox)
 				.applyMatrix4(this.context.__PM__.matrixWorld);
 		}
+
+		requestAnimationFrame(this.update.bind(this));
 	}
 
 	addClassSettings() {

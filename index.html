@@ -87,11 +87,69 @@
 		<div
 			id="district-picker"
 			class="full-screen district-picker"
-			style="display: flex"
+			style="display: flex
+			"
 		>
 			<div class="banner">PICK DISTRICT</div>
 
-			<div class="districts-holder" id="district-one">
+
+			<div
+				class="district-selector-buttons"
+				style="
+					width: 100%;
+					height: 70%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+				"
+			>
+		<div class="generic-button" style="border: none" id="district-name-holder"></div>
+		<div class="n" style="display:none" id="district-index-holder"></div>
+		<div class="" style="font-size: 64px">
+			<span class="material-symbols-outlined" style="font-size: 64px ; color :red">
+				location_on
+				</span>
+		</div>
+		</div>
+
+
+			<div
+				class="district-selector-buttons"
+				style="
+					width: 100%;
+					height: 70%;
+					display: flex;
+					justify-content: space-around;
+					align-items: center;
+				"
+			>
+				<div class="">
+					<button  style="border: none" class=""
+
+
+
+					id="previous-district">
+
+						<span class="material-symbols-outlined" style = "background: transparent; font-size : 64px; ">
+							navigate_before
+							</span></button>
+				</div>
+
+				<div class="">
+					<button style="border: none"  class=""
+
+
+
+					id="next-district">
+						<span class="material-symbols-outlined" style = "background: transparent; font-size : 64px; ">
+							navigate_next
+							</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- <div class="districts-holder" id="district-one">
 				<div class="district">
 					<div class="district-name">Friedrichshain-Kreuzberg</div>
 					<div class="district-image">
@@ -152,9 +210,10 @@
 					<div class="district-name">DISTRICT NAME</div>
 					<div class="district-image">
 						<div class="coming-soon">COMING SOON :)</div>
-					</div>
+					</div>-->
+
 					<div class="district-enter-button">
-						<button class="coming-soon-button">ENTER</button>
+						<button style="border: 3px solid black; font-size: 48px;" class="generic-button" id="confirm-district-selection">ENTER</button>
 					</div>
 				</div>
 			</div>
@@ -163,8 +222,8 @@
 
 		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
 		<div id="character-picker" class="full-screen character-picker">
-			<div style="color: red; font-size: 32px">
-				THIS SECTION IS UNDER DEVELOPMENT
+			<div style="color: red; font-size: 48px" id="character-name">
+
 			</div>
 
 			<div
@@ -178,11 +237,11 @@
 				"
 			>
 				<div class="">
-					<button class="charachter-continue-button" id="">PREV</button>
+					<button class="charachter-continue-button" id="character-picker-prev">PREV</button>
 				</div>
 
 				<div class="">
-					<button class="charachter-continue-button" id="">NEXT</button>
+					<button class="charachter-continue-button" id="character-picker-next">NEXT</button>
 				</div>
 			</div>
 
@@ -213,12 +272,12 @@
 					right: 50;
 				"
 			>
-				<button class="generic-button" id="">HOME</button>
-				<button class="generic-button" id="display-character-picker">
+				<button class="generic-button" style="display: none;" id="">HOME</button>
+				<button class="generic-button" style="display: none;" id="display-character-picker">
 					CHARACTER
 				</button>
 				<button class="start-game-button-final" id="start-game-button-final">
-					CONTINUE
+					GO!
 				</button>
 			</div>
 		</div>

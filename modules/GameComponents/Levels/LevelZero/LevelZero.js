@@ -34,24 +34,24 @@ class LevelZero extends Level {
 		this.stateManager.enterStage();
 	}
 
-	async start() {
+	start() {
 		this.init();
 	}
 
-	async init() {
+	init() {
 		/*
 		LOADING THE MODELS
 		*/
-		let tileOne = await new LandscapeTile("assets/models/tiles/tiles.1.2.glb");
-		let tileTwo = await new LandscapeTile("assets/models/tiles/tiles.2.3.glb");
-		let tileThree = await new LandscapeTile(
-			"assets/models/tiles/tiles.3.2.glb"
-		);
-		let tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
-		let tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
-		let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.3.glb");
-		let tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
-		let tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
+		// let tileOne = await new LandscapeTile("assets/models/tiles/tiles.1.2.glb");
+		// let tileTwo = await new LandscapeTile("assets/models/tiles/tiles.2.3.glb");
+		// let tileThree = await new LandscapeTile(
+		// 	"assets/models/tiles/tiles.3.2.glb"
+		// );
+		// let tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
+		// let tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
+		// let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.3.glb");
+		// let tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
+		// let tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
 
 		/*
 		CITY DESIGN
@@ -59,20 +59,20 @@ class LevelZero extends Level {
 		this.cityopts = {
 			name: "berlin",
 			tiles: [
-				tileSeven.clone(),
-				tileTwo.clone(),
-				tileThree.clone(),
-				tileSeven.clone(),
-				tileEight.clone(),
-				tileSix.clone(),
-				tileFour.clone(),
-				tileTwo.clone(),
-				tileOne.clone(),
-				tileFive.clone(),
-				tileTwo.clone(),
-				tileSeven.clone(),
-				tileEight.clone(),
-				tileOne.clone(),
+				this.context.tileSeven,
+				this.context.tileTwo,
+				this.context.tileThree,
+				this.context.tileSeven.clone(),
+				this.context.tileEight,
+				this.context.tileSix,
+				this.context.tileTwo.clone(),
+				this.context.tileFour,
+				this.context.tileOne,
+				this.context.tileFive,
+				this.context.tileTwo.clone(),
+				this.context.tileSeven.clone(),
+				this.context.tileEight.clone(),
+				this.context.tileOne.clone(),
 			],
 		};
 

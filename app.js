@@ -19,6 +19,7 @@ import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 // import { GLTFLoader } from "/libs/GLTFLoader.js";
 
 import * as dat from "/libs/dat.gui.module.js";
+import DistrictPicker from "./modules/GameComponents/Player/Pickers/DistrictPicker.js";
 
 class Game {
 	constructor() {
@@ -74,12 +75,13 @@ class Game {
 		this.initScoreSystem();
 		this.initHealthSystem();
 		this.initGameScene();
-		this.initLevels();
+		// this.initLevels();
 		this.initPlayerInstance();
 
 		this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
 
 		this.uiManager = new UIManager(this);
+		this.districtPicker = new DistrictPicker(this);
 	}
 
 	initGameState() {
@@ -115,15 +117,8 @@ class Game {
 		this.audioManager = new AudioManager(this);
 	}
 
-	initLevels() {
-		this.levelZero = new LevelZero(this);
-		this.levelZero.activeLevel = true;
-
-		this.currentLevel = this.levelZero;
-	}
-
 	initPlayerInstance() {
-		this.playerInstance = new Player(this);
+		// this.playerInstance = new Player(this);
 	}
 
 	addClassSettings() {
@@ -139,14 +134,15 @@ class Game {
 	checkRiverIntersection() {
 		if (
 			this.gameStateManager.currentState != "game_over" &&
-			this.gameWorld.scene.getObjectByName("Water")
+			this.gameWorld.scene.getObjectByName("Water") &&
+			this.playerInstance
 		) {
-			if (this.gameStateManager.currentState === "game_over") rurn;
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("Water")
 				.getWorldPosition(childPosition);
 
+			// console.log(childPosition);
 			document.getElementById("dist-to-river").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
 			);
@@ -157,6 +153,7 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition) > 2
 			) {
 				if (!this.G.PLAYER_JUMPING) {
+					console.log("GAME OVER");
 					this.gameStateManager.gameOver();
 				}
 				document.getElementById("dist-to-river").style.color = "red";
@@ -169,15 +166,21 @@ class Game {
 	checkBridgeIntersection() {
 		if (
 			this.gameStateManager.currentState != "game_over" &&
-			this.gameWorld.scene.getObjectByName("TrainStation")
+			this.gameWorld.scene.getObjectByName("TrainStation") &&
+			this.playerInstance
 		) {
 			let childPosition = new THREE.Vector3();
+			// console.log("the train station is");
+			// console.log(this.gameWorld.scene.getObjectByName("TrainStation"));
+
 			this.gameWorld.scene
 				.getObjectByName("TrainStation")
 				.getWorldPosition(childPosition);
 
 			document.getElementById("dist-to-bridge").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
+				// childPosition.distanceTo(this.__PM__.position)
+				// this.playerBB.position.distanceTo(childPosition)
 			);
 
 			if (
@@ -224,7 +227,10 @@ class Game {
 
 		document.getElementById("player-is-sliding").innerText =
 			this.G.PLAYER_SLIDING;
-		if (this.gameWorld.scene.getObjectByName("bus-left")) {
+		if (
+			this.gameWorld.scene.getObjectByName("bus-left") &&
+			this.playerInstance
+		) {
 			let childPosition = new THREE.Vector3();
 			this.gameWorld.scene
 				.getObjectByName("bus-left")
@@ -252,15 +258,18 @@ class Game {
 		requestAnimationFrame(this.animate.bind(this));
 		if (!this.renderGraphics) return;
 
-		this.world.step(1 / 120, this.time_physics.getDelta());
+		this.world.step(1 / 45, this.time_physics.getDelta());
 
 		if (this.globalSettings.renderCannonDebug) {
 			this.cannonDebugger.update();
 		}
 
 		requestAnimationFrame(this.gameWorld.update.bind(this.gameWorld));
-		this.currentLevel.update();
-		requestAnimationFrame(this.playerInstance.update.bind(this.playerInstance));
+		if (this.currentLevel) this.currentLevel.update();
+		if (this.playerInstance)
+			requestAnimationFrame(
+				this.playerInstance.update.bind(this.playerInstance)
+			);
 
 		this.stats.end();
 	}

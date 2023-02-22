@@ -44,6 +44,7 @@ class ScoreManager {
 		}, 1000 / 2);
 
 		if (this.stateManager.currentState === "in_play") {
+			return;
 			if (this.score >= this.context.currentLevel.levelInfo.levelScoreObjcetive)
 				this.stateManager.gameOver();
 			/*   this.score++;

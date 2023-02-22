@@ -47,8 +47,9 @@ class GameStateManager {
 
 	enterPlay() {
 		this.currentState = this.gameStates.inPlay;
-		this.scoreContainer = document.getElementById("score-holder");
-		this.scoreContainer.style.display = "flex";
+		// this.scoreContainer = document.getElementById("score-holder");
+		// this.scoreContainer.style.display = "flex";
+		document.getElementById("in-play-screen").style.display = "flex";
 		this.context.gameStateEventBus.publish("enter_play");
 	}
 

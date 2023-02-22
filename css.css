@@ -268,7 +268,7 @@ canvas {
 }
 
 .district-picker {
-	background: black;
+	background: transparent;
 	/* position: absolute; */
 
 	/* overflow-x: auto; */
@@ -277,6 +277,7 @@ canvas {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	justify-content: space-between;
 }
 
 .district-picker .banner {
@@ -348,23 +349,22 @@ canvas {
 	text-align: center;
 }
 
-.district .district-enter-button {
-	width: 100%;
+.district-enter-button {
+	width: 90%;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 }
 
-.district .district-enter-button button {
-	font-size: 36px;
+.district-enter-button button {
+	font-size: 32px;
 	background-color: transparent;
 	color: aquamarine;
 	border: 1px solid gray;
-	width: 75%;
-
+	/* width: 100%; */
 	cursor: crosshair;
 }
 
-.district .district-enter-button .coming-soon-button {
+/* .district .district-enter-button .coming-soon-button {
 	font-size: 36px;
 	background-color: transparent;
 	color: grey;
@@ -372,7 +372,7 @@ canvas {
 	width: 75%;
 
 	cursor: not-allowed;
-}
+} */
 
 .in-game-debug {
 	background-color: black;
@@ -383,6 +383,8 @@ canvas {
 
 	width: 100%;
 	height: 100px;
+
+	z-index: 9999999;
 
 	display: flex;
 	flex-direction: column;

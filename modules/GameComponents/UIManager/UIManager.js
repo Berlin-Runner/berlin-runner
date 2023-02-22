@@ -2,8 +2,7 @@ import { GameIntroComponent } from "./CommonUIComponents/GameIntroComponent.js";
 import { GamePlayComponent } from "./CommonUIComponents/GamePlayComponent.js";
 import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js";
 import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
-import { DistrictPickerComponent } from "./CommonUIComponents/DistrictPickerComponent.js";
-import CharacterPicker from "./CharacterPicker.js";
+
 import StageUI from "./StageUI.js";
 class UIManager {
 	constructor(context) {
@@ -20,15 +19,15 @@ class UIManager {
 		this.gameIntroComponent.showStatic();
 
 		this.stageUIComponent = new StageUI("stage-screen", this.context);
-		this.districtPicker = new DistrictPickerComponent(
-			"district-picker",
-			this.context
-		);
+		// this.districtPicker = new DistrictPickerComponent(
+		// 	"district-picker",
+		// 	this.context
+		// );
 
-		this.characterPicker = new CharacterPicker(
-			"character-picker",
-			this.context
-		);
+		// this.characterPicker = new CharacterPicker(
+		// 	"character-picker",
+		// 	this.context
+		// );
 
 		this.gamePlayComponent = new GamePlayComponent(
 			"in-play-screen",
