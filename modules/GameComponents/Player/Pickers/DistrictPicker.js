@@ -24,16 +24,26 @@ export default class DistrictPicker {
 		this.selectedDistrict = this.context.G.SELECTED_DISTRICT;
 
 		this.districtIndex = 0;
-		this.totalDistrictCount = 8;
+		this.totalDistrictCount = 7;
+
+		/*
+		1 - "goerlitzer park"
+		2 -" kottbusser tor"
+		3 - "oberbaumbruecke"
+		4 - "runbase"
+		5 - "braves hq"
+		6 - "schlesisches tor"
+		7 - "alexanderplatz"
+		*/
 
 		this.districtNames = [
-			"DISTRICT-ONE",
-			"DISTRICT-TWO",
-			"DISTRICT-THREE",
-			"DISTRICT-FOUR",
-			"DISTRICT-FIVE",
-			"DISTRICT-SIX",
-			"DISTRICT-SEVEN",
+			"goerlitzer park",
+			" kottbusser tor",
+			"oberbaumbruecke",
+			"runbase",
+			"braves hq",
+			"schlesisches tor",
+			"alexanderplatz",
 		];
 
 		this.districtNameHolder.innerText =
@@ -189,7 +199,7 @@ export default class DistrictPicker {
 			this.tileFive,
 			this.tileSix,
 			this.tileSeven,
-			this.tileEight,
+			// this.tileEight,
 		];
 
 		this.tiles.forEach((tile, index) => {
@@ -206,7 +216,7 @@ export default class DistrictPicker {
 	}
 
 	next() {
-		if (this.districtIndex >= 4) return;
+		if (this.districtIndex >= 3) return;
 		this.districtIndex += 1;
 		console.log("after next is clicked : " + this.districtIndex);
 		gsap.to(this.pickerArea.position, {
@@ -219,7 +229,7 @@ export default class DistrictPicker {
 	}
 
 	prev() {
-		if (this.districtIndex <= -4) return;
+		if (this.districtIndex <= -3) return;
 		this.districtIndex -= 1;
 		console.log("after prev is clicked : " + this.districtIndex);
 		gsap.to(this.pickerArea.position, {

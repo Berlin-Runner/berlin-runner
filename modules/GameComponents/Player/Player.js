@@ -22,7 +22,7 @@ class Player {
 			playerInitialPosition: new Vec3(0, 0, 0),
 			playerLinearDampeneingFactor: 0,
 
-			debugAABB: true,
+			debugAABB: false,
 
 			player: "ben",
 		};
