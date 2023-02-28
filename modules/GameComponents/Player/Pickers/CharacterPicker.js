@@ -9,6 +9,7 @@ export default class CharacterPicker {
 		this.scene = this.context.gameWorld.scene;
 		this.stateBus = this.context.gameStateEventBus;
 		this.stateManager = this.context.gameStateManager;
+		this.pickerActive = true;
 
 		this.init();
 	}
@@ -224,6 +225,7 @@ export default class CharacterPicker {
 
 		console.log(this.playerModels[this.characterIndex + 1]);
 		this.playerModels[this.characterIndex + 1].model.position.set(0, 0, 0);
+		this.playerModels[this.characterIndex + 1].model.rotation.set(0, 0, 0);
 
 		this.context.playerInstance = new Player(
 			this.context,
@@ -233,12 +235,18 @@ export default class CharacterPicker {
 		this.mixer = null;
 		this.mixer_ = null;
 		this.mixer__ = null;
+
+		this.pickerActive = false;
 	}
 
 	update() {
 		requestAnimationFrame(this.update.bind(this));
+		if (!this.pickerActive) return;
 		if (this.mixer) this.mixer.update(this.context.time.getDelta());
 		if (this.mixer_) this.mixer_.update(this.context.time.getDelta());
 		if (this.mixer__) this.mixer__.update(this.context.time.getDelta());
+		if (this.ben) this.ben.model.rotation.y += 0.025;
+		if (this.katy) this.katy.model.rotation.y += 0.025;
+		if (this.coach) this.coach.model.rotation.y += 0.025;
 	}
 }
