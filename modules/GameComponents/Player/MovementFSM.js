@@ -10,7 +10,7 @@ class MovementFSM {
 
 		this.canJump = true;
 		this.canSlide = true;
-		this.jumpVelocity = 12;
+		this.jumpVelocity = 20;
 
 		this.lanes = {
 			center: 0,
@@ -20,7 +20,7 @@ class MovementFSM {
 
 		this.currentPlayerLane = this.lanes.center;
 
-		this.velocity = this.context.playerCollider.velocity;
+		// this.velocity = this.context.playerCollider.velocity;
 
 		this.listenForKeyboardInputs();
 		this.listenForSwipeInputs();
@@ -163,10 +163,18 @@ class MovementFSM {
 		if (this.canJump) {
 			this.playJumpAnimation();
 			this.jumpAudio.play();
-			this.velocity.y = this.jumpVelocity;
+			// this.velocity.y = this.jumpVelocity;
+			this.player.position.y = this.jumpVelocity;
 		}
-		this.canJump = false;
-		this.context.G.PLAYER_JUMPING = !this.canJump;
+
+		this.canJump = true;
+		this.context.G.PLAYER_JUMPING = this.canJump;
+		setTimeout(() => {
+			// this.player.position.y = 0;
+			this.canJump = false;
+			// this.isSliding = false;
+			this.context.G.PLAYER_JUMPING = this.canJump;
+		}, 1200);
 	}
 
 	moveObjectToPosition(object, position, duration, finishCallBack) {
@@ -300,15 +308,16 @@ class MovementFSM {
 	}
 
 	update() {
-		this.updatePlayerColliderPosition();
-		if (this.velocity.y < 0.75) this.canJump = true;
+		// this.updatePlayerColliderPosition();
+		if (this.player.position.y < 0.75) this.canJump = true;
 		if (
 			this.context.playerInstance &&
 			this.context.playerInstance.player.position.y > 0.75
 		) {
 			this.canJump = false;
 		}
-		this.context.G.PLAYER_JUMPING = !this.canJump;
+		if (this.player.position.y > 0.01) this.player.position.y -= 0.1;
+		// this.context.G.PLAYER_JUMPING = !this.canJump;
 	}
 
 	addClassSettings() {
