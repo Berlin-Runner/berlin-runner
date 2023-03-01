@@ -69,7 +69,7 @@ class Game {
 		this._g = new G();
 		this.G = this._g.getG();
 
-		this.physicsManager = new PhysicsManager(this);
+		// this.physicsManager = new PhysicsManager(this);
 
 		this.initGameState();
 		this.initScoreSystem();
@@ -255,10 +255,13 @@ class Game {
 
 		this.updateStats();
 
-		requestAnimationFrame(this.animate.bind(this));
+		setTimeout(() => {
+			requestAnimationFrame(this.animate.bind(this));
+		}, 1000 / 120);
+
 		if (!this.renderGraphics) return;
 
-		this.world.step(1 / 45, this.time_physics.getDelta());
+		// this.world.step(1 / 45, this.time_physics.getDelta());
 
 		if (this.globalSettings.renderCannonDebug) {
 			this.cannonDebugger.update();
