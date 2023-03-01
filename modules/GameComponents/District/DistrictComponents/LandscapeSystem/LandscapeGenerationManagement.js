@@ -35,18 +35,18 @@ class LandscapeGenerationManager {
 		} else {
 		}
 
-		console.log(this.landscapesArray);
+		// console.log(this.landscapesArray);
 
 		this.city = new THREE.Object3D();
 
 		this.landscapesArray.forEach((child, index) => {
 			// console.log(child);
-			console.log(child);
+			// console.log(child);
 			child.position.z -= this.modelLength * index;
 			this.city.add(child);
 		});
 		this.z = -this.modelLength * this.landscapesArray.length;
-		console.log(this.city);
+		// console.log(this.city);
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 
@@ -94,9 +94,7 @@ class LandscapeGenerationManager {
 		setTimeout(() => {
 			if (this.gameState.currentState != "in_play") return;
 			this.updateSpeedFactor += 0.05;
-			if (this.updateSpeedFactor > 1) return;
-
-			console.log("CURRENT UPDATE SCALE" + this.updateSpeedFactor_);
+			if (this.updateSpeedFactor > 1.5) return;
 		}, 10 * 1000);
 	}
 

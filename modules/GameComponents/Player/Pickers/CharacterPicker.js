@@ -194,7 +194,7 @@ export default class CharacterPicker {
 	next() {
 		if (this.characterIndex >= 1) return;
 		this.characterIndex += 1;
-		console.log("after next is clicked : " + this.characterIndex);
+		// console.log("after next is clicked : " + this.characterIndex);
 		gsap.to(this.pickerArea.position, {
 			x: -15 * (Math.abs(this.characterIndex) % this.totalCharacterCount),
 			duration: 1,
@@ -207,7 +207,7 @@ export default class CharacterPicker {
 	prev() {
 		if (this.characterIndex <= -1) return;
 		this.characterIndex -= 1;
-		console.log("after prev is clicked : " + this.characterIndex);
+		// console.log("after prev is clicked : " + this.characterIndex);
 		gsap.to(this.pickerArea.position, {
 			x: 15 * (Math.abs(this.characterIndex) % this.totalCharacterCount),
 			duration: 1,
@@ -223,7 +223,7 @@ export default class CharacterPicker {
 		this.stateManager.enterStage();
 		this.chararcterPickerUI.style.display = "none";
 
-		console.log(this.playerModels[this.characterIndex + 1]);
+		// console.log(this.playerModels[this.characterIndex + 1]);
 		this.playerModels[this.characterIndex + 1].model.position.set(0, 0, 0);
 		this.playerModels[this.characterIndex + 1].model.rotation.set(0, 0, 0);
 
@@ -245,8 +245,8 @@ export default class CharacterPicker {
 		if (this.mixer) this.mixer.update(this.context.time.getDelta());
 		if (this.mixer_) this.mixer_.update(this.context.time.getDelta());
 		if (this.mixer__) this.mixer__.update(this.context.time.getDelta());
-		if (this.ben) this.ben.model.rotation.y += 0.025;
-		if (this.katy) this.katy.model.rotation.y += 0.025;
-		if (this.coach) this.coach.model.rotation.y += 0.025;
+		if (this.ben) this.ben.model.rotation.y += 0.015;
+		if (this.katy) this.katy.model.rotation.y += 0.015;
+		if (this.coach) this.coach.model.rotation.y += 0.015;
 	}
 }

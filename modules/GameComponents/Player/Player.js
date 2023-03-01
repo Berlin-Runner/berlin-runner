@@ -36,7 +36,7 @@ class Player {
 
 	async init() {
 		await this.addPlayerMesh(this.playerModel);
-		this.initCharachterCollider();
+		// this.initCharachterCollider();
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
 		this.movementManager = new MovementFSM(this.context, this.player);
