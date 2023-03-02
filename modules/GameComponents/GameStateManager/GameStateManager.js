@@ -13,6 +13,8 @@ class GameStateManager {
 			over: "game_over",
 		};
 
+		this.switch = false;
+
 		this.init();
 	}
 
@@ -65,7 +67,12 @@ class GameStateManager {
 
 	restartGame() {
 		this.currentState = this.gameStates.inPlay;
-		this.context.cityContainer.position.z += 2;
+		console.log(this.context.tileCount);
+
+		this.context.cityContainer.children[0].position.z += 2;
+
+		console.log(this.context.cityContainer.position);
+
 		this.context.gameStateEventBus.publish("restart_game");
 	}
 

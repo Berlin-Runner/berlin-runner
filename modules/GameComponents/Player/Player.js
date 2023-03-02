@@ -133,6 +133,7 @@ class Player {
 		// this.player.add(playerMeshLady);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(0.25);
+		// this.context.cityContainer.add(this.player);
 		this.scene.add(this.player);
 
 		this.animationManager = new AnimationManager(
