@@ -257,7 +257,7 @@ class Game {
 
 		setTimeout(() => {
 			requestAnimationFrame(this.animate.bind(this));
-		}, 1000 / 120);
+		}, 1000 / 60);
 
 		if (!this.renderGraphics) return;
 
