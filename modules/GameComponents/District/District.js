@@ -20,6 +20,11 @@ class District {
 		requestAnimationFrame(
 			this.landscapeManager.update.bind(this.landscapeManager)
 		);
+
+		requestAnimationFrame(
+			this.landscapeManager.updateSpeed.bind(this.landscapeManager)
+		);
+
 		requestAnimationFrame(
 			this.landscapeManager.updateCityMeshPoistion.bind(this.landscapeManager)
 		);
