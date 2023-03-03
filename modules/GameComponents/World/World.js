@@ -8,22 +8,32 @@ class World_ {
 	}
 
 	init() {
+		this.initCamera();
+
+		this.initScene();
+
+		this.initRenderer();
+
+		this.initControls();
+
+		this.initLights();
+	}
+
+	initCamera() {
 		this.camera = new THREE.PerspectiveCamera(
-			75,
+			95,
 			window.innerWidth / window.innerHeight,
 			0.1,
 			1000.0
 		);
-		// this.camera.position.set(0, 4.5, 7);
+	}
 
+	initScene() {
 		this.scene = new THREE.Scene();
 		this.scene.background = this.context.textures.sky;
+	}
 
-		/* const near = 0.1;
-		const far = 125;
-		const color = "#ccc";
-		this.scene.fog = new THREE.Fog(color, near, far); */
-
+	initRenderer() {
 		this.canvas = document.getElementById("webgl");
 
 		this.renderer = new THREE.WebGLRenderer({
@@ -31,38 +41,28 @@ class World_ {
 			powerPreference: "high-performance",
 		});
 
-		/* let pixelRatio = window.devicePixelRatio;
-		let AA = true;
-		if (pixelRatio > 1) {
-			AA = false;
-		} */
-
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
 
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
-		// this.renderer.textureEncoding = THREE.sRGBEncoding;
 		this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
 		this.renderer.physicallyCorrectLights = true;
 		this.canvas.appendChild(this.renderer.domElement);
+	}
 
+	initControls() {
 		this.controls = new THREE.OrbitControls(
 			this.camera,
 			this.renderer.domElement
 		);
 		this.controls.enabled = false;
+	}
 
+	initLights() {
 		let ambLight = new THREE.AmbientLight("#ffffff", 2);
 		this.scene.add(ambLight);
 
-		/* let hemiLight = new THREE.HemisphereLight(0xfff, 0xfff, 2);
-		this.scene.add(hemiLight); */
-
-		// let sunLight = new THREE.DirectionalLight("#f00", 2);
-		// sunLight.position.set(0, 1.5, 1);
-		// this.scene.add(sunLight);
-
-		const sunlight = new THREE.DirectionalLight(0xffffff, 1);
+		let sunlight = new THREE.DirectionalLight(0xffffff, 1);
 
 		// Set the position of the light to simulate the sun's position
 		sunlight.position.set(0, 1, 1);
