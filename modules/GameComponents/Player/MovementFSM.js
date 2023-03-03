@@ -20,22 +20,10 @@ class MovementFSM {
 
 		this.currentPlayerLane = this.lanes.center;
 
-		// this.velocity = this.context.playerCollider.velocity;
-
 		this.listenForKeyboardInputs();
 		this.listenForSwipeInputs();
 
 		this.addClassSettings();
-
-		this.jumpAudio = new BaseAudioComponent(this.context, {
-			url: "./assets/sounds/jump.mp3",
-			isMute: false,
-			doesLoop: false,
-			volume: 0.05,
-		});
-
-		this.jumpSound = new Audio("./assets/sounds/jump.mp3");
-		this.jumpSound.load();
 
 		this.keysDown = {
 			left: false,
@@ -162,17 +150,13 @@ class MovementFSM {
 	jump() {
 		if (this.canJump) {
 			this.playJumpAnimation();
-			this.jumpAudio.play();
-			// this.velocity.y = this.jumpVelocity;
 			this.player.position.y = this.jumpVelocity;
 		}
 
 		this.canJump = true;
 		this.context.G.PLAYER_JUMPING = this.canJump;
 		setTimeout(() => {
-			// this.player.position.y = 0;
 			this.canJump = false;
-			// this.isSliding = false;
 			this.context.G.PLAYER_JUMPING = this.canJump;
 		}, 1200);
 	}
@@ -308,7 +292,6 @@ class MovementFSM {
 	}
 
 	update() {
-		// this.updatePlayerColliderPosition();
 		if (this.player.position.y < 0.75) this.canJump = true;
 		if (
 			this.context.playerInstance &&
@@ -317,7 +300,6 @@ class MovementFSM {
 			this.canJump = false;
 		}
 		if (this.player.position.y > 0.01) this.player.position.y -= 0.1;
-		// this.context.G.PLAYER_JUMPING = !this.canJump;
 	}
 
 	addClassSettings() {
