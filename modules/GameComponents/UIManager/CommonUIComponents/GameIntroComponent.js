@@ -2,7 +2,7 @@ import { BaseUIComponent } from "../BaseUIComponent.js";
 class GameIntroComponent extends BaseUIComponent {
 	constructor(id, context) {
 		super(id, context);
-		// console.log("setting up Game intro Screen");
+
 		this.startGameButton = document.getElementById("start-game-button");
 		this.setUpComponentEventListners();
 		this.setupEventBusSubscriptions();
@@ -10,34 +10,26 @@ class GameIntroComponent extends BaseUIComponent {
 
 	setUpComponentEventListners() {
 		this.startGameButton.addEventListener("click", () => {
-			// console.log("start button pressed");
 			this.startGame();
 		});
 
 		window.addEventListener("keypress", (e) => {
 			if (e.code === "KeyM") {
-				// SOURCE OF THE KEY PRESS HANDLE MUST BE A SINGLE POINT IN THE STSTEM
-				/*   console.log("M is pressed");
-        this.muteToggle(); */
 			}
 		});
 	}
 
 	setupEventBusSubscriptions() {
-		// console.log(this.stateBus);
 		this.stateBus.subscribe("start_game", () => {
 			this.hideComponent();
-			// this.hideStatic();
 		});
 
 		this.stateBus.subscribe("back_to_home", () => {
 			this.showComponent();
-			// this.showStatic();
 		});
 	}
 
 	startGame() {
-		// console.log("showing the picker");
 		this.hideComponent();
 
 		this.stateManager.showDistrictPicker();

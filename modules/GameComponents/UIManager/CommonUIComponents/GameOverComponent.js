@@ -14,13 +14,11 @@ class GameOverComponent extends BaseUIComponent {
 
 	setUpComponentEventListners() {
 		this.restartLevelButton.addEventListener("click", () => {
-			console.log("restarting level");
 			this.restart();
 		});
 
 		this.backToHomeButton.addEventListener("click", () => {
-			console.log("going back to home");
-			this.backToHome();
+			// this.backToHome();
 		});
 	}
 
@@ -40,7 +38,7 @@ class GameOverComponent extends BaseUIComponent {
 
 		this.stateBus.subscribe("restart_game", () => {
 			this.hideComponent();
-			this.hideStatic();
+			// this.hideStatic();
 		});
 
 		this.stateBus.subscribe("back_to_home", () => {
@@ -50,11 +48,9 @@ class GameOverComponent extends BaseUIComponent {
 
 	restart() {
 		this.stateManager.restartGame();
-		console.log("restart function");
 	}
 
 	backToHome() {
-		console.log("back to home button");
 		this.stateManager.resetState();
 	}
 }

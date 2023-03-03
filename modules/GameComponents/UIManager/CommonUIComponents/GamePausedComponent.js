@@ -28,12 +28,12 @@ class GamePausedComponent extends BaseUIComponent {
 
 		this.stateBus.subscribe("resume_game", () => {
 			this.hideComponent();
-			this.hideStatic();
+			// this.hideStatic();
 		});
 
 		this.stateBus.subscribe("restart_game", () => {
 			this.hideComponent();
-			this.hideStatic();
+			// this.hideStatic();
 		});
 	}
 
