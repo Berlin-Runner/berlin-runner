@@ -2,7 +2,6 @@ import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 import { MovementFSM } from "./MovementFSM.js";
 import { Camer3rdPerson } from "./Camera3rdPerson.js";
 
-import { UTIL } from "../../Util/UTIL.js";
 import AnimationManager from "./AnimationManager.js";
 
 class Player {
@@ -30,13 +29,10 @@ class Player {
 		this.init();
 
 		this.addClassSettings();
-
-		// requestAnimationFrame(this.update.bind(this));
 	}
 
 	async init() {
 		await this.addPlayerMesh(this.playerModel);
-		// this.initCharachterCollider();
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
 		this.movementManager = new MovementFSM(this.context, this.player);
@@ -56,9 +52,7 @@ class Player {
 			90
 		);
 		this.context.playerCollider.addShape(boxShape);
-		// this.context.playerCollider.position = threeToCannonVec3(
-		// 	this.player.position
-		// );
+
 		this.context.playerCollider.linearDamping =
 			this.settings.playerLinearDampeneingFactor;
 		this.context.playerCollider.allowSleep = false;
@@ -71,84 +65,28 @@ class Player {
 		});
 	}
 
-	async loadBenModel() {
-		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/zen-ben-v2.glb"
-			// "/assets/models/the-girl.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async loadLadyModel() {
-		let { model, animations } = await UTIL.loadModel(
-			// "/assets/models/zen-ben.glb"
-			// "/assets/models/the-girl.glb"
-			"/assets/models/kati.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async initializePlayerModels() {
-		this.ben = await this.loadBenModel();
-		this.lady = await this.loadLadyModel();
-	}
-
 	async addPlayerMesh(player) {
-		// await this.initializePlayerModels();
-
-		let playerModelFullBen;
-		// let playerModelFullLady;
 		this.player = new THREE.Group();
 		this.player.position.set(0, 0, 0);
-		// if (player === "ben") {
-		// playerModelFull = await this.loadBenModel();
-		// playerModelFullBen = this.ben;
-		// playerModelFullBen.model.scale.setScalar(45);
-		// playerModelFullBen.model.position.set(0, 0, 0);
 
 		let playerModelFull = player;
-		// playerModelFull.model.position.set(0, 0, 0);
-		// playerModelFull.model.scale.setScalar(1);
-		// console.log(playerModelFull);
-		// }
-		// else if (player === "lady") {
-		// playerModelFull = await this.loadLadyModel();
-		// playerModelFullLady = this.lady;
-		// playerModelFullLady.model.position.set(1, 0, 0);
-		// }
-
-		// console.log(playerModelFull);
-
 		let playerMesh = playerModelFull.model;
-		// let playerMeshLady = playerModelFullLady.model;
 		let playerAnimation = playerModelFull.animations;
-		// let playerAnimationLady = playerModelFullLady.animations;
 
 		this.initPlayerBB(playerMesh);
-		// this.initPlayerBB(playerMeshLady);
 
 		this.player.add(playerMesh);
-		// this.player.add(playerMeshLady);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(0.25);
-		// this.context.cityContainer.add(this.player);
-		this.scene.add(this.player);
+		this.context.cityContainer.add(this.player); // the player is the child of the city container
 
 		this.animationManager = new AnimationManager(
 			this.context,
 			playerMesh,
 			playerAnimation
 		);
-		// this.animationManagerLady = new AnimationManager(
-		// 	this.context,
-		// 	playerMeshLady,
-		// 	playerAnimationLady
-		// );
 
 		this.context.animationManager = this.animationManager;
-		// this.context.animationManagerLady = this.animationManagerLady;
 	}
 
 	initPlayerBB(playerMesh) {
@@ -165,7 +103,6 @@ class Player {
 	}
 
 	update() {
-		// if (!this.player) return;
 		if (this.settings.cameraFollow) {
 			this.thirdPersonCamera.update();
 		}
