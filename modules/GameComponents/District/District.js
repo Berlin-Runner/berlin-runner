@@ -4,52 +4,37 @@ class District {
 		this.context = context;
 		this.opts = opts;
 		this.name = this.opts.name;
+		this.stateBus = this.context.gameStateEventBus;
+		this.stateManager = this.context.gameStateManager;
 
+		this.init();
 		this.awake();
+	}
+
+	init() {
+		this.addEventSubscriptionListeners();
+	}
+
+	addEventSubscriptionListeners() {
+		this.stateBus.subscribe("enter_play", () => {
+			this.start();
+		});
 	}
 
 	awake() {
 		this.landscapeManager = new LandscapeGenerationManager(this.context, {
 			tiles: this.opts.tiles,
 		});
-
-		this.start();
 	}
 
 	start() {
-		requestAnimationFrame(
-			this.landscapeManager.update.bind(this.landscapeManager)
-		);
+		this.landscapeManager.update();
 
-		requestAnimationFrame(
-			this.landscapeManager.updateSpeed.bind(this.landscapeManager)
-		);
+		this.landscapeManager.updateSpeed();
 
-		requestAnimationFrame(
-			this.landscapeManager.updateCityMeshPoistion.bind(this.landscapeManager)
-		);
-		requestAnimationFrame(
-			this.landscapeManager.updatePlacements.bind(this.landscapeManager)
-		);
+		this.landscapeManager.updateCityMeshPoistion();
 
-		document.addEventListener("visibilitychange", () => {
-			if (document.hidden) {
-				// stop the animation
-			} else {
-				// resume the animation
-				requestAnimationFrame(
-					this.landscapeManager.update.bind(this.landscapeManager)
-				);
-				requestAnimationFrame(
-					this.landscapeManager.updateCityMeshPoistion.bind(
-						this.landscapeManager
-					)
-				);
-				requestAnimationFrame(
-					this.landscapeManager.updatePlacements.bind(this.landscapeManager)
-				);
-			}
-		});
+		this.landscapeManager.updatePlacements();
 	}
 
 	dispose() {
