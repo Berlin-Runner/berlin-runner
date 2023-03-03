@@ -19,7 +19,7 @@ import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 // import { GLTFLoader } from "/libs/GLTFLoader.js";
 
 import * as dat from "/libs/dat.gui.module.js";
-import DistrictPicker from "./modules/GameComponents/Player/Pickers/DistrictPicker.js";
+import DistrictPicker from "./modules/GameComponents/Pickers/DistrictPicker.js";
 
 class Game {
 	constructor() {
@@ -59,6 +59,7 @@ class Game {
 		this.gui.close();
 
 		this.time = new THREE.Clock();
+		this.delta = new THREE.Clock();
 		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
 
 		// adding stats UI
@@ -117,9 +118,7 @@ class Game {
 		this.audioManager = new AudioManager(this);
 	}
 
-	initPlayerInstance() {
-		// this.playerInstance = new Player(this);
-	}
+	initPlayerInstance() {}
 
 	addClassSettings() {
 		let classSettings = this.gui.addFolder("GLOBAL SETTINGS");
@@ -142,7 +141,6 @@ class Game {
 				.getObjectByName("Water")
 				.getWorldPosition(childPosition);
 
-			// console.log(childPosition);
 			document.getElementById("dist-to-river").innerText = Math.round(
 				this.__PM__.position.distanceTo(childPosition)
 			);
@@ -153,7 +151,6 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition) > 2
 			) {
 				if (!this.G.PLAYER_JUMPING) {
-					console.log("GAME OVER");
 					this.gameStateManager.gameOver();
 				}
 				document.getElementById("dist-to-river").style.color = "red";
@@ -170,8 +167,6 @@ class Game {
 			this.playerInstance
 		) {
 			let childPosition = new THREE.Vector3();
-			// console.log("the train station is");
-			// console.log(this.gameWorld.scene.getObjectByName("TrainStation"));
 
 			this.gameWorld.scene
 				.getObjectByName("TrainStation")
@@ -189,7 +184,6 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition) > 3
 			) {
 				if (this.G.PLAYER_SLIDING) {
-					console.log(this.gameWorld.scene.getObjectByName("TrainStation"));
 					this.gameWorld.scene.getObjectByName(
 						"Train_Station001"
 					).material.wireframe = true;
@@ -250,44 +244,23 @@ class Game {
 	animate() {
 		this.stats.begin();
 
+		requestAnimationFrame(this.animate.bind(this));
+
 		this.checkRiverIntersection();
 		this.checkBridgeIntersection();
 
 		this.updateStats();
 
-		setTimeout(() => {
-			requestAnimationFrame(this.animate.bind(this));
-		}, 1000 / 60);
-
-		if (!this.renderGraphics) return;
-
-		// this.world.step(1 / 45, this.time_physics.getDelta());
-
-		if (this.globalSettings.renderCannonDebug) {
-			this.cannonDebugger.update();
-		}
-
-		requestAnimationFrame(this.gameWorld.update.bind(this.gameWorld));
+		this.gameWorld.update();
 		if (this.currentLevel) this.currentLevel.update();
-		if (this.playerInstance)
-			requestAnimationFrame(
-				this.playerInstance.update.bind(this.playerInstance)
-			);
+		if (this.playerInstance) this.playerInstance.update();
 
 		this.stats.end();
 	}
 }
 
 let gameInstance = new Game();
-requestAnimationFrame(gameInstance.animate.bind(gameInstance));
-document.addEventListener("visibilitychange", function () {
-	if (document.hidden) {
-		// stop the animation
-	} else {
-		// resume the animation
-		requestAnimationFrame(gameInstance.animate.bind(gameInstance));
-	}
-});
+gameInstance.animate();
 
 class BerlinRunnerTextLogo {
 	constructor() {
@@ -338,14 +311,13 @@ class BerlinRunnerTextLogo {
 		loader.load("/assets/models/berlin-runner-text.glb", (res) => {
 			this.logoModel = res.scene.children[0];
 			this.scene.add(this.logoModel);
-			console.log(this.logoModel);
 		});
 	}
 
 	animate() {
 		this.tf += 0.1;
 		requestAnimationFrame(this.animate.bind(this));
-		console.log("hh");
+
 		this.controls.update();
 		this.renderer.render(this.scene, this.camera);
 
