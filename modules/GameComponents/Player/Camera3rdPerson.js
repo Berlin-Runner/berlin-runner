@@ -6,6 +6,8 @@ class Camer3rdPerson {
 
 		this.time = new THREE.Clock();
 
+		this.follow = false;
+
 		this.cameraOffsetProfiles = [
 			{
 				//BIRDS_EYE_VIEW
@@ -29,8 +31,7 @@ class Camer3rdPerson {
 	}
 
 	update() {
-		return;
-		if (!this.camera || !this.player) return;
+		if (!this.camera || !this.player || !this.follow) return;
 		this.camera.position.y =
 			this.player.position.y + this.currentCameraOffsetProfile.y;
 		this.camera.position.z =

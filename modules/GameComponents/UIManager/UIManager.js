@@ -19,15 +19,6 @@ class UIManager {
 		this.gameIntroComponent.showStatic();
 
 		this.stageUIComponent = new StageUI("stage-screen", this.context);
-		// this.districtPicker = new DistrictPickerComponent(
-		// 	"district-picker",
-		// 	this.context
-		// );
-
-		// this.characterPicker = new CharacterPicker(
-		// 	"character-picker",
-		// 	this.context
-		// );
 
 		this.gamePlayComponent = new GamePlayComponent(
 			"in-play-screen",

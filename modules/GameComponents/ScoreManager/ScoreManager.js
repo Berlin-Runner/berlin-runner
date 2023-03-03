@@ -24,7 +24,6 @@ class ScoreManager {
 		});
 
 		this.scoreBus.subscribe("add-score", (value) => {
-			// console.log("adding score value of " + value + " man");
 			this.score += value;
 			this.scoreBus.publish("update_score", this.formatScore(this.score));
 		});
@@ -47,11 +46,6 @@ class ScoreManager {
 			return;
 			if (this.score >= this.context.currentLevel.levelInfo.levelScoreObjcetive)
 				this.stateManager.gameOver();
-			/*   this.score++;
-      this.context.scoreEventBus.publish(
-        "update_score",
-        this.formatScore(this.score)
-      ); */
 		}
 	}
 }

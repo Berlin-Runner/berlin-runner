@@ -1,7 +1,5 @@
 import { Level } from "../Level.js";
 import { District } from "../../District/District.js";
-import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
-import { LandscapeTile } from "../../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js";
 
 class LevelZero extends Level {
 	constructor(context) {
@@ -39,20 +37,6 @@ class LevelZero extends Level {
 	}
 
 	init() {
-		/*
-		LOADING THE MODELS
-		*/
-		// let tileOne = await new LandscapeTile("assets/models/tiles/tiles.1.2.glb");
-		// let tileTwo = await new LandscapeTile("assets/models/tiles/tiles.2.3.glb");
-		// let tileThree = await new LandscapeTile(
-		// 	"assets/models/tiles/tiles.3.2.glb"
-		// );
-		// let tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
-		// let tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
-		// let tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.3.glb");
-		// let tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
-		// let tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
-
 		/*
 		CITY DESIGN
 		*/

@@ -1,4 +1,4 @@
-import { Obstacle } from "../Obstacle.js";
+import { Obstacle } from "../../LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Obstacle.js";
 
 export default class Stage extends Obstacle {
 	constructor(context) {

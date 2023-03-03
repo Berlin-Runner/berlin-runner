@@ -46,22 +46,12 @@ class Bus extends Obstacle {
 			let busBB = new THREE.Box3();
 			this.context.busBB = busBB;
 			this.context.busBB.setFromObject(this.context.__BM__);
-			// this.context.busBB.position = this.spawnPosition;
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
-			// this.context.gameWorld.scene.add(box);
 
-			this.scene.add(this.busMesh);
+			this.context.cityContainer.add(this.busMesh);
 
 			requestAnimationFrame(this.update.bind(this));
-			document.addEventListener("visibilitychange", () => {
-				if (document.hidden) {
-					// stop the animation
-				} else {
-					// resume the animation
-					requestAnimationFrame(this.update.bind(this));
-				}
-			});
 		});
 	}
 
@@ -108,9 +98,9 @@ class Bus extends Obstacle {
 
 		if (this.stateManager.currentState === "in_play") {
 			this.busMesh.position.z +=
-				(this.modelLength / 2) *
+				(this.modelLength / 1) *
 				this.delta.getDelta() *
-				(7 / this.updateSpeedFactor);
+				this.context.G.UPDATE_SPEED_FACTOR;
 
 			if (
 				this.context.playerBB &&

@@ -49,8 +49,6 @@ class GameStateManager {
 
 	enterPlay() {
 		this.currentState = this.gameStates.inPlay;
-		// this.scoreContainer = document.getElementById("score-holder");
-		// this.scoreContainer.style.display = "flex";
 		document.getElementById("in-play-screen").style.display = "flex";
 		this.context.gameStateEventBus.publish("enter_play");
 	}
@@ -67,11 +65,8 @@ class GameStateManager {
 
 	restartGame() {
 		this.currentState = this.gameStates.inPlay;
-		console.log(this.context.tileCount);
 
 		this.context.cityContainer.children[0].position.z += 2;
-
-		console.log(this.context.cityContainer.position);
 
 		this.context.gameStateEventBus.publish("restart_game");
 	}

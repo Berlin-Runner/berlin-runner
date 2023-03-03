@@ -10,6 +10,8 @@ class G {
 			PLAYER_SLIDING: false,
 
 			SELECTED_DISTRICT: 3,
+
+			UPDATE_SPEED_FACTOR: 0.25,
 		};
 	}
 
