@@ -4,7 +4,6 @@ class GamePlayComponent extends BaseUIComponent {
 	constructor(id, context) {
 		super(id, context);
 
-		// this.pauseButton = document.getElementById("pause-button");
 		this.pauseButton = new BaseUIComponent("pause-button", this.context);
 		this.scoreHolder = document.getElementById("score_text");
 

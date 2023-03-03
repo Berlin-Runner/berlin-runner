@@ -29,7 +29,6 @@ class HealthManager {
 		});
 
 		this.healthBus.subscribe("add-healing", (amount) => {
-			console.log("healing by " + amount + " amount");
 			this.healByAmount(amount);
 		});
 	}
