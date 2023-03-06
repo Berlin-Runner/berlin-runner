@@ -14,7 +14,7 @@ class LandscapeGenerationManager {
 			moveCity: true,
 			recycleCityTiles: true,
 
-			initialSpeedFactor: 0.25,
+			initialSpeedFactor: 0.4,
 			speedFactorIncrement: 0.075,
 		};
 
