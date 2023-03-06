@@ -1,4 +1,5 @@
 import { ObstacleGenerationManager } from "./LandscapeComponents/ObstacleGenerationManager/ObstacleGenerationManager.js";
+import { RewardGenerationManagement } from "./LandscapeComponents/RewardGenerationManager/RewardGenerationManager.js";
 class LandscapeGenerationManager {
 	constructor(context, opts = null) {
 		this.context = context;
@@ -12,6 +13,9 @@ class LandscapeGenerationManager {
 			renderWireframe: false,
 			moveCity: true,
 			recycleCityTiles: true,
+
+			initialSpeedFactor: 0.25,
+			speedFactorIncrement: 0.075,
 		};
 
 		this.init();
@@ -24,15 +28,18 @@ class LandscapeGenerationManager {
 		this.model = null;
 		this.modelLength = this.context.G.TILE_LENGTH;
 
-		this.updateSpeedFactor = 0.25; //use this to make things move faster
+		this.updateSpeedFactor = this.settings.initialSpeedFactor; //use this to make things move faster
 
 		this.placementPosition = -200;
 
 		this.initCityTiles();
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
+		this.rewardManager = new RewardGenerationManagement(this.context);
 
 		this.setupEventSubscriptions();
+
+		this.addClassSettings();
 	}
 
 	initCityTiles() {
@@ -95,7 +102,7 @@ class LandscapeGenerationManager {
 		setTimeout(() => {
 			requestAnimationFrame(this.updateSpeed.bind(this));
 			if (this.gameState.currentState != "in_play") return;
-			this.updateSpeedFactor += 0.075;
+			this.updateSpeedFactor += this.settings.speedFactorIncrement;
 			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
 			if (this.updateSpeedFactor > 1) return;
 		}, 5 * 1000);
@@ -113,6 +120,19 @@ class LandscapeGenerationManager {
 		}
 	}
 
+	updateRewardPlacements() {
+		setTimeout(() => {
+			requestAnimationFrame(this.updateRewardPlacements.bind(this));
+		}, 5 * 1000);
+
+		if (this.gameState.currentState == "in_play") {
+			// if (this.counter % 2 === 0) {
+			console.log("COING");
+			this.rewardManager.placeReward(-75);
+			// }
+		}
+	}
+
 	updateCityMeshPoistion() {
 		requestAnimationFrame(this.updateCityMeshPoistion.bind(this));
 		if (
@@ -126,6 +146,29 @@ class LandscapeGenerationManager {
 	}
 
 	dispose() {}
+
+	addClassSettings() {
+		this.localSettings = this.context.gui.addFolder(
+			"LANDSCAPE GENERATION SETTINGS"
+		);
+
+		this.generationSettings = this.localSettings.addFolder("SPEED SETTINGS");
+
+		this.generationSettings
+			.add(this.settings, "initialSpeedFactor", 0, 0.5, 0.01)
+			.name("initial speed")
+			.onChange((value) => {
+				this.initialSpeedFactor = value;
+				this.updateSpeedFactor = value;
+			});
+
+		this.generationSettings
+			.add(this.settings, "speedFactorIncrement", 0, 0.1, 0.0125)
+			.name("speed increment")
+			.onChange((value) => {
+				console.log(this.settings.speedFactorIncrement);
+			});
+	}
 }
 
 export { LandscapeGenerationManager };
