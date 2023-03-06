@@ -38,7 +38,7 @@ export default class StageUI extends BaseUIComponent {
 			},
 		});
 		gsap.to(this.context.gameWorld.camera.position, {
-			y: 2,
+			y: 3,
 			z: 4,
 			duration: 1.125,
 
