@@ -151,8 +151,10 @@ class LandscapeGenerationManager {
 		this.localSettings = this.context.gui.addFolder(
 			"LANDSCAPE GENERATION SETTINGS"
 		);
+		this.localSettings.open();
 
 		this.generationSettings = this.localSettings.addFolder("SPEED SETTINGS");
+		this.generationSettings.open();
 
 		this.generationSettings
 			.add(this.settings, "initialSpeedFactor", 0, 0.5, 0.01)
@@ -164,7 +166,7 @@ class LandscapeGenerationManager {
 
 		this.generationSettings
 			.add(this.settings, "speedFactorIncrement", 0, 0.1, 0.0125)
-			.name("speed increment")
+			.name("increment")
 			.onChange((value) => {
 				console.log(this.settings.speedFactorIncrement);
 			});
