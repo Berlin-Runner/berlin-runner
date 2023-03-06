@@ -21,16 +21,17 @@ class RewardGenerationManagement {
 	init() {
 		this.coinindex = 0;
 
-		this.totalCoins = 20;
+		this.totalCoins = 2;
 		this.coins = [];
 
-		// let coin = new Coin(this.context, this.spawnPosition);
-		let beer = new Beer(this.context, this.spawnPosition);
+		let coin = new Coin(this.context, this.spawnPosition);
+		// let beer = new Beer(this.context, this.spawnPosition);
 
 		for (let index = 0; index < this.totalCoins; index++) {
-			// this.coins.push(coin.clone());
-			this.coins.push(beer.clone());
+			this.coins.push(coin.clone());
+			// this.coins.push(beer.clone());
 		}
+		console.log(this.coins);
 	}
 
 	placeReward(z) {
@@ -43,7 +44,6 @@ class RewardGenerationManagement {
 		let reward = this.coins[this.coinindex % this.totalCoins];
 		reward.updatePosition(this.placementPostion);
 		this.coinindex++;
-		// reward = reward.coinMesh;
 	}
 
 	update() {}

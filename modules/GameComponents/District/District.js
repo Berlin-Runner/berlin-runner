@@ -35,6 +35,8 @@ class District {
 		this.landscapeManager.updateCityMeshPoistion();
 
 		this.landscapeManager.updatePlacements();
+
+		this.landscapeManager.updateRewardPlacements();
 	}
 
 	dispose() {
