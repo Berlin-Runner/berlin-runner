@@ -77,7 +77,8 @@ class LandscapeGenerationManager {
 
 	setupEventSubscriptions() {
 		this.stateBus.subscribe("restart_game", () => {
-			this.updateSpeedFactor = 0.25;
+			this.updateSpeedFactor = 0.4;
+			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
 			// this.cityTiles.position.z = 240;
 		});
 	}
