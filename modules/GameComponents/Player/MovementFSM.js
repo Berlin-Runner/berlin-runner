@@ -8,9 +8,11 @@ class MovementFSM {
 		this.tweenDuration = 0.75;
 		this.cameraTweenDuration = 0.85;
 
+		this.time = new THREE.Clock();
+
 		this.canJump = true;
 		this.canSlide = true;
-		this.jumpVelocity = 20;
+		this.jumpVelocity = 2;
 
 		this.lanes = {
 			center: 0,
@@ -148,13 +150,25 @@ class MovementFSM {
 	}
 
 	jump() {
-		if (this.canJump) {
-			this.playJumpAnimation();
-			this.player.position.y = this.jumpVelocity;
-		}
+		// if (this.canJump) {
+		this.playJumpAnimation();
 
 		this.canJump = true;
 		this.context.G.PLAYER_JUMPING = this.canJump;
+
+		gsap.to(this.player.position, {
+			y: 1,
+			duration: 0.2,
+
+			onComplete: () =>
+				gsap.to(this.player.position, {
+					y: 0,
+					duration: 0.3,
+
+					// onComplete: () => alert("shit"),
+				}),
+		});
+
 		setTimeout(() => {
 			this.canJump = false;
 			this.context.G.PLAYER_JUMPING = this.canJump;
@@ -292,14 +306,15 @@ class MovementFSM {
 	}
 
 	update() {
-		if (this.player.position.y < 0.75) this.canJump = true;
-		if (
-			this.context.playerInstance &&
-			this.context.playerInstance.player.position.y > 0.75
-		) {
-			this.canJump = false;
-		}
-		if (this.player.position.y > 0.01) this.player.position.y -= 0.1;
+		// if (
+		// 	this.context.playerInstance &&
+		// 	this.context.playerInstance.player.position.y > 0.75
+		// ) {
+		// 	this.canJump = false;
+		// }
+		// if (this.player.position.y < 0.75) this.canJump = true;
+		// if (this.canJump) this.player.position.y += 0.001;
+		// if (this.player.position.y > 0.01) this.player.position.y -= 0.001;
 	}
 
 	addClassSettings() {
