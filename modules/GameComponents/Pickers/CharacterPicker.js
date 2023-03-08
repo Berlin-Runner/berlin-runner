@@ -105,75 +105,59 @@ export default class CharacterPicker {
 		this.addPlayerMeshes();
 	}
 
-	async loadBenModel() {
-		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/zen-ben-v2.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async loadLadyModel() {
-		let { model, animations } = await UTIL.loadModel("/assets/models/kati.glb");
-
-		return { model, animations };
-	}
-
-	async loadCoachModel() {
-		let { model, animations } = await UTIL.loadModel(
-			"/assets/models/coach_aabb.glb"
-		);
-
-		return { model, animations };
-	}
-
 	async addPlayerMeshes() {
-		this.ben = await this.loadBenModel();
-		this.ben.model.scale.setScalar(190);
-		this.pickerArea.add(this.ben.model);
+		this.context.ben.model.scale.setScalar(190);
+		this.pickerArea.add(this.context.ben.model);
 
-		this.mixer = new THREE.AnimationMixer(this.ben.model);
-		this.idleClip = THREE.AnimationClip.findByName(this.ben.animations, "Idle");
+		this.mixer = new THREE.AnimationMixer(this.context.ben.model);
+		this.idleClip = THREE.AnimationClip.findByName(
+			this.context.ben.animations,
+			"Idle"
+		);
 		this.idleAction = this.mixer.clipAction(this.idleClip);
 		this.idleAction.play();
 
 		this.scene.getObjectByName("aabb").visible = false;
-		this.katy = await this.loadLadyModel();
-		this.katy.model.scale.setScalar(3.25);
-		this.katy.model.position.x = 15;
-		this.katy.model.position.z = 0.5;
-		this.pickerArea.add(this.katy.model);
 
-		this.mixer_ = new THREE.AnimationMixer(this.katy.model);
+		this.context.katy.model.scale.setScalar(3.25);
+		this.context.katy.model.position.x = 15;
+		this.context.katy.model.position.z = 0.5;
+		this.pickerArea.add(this.context.katy.model);
+
+		this.mixer_ = new THREE.AnimationMixer(this.context.katy.model);
 		this.idleClip_ = THREE.AnimationClip.findByName(
-			this.katy.animations,
+			this.context.katy.animations,
 			"Idle"
 		);
 		this.idleAction_ = this.mixer_.clipAction(this.idleClip_);
 		this.idleAction_.play();
 
 		this.scene.getObjectByName("aabb").visible = false;
-		this.katy.model.traverse((child) => {
-			if (child.name === "aabb") child.visible = false;
-		});
-		this.coach = await this.loadCoachModel();
-		this.coach.model.scale.setScalar(1.5);
-		this.coach.model.position.x = -15;
-		this.coach.model.position.z = 0.5;
-		this.pickerArea.add(this.coach.model);
-		this.coach.model.traverse((child) => {
+		this.context.katy.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
 
-		this.mixer__ = new THREE.AnimationMixer(this.coach.model);
+		this.context.coach.model.scale.setScalar(1.5);
+		this.context.coach.model.position.x = -15;
+		this.context.coach.model.position.z = 0.5;
+		this.pickerArea.add(this.context.coach.model);
+		this.context.coach.model.traverse((child) => {
+			if (child.name === "aabb") child.visible = false;
+		});
+
+		this.mixer__ = new THREE.AnimationMixer(this.context.coach.model);
 		this.idleClip__ = THREE.AnimationClip.findByName(
-			this.coach.animations,
+			this.context.coach.animations,
 			"Idle"
 		);
 		this.idleAction__ = this.mixer__.clipAction(this.idleClip__);
 		this.idleAction__.play();
 
-		this.playerModels = [this.coach, this.ben, this.katy];
+		this.playerModels = [
+			this.context.coach,
+			this.context.ben,
+			this.context.katy,
+		];
 	}
 
 	next() {
@@ -225,8 +209,8 @@ export default class CharacterPicker {
 		if (this.mixer) this.mixer.update(this.context.time.getDelta());
 		if (this.mixer_) this.mixer_.update(this.context.time.getDelta());
 		if (this.mixer__) this.mixer__.update(this.context.time.getDelta());
-		if (this.ben) this.ben.model.rotation.y += 0.015;
-		if (this.katy) this.katy.model.rotation.y += 0.015;
-		if (this.coach) this.coach.model.rotation.y += 0.015;
+		if (this.context.ben) this.context.ben.model.rotation.y += 0.015;
+		if (this.context.katy) this.context.katy.model.rotation.y += 0.015;
+		if (this.context.coach) this.context.coach.model.rotation.y += 0.015;
 	}
 }

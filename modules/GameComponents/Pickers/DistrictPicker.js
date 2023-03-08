@@ -130,39 +130,21 @@ export default class DistrictPicker {
 		this.scene.add(this.pickerArea);
 		this.scene.add(this.pickerArea_);
 
-		await this.addTiles();
+		this.addTiles();
 	}
 
-	async addTiles() {
-		this.tileOne = await new LandscapeTile("assets/models/tiles/tiles.1.2.glb");
-		this.context.tileOne = this.tileOne;
-		this.tileTwo = await new LandscapeTile("assets/models/tiles/tiles.2.3.glb");
-		this.context.tileTwo = this.tileTwo;
-		this.tileThree = await new LandscapeTile(
-			"assets/models/tiles/tiles.3.2.glb"
-		);
-		this.context.tileThree = this.tileThree;
-		this.tileFour = await new LandscapeTile("assets/models/tiles/tiles.4.glb");
-		this.context.tileFour = this.tileFour;
-		this.tileFive = await new LandscapeTile("assets/models/tiles/tiles.5.glb");
-		this.context.tileFive = this.tileFive;
-		this.tileSix = await new LandscapeTile("assets/models/tiles/tiles.6.3.glb");
-		this.context.tileSix = this.tileSix;
-		this.tileSeven = await new LandscapeTile("assets/models/tiles/tiles.7.glb");
-		this.context.tileSeven = this.tileSeven;
-
-		this.tileEight = await new LandscapeTile("assets/models/tiles/tiles.8.glb");
-		this.context.tileEight = this.tileEight;
-
+	addTiles() {
 		this.tiles = [
-			this.tileOne,
-			this.tileTwo,
-			this.tileThree,
-			this.tileFour,
-			this.tileFive,
-			this.tileSix,
-			this.tileSeven,
+			this.context.tileOne,
+			this.context.tileTwo,
+			this.context.tileThree,
+			this.context.tileFour,
+			this.context.tileFive,
+			this.context.tileSix,
+			this.context.tileSeven,
 		];
+
+		console.log(this.tiles);
 
 		this.tiles.forEach((tile, index) => {
 			tile.position.x = -30 + 10 * index;

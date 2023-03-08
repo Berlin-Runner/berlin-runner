@@ -45,7 +45,7 @@ class Car extends Obstacle {
 	}
 
 	async loadObstacle(url) {
-		let { model, animations } = await UTIL.loadModel(url);
+		let { model, animations } = await this.context.assetLoader.loadModel(url);
 
 		return { model, animations };
 	}

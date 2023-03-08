@@ -7,7 +7,7 @@ class FirstAid {
 	}
 
 	async loadFirstAidKit(url) {
-		let { model } = await UTIL.loadModel(url);
+		let { model } = await this.context.assetLoader.loadModel(url);
 
 		// console.log(model);
 

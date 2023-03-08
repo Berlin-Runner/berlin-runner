@@ -7,7 +7,7 @@ class Reward {
 	}
 
 	async loadReward(url) {
-		let { model } = await UTIL.loadModel(url);
+		let { model } = await this.context.assetLoader.loadModel(url);
 
 		return model.children[0];
 	}

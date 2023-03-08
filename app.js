@@ -20,6 +20,7 @@ import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 
 import * as dat from "/libs/dat.gui.module.js";
 import DistrictPicker from "./modules/GameComponents/Pickers/DistrictPicker.js";
+import AssetLoader from "./modules/Core/AssetLoader/AssetLoader.js";
 
 class Game {
 	constructor() {
@@ -48,10 +49,15 @@ class Game {
 			"sliding",
 		];
 
+		this.started = false;
+		this.assetLoader = new AssetLoader(this);
+
 		this.init();
+
+		this.assetLoader.loadLandscapeTiles();
 	}
 
-	init() {
+	async init() {
 		this.renderGraphics = true;
 
 		this.settingEventBus = new EventBus();
@@ -69,20 +75,30 @@ class Game {
 
 		this._g = new G();
 		this.G = this._g.getG();
+		this.assetLoader
+			.init()
+			.then(() => {
+				this.initGameState();
+				this.initScoreSystem();
+				this.initHealthSystem();
+				this.initGameScene();
+				// this.initLevels();
+				this.initPlayerInstance();
 
+				this.cannonDebugger = new CannonDebugger(
+					this.gameWorld.scene,
+					this.world
+				);
+
+				this.uiManager = new UIManager(this);
+				this.districtPicker = new DistrictPicker(this);
+
+				this.started = true;
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		// this.physicsManager = new PhysicsManager(this);
-
-		this.initGameState();
-		this.initScoreSystem();
-		this.initHealthSystem();
-		this.initGameScene();
-		// this.initLevels();
-		this.initPlayerInstance();
-
-		this.cannonDebugger = new CannonDebugger(this.gameWorld.scene, this.world);
-
-		this.uiManager = new UIManager(this);
-		this.districtPicker = new DistrictPicker(this);
 	}
 
 	initGameState() {
@@ -242,20 +258,21 @@ class Game {
 	}
 
 	animate() {
-		this.stats.begin();
-
 		requestAnimationFrame(this.animate.bind(this));
+		if (this.started) {
+			this.stats.begin();
 
-		this.checkRiverIntersection();
-		this.checkBridgeIntersection();
+			this.checkRiverIntersection();
+			this.checkBridgeIntersection();
 
-		this.updateStats();
+			this.updateStats();
 
-		this.gameWorld.update();
-		if (this.currentLevel) this.currentLevel.update();
-		if (this.playerInstance) this.playerInstance.update();
+			this.gameWorld.update();
+			if (this.currentLevel) this.currentLevel.update();
+			if (this.playerInstance) this.playerInstance.update();
 
-		this.stats.end();
+			this.stats.end();
+		}
 	}
 }
 
