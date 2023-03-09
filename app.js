@@ -63,15 +63,18 @@ class Game {
 		this.settingEventBus = new EventBus();
 		this.gui = new dat.GUI();
 		this.gui.close();
+		this.gui.hide();
 
 		this.time = new THREE.Clock();
 		this.delta = new THREE.Clock();
 		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
 
 		// adding stats UI
-		this.stats = new Stats();
+		/* this.stats = new Stats();
 		this.stats.showPanel(0);
 		document.body.appendChild(this.stats.dom);
+
+		*/
 
 		this._g = new G();
 		this.G = this._g.getG();
@@ -260,18 +263,18 @@ class Game {
 	animate() {
 		requestAnimationFrame(this.animate.bind(this));
 		if (this.started) {
+			/*
 			this.stats.begin();
-
 			this.checkRiverIntersection();
 			this.checkBridgeIntersection();
 
-			this.updateStats();
+			this.updateStats(); */
 
 			this.gameWorld.update();
 			if (this.currentLevel) this.currentLevel.update();
 			if (this.playerInstance) this.playerInstance.update();
 
-			this.stats.end();
+			// this.stats.end();
 		}
 	}
 }
