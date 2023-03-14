@@ -50,7 +50,6 @@ class MovementFSM {
 		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
 
 		hammertime.on("swipeleft", (e) => {
-			alert("");
 			this.moveLeft();
 		});
 

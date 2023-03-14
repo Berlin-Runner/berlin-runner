@@ -2,7 +2,7 @@ class G {
 	constructor() {
 		this.G = {
 			scene: undefined,
-			DEVICE_TYPE: "desktop",
+			DEVICE_TYPE: "",
 			POINTER_LOCKED: true,
 			TILE_LENGTH: 40,
 

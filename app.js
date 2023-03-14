@@ -21,7 +21,7 @@ import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 import * as dat from "/libs/dat.gui.module.js";
 import DistrictPicker from "./modules/GameComponents/Pickers/DistrictPicker.js";
 import AssetLoader from "./modules/Core/AssetLoader/AssetLoader.js";
-import Tutorial from "./modules/GameComponents/Tutorial /Tutorial.js";
+import TutorialManager from "./modules/GameComponents/Tutorial /TutorialManager.js";
 
 class Game {
 	constructor() {
@@ -97,8 +97,12 @@ class Game {
 
 				this.started = true;
 
+				let result = new UAParser().getResult();
+				this.G.DEVICE_TYPE =
+					result.device.type === undefined ? "desktop" : "mobile";
+
 				this.playerMovementEventBus = new EventBus();
-				this.tutorial = new Tutorial(this);
+				this.tutorial = new TutorialManager(this);
 			})
 			.catch((err) => {
 				console.log(err);
