@@ -13,7 +13,7 @@ export default class AssetLoader {
 		this.instructionsContainer = document.querySelector(".instructions");
 		this.loadBarElement = document.querySelector(".loading-bar");
 		this.percentSpan = document.querySelector(".percentage");
-		console.log(this.loadingPage.style.bac);
+		// console.log(this.loadingPage.style.bac);
 	}
 
 	async init() {
@@ -44,7 +44,7 @@ export default class AssetLoader {
 		};
 
 		this.manager.onLoad = () => {
-			console.log("Loading complete!");
+			// console.log("Loading complete!");
 			this.loadingPage.style.display = "none";
 		};
 
@@ -67,11 +67,11 @@ export default class AssetLoader {
 			this.percentSpan.innerHTML = Math.round(this.progressRatio * 100);
 			this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
 
-			console.log(itemsLoaded / itemsTotal);
+			// console.log(itemsLoaded / itemsTotal);
 		};
 
 		this.manager.onError = (url) => {
-			console.log("There was an error loading " + url);
+			// console.log("There was an error loading " + url);
 		};
 
 		this.context.globalLoadingManager = this.manager;
@@ -143,9 +143,9 @@ export default class AssetLoader {
 			);
 			this.context.tileEight = this.tileEight;
 
-			console.log("console.log)");
+			// console.log("console.log)");
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 		}
 	}
 
