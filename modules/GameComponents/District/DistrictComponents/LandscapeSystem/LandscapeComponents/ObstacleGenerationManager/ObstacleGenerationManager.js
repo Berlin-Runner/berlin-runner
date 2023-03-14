@@ -19,7 +19,7 @@ class ObstacleGenerationManager {
 
 		this.buses = [];
 
-		let initialSpawnPosition = new THREE.Vector3(0, 0, -100);
+		let initialSpawnPosition = new THREE.Vector3(0, 0, -220);
 		let bus = new Bus(this.context, initialSpawnPosition);
 
 		this.buses.push(bus);

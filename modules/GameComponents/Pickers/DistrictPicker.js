@@ -144,7 +144,7 @@ export default class DistrictPicker {
 			this.context.tileSeven,
 		];
 
-		console.log(this.tiles);
+		// console.log(this.tiles);
 
 		this.tiles.forEach((tile, index) => {
 			tile.position.x = -30 + 10 * index;

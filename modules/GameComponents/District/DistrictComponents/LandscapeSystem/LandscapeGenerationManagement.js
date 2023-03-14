@@ -29,8 +29,9 @@ class LandscapeGenerationManager {
 		this.modelLength = this.context.G.TILE_LENGTH;
 
 		this.updateSpeedFactor = this.settings.initialSpeedFactor; //use this to make things move faster
+		this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
 
-		this.placementPosition = -200;
+		this.placementPosition = -225;
 
 		this.initCityTiles();
 
@@ -86,7 +87,7 @@ class LandscapeGenerationManager {
 	update() {
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
-		}, 1000 / this.updateSpeedFactor);
+		}, 1000 / this.context.G.UPDATE_SPEED_FACTOR);
 
 		if (this.gameState.currentState == "in_play") {
 			let currentMesh =
@@ -142,7 +143,9 @@ class LandscapeGenerationManager {
 			this.settings.moveCity
 		) {
 			this.cityTiles.position.z +=
-				this.modelLength * this.updateSpeedFactor * this.delta.getDelta();
+				this.modelLength *
+				this.context.G.UPDATE_SPEED_FACTOR *
+				this.delta.getDelta();
 		}
 	}
 
