@@ -21,6 +21,7 @@ import { UIManager } from "./modules/GameComponents/UIManager/UIManager.js";
 import * as dat from "/libs/dat.gui.module.js";
 import DistrictPicker from "./modules/GameComponents/Pickers/DistrictPicker.js";
 import AssetLoader from "./modules/Core/AssetLoader/AssetLoader.js";
+import Tutorial from "./modules/GameComponents/Tutorial /Tutorial.js";
 
 class Game {
 	constructor() {
@@ -70,11 +71,9 @@ class Game {
 		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
 
 		// adding stats UI
-		/* this.stats = new Stats();
+		this.stats = new Stats();
 		this.stats.showPanel(0);
 		document.body.appendChild(this.stats.dom);
-
-		*/
 
 		this._g = new G();
 		this.G = this._g.getG();
@@ -97,6 +96,9 @@ class Game {
 				this.districtPicker = new DistrictPicker(this);
 
 				this.started = true;
+
+				this.playerMovementEventBus = new EventBus();
+				this.tutorial = new Tutorial(this);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -164,6 +166,10 @@ class Game {
 				this.__PM__.position.distanceTo(childPosition)
 			);
 
+			this.G.DISTANCE_TO_RIVER = this.__PM__.position.distanceTo(childPosition);
+
+			// console.log(this.G.DISTANCE_TO_BUS);
+
 			if (
 				childPosition.z < 0 &&
 				this.__PM__.position.distanceTo(childPosition) < 3 &&
@@ -196,6 +202,9 @@ class Game {
 				// childPosition.distanceTo(this.__PM__.position)
 				// this.playerBB.position.distanceTo(childPosition)
 			);
+
+			this.G.DISTANCE_TO_BRIDGE =
+				this.__PM__.position.distanceTo(childPosition);
 
 			if (
 				childPosition.z < 0 &&
@@ -249,9 +258,9 @@ class Game {
 				.getObjectByName("bus-left")
 				.getWorldPosition(childPosition);
 
-			document.getElementById("dist-to-bus").innerText = Math.round(
-				this.__PM__.position.distanceTo(childPosition)
-			);
+			document.getElementById("dist-to-bus").innerText = Math.round();
+
+			this.G.DISTANCE_TO_BUS = this.__PM__.position.distanceTo(childPosition);
 		}
 
 		document.getElementById("current-game-state").innerText =
@@ -263,18 +272,19 @@ class Game {
 	animate() {
 		requestAnimationFrame(this.animate.bind(this));
 		if (this.started) {
-			/*
+			if (this.tutorial) this.tutorial.update();
 			this.stats.begin();
 			this.checkRiverIntersection();
 			this.checkBridgeIntersection();
-
-			this.updateStats(); */
+			this.updateStats();
+			/*
+			 */
 
 			this.gameWorld.update();
 			if (this.currentLevel) this.currentLevel.update();
 			if (this.playerInstance) this.playerInstance.update();
 
-			// this.stats.end();
+			this.stats.end();
 		}
 	}
 }
