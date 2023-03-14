@@ -5,6 +5,8 @@ class MovementFSM {
 		this.context = context;
 		this.player = player;
 
+		this.movementEventBus = this.context.playerMovementEventBus;
+
 		this.tweenDuration = 0.75;
 		this.cameraTweenDuration = 0.85;
 
@@ -43,10 +45,12 @@ class MovementFSM {
 
 	listenForSwipeInputs() {
 		let hammertime = new Hammer(document.getElementById("webgl"), {});
+		console.log(hammertime);
 
 		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
 
 		hammertime.on("swipeleft", (e) => {
+			alert("");
 			this.moveLeft();
 		});
 
@@ -127,6 +131,7 @@ class MovementFSM {
 	}
 
 	slide() {
+		this.movementEventBus.publish("player-slided");
 		this.playSlideAnimation();
 		this.isSliding = true;
 		this.context.G.PLAYER_SLIDING = this.isSliding;
@@ -151,6 +156,7 @@ class MovementFSM {
 
 	jump() {
 		// if (this.canJump) {
+		this.movementEventBus.publish("player-jumped");
 		this.playJumpAnimation();
 
 		this.canJump = true;
@@ -226,6 +232,7 @@ class MovementFSM {
 	}
 
 	moveLeft() {
+		this.movementEventBus.publish("player-side-moved");
 		switch (this.currentPlayerLane) {
 			case this.lanes.left:
 				return;
@@ -251,6 +258,7 @@ class MovementFSM {
 	}
 
 	moveRight() {
+		this.movementEventBus.publish("player-side-moved");
 		switch (this.currentPlayerLane) {
 			case this.lanes.right:
 				break;
