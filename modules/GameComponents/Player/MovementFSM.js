@@ -220,7 +220,7 @@ class MovementFSM {
 	}
 
 	pullToCenter() {
-		this.moveObjectToPosition(this.player, 0, 0.75);
+		this.moveObjectToPosition(this.player, 0, 1);
 		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
 
 		if (this.currentPlayerLane == this.lanes.left)
