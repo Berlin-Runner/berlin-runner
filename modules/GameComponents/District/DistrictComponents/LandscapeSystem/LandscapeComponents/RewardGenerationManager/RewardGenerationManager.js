@@ -1,7 +1,7 @@
 import { Coin } from "./Coin.js";
 import { UTIL } from "../../../../../../Util/UTIL.js";
 import { Vec3 } from "../../../../../../../libs/cannon-es.js";
-import { Beer } from "./beer/Beer.js";
+import Donut from "./donut/donut.js";
 class RewardGenerationManagement {
 	constructor(context) {
 		this.context = context;
@@ -19,19 +19,28 @@ class RewardGenerationManagement {
 	}
 
 	init() {
-		this.coinindex = 0;
+		// this.coinindex = 0;
+		this.donutIndex = 0;
 
-		this.totalCoins = 2;
-		this.coins = [];
+		// this.totalCoins = 2;
+		this.totalDonuts = 5;
+		// this.coins = [];
+		this.donuts = [];
 
-		let coin = new Coin(this.context, this.spawnPosition);
+		// let coin = new Coin(this.context, this.spawnPosition);
+		let donut = new Donut(this.context, this.spawnPosition);
 		// let beer = new Beer(this.context, this.spawnPosition);
 
-		for (let index = 0; index < this.totalCoins; index++) {
-			this.coins.push(coin.clone());
+		// for (let index = 0; index < this.totalCoins; index++) {
+		// 	this.coins.push(coin.clone());
+		// 	// this.coins.push(beer.clone());
+		// }
+
+		for (let index = 0; index < this.totalDonuts; index++) {
+			this.donuts.push(donut.clone());
 			// this.coins.push(beer.clone());
 		}
-		console.log(this.coins);
+		console.log(this.donuts);
 	}
 
 	placeReward(z) {
@@ -41,9 +50,13 @@ class RewardGenerationManagement {
 				this.coinPositionsY[UTIL.randomIntFromInterval(0, 1)]),
 			(this.placementPostion.z = z);
 
-		let reward = this.coins[this.coinindex % this.totalCoins];
-		reward.updatePosition(this.placementPostion);
-		this.coinindex++;
+		// let reward = this.coins[this.coinindex % this.totalCoins];
+		// reward.updatePosition(this.placementPostion);
+		// this.coinindex++;
+
+		let reward_ = this.donuts[this.donutIndex % this.totalDonuts];
+		reward_.updatePosition(this.placementPostion);
+		this.donutIndex++;
 	}
 
 	update() {}

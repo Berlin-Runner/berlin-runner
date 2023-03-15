@@ -22,6 +22,7 @@ export default class AssetLoader {
 			await this.loadCharacterModels();
 			await this.loadObstacleModels();
 			await this.loadRewardModels();
+			await this.loadDonut();
 
 			if (this.error) {
 				reject("there's some problem");
@@ -169,6 +170,12 @@ export default class AssetLoader {
 		);
 
 		return { model, animations };
+	}
+
+	async loadDonut() {
+		let { model } = await this.loadModel("/assets/models/donut_2.0.glb");
+
+		this.context.donut = model;
 	}
 
 	async loadCharacterModels() {
