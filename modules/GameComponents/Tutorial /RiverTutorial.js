@@ -40,7 +40,7 @@ export default class RiverTutorial {
 	checkRiverDistance() {
 		if (this.completed) return;
 
-		if (this.context.G.DISTANCE_TO_RIVER <= 10) {
+		if (this.context.G.DISTANCE_TO_RIVER <= 15) {
 			this.inRange = true;
 			this.uiElement.style.display = "flex";
 			this.context.G.UPDATE_SPEED_FACTOR = 0.1;

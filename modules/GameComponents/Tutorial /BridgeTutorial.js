@@ -38,7 +38,7 @@ export default class BridgeTutorial {
 	checkBridgeDistance() {
 		if (this.completed) return;
 
-		if (this.context.G.DISTANCE_TO_BRIDGE <= 7.5) {
+		if (this.context.G.DISTANCE_TO_BRIDGE <= 10) {
 			this.inRange = true;
 			this.uiElement.style.display = "flex";
 			this.context.G.UPDATE_SPEED_FACTOR = 0.1;
