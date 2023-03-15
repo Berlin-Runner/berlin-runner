@@ -39,7 +39,7 @@ export default class BusTutorial {
 	checkBusDistance() {
 		if (this.completed) return;
 
-		if (this.context.G.DISTANCE_TO_BUS <= 20) {
+		if (this.context.G.DISTANCE_TO_BUS <= 17.5) {
 			this.inRange = true;
 			this.uiElement.style.display = "flex";
 			this.context.G.UPDATE_SPEED_FACTOR = 0.1;
