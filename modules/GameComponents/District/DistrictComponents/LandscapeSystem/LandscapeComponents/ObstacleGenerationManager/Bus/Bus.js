@@ -49,7 +49,8 @@ class Bus extends Obstacle {
 
 			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
 
-			this.context.cityContainer.add(this.busMesh);
+			// this.context.cityContainer.add(this.busMesh);
+			this.context.tileOne.add(this.busMesh);
 
 			requestAnimationFrame(this.update.bind(this));
 		});
@@ -97,10 +98,10 @@ class Bus extends Obstacle {
 		requestAnimationFrame(this.update.bind(this));
 
 		if (this.stateManager.currentState === "in_play") {
-			this.busMesh.position.z +=
-				(this.modelLength / 1) *
-				this.delta.getDelta() *
-				this.context.G.UPDATE_SPEED_FACTOR;
+			// this.busMesh.position.z +=
+			// 	(this.modelLength / 1) *
+			// 	this.delta.getDelta() *
+			// 	this.context.G.UPDATE_SPEED_FACTOR;
 
 			if (
 				this.context.playerBB &&

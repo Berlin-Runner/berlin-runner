@@ -32,9 +32,9 @@ class ObstacleGenerationManager {
 			zPos
 		);
 
-		placementPosition.z += 10;
-		let currentBus = this.buses[this.obstacleIndex % this.totalObstacles];
-		currentBus.updatePosition(placementPosition);
+		// placementPosition.z += 10;
+		// let currentBus = this.buses[this.obstacleIndex % this.totalObstacles];
+		// currentBus.updatePosition(placementPosition);
 
 		this.obstacleIndex++;
 	}

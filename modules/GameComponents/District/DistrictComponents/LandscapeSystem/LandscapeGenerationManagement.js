@@ -57,12 +57,17 @@ class LandscapeGenerationManager {
 			this.cityTiles.add(child);
 		});
 
+		console.log(this.cityTiles);
+
 		this.city.add(this.cityTiles);
+
+		console.log(this.cityTiles);
 
 		this.z = -this.modelLength * this.landscapesArray.length;
 
 		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
 		this.cityTiles.position.z = cityCenter - this.modelLength;
+		console.log(cityCenter);
 
 		this.cityTiles.traverse((child) => {
 			if (child.isMesh) {
@@ -72,8 +77,12 @@ class LandscapeGenerationManager {
 			}
 		});
 
+		this.lastTilePosition = 280;
+
 		this.scene.add(this.city);
 		this.context.cityContainer = this.city;
+
+		this.objectWorldPositionHolder = new THREE.Vector3(0, 0, 0);
 	}
 
 	setupEventSubscriptions() {
@@ -89,14 +98,32 @@ class LandscapeGenerationManager {
 			requestAnimationFrame(this.update.bind(this));
 		}, 1000 / this.context.G.UPDATE_SPEED_FACTOR);
 
+		// if (this.gameState.currentState == "in_play") {
+		// 	let currentMesh =
+		// 		this.cityTiles.children[this.counter % this.landscapesArray.length];
+		// 	this.counter++;
+
+		// 	currentMesh.position.z = this.z;
+
+		// 	this.z -= this.modelLength;
+		// }
+
+		// setTimeout(() => {
+		// 	requestAnimationFrame(this.update.bind(this));
+		// }, 1000 / 5);
+
 		if (this.gameState.currentState == "in_play") {
-			let currentMesh =
-				this.cityTiles.children[this.counter % this.landscapesArray.length];
-			this.counter++;
-
-			currentMesh.position.z = this.z;
-
-			this.z -= this.modelLength;
+			this.cityTiles.children.forEach((child) => {
+				// console.log(child);
+				// console.log(child.position.z);
+				child.getWorldPosition(this.objectWorldPositionHolder);
+				if (this.objectWorldPositionHolder.z > 120) {
+					// console.log(`tile has passed the -z treshold and must be recycled`);
+					child.position.z = this.z;
+					this.z -= this.modelLength;
+					// this.lastTilePosition = child.position.z;
+				}
+			});
 		}
 	}
 
@@ -117,7 +144,7 @@ class LandscapeGenerationManager {
 
 		if (this.gameState.currentState == "in_play") {
 			if (this.counter % 3 === 0) {
-				this.obstacleManager.placeObstacles(this.placementPosition);
+				// this.obstacleManager.placeObstacles(this.placementPosition);
 			}
 		}
 	}
