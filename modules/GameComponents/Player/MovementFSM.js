@@ -249,7 +249,7 @@ class MovementFSM {
 				);
 				this.moveObjectToPosition(this.player, -2.5, this.tweenDuration, () => {
 					if (this.keysDown.left) return;
-					this.pullToCenter();
+					// this.pullToCenter();
 				});
 
 				break;
@@ -274,7 +274,7 @@ class MovementFSM {
 				);
 				this.moveObjectToPosition(this.player, 2.5, this.tweenDuration, () => {
 					if (this.keysDown.right) return;
-					this.pullToCenter();
+					// this.pullToCenter();
 				});
 				break;
 		}
