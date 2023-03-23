@@ -6,26 +6,17 @@ class Bus extends Obstacle {
 	constructor(context, spawnPosition) {
 		super(context);
 		this.spawnPosition = spawnPosition;
+		this.scene = this.context.gameWorld.scene;
 		this.stateManager = this.context.gameStateManager;
 		this.stateBus = this.context.gameStateEventBus;
-
-		this.updateSpeedFactor = 7.5;
 
 		this.init();
 	}
 
 	init() {
-		this.scene = this.context.gameWorld.scene;
 		this.modelLength = this.context.G.TILE_LENGTH;
 
 		this.delta = new THREE.Clock();
-
-		this.audioComponent = new BaseAudioComponent(this.context, {
-			url: "./assets/sounds/oooo.mp3",
-			isMute: false,
-			doesLoop: false,
-			volume: 0.125,
-		});
 
 		this.modelUrl =
 			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses_.glb";
@@ -39,7 +30,6 @@ class Bus extends Obstacle {
 		let model = this.initObstacle(this.modelUrl);
 		model.then((res) => {
 			this.busMesh = res.model;
-			this.busMesh.position.copy(this.spawnPosition);
 
 			this.context.__BM__ = this.busMesh.getObjectByName("aabb");
 			this.context.__BM__.visible = false;
@@ -56,38 +46,11 @@ class Bus extends Obstacle {
 		});
 	}
 
-	attachCollider() {
-		const halfExtents = new Vec3(0, 0, 0);
-		const boxShape = new Box(halfExtents);
-		let busCollider = new Body({
-			material: this.physicsMaterial,
-			type: Body.STATIC,
-		});
-		busCollider.addShape(boxShape);
-
-		this.context.world.addBody(busCollider);
-		this.collider = busCollider;
-		this.setupEventListners(busCollider);
-	}
-
 	setupEventSubscriber() {
-		this.stateBus.subscribe("game_over", () => {
-			this.busMesh.position.z = -200;
-		});
+		this.stateBus.subscribe("game_over", () => {});
 	}
 
-	setupEventListners() {
-		this.collider.addEventListener("collide", (event) => {
-			const { contact } = event;
-
-			if (contact.bi.id === this.context.playerCollider.id) {
-				this.audioComponent.play();
-				this.healthBus.publish("add-damage", 4);
-				console.log("player collided with car");
-				return;
-			}
-		});
-	}
+	setupEventListners() {}
 
 	updatePosition(placementPostion) {
 		this.busMesh.position.z = placementPostion.z;
@@ -98,11 +61,6 @@ class Bus extends Obstacle {
 		requestAnimationFrame(this.update.bind(this));
 
 		if (this.stateManager.currentState === "in_play") {
-			// this.busMesh.position.z +=
-			// 	(this.modelLength / 1) *
-			// 	this.delta.getDelta() *
-			// 	this.context.G.UPDATE_SPEED_FACTOR;
-
 			if (
 				this.context.playerBB &&
 				this.context.busBB &&
