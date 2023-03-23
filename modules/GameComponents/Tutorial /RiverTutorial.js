@@ -28,12 +28,12 @@ export default class RiverTutorial {
 
 	setupEventSubscriptions() {
 		this.movementEventBus.subscribe("player-jumped", () => {
-			// if (this.inRange) {
-			this.uiElement.style.display = "none";
-			this.context.G.UPDATE_SPEED_FACTOR = 0.4;
-			this.completed = true;
-			// this.inRange = false;
-			// }
+			if (!this.completed) {
+				this.uiElement.style.display = "none";
+				this.context.G.UPDATE_SPEED_FACTOR = 0.4;
+				this.completed = true;
+				// this.inRange = false;
+			}
 		});
 	}
 
