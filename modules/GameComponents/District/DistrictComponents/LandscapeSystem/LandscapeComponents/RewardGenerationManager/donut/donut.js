@@ -12,6 +12,7 @@ export default class Donut extends Reward {
 		this.donut = this.context.donut;
 		console.log(this.donut.children);
 		this.donut.children[0].scale.setScalar(4);
+		this.donut.position.z = -1000;
 		this.donut.position.y = 1;
 		this.donut.rotateX(-45 * (Math.PI / 180));
 
@@ -28,11 +29,13 @@ export default class Donut extends Reward {
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		this.donut.position.z +=
-			(this.modelLength / 2) *
-			this.delta.getDelta() *
-			this.context.G.UPDATE_SPEED_FACTOR *
-			0.5;
+		if (this.context.gameStateManager.currentState === "in_play") {
+			this.donut.position.z +=
+				(this.modelLength / 2) *
+				this.delta.getDelta() *
+				this.context.G.UPDATE_SPEED_FACTOR *
+				0.25;
+		}
 
 		this.donut.rotation.z += 0.005;
 	}

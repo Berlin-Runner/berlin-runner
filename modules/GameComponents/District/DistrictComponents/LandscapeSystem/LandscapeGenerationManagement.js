@@ -94,34 +94,20 @@ class LandscapeGenerationManager {
 	}
 
 	update() {
-		setTimeout(() => {
-			requestAnimationFrame(this.update.bind(this));
-		}, 1000 / this.context.G.UPDATE_SPEED_FACTOR);
-
-		// if (this.gameState.currentState == "in_play") {
-		// 	let currentMesh =
-		// 		this.cityTiles.children[this.counter % this.landscapesArray.length];
-		// 	this.counter++;
-
-		// 	currentMesh.position.z = this.z;
-
-		// 	this.z -= this.modelLength;
-		// }
-
 		// setTimeout(() => {
 		// 	requestAnimationFrame(this.update.bind(this));
-		// }, 1000 / 5);
+		// }, 1000 / this.context.G.UPDATE_SPEED_FACTOR);
+
+		setTimeout(() => {
+			requestAnimationFrame(this.update.bind(this));
+		}, 1000 / 10);
 
 		if (this.gameState.currentState == "in_play") {
 			this.cityTiles.children.forEach((child) => {
-				// console.log(child);
-				// console.log(child.position.z);
 				child.getWorldPosition(this.objectWorldPositionHolder);
 				if (this.objectWorldPositionHolder.z > 120) {
-					// console.log(`tile has passed the -z treshold and must be recycled`);
 					child.position.z = this.z;
 					this.z -= this.modelLength;
-					// this.lastTilePosition = child.position.z;
 				}
 			});
 		}
@@ -152,11 +138,11 @@ class LandscapeGenerationManager {
 	updateRewardPlacements() {
 		setTimeout(() => {
 			requestAnimationFrame(this.updateRewardPlacements.bind(this));
-		}, 5 * 1000);
+		}, 10 * 1000);
 
 		if (this.gameState.currentState == "in_play") {
 			// if (this.counter % 2 === 0) {
-			console.log("COING");
+			// console.log("COING");
 			this.rewardManager.placeReward(-75);
 			// }
 		}
