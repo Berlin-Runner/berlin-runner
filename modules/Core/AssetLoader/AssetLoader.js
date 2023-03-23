@@ -173,7 +173,7 @@ export default class AssetLoader {
 	}
 
 	async loadDonut() {
-		let { model } = await this.loadModel("/assets/models/donut_2.0.glb");
+		let { model } = await this.loadModel("/assets/models/donut.glb");
 
 		this.context.donut = model;
 	}

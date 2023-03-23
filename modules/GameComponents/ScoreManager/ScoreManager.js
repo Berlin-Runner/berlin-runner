@@ -8,6 +8,7 @@ class ScoreManager {
 
 		this.init();
 		requestAnimationFrame(this.update.bind(this));
+		this.updateScore = true;
 	}
 
 	init() {
@@ -24,7 +25,12 @@ class ScoreManager {
 		});
 
 		this.scoreBus.subscribe("add-score", (value) => {
+			if (!this.updateScore) return;
+			setTimeout(() => {
+				this.updateScore = true;
+			}, 1000);
 			this.score += value;
+			this.updateScore = false;
 			this.scoreBus.publish("update_score", this.formatScore(this.score));
 		});
 	}

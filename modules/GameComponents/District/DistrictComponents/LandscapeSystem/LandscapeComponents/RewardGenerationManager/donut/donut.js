@@ -18,7 +18,22 @@ export default class Donut extends Reward {
 
 		this.context.gameWorld.scene.add(this.donut);
 
+		this.initAABB();
+
 		requestAnimationFrame(this.update.bind(this));
+		this.testForCollision();
+	}
+
+	initAABB() {
+		console.log(this.donut);
+		this.__donutAABB__ = this.donut.getObjectByName("aabb");
+		this.__donutAABB__.visible = false;
+		this.__donutAABB__.scale.y = 0.01;
+		this.donutBB = new THREE.Box3();
+		this.donutBB.setFromObject(this.__donutAABB__);
+
+		const box = new THREE.Box3Helper(this.donutBB, 0xff0000);
+		this.context.gameWorld.scene.add(box);
 	}
 
 	updatePosition(placementPostion) {
@@ -29,6 +44,12 @@ export default class Donut extends Reward {
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
+		if (this.donutBB && this.context.playerBB) {
+			this.donutBB
+				.copy(this.__donutAABB__.geometry.boundingBox)
+				.applyMatrix4(this.__donutAABB__.matrixWorld);
+		}
+
 		if (this.context.gameStateManager.currentState === "in_play") {
 			this.donut.position.z +=
 				(this.modelLength / 2) *
@@ -38,6 +59,20 @@ export default class Donut extends Reward {
 		}
 
 		this.donut.rotation.z += 0.005;
+	}
+
+	testForCollision() {
+		if (!this.context.gameStateManager.currentState === "in_play") return;
+
+		if (
+			this.donutBB &&
+			this.context.playerBB &&
+			this.context.playerBB.intersectsBox(this.donutBB)
+		) {
+			this.context.scoreEventBus.publish("add-score", 1);
+		}
+
+		requestAnimationFrame(this.testForCollision.bind(this));
 	}
 
 	clone() {
