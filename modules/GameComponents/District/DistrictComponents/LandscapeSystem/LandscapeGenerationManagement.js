@@ -139,7 +139,7 @@ class LandscapeGenerationManager {
 	updateRewardPlacements() {
 		setTimeout(() => {
 			requestAnimationFrame(this.updateRewardPlacements.bind(this));
-		}, 1000 * 2);
+		}, 1000 * 3);
 
 		if (this.gameState.currentState == "in_play") {
 			this.rewardManager.placeReward(-50);

@@ -32,7 +32,7 @@ export default class Donut extends Reward {
 		this.donutBB.setFromObject(this.__donutAABB__);
 
 		const box = new THREE.Box3Helper(this.donutBB, 0xff0000);
-		this.context.gameWorld.scene.add(box);
+		// this.context.gameWorld.scene.add(box);
 	}
 
 	updatePosition(placementPostion) {
@@ -52,7 +52,7 @@ export default class Donut extends Reward {
 			this.donut.position.z +=
 				this.modelLength *
 				this.context.G.UPDATE_SPEED_FACTOR *
-				0.1 *
+				0.09 *
 				this.delta.getDelta();
 		}
 
@@ -74,9 +74,9 @@ export default class Donut extends Reward {
 				x: 0.1,
 				y: 0.1,
 				z: 0.1,
-				duration: 0.25,
+				duration: 0.14,
 				onComplete: () => {
-					gsap.to(this.donut.scale, { x: 1, y: 1, z: 1, duration: 0.1 });
+					gsap.to(this.donut.scale, { x: 1, y: 1, z: 1, duration: 0.4 });
 				},
 			});
 		}
