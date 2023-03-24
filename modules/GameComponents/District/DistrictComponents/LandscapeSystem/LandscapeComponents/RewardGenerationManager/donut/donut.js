@@ -70,6 +70,15 @@ export default class Donut extends Reward {
 			this.context.playerBB.intersectsBox(this.donutBB)
 		) {
 			this.context.scoreEventBus.publish("add-score", 1);
+			gsap.to(this.donut.scale, {
+				x: 0.1,
+				y: 0.1,
+				z: 0.1,
+				duration: 0.25,
+				onComplete: () => {
+					gsap.to(this.donut.scale, { x: 1, y: 1, z: 1, duration: 0.1 });
+				},
+			});
 		}
 
 		requestAnimationFrame(this.testForCollision.bind(this));
