@@ -50,6 +50,13 @@ class GamePlayComponent extends BaseUIComponent {
 
 	upadteScore(score) {
 		this.scoreHolder.innerText = score;
+		gsap.to(this.scoreHolder.style, {
+			fontSize: "136px",
+			duration: 0.125,
+			onComplete: () => {
+				gsap.to(this.scoreHolder.style, { fontSize: "60px", duration: 0.1 });
+			},
+		});
 	}
 
 	updateHealth(health) {
