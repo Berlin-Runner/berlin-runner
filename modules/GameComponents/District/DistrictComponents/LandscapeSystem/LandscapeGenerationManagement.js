@@ -81,6 +81,7 @@ class LandscapeGenerationManager {
 
 		this.scene.add(this.city);
 		this.context.cityContainer = this.city;
+		// this.context.cityTiles = this.cityTiles;
 
 		this.objectWorldPositionHolder = new THREE.Vector3(0, 0, 0);
 	}
@@ -138,13 +139,10 @@ class LandscapeGenerationManager {
 	updateRewardPlacements() {
 		setTimeout(() => {
 			requestAnimationFrame(this.updateRewardPlacements.bind(this));
-		}, 10 * 1000);
+		}, 1000 * 2);
 
 		if (this.gameState.currentState == "in_play") {
-			// if (this.counter % 2 === 0) {
-			// console.log("COING");
-			this.rewardManager.placeReward(-75);
-			// }
+			this.rewardManager.placeReward(-50);
 		}
 	}
 

@@ -10,13 +10,12 @@ export default class Donut extends Reward {
 		this.delta = new THREE.Clock();
 
 		this.donut = this.context.donut;
-		console.log(this.donut.children);
 		this.donut.children[0].scale.setScalar(4);
-		this.donut.position.z = -1000;
 		this.donut.position.y = 1;
-		this.donut.rotateX(-45 * (Math.PI / 180));
+		this.donut.position.copy(spawnPosition);
+		// this.donut.children[0].rotateZ(45 * (Math.PI / 180));
 
-		this.context.gameWorld.scene.add(this.donut);
+		this.context.cityContainer.add(this.donut);
 
 		this.initAABB();
 
@@ -37,8 +36,7 @@ export default class Donut extends Reward {
 	}
 
 	updatePosition(placementPostion) {
-		this.donut.position.z = placementPostion.z;
-		this.donut.position.x = placementPostion.x;
+		this.donut.position.copy(placementPostion);
 	}
 
 	update() {
@@ -52,13 +50,15 @@ export default class Donut extends Reward {
 
 		if (this.context.gameStateManager.currentState === "in_play") {
 			this.donut.position.z +=
-				(this.modelLength / 2) *
-				this.delta.getDelta() *
+				this.modelLength *
 				this.context.G.UPDATE_SPEED_FACTOR *
-				0.25;
+				0.1 *
+				this.delta.getDelta();
 		}
 
-		this.donut.rotation.z += 0.005;
+		// this.donut.rotation.z += 0.005;
+		// this.donut.rotation.x += 0.005;
+		this.donut.rotation.y += 0.005;
 	}
 
 	testForCollision() {

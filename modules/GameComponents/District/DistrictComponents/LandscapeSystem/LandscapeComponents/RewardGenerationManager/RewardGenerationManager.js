@@ -10,36 +10,25 @@ class RewardGenerationManagement {
 		this.delta = new THREE.Clock();
 
 		this.coinPositionsX = [-2.5, 0, 2.5];
-		this.coinPositionsY = [1, 2.25];
+		this.coinPositionsY = [1, 1.5];
 
-		this.spawnPosition = new THREE.Vector3(0, 0, 2000);
-		this.placementPostion = new THREE.Vector3(0, 0, 0);
+		this.spawnPosition = new THREE.Vector3(0, -10000, 1000);
+		this.placementPostion = new THREE.Vector3(-2.5, 0, 0);
 
 		this.init();
 	}
 
 	init() {
-		// this.coinindex = 0;
 		this.donutIndex = 0;
-
-		// this.totalCoins = 2;
-		this.totalDonuts = 5;
-		// this.coins = [];
+		this.totalDonuts = 15;
 		this.donuts = [];
 
-		// let coin = new Coin(this.context, this.spawnPosition);
 		let donut = new Donut(this.context, this.spawnPosition);
-		// let beer = new Beer(this.context, this.spawnPosition);
-
-		// for (let index = 0; index < this.totalCoins; index++) {
-		// 	this.coins.push(coin.clone());
-		// 	// this.coins.push(beer.clone());
-		// }
 
 		for (let index = 0; index < this.totalDonuts; index++) {
 			this.donuts.push(donut.clone());
-			// this.coins.push(beer.clone());
 		}
+
 		console.log(this.donuts);
 	}
 
@@ -55,6 +44,11 @@ class RewardGenerationManagement {
 		// this.coinindex++;
 
 		let reward_ = this.donuts[this.donutIndex % this.totalDonuts];
+		console.log(
+			`placing donut # ${this.donutIndex % this.totalDonuts} at zPos: ${
+				this.placementPostion.z
+			}`
+		);
 		reward_.updatePosition(this.placementPostion);
 		this.donutIndex++;
 	}
