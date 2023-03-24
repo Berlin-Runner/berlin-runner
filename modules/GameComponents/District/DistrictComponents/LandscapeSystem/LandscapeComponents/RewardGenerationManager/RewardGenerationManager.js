@@ -10,7 +10,7 @@ class RewardGenerationManagement {
 		this.delta = new THREE.Clock();
 
 		this.coinPositionsX = [-2.5, 0, 2.5];
-		this.coinPositionsY = [1, 1.5];
+		this.coinPositionsY = [1, 1];
 
 		this.spawnPosition = new THREE.Vector3(0, -10000, 1000);
 		this.placementPostion = new THREE.Vector3(-2.5, 0, 0);
