@@ -21,6 +21,8 @@ export default class BridgeTutorial {
 		this.distanceToRiver;
 		this.childPosition = new THREE.Vector3();
 
+		this.captureGlobalUpdateSpeedFactor = true;
+
 		this.setupEventSubscriptions();
 	}
 
@@ -28,7 +30,8 @@ export default class BridgeTutorial {
 		this.movementEventBus.subscribe("player-slided", () => {
 			if (!this.completed) {
 				this.uiElement.style.display = "none";
-				this.context.G.UPDATE_SPEED_FACTOR = 0.4;
+				if (!this.captureGlobalUpdateSpeedFactor)
+					this.context.G.UPDATE_SPEED_FACTOR = this.globalUpdateSpeedFactor;
 				this.completed = true;
 				// this.inRange = false;
 			}
@@ -38,9 +41,15 @@ export default class BridgeTutorial {
 	checkBridgeDistance() {
 		if (this.completed) return;
 
-		if (this.context.G.DISTANCE_TO_BRIDGE <= 8.75) {
+		if (this.context.G.DISTANCE_TO_BRIDGE <= 12.75) {
 			this.inRange = true;
 			this.uiElement.style.display = "flex";
+
+			if (this.captureGlobalUpdateSpeedFactor) {
+				this.globalUpdateSpeedFactor = this.context.G.UPDATE_SPEED_FACTOR;
+				this.captureGlobalUpdateSpeedFactor = false;
+			}
+
 			this.context.G.UPDATE_SPEED_FACTOR = 0.1;
 		}
 	}
