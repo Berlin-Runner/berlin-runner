@@ -62,8 +62,6 @@
 					<div class="loading-bar-holder">
 						<div class="loading-bar"></div>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
@@ -108,11 +106,9 @@
 		<div
 			id="district-picker"
 			class="full-screen district-picker"
-			style="display: flex
-			"
+			style="display: flex"
 		>
 			<div class="banner">PICK DISTRICT</div>
-
 
 			<div
 				class="district-selector-buttons"
@@ -125,15 +121,21 @@
 					align-items: center;
 				"
 			>
-		<div class="generic-button" style="border: none" id="district-name-holder"></div>
-		<div class="n" style="display:none" id="district-index-holder"></div>
-		<div class="" style="font-size: 64px">
-			<span class="material-symbols-outlined" style="font-size: 64px ; color :red">
-				location_on
-				</span>
-		</div>
-		</div>
-
+				<div
+					class="generic-button"
+					style="border: none"
+					id="district-name-holder"
+				></div>
+				<div class="n" style="display: none" id="district-index-holder"></div>
+				<div class="" style="font-size: 64px">
+					<span
+						class="material-symbols-outlined"
+						style="font-size: 64px; color: red"
+					>
+						location_on
+					</span>
+				</div>
+			</div>
 
 			<div
 				class="district-selector-buttons"
@@ -146,26 +148,24 @@
 				"
 			>
 				<div class="">
-					<button  style="border: none" class=""
-
-
-
-					id="previous-district">
-
-						<span class="material-symbols-outlined" style = "background: transparent; font-size : 64px; ">
+					<button style="border: none" class="" id="previous-district">
+						<span
+							class="material-symbols-outlined"
+							style="background: transparent; font-size: 64px"
+						>
 							navigate_before
-							</span></button>
+						</span>
+					</button>
 				</div>
 
 				<div class="">
-					<button style="border: none"  class=""
-
-
-
-					id="next-district">
-						<span class="material-symbols-outlined" style = "background: transparent; font-size : 64px; ">
+					<button style="border: none" class="" id="next-district">
+						<span
+							class="material-symbols-outlined"
+							style="background: transparent; font-size: 64px"
+						>
 							navigate_next
-							</span>
+						</span>
 					</button>
 				</div>
 			</div>
@@ -233,19 +233,23 @@
 						<div class="coming-soon">COMING SOON :)</div>
 					</div>-->
 
-					<div class="district-enter-button">
-						<button style="border: 3px solid black; font-size: 48px;" class="generic-button" id="confirm-district-selection">ENTER</button>
-					</div>
-				</div>
+			<div class="district-enter-button">
+				<button
+					style="border: 3px solid black; font-size: 48px"
+					class="generic-button"
+					id="confirm-district-selection"
+				>
+					ENTER
+				</button>
 			</div>
+			<!-- </div> -->
+			<!-- </div> -->
 		</div>
 		<!-- =============================================== DISTRICT PICKER END =============================================== -->
 
 		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
 		<div id="character-picker" class="full-screen character-picker">
-			<div style="color: red; font-size: 48px" id="character-name">
-
-			</div>
+			<div style="color: red; font-size: 48px" id="character-name"></div>
 
 			<div
 				class="character-selector-buttons"
@@ -258,11 +262,15 @@
 				"
 			>
 				<div class="">
-					<button class="charachter-continue-button" id="character-picker-prev">PREV</button>
+					<button class="charachter-continue-button" id="character-picker-prev">
+						PREV
+					</button>
 				</div>
 
 				<div class="">
-					<button class="charachter-continue-button" id="character-picker-next">NEXT</button>
+					<button class="charachter-continue-button" id="character-picker-next">
+						NEXT
+					</button>
 				</div>
 			</div>
 
@@ -293,8 +301,12 @@
 					right: 50;
 				"
 			>
-				<button class="generic-button" style="display: none;" id="">HOME</button>
-				<button class="generic-button" style="display: none;" id="display-character-picker">
+				<button class="generic-button" style="display: none" id="">HOME</button>
+				<button
+					class="generic-button"
+					style="display: none"
+					id="display-character-picker"
+				>
 					CHARACTER
 				</button>
 				<button class="start-game-button-final" id="start-game-button-final">
@@ -306,72 +318,61 @@
 
 		<!-- =============================================== GAME PLAY SCREEN START =============================================== -->
 		<div id="in-play-screen" class="_">
-
-
 			<div id="pause-button-holder">
 				<span class="material-symbols-outlined" id="pause-button"> pause </span>
 			</div>
 
 			<div class="score" id="score-holder">
-				SCORE: &nbsp;&nbsp;<span id="score_text" style="display: flex">0</span>
+				DONUTS: &nbsp;&nbsp;<span id="score_text" style="display: flex">0</span>
 			</div>
 			<div class="health" style="display: none">
 				HEALTH: <span id="health-value">=)</span> %
 			</div>
 
 			<div class="tutorial-screen">
-				<div class="river-tutorial" id="river-tutorial" >
+				<div class="river-tutorial" id="river-tutorial">
 					<div>
-						<div >
-							<span class="material-symbols-outlined" style="font-size: 28px; ">
-							arrow_upward
+						<div>
+							<span class="material-symbols-outlined" style="font-size: 28px">
+								arrow_upward
 							</span>
 						</div>
 
 						<div>
 							<span id="river-tutorial-message">PRESS SPACEBAR</span>
-
 						</div>
-
 					</div>
-
 				</div>
 
-				<div class="bridge-tutorial" id="bridge-tutorial" >
+				<div class="bridge-tutorial" id="bridge-tutorial">
 					<div>
-						<div >
-							<span class="material-symbols-outlined" style="font-size: 28px; ">
-							arrow_downward
+						<div>
+							<span class="material-symbols-outlined" style="font-size: 28px">
+								arrow_downward
 							</span>
 						</div>
 
 						<div>
 							<span id="bridge-tutorial-message">PRESS 'S'</span>
-
 						</div>
-
 					</div>
-
 				</div>
 
-				<div class="bus-tutorial" id="bus-tutorial" >
+				<div class="bus-tutorial" id="bus-tutorial">
 					<div>
-						<div >
-							<span class="material-symbols-outlined" style="font-size: 28px; ">
+						<div>
+							<span class="material-symbols-outlined" style="font-size: 28px">
 								arrow_back
-								</span>
-								<span class="material-symbols-outlined" style="font-size: 28px; ">
-									arrow_forward
-									</span>
+							</span>
+							<span class="material-symbols-outlined" style="font-size: 28px">
+								arrow_forward
+							</span>
 						</div>
 
 						<div>
 							<span id="bus-tutorial-message">PRESS 'A' / 'D'</span>
-
 						</div>
-
 					</div>
-
 				</div>
 			</div>
 
