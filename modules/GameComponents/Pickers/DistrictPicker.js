@@ -13,9 +13,9 @@ export default class DistrictPicker {
 	}
 
 	init() {
+		document.getElementById("in-play-screen").style.display = " none";
 		this.pickerUIComponent = document.getElementById("district-picker");
 		this.pickerUIComponent.style.display = "none";
-		document.getElementById("in-play-screen").style.display = " none";
 		this.nextButton = document.getElementById("next-district");
 		this.prevButton = document.getElementById("previous-district");
 		this.selectButton = document.getElementById("confirm-district-selection");
@@ -26,15 +26,7 @@ export default class DistrictPicker {
 		this.districtIndex = 0;
 		this.totalDistrictCount = 7;
 
-		/*
-		1 - "goerlitzer park"
-		2 -" kottbusser tor"
-		3 - "oberbaumbruecke"
-		4 - "runbase"
-		5 - "braves hq"
-		6 - "schlesisches tor"
-		7 - "alexanderplatz"
-		*/
+		this.gapDistance = 10;
 
 		this.districtNames = [
 			"goerlitzer park",
@@ -48,15 +40,6 @@ export default class DistrictPicker {
 
 		this.districtNameHolder.innerText =
 			this.districtNames[this.selectedDistrict];
-		/*
-                move camera to 0 , 20 , 0
-
-                create a 3d object that will be container for all the district tiles
-
-                add the tiles
-
-                implement a next/prev and select functionality
-            */
 
 		this.setupPickerArea();
 
@@ -147,7 +130,7 @@ export default class DistrictPicker {
 		// console.log(this.tiles);
 
 		this.tiles.forEach((tile, index) => {
-			tile.position.x = -30 + 10 * index;
+			tile.position.x = -this.gapDistance * index;
 			tile.scale.setScalar(0.15);
 			tile.rotateY(180 * (Math.PI / 180));
 			tile.rotateX(-20 * (Math.PI / 180));
@@ -156,28 +139,24 @@ export default class DistrictPicker {
 	}
 
 	next() {
-		if (this.districtIndex >= 3) return;
+		if (this.districtIndex >= 6) return;
 		this.districtIndex += 1;
-		console.log("after next is clicked : " + this.districtIndex);
 		gsap.to(this.pickerArea.position, {
-			x: 10 * (this.districtIndex % this.totalDistrictCount),
+			x: this.gapDistance * (this.districtIndex % this.totalDistrictCount),
 			duration: 1,
 		});
 
-		this.districtNameHolder.innerText =
-			this.districtNames[3 + this.districtIndex];
+		this.districtNameHolder.innerText = this.districtNames[this.districtIndex];
 	}
 
 	prev() {
-		if (this.districtIndex <= -3) return;
+		if (this.districtIndex < 1) return;
 		this.districtIndex -= 1;
-		console.log("after prev is clicked : " + this.districtIndex);
 		gsap.to(this.pickerArea.position, {
-			x: 10 * (this.districtIndex % this.totalDistrictCount),
+			x: this.gapDistance * (this.districtIndex % this.totalDistrictCount),
 			duration: 1,
 		});
-		this.districtNameHolder.innerText =
-			this.districtNames[3 + this.districtIndex];
+		this.districtNameHolder.innerText = this.districtNames[this.districtIndex];
 	}
 
 	select() {
