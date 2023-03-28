@@ -283,7 +283,7 @@ canvas {
 .district-picker .banner,
 .character-picker .banner {
 	position: relative;
-	font-size: 108px;
+	font-size: 72px;
 	color: aquamarine;
 	text-shadow: -1px 1px violet;
 	border-bottom: 3px solid aliceblue;
