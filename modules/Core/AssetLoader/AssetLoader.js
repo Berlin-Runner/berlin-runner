@@ -164,6 +164,14 @@ export default class AssetLoader {
 		return { model, animations };
 	}
 
+	async loadCaptainModel() {
+		let { model, animations } = await this.loadModel(
+			"/assets/models/captain-bubble.glb"
+		);
+
+		return { model, animations };
+	}
+
 	async loadCoachModel() {
 		let { model, animations } = await this.loadModel(
 			"/assets/models/coach_aabb.glb"
@@ -181,6 +189,7 @@ export default class AssetLoader {
 	async loadCharacterModels() {
 		this.context.ben = await this.loadBenModel();
 		this.context.katy = await this.loadLadyModel();
+		this.context.captain = await this.loadCaptainModel();
 		this.context.coach = await this.loadCoachModel();
 	}
 
