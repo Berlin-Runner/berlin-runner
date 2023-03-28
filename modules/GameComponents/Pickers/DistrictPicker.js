@@ -30,13 +30,13 @@ export default class DistrictPicker {
 		this.gapDistance = 10;
 
 		this.districtNames = [
-			"goerlitzer park",
-			" kottbusser tor",
-			"oberbaumbruecke",
-			"runbase",
-			"braves hq",
-			"schlesisches tor",
 			"alexanderplatz",
+			"schlesisches tor",
+			"braves hq",
+			"runbase",
+			"oberbaumbruecke",
+			" kottbusser tor",
+			"goerlitzer park",
 		];
 
 		this.districtNameHolder.innerText =

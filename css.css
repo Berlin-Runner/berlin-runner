@@ -280,7 +280,8 @@ canvas {
 	justify-content: space-between;
 }
 
-.district-picker .banner {
+.district-picker .banner,
+.character-picker .banner {
 	position: relative;
 	font-size: 108px;
 	color: aquamarine;
@@ -415,13 +416,13 @@ canvas {
 	flex-direction: column;
 }
 
-.character-picker .banner {
+/* .character-picker .banner {
 	position: relative;
 	font-size: 64px;
 	color: aquamarine;
 	text-shadow: -1px 1px violet;
 	border-bottom: 3px solid aliceblue;
-}
+} */
 
 .character-picker .characters-holder {
 	/* border: solid red 1px; */

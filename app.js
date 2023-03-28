@@ -71,9 +71,9 @@ class Game {
 		this.time_physics = new THREE.Clock(); //used for interpolating the physics step
 
 		// adding stats UI
-		this.stats = new Stats();
+		/* this.stats = new Stats();
 		this.stats.showPanel(0);
-		document.body.appendChild(this.stats.dom);
+		document.body.appendChild(this.stats.dom); */
 
 		this._g = new G();
 		this.G = this._g.getG();
@@ -277,7 +277,7 @@ class Game {
 		requestAnimationFrame(this.animate.bind(this));
 		if (this.started) {
 			if (this.tutorial) this.tutorial.update();
-			this.stats.begin();
+			// this.stats.begin();
 			this.checkRiverIntersection();
 			this.checkBridgeIntersection();
 			this.updateStats();
@@ -288,7 +288,7 @@ class Game {
 			if (this.currentLevel) this.currentLevel.update();
 			if (this.playerInstance) this.playerInstance.update();
 
-			this.stats.end();
+			// this.stats.end();
 		}
 	}
 }
