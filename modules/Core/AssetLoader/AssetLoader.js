@@ -159,7 +159,7 @@ export default class AssetLoader {
 	}
 
 	async loadLadyModel() {
-		let { model, animations } = await this.loadModel("/assets/models/kati.glb");
+		let { model, animations } = await this.loadModel("/assets/models/katy.glb");
 
 		return { model, animations };
 	}
