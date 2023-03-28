@@ -10,6 +10,7 @@ export default class DistrictPicker {
 		this.scene = this.context.gameWorld.scene;
 
 		this.init();
+		this.update();
 	}
 
 	init() {
@@ -139,7 +140,10 @@ export default class DistrictPicker {
 	}
 
 	next() {
+		console.log(this.districtIndex);
+
 		if (this.districtIndex >= 6) return;
+
 		this.districtIndex += 1;
 		gsap.to(this.pickerArea.position, {
 			x: this.gapDistance * (this.districtIndex % this.totalDistrictCount),
@@ -157,6 +161,23 @@ export default class DistrictPicker {
 			duration: 1,
 		});
 		this.districtNameHolder.innerText = this.districtNames[this.districtIndex];
+	}
+
+	update() {
+		requestAnimationFrame(this.update.bind(this));
+
+		if (this.districtIndex == 0) {
+			this.prevButton.style.display = "none";
+		} else {
+			this.prevButton.style.display = "flex";
+		}
+
+		if (this.districtIndex == 6) {
+			console.log("=)");
+			this.nextButton.style.display = "none";
+		} else {
+			this.nextButton.style.display = "flex";
+		}
 	}
 
 	select() {
