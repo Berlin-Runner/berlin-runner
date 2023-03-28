@@ -126,7 +126,7 @@ export default class CharacterPicker {
 
 		this.scene.getObjectByName("aabb").visible = false;
 
-		this.context.katy.model.scale.setScalar(3.25);
+		this.context.katy.model.scale.setScalar(4.25);
 		this.context.katy.model.position.x = 15;
 		this.context.katy.model.position.z = 0.5;
 		this.pickerArea.add(this.context.katy.model);
