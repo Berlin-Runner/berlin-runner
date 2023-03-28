@@ -166,17 +166,19 @@ export default class DistrictPicker {
 	update() {
 		requestAnimationFrame(this.update.bind(this));
 
-		if (this.districtIndex == 0) {
-			this.prevButton.style.display = "none";
-		} else {
-			this.prevButton.style.display = "flex";
-		}
+		if (this.context.gameStateManager.currentState === "picking-district") {
+			if (this.districtIndex == 0) {
+				this.prevButton.style.display = "none";
+			} else {
+				this.prevButton.style.display = "flex";
+			}
 
-		if (this.districtIndex == 6) {
-			console.log("=)");
-			this.nextButton.style.display = "none";
-		} else {
-			this.nextButton.style.display = "flex";
+			if (this.districtIndex == 6) {
+				console.log("=)");
+				this.nextButton.style.display = "none";
+			} else {
+				this.nextButton.style.display = "flex";
+			}
 		}
 	}
 
@@ -194,6 +196,7 @@ export default class DistrictPicker {
 		});
 		gsap.to(this.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.75 });
 		this.stateBus.publish("display-chracter-selector");
+		this.context.gameStateManager.showCharacterPicker();
 		this.initLevels();
 	}
 

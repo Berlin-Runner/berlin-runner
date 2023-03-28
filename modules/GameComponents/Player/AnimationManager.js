@@ -29,7 +29,9 @@ export default class AnimationManager {
 	}
 
 	initializeAnimations(clips) {
-		this.runClip = THREE.AnimationClip.findByName(clips, "Running");
+		this.runClip =
+			THREE.AnimationClip.findByName(clips, "Running") ||
+			THREE.AnimationClip.findByName(clips, "Run");
 		this.fallClip =
 			THREE.AnimationClip.findByName(clips, "Fall") ||
 			THREE.AnimationClip.findByName(clips, "Falling");
@@ -43,7 +45,8 @@ export default class AnimationManager {
 		this.slideClip =
 			THREE.AnimationClip.findByName(clips, "Running slide") ||
 			THREE.AnimationClip.findByName(clips, "Sliding") ||
-			THREE.AnimationClip.findByName(clips, "Running Slide");
+			THREE.AnimationClip.findByName(clips, "Running Slide") ||
+			THREE.AnimationClip.findByName(clips, "Slide");
 
 		if (this.mixer) {
 			this.runAction = this.mixer.clipAction(this.runClip);
