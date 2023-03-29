@@ -188,7 +188,7 @@ export default class AssetLoader {
 	}
 
 	async loadCoffee() {
-		let { model } = await this.loadModel("/assets/models/coffee_cup.glb");
+		let { model } = await this.loadModel("/assets/models/coffee_cup_2.glb");
 
 		console.log(model);
 

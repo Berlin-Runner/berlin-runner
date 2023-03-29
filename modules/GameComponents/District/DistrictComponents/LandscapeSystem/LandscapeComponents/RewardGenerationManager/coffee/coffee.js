@@ -11,7 +11,7 @@ export default class Coffee extends Reward {
 
 		this.coffeeCup = this.context.coffee;
 		console.log(this.coffeeCup);
-		this.coffeeCup.children[0].scale.setScalar(4);
+		// this.coffeeCup.scale.setScalar(10);
 		this.coffeeCup.position.y = 1;
 		this.coffeeCup.position.copy(spawnPosition);
 		// this.coffeeCup.children[0].rotateZ(45 * (Math.PI / 180));
