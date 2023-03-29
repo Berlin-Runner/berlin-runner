@@ -65,9 +65,8 @@ class LandscapeGenerationManager {
 
 		this.z = -this.modelLength * this.landscapesArray.length;
 
-		let cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
-		this.cityTiles.position.z = cityCenter - this.modelLength;
-		console.log(cityCenter);
+		this.cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
+		this.cityTiles.position.z = this.cityCenter - this.modelLength;
 
 		this.cityTiles.traverse((child) => {
 			if (child.isMesh) {
@@ -90,8 +89,47 @@ class LandscapeGenerationManager {
 		this.stateBus.subscribe("restart_game", () => {
 			this.updateSpeedFactor = 0.4;
 			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
-			// this.cityTiles.position.z = 240;
+
+			// this.cityTiles.position.z = this.cityCenter - this.modelLength;
+
+			this.randomizeTileOrder();
 		});
+	}
+
+	randomizeTileOrder() {
+		let randomized = this.shuffleArray([
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+		]);
+
+		// console.log(randomized);
+
+		this.cityTiles.children.forEach((child, index) => {
+			// console.log(`now child #${index} is at order ${randomized[index]}`);
+			// this.cityTiles.setChildIndex(
+			// 	this.cityTiles.children[index],
+			// 	randomized[index]
+			// );
+		});
+
+		console.log("ORDER BEFORE SHUFFLE");
+		this.cityTiles.children.forEach((element) => {
+			console.log(element.children.length);
+		});
+
+		let tiles = this.cityTiles.children;
+		this.cityTiles.children = [];
+		this.cityTiles.children = this.shuffleArray(tiles);
+
+		console.log("ORDER BEFORE SHUFFLE");
+		console.log(this.cityTiles.children);
+	}
+
+	shuffleArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
 	}
 
 	update() {

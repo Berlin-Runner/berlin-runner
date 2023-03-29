@@ -23,6 +23,7 @@ export default class AssetLoader {
 			await this.loadObstacleModels();
 			await this.loadRewardModels();
 			await this.loadDonut();
+			await this.loadCoffee();
 
 			if (this.error) {
 				reject("there's some problem");
@@ -184,6 +185,14 @@ export default class AssetLoader {
 		let { model } = await this.loadModel("/assets/models/donut.glb");
 
 		this.context.donut = model;
+	}
+
+	async loadCoffee() {
+		let { model } = await this.loadModel("/assets/models/coffee_cup.glb");
+
+		console.log(model);
+
+		this.context.coffee = model;
 	}
 
 	async loadCharacterModels() {

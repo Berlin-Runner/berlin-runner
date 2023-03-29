@@ -2,6 +2,7 @@ import { Coin } from "./Coin.js";
 import { UTIL } from "../../../../../../Util/UTIL.js";
 import { Vec3 } from "../../../../../../../libs/cannon-es.js";
 import Donut from "./donut/donut.js";
+import Coffee from "./coffee/coffee.js";
 class RewardGenerationManagement {
 	constructor(context) {
 		this.context = context;
@@ -19,17 +20,26 @@ class RewardGenerationManagement {
 	}
 
 	init() {
-		this.donutIndex = 0;
-		this.totalDonuts = 15;
-		this.donuts = [];
+		// this.donutIndex = 0;
+		// this.totalDonuts = 15;
+		// this.donuts = [];
 
-		let donut = new Donut(this.context, this.spawnPosition);
+		this.coffeeIndex = 0;
+		this.totalCoffees = 15;
+		this.coffees = [];
 
-		for (let index = 0; index < this.totalDonuts; index++) {
-			this.donuts.push(donut.clone());
+		// let donut = new Donut(this.context, this.spawnPosition);
+		let coffee = new Coffee(this.context, this.spawnPosition);
+
+		// for (let index = 0; index < this.totalDonuts; index++) {
+		// 	this.donuts.push(donut.clone());
+		// }
+
+		for (let index = 0; index < this.totalCoffees; index++) {
+			this.coffees.push(coffee.clone());
 		}
 
-		console.log(this.donuts);
+		console.log(this.coffees);
 	}
 
 	placeReward(z) {
@@ -43,14 +53,23 @@ class RewardGenerationManagement {
 		// reward.updatePosition(this.placementPostion);
 		// this.coinindex++;
 
-		let reward_ = this.donuts[this.donutIndex % this.totalDonuts];
+		// let reward_ = this.donuts[this.donutIndex % this.totalDonuts];
+		// console.log(
+		// 	`placing donut # ${this.donutIndex % this.totalDonuts} at zPos: ${
+		// 		this.placementPostion.z
+		// 	}`
+		// );
+		// reward_.updatePosition(this.placementPostion);
+		// this.donutIndex++;
+
+		let reward_ = this.coffees[this.coffeeIndex % this.totalCoffees];
 		console.log(
-			`placing donut # ${this.donutIndex % this.totalDonuts} at zPos: ${
+			`placing donut # ${this.coffeeIndex % this.totalCoffees} at zPos: ${
 				this.placementPostion.z
 			}`
 		);
 		reward_.updatePosition(this.placementPostion);
-		this.donutIndex++;
+		this.coffeeIndex++;
 	}
 
 	update() {}
