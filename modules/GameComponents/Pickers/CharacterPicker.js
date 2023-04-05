@@ -20,7 +20,7 @@ export default class CharacterPicker {
 		this.nextButton = document.getElementById("character-picker-next");
 		this.prevButton = document.getElementById("character-picker-prev");
 		this.continueButton = document.getElementById("charachter-continue-button");
-		this.totalCharacterCount = 4;
+		this.totalCharacterCount = 5;
 
 		this.characterIndex = 0;
 		this.gapDistance = 15;
@@ -30,6 +30,7 @@ export default class CharacterPicker {
 			"special k",
 			"doctor d",
 			"captain bubbles",
+			"berlin bouncer",
 		];
 		this.characterNameHodler.innerText =
 			this.characterNames[this.characterIndex];
@@ -175,16 +176,33 @@ export default class CharacterPicker {
 		this.idleAction__ = this.mixer__.clipAction(this.idleClip__);
 		this.idleAction__.play();
 
+		this.context.bouncer.model.scale.setScalar(2);
+		this.context.bouncer.model.position.x = 60;
+		this.context.bouncer.model.position.z = 0.5;
+		this.pickerArea.add(this.context.bouncer.model);
+		this.context.bouncer.model.traverse((child) => {
+			if (child.name === "aabb") child.visible = false;
+		});
+
+		this.mixer____ = new THREE.AnimationMixer(this.context.bouncer.model);
+		this.idleClip____ = THREE.AnimationClip.findByName(
+			this.context.bouncer.animations,
+			"Idle"
+		);
+		this.idleAction____ = this.mixer____.clipAction(this.idleClip____);
+		this.idleAction____.play();
+
 		this.playerModels = [
 			this.context.ben,
 			this.context.katy,
 			this.context.coach,
 			this.context.captain,
+			this.context.bouncer,
 		];
 	}
 
 	next() {
-		if (this.characterIndex >= 3) return;
+		if (this.characterIndex >= 4) return;
 		this.characterIndex += 1;
 		gsap.to(this.pickerArea.position, {
 			x: -15 * (this.characterIndex % this.totalCharacterCount),
@@ -237,10 +255,12 @@ export default class CharacterPicker {
 		if (this.mixer_) this.mixer_.update(this.context.time.getDelta());
 		if (this.mixer__) this.mixer__.update(this.context.time.getDelta());
 		if (this.mixer___) this.mixer___.update(this.context.time.getDelta());
+		if (this.mixer____) this.mixer____.update(this.context.time.getDelta());
 		if (this.context.ben) this.context.ben.model.rotation.y += 0.015;
 		if (this.context.katy) this.context.katy.model.rotation.y += 0.015;
 		if (this.context.coach) this.context.coach.model.rotation.y += 0.015;
 		if (this.context.captain) this.context.captain.model.rotation.y += 0.015;
+		if (this.context.bouncer) this.context.bouncer.model.rotation.y += 0.015;
 
 		if (this.characterIndex == 0) {
 			this.prevButton.style.display = "none";
@@ -248,7 +268,7 @@ export default class CharacterPicker {
 			this.prevButton.style.display = "flex";
 		}
 
-		if (this.characterIndex == 3) {
+		if (this.characterIndex == 4) {
 			console.log("=)");
 			this.nextButton.style.display = "none";
 		} else {

@@ -181,6 +181,14 @@ export default class AssetLoader {
 		return { model, animations };
 	}
 
+	async loadBouncerModel() {
+		let { model, animations } = await this.loadModel(
+			"/assets/models/bouncer.glb"
+		);
+
+		return { model, animations };
+	}
+
 	async loadDonut() {
 		let { model } = await this.loadModel("/assets/models/donut.glb");
 
@@ -190,7 +198,7 @@ export default class AssetLoader {
 	async loadCoffee() {
 		let { model } = await this.loadModel("/assets/models/coffee_cup_2.glb");
 
-		console.log(model);
+		// console.log(model);
 
 		this.context.coffee = model;
 	}
@@ -200,6 +208,7 @@ export default class AssetLoader {
 		this.context.katy = await this.loadLadyModel();
 		this.context.captain = await this.loadCaptainModel();
 		this.context.coach = await this.loadCoachModel();
+		this.context.bouncer = await this.loadBouncerModel();
 	}
 
 	loadObstacleModels() {}
