@@ -22,6 +22,7 @@ import * as dat from "/libs/dat.gui.module.js";
 import DistrictPicker from "./modules/GameComponents/Pickers/DistrictPicker.js";
 import AssetLoader from "./modules/Core/AssetLoader/AssetLoader.js";
 import TutorialManager from "./modules/GameComponents/Tutorial /TutorialManager.js";
+import CharacterPicker from "./modules/GameComponents/Pickers/CharacterPicker.js";
 
 class Game {
 	constructor() {
@@ -93,7 +94,8 @@ class Game {
 				);
 
 				this.uiManager = new UIManager(this);
-				this.districtPicker = new DistrictPicker(this);
+				// this.districtPicker = new DistrictPicker(this);
+				this.characterPicker = new CharacterPicker(this);
 
 				this.started = true;
 

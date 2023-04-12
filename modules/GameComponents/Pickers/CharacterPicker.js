@@ -26,20 +26,38 @@ export default class CharacterPicker {
 		this.gapDistance = 15;
 
 		this.characterNames = [
-			"big ben",
-			"special k",
-			"doctor d",
-			"captain bubbles",
 			"berlin bouncer",
+			"captain bubbles",
+			"doctor d",
+			"special k",
+			"big ben",
 		];
 		this.characterNameHodler.innerText =
 			this.characterNames[this.characterIndex];
 
 		this.setupUIEventListeners();
+		this.listenForSwipeInputs();
 		this.setupStateEventListeners();
 		this.setupPickerArea();
 
 		this.update();
+	}
+
+	listenForSwipeInputs() {
+		let hammertime = new Hammer(
+			document.getElementById("character-picker"),
+			{}
+		);
+
+		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+
+		hammertime.on("swipeleft", (e) => {
+			this.next();
+		});
+
+		hammertime.on("swiperight", (e) => {
+			this.prev();
+		});
 	}
 
 	setupUIEventListeners() {
@@ -115,6 +133,7 @@ export default class CharacterPicker {
 
 	async addPlayerMeshes() {
 		this.context.ben.model.scale.setScalar(190);
+		this.context.ben.model.position.x = 60;
 		this.pickerArea.add(this.context.ben.model);
 
 		this.mixer = new THREE.AnimationMixer(this.context.ben.model);
@@ -128,7 +147,7 @@ export default class CharacterPicker {
 		this.scene.getObjectByName("aabb").visible = false;
 
 		this.context.katy.model.scale.setScalar(4.25);
-		this.context.katy.model.position.x = 15;
+		this.context.katy.model.position.x = 45;
 		this.context.katy.model.position.z = 0.5;
 		this.pickerArea.add(this.context.katy.model);
 
@@ -146,7 +165,7 @@ export default class CharacterPicker {
 		});
 
 		this.context.captain.model.scale.setScalar(200);
-		this.context.captain.model.position.x = 45;
+		this.context.captain.model.position.x = 15;
 		this.context.captain.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
@@ -177,7 +196,7 @@ export default class CharacterPicker {
 		this.idleAction__.play();
 
 		this.context.bouncer.model.scale.setScalar(2);
-		this.context.bouncer.model.position.x = 60;
+		this.context.bouncer.model.position.x = 0;
 		this.context.bouncer.model.position.z = 0.5;
 		this.pickerArea.add(this.context.bouncer.model);
 		this.context.bouncer.model.traverse((child) => {
@@ -193,11 +212,11 @@ export default class CharacterPicker {
 		this.idleAction____.play();
 
 		this.playerModels = [
-			this.context.ben,
-			this.context.katy,
-			this.context.coach,
-			this.context.captain,
 			this.context.bouncer,
+			this.context.captain,
+			this.context.coach,
+			this.context.katy,
+			this.context.ben,
 		];
 	}
 

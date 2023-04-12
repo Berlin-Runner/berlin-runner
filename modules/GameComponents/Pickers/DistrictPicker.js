@@ -45,9 +45,24 @@ export default class DistrictPicker {
 		this.setupPickerArea();
 
 		this.setupUIEventListeners();
+		this.listenForSwipeInputs();
 		this.setupStateEventListeners();
 
 		this.context.characterPicker = new CharacterPicker(this.context);
+	}
+
+	listenForSwipeInputs() {
+		let hammertime = new Hammer(document.getElementById("district-picker"), {});
+
+		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+
+		hammertime.on("swipeleft", (e) => {
+			this.next();
+		});
+
+		hammertime.on("swiperight", (e) => {
+			this.prev();
+		});
 	}
 
 	setupUIEventListeners() {

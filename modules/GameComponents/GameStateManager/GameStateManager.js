@@ -29,6 +29,7 @@ class GameStateManager {
 
 	showCharacterPicker() {
 		this.currentState = this.gameStates.pickingCharacter;
+
 		this.context.gameStateEventBus.publish("pick-character");
 	}
 
