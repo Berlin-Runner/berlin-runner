@@ -78,7 +78,8 @@ class Player {
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(0.25);
-		this.context.cityContainer.add(this.player); // the player is the child of the city container
+		// this.context.cityContainer.add(this.player); // the player is the child of the city container
+		this.scene.add(this.player);
 
 		this.animationManager = new AnimationManager(
 			this.context,
