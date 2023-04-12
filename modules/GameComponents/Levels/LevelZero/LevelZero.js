@@ -43,13 +43,6 @@ class LevelZero extends Level {
 		this.cityopts = {
 			name: "berlin",
 			tiles: [
-				this.context.tileSeven,
-				this.context.tileTwo,
-				this.context.tileThree,
-				this.context.tileSeven.clone(),
-				this.context.tileEight,
-				this.context.tileSix,
-				this.context.tileTwo.clone(),
 				this.context.tileFour,
 				this.context.tileOne,
 				this.context.tileFive,
@@ -57,6 +50,14 @@ class LevelZero extends Level {
 				this.context.tileSeven.clone(),
 				this.context.tileEight.clone(),
 				this.context.tileOne.clone(),
+
+				this.context.tileSeven,
+				this.context.tileTwo,
+				this.context.tileThree,
+				this.context.tileSeven.clone(),
+				this.context.tileEight,
+				this.context.tileSix,
+				this.context.tileTwo.clone(),
 			],
 		};
 

@@ -29,6 +29,7 @@ class ScoreManager {
 			setTimeout(() => {
 				this.updateScore = true;
 			}, 1000);
+			this.context.scoreEventBus.publish("increase-speed");
 			this.score += value;
 			this.updateScore = false;
 			this.scoreBus.publish("update_score", this.formatScore(this.score));
