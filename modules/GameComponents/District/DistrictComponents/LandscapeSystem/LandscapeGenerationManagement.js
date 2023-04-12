@@ -33,21 +33,24 @@ class LandscapeGenerationManager {
 
 		this.placementPosition = -225;
 
-		this.initCityTiles();
+		this.initCityTiles(this.opts.tiles);
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
 		this.rewardManager = new RewardGenerationManagement(this.context);
 
 		this.setupEventSubscriptions();
 
-		this.addClassSettings();
+		// this.addClassSettings();
 	}
 
-	initCityTiles() {
+	initCityTiles(tiles_array) {
 		if (this.opts != null) {
-			this.landscapesArray = this.opts.tiles;
+			this.landscapesArray = tiles_array;
 		} else {
+			return;
 		}
+
+		console.log(this.landscapesArray);
 
 		this.city = new THREE.Group();
 		this.cityTiles = new THREE.Group();
@@ -94,37 +97,19 @@ class LandscapeGenerationManager {
 
 			this.randomizeTileOrder();
 		});
+
+		this.context.scoreEventBus.subscribe("increase-speed", () => {
+			if (this.gameState.currentState != "in_play") return;
+			this.updateSpeedFactor += this.settings.speedFactorIncrement / 2;
+			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
+			if (this.updateSpeedFactor > 1) return;
+		});
 	}
 
-	randomizeTileOrder() {
-		let randomized = this.shuffleArray([
-			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-		]);
-
-		// console.log(randomized);
-
-		this.cityTiles.children.forEach((child, index) => {
-			// console.log(`now child #${index} is at order ${randomized[index]}`);
-			// this.cityTiles.setChildIndex(
-			// 	this.cityTiles.children[index],
-			// 	randomized[index]
-			// );
-		});
-
-		console.log("ORDER BEFORE SHUFFLE");
-		this.cityTiles.children.forEach((element) => {
-			console.log(element.children.length);
-		});
-
-		let tiles = this.cityTiles.children;
-		this.cityTiles.children = [];
-		this.cityTiles.children = this.shuffleArray(tiles);
-
-		console.log("ORDER BEFORE SHUFFLE");
-		console.log(this.cityTiles.children);
-	}
+	randomizeTileOrder() {}
 
 	shuffleArray(array) {
+		//Fisher-Yates shuffle algorithm
 		for (let i = array.length - 1; i > 0; i--) {
 			let j = Math.floor(Math.random() * (i + 1));
 			[array[i], array[j]] = [array[j], array[i]];
@@ -155,10 +140,6 @@ class LandscapeGenerationManager {
 	updateSpeed() {
 		setTimeout(() => {
 			requestAnimationFrame(this.updateSpeed.bind(this));
-			if (this.gameState.currentState != "in_play") return;
-			this.updateSpeedFactor += this.settings.speedFactorIncrement;
-			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor;
-			if (this.updateSpeedFactor > 1) return;
 		}, 5 * 1000);
 	}
 
