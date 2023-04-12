@@ -18,6 +18,8 @@ class LandscapeGenerationManager {
 			speedFactorIncrement: 0.075,
 		};
 
+		this.tilesToRecycle = [];
+
 		this.init();
 	}
 
@@ -86,6 +88,7 @@ class LandscapeGenerationManager {
 		// this.context.cityTiles = this.cityTiles;
 
 		this.objectWorldPositionHolder = new THREE.Vector3(0, 0, 0);
+		this.lastTileWorldPositionHolder = new THREE.Vector3(0, 0, 0);
 	}
 
 	setupEventSubscriptions() {
@@ -117,11 +120,10 @@ class LandscapeGenerationManager {
 		return array;
 	}
 
+	randomIntFromInterval(min, max) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
 	update() {
-		// setTimeout(() => {
-		// 	requestAnimationFrame(this.update.bind(this));
-		// }, 1000 / this.context.G.UPDATE_SPEED_FACTOR);
-
 		setTimeout(() => {
 			requestAnimationFrame(this.update.bind(this));
 		}, 1000 / 10);
@@ -129,11 +131,31 @@ class LandscapeGenerationManager {
 		if (this.gameState.currentState == "in_play") {
 			this.cityTiles.children.forEach((child) => {
 				child.getWorldPosition(this.objectWorldPositionHolder);
-				if (this.objectWorldPositionHolder.z > 120) {
-					child.position.z = this.z;
-					this.z -= this.modelLength;
+				this.cityTiles.children[
+					this.cityTiles.children.length - 1
+				].getWorldPosition(this.lastTileWorldPositionHolder);
+
+				if (this.objectWorldPositionHolder.z > 50) {
+					child.visible = false;
+					this.tilesToRecycle.push(child);
+
+					this.cityTiles.remove(child);
 				}
 			});
+		}
+
+		if (this.tilesToRecycle.length >= 5) {
+			let randomIndex = this.randomIntFromInterval(
+				0,
+				this.tilesToRecycle.length - 1
+			);
+			let randomTile = this.tilesToRecycle.splice(randomIndex, 1)[0];
+
+			randomTile.position.z = this.z;
+			this.z -= this.modelLength;
+
+			randomTile.visible = true;
+			this.cityTiles.add(randomTile);
 		}
 	}
 

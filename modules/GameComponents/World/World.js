@@ -24,7 +24,7 @@ class World_ {
 			95,
 			window.innerWidth / window.innerHeight,
 			0.1,
-			1000.0
+			100000.0
 		);
 	}
 
