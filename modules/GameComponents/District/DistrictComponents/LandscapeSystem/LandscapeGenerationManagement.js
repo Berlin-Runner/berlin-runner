@@ -48,6 +48,7 @@ class LandscapeGenerationManager {
 	initCityTiles(tiles_array) {
 		if (this.opts != null) {
 			this.landscapesArray = tiles_array;
+			this.shuffleArray(this.landscapesArray);
 		} else {
 			return;
 		}
@@ -149,6 +150,7 @@ class LandscapeGenerationManager {
 				0,
 				this.tilesToRecycle.length - 1
 			);
+			console.log(`INDEX = ${randomIndex}`);
 			let randomTile = this.tilesToRecycle.splice(randomIndex, 1)[0];
 
 			randomTile.position.z = this.z;

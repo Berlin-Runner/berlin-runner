@@ -32,8 +32,8 @@ class Game {
 				(texture) => {
 					texture.wrapS = THREE.RepeatWrapping;
 					texture.wrapT = THREE.RepeatWrapping;
-					texture.minFilter = THREE.NearestFilter;
-					texture.magFilter = THREE.NearestFilter;
+					// texture.minFilter = THREE.NearestFilter;
+					// texture.magFilter = THREE.NearestFilter;
 				}
 			),
 		};

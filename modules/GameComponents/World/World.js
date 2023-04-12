@@ -30,7 +30,7 @@ class World_ {
 
 	initScene() {
 		this.scene = new THREE.Scene();
-		this.scene.background = this.context.textures.sky;
+		this.scene.background = new THREE.Color("#87CEFA");
 	}
 
 	initRenderer() {

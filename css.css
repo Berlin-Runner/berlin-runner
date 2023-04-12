@@ -474,11 +474,23 @@ canvas {
 	text-align: center;
 	height: 5%;
 	color: aliceblue;
-	font-size: 32px;
+	font-size: 24px;
 	font-weight: 700;
 	padding: 10px;
 	/* border: blue solid 3px; */
 }
+
+#character-name {
+	font-size: 48px;
+}
+
+@media (max-width: 768px) {
+	/* Mobile styles */
+	.character-picker .banner {
+		font-size: 64px;
+	}
+}
+
 .select-character {
 	height: 10%;
 	/* border: greenyellow solid 3px; */
