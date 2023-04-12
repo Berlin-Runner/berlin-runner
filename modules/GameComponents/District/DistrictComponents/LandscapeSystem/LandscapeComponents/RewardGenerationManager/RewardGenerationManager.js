@@ -39,7 +39,7 @@ class RewardGenerationManagement {
 			this.coffees.push(coffee.clone());
 		}
 
-		console.log(this.coffees);
+		// console.log(this.coffees);
 	}
 
 	placeReward(z) {

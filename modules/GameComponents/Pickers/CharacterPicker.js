@@ -257,7 +257,7 @@ export default class CharacterPicker {
 		);
 
 		// this.playerModels[]
-		console.log(this.characterIndex);
+		// console.log(this.characterIndex);
 
 		this.mixer = null;
 		this.mixer_ = null;
@@ -288,7 +288,7 @@ export default class CharacterPicker {
 		}
 
 		if (this.characterIndex == 4) {
-			console.log("=)");
+			// console.log("=)");
 			this.nextButton.style.display = "none";
 		} else {
 			this.nextButton.style.display = "flex";

@@ -45,7 +45,7 @@ class MovementFSM {
 
 	listenForSwipeInputs() {
 		let hammertime = new Hammer(document.getElementById("webgl"), {});
-		console.log(hammertime);
+		// console.log(hammertime);
 
 		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
 

@@ -50,7 +50,7 @@ class LandscapeGenerationManager {
 			return;
 		}
 
-		console.log(this.landscapesArray);
+		// console.log(this.landscapesArray);
 
 		this.city = new THREE.Group();
 		this.cityTiles = new THREE.Group();
@@ -60,11 +60,11 @@ class LandscapeGenerationManager {
 			this.cityTiles.add(child);
 		});
 
-		console.log(this.cityTiles);
+		// console.log(this.cityTiles);
 
 		this.city.add(this.cityTiles);
 
-		console.log(this.cityTiles);
+		// console.log(this.cityTiles);
 
 		this.z = -this.modelLength * this.landscapesArray.length;
 
@@ -202,7 +202,7 @@ class LandscapeGenerationManager {
 			.add(this.settings, "speedFactorIncrement", 0, 0.1, 0.0125)
 			.name("increment")
 			.onChange((value) => {
-				console.log(this.settings.speedFactorIncrement);
+				// console.log(this.settings.speedFactorIncrement);
 			});
 	}
 }
