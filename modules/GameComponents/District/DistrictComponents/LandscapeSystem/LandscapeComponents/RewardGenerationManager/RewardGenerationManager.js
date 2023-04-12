@@ -63,11 +63,6 @@ class RewardGenerationManagement {
 		// this.donutIndex++;
 
 		let reward_ = this.coffees[this.coffeeIndex % this.totalCoffees];
-		console.log(
-			`placing donut # ${this.coffeeIndex % this.totalCoffees} at zPos: ${
-				this.placementPostion.z
-			}`
-		);
 		reward_.updatePosition(this.placementPostion);
 		this.coffeeIndex++;
 	}

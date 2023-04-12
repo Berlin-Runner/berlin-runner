@@ -10,7 +10,7 @@ export default class Coffee extends Reward {
 		this.delta = new THREE.Clock();
 
 		this.coffeeCup = this.context.coffee;
-		console.log(this.coffeeCup);
+		// console.log(this.coffeeCup);
 		// this.coffeeCup.scale.setScalar(10);
 		this.coffeeCup.position.y = 1;
 		this.coffeeCup.position.copy(spawnPosition);
@@ -25,7 +25,7 @@ export default class Coffee extends Reward {
 	}
 
 	initAABB() {
-		console.log(this.coffeeCup);
+		// console.log(this.coffeeCup);
 		this.__coffeeCupAABB__ = this.coffeeCup.getObjectByName("aabb");
 		this.__coffeeCupAABB__.visible = false;
 		this.__coffeeCupAABB__.scale.y = 0.01;
