@@ -2,6 +2,7 @@ export default class BridgeTutorial {
 	constructor(context) {
 		this.context = context;
 		this.movementEventBus = this.context.playerMovementEventBus;
+		this.stateBus = this.context.gameStateEventBus;
 
 		this.playerPosition = new THREE.Vector3(0, 0, 0);
 
@@ -35,6 +36,11 @@ export default class BridgeTutorial {
 				this.completed = true;
 				// this.inRange = false;
 			}
+		});
+
+		this.stateBus.subscribe("restart_game", () => {
+			this.completed = true;
+			this.uiElement.style.display = "none";
 		});
 	}
 
