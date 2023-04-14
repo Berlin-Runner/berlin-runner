@@ -45,16 +45,18 @@ class LevelZero extends Level {
 			tiles: [
 				this.context.tileTwo.clone(),
 				this.context.tileFour,
-				this.context.tileOne,
-				this.context.tileFive,
+				this.context.tileSeven,
 				this.context.tileTwo.clone(),
 				this.context.tileSeven.clone(),
-				this.context.tileSix,
 				this.context.tileThree,
-				this.context.tileSeven,
 				this.context.tileTwo,
 				this.context.tileSeven.clone(),
 				this.context.tileEight,
+			],
+			obstacles: [
+				this.context.tileOne, //bus container
+				this.context.tileFive, //river tile
+				this.context.tileSix, //bridge tile
 			],
 		};
 

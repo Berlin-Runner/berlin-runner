@@ -408,17 +408,55 @@
 
 		<!-- =============================================== GAME OVER SCREEN START =============================================== -->
 		<div id="game-over-screen" class="full-screen">
-			<div id="game-title">
-				=(, you just died!, <br />
-				<span style="color: blueviolet">(strictly for tetsing purposes)</span>
+			<div
+				id="game-over-messaege"
+				style="text-align: center; color: rgb(142, 229, 11)"
+			>
+				ALMOST!
+				<br />
+
+				Nice try, Berlin Runner. If you get a score of 10 coffees or more, you
+				win a reward, so try again!
 			</div>
-			<div style="display: none" id="final-score-holder">
-				FINAL SCORE:<span id="game-over-final-score"></span>
+
+			<div
+				id="reward-claim-messaege"
+				style="
+					text-align: center;
+					color: black;
+					font-size: 32px;
+					display: flex;
+					flex-direction: column;
+				"
+			>
+				<span style="font-size: 48px"> YOU WON A REWARD! </span>
+				<br />
+				<div>
+					Way to go Berlin Runner! You earned a high score and you can redeem it
+					for a discount from our partner! <br />
+					Screenshot this and take it in to Five Elephant in Kreuzberg, Mitte,
+					or Pberg for a surprise ☕️
+				</div>
+
+				<div>
+					<img
+						src="/assets/img/coffee-house.jpg"
+						height="200px"
+						width="200px"
+						alt=""
+					/>
+				</div>
+			</div>
+			<div style="display: flex" id="final-score-holder">
+				SCORE:<span id="game-over-final-score"></span>
 			</div>
 
 			<div id="restart-level-button">RESTART</div>
-			<div id="back-to-home-button">HOME</div>
-			<div style="display: flex; flex-direction: row">
+			<div id="select-character-button" style="display: none">
+				SELECT PLAYER
+			</div>
+			<div id="back-to-home-button" style="display: none">HOME</div>
+			<!-- <div style="display: flex; flex-direction: row">
 				<span
 					style="
 						display: flex;
@@ -438,7 +476,7 @@
 						MUTED
 					</div>
 				</span>
-			</div>
+			</div> -->
 		</div>
 		<!-- =============================================== GAME OVER SCREEN END =============================================== -->
 
