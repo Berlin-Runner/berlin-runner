@@ -20,6 +20,10 @@ class GameStateManager {
 
 	init() {
 		this.currentState = this.gameStates.notStartedYet;
+
+		document.addEventListener("keypress", (e) => {
+			if (e.code === "KeyG") this.gameOver();
+		});
 	}
 
 	resetState() {
@@ -65,9 +69,14 @@ class GameStateManager {
 	}
 
 	restartGame() {
+		gsap.to(this.context.cityContainer.children[0].position, {
+			z: (this.context.cityContainer.children[0].position.z += 13),
+			duration: 1,
+			onComplete: () => {},
+		});
 		this.currentState = this.gameStates.inPlay;
 
-		this.context.cityContainer.children[0].position.z += 3;
+		console.log(this.context.cityContainer.children[0]);
 
 		this.context.gameStateEventBus.publish("restart_game");
 	}
