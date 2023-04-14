@@ -5,13 +5,14 @@ import { Camer3rdPerson } from "./Camera3rdPerson.js";
 import AnimationManager from "./AnimationManager.js";
 
 class Player {
-	constructor(context, playerModel) {
+	constructor(context, playerModel, playerAnimations) {
 		this.context = context;
 		this.camera = this.context.gameWorld.camera;
 		this.scene = this.context.gameWorld.scene;
 
 		this.player = null;
 		this.playerModel = playerModel;
+		this.playerAnimations = playerAnimations;
 
 		this.settings = {
 			cameraFollow: true,
@@ -28,11 +29,11 @@ class Player {
 
 		this.init();
 
-		this.addClassSettings();
+		// this.addClassSettings();
 	}
 
 	async init() {
-		await this.addPlayerMesh(this.playerModel);
+		await this.addPlayerMesh(this.playerModel, this.playerAnimations);
 
 		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
 		this.movementManager = new MovementFSM(this.context, this.player);
@@ -65,21 +66,23 @@ class Player {
 		});
 	}
 
-	async addPlayerMesh(player) {
+	async addPlayerMesh(player, animations) {
 		this.player = new THREE.Group();
 		this.player.position.set(0, 0, 0);
 
-		let playerModelFull = player;
-		let playerMesh = playerModelFull.model;
-		let playerAnimation = playerModelFull.animations;
+		let playerMesh = player;
+		let playerAnimation = animations;
 
 		this.initPlayerBB(playerMesh);
 
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
-		this.player.scale.setScalar(0.25);
+		this.player.scale.setScalar(0.23);
 		// this.context.cityContainer.add(this.player); // the player is the child of the city container
+		this.context.player = this.player;
 		this.scene.add(this.player);
+
+		console.log(this.player.position);
 
 		this.animationManager = new AnimationManager(
 			this.context,
@@ -91,6 +94,7 @@ class Player {
 	}
 
 	initPlayerBB(playerMesh) {
+		// console.log(playerMesh);
 		this.context.__PM__ = playerMesh.getObjectByName("aabb");
 		this.context.__PM__.visible = false;
 

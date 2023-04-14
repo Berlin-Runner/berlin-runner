@@ -59,6 +59,7 @@ class GameIntroComponent extends BaseUIComponent {
 		this.stateBus.publish("display-chracter-selector");
 		this.context.gameStateManager.showCharacterPicker();
 		this.initLevels();
+		// this.context.characterPicker.select();
 	}
 
 	initLevels() {
