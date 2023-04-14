@@ -35,7 +35,9 @@ class LandscapeGenerationManager {
 
 		this.placementPosition = -225;
 
+		// console.log(this.opts);
 		this.initCityTiles(this.opts.tiles);
+		// this.tilesToRecycle = [...this.opts.obstacles];
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
 		this.rewardManager = new RewardGenerationManagement(this.context);
@@ -48,7 +50,8 @@ class LandscapeGenerationManager {
 	initCityTiles(tiles_array) {
 		if (this.opts != null) {
 			this.landscapesArray = tiles_array;
-			this.shuffleArray(this.landscapesArray);
+			this.landscapesArray = this.shuffleArray(this.landscapesArray);
+			this.landscapesArray = this.landscapesArray.concat(this.opts.obstacles);
 		} else {
 			return;
 		}

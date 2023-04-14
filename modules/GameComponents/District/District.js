@@ -24,6 +24,7 @@ class District {
 	awake() {
 		this.landscapeManager = new LandscapeGenerationManager(this.context, {
 			tiles: this.opts.tiles,
+			obstacles: this.opts.obstacles,
 		});
 	}
 
