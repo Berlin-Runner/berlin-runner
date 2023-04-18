@@ -69,15 +69,10 @@ class GameStateManager {
 	}
 
 	restartGame() {
-		gsap.to(this.context.cityContainer.children[0].position, {
-			z: (this.context.cityContainer.children[0].position.z += 13),
-			duration: 1,
-			onComplete: () => {},
-		});
 		this.currentState = this.gameStates.inPlay;
 
 		console.log(this.context.cityContainer.children[0]);
-
+		this.context.cityContainer.children[0].position.z += 13;
 		this.context.gameStateEventBus.publish("restart_game");
 	}
 
