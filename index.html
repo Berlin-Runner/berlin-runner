@@ -43,6 +43,7 @@
 			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 		/>
 	</head>
+
 	<body>
 		<!-- =============================================== STATIC SCREEN NOISE =============================================== -->
 		<div id="page_static" class="full-screen"></div>
@@ -408,52 +409,54 @@
 
 		<!-- =============================================== GAME OVER SCREEN START =============================================== -->
 		<div id="game-over-screen" class="full-screen">
-			<div
-				id="game-over-messaege"
-				style="text-align: center; color: rgb(142, 229, 11)"
-			>
-				ALMOST!
-				<br />
+			<div class="container">
+				<div
+					id="game-over-messaege"
+					style="text-align: center; color: rgb(142, 229, 11)"
+				>
+					ALMOST!
+					<br />
 
-				If you get a score of 10 coffees or more, you win a surprise, so try
-				again!
-			</div>
-
-			<div
-				id="reward-claim-messaege"
-				style="
-					text-align: center;
-					color: black;
-					font-size: 32px;
-					display: flex;
-					flex-direction: column;
-				"
-			>
-				<span style="font-size: 48px"> YOU WON A REWARD! </span>
-				<br />
-				<div>
-					Screenshot this and take it in to FIve Elephant Kreuzberg, Mitte, or
-					Pberg for a discount ☕️
+					If you get a score of 10 coffees or more, you win a surprise, so try
+					again!
 				</div>
 
-				<div>
-					<img
-						src="/assets/img/coffee-house.jpg"
-						height="200px"
-						width="200px"
-						alt=""
-					/>
-				</div>
-			</div>
-			<div style="display: flex" id="final-score-holder">
-				SCORE:<span id="game-over-final-score"></span>
-			</div>
+				<div
+					id="reward-claim-messaege"
+					style="
+						text-align: center;
+						color: beige;
+						font-size: 32px;
+						display: flex;
+						flex-direction: column;
+					"
+				>
+					<span style="font-size: 48px"> YOU WON A REWARD! </span>
+					<br />
+					<div>
+						Screenshot this and take it in to FIve Elephant Kreuzberg, Mitte, or
+						Pberg for a discount ☕️
+					</div>
 
-			<div id="restart-level-button">RESTART</div>
-			<div id="select-character-button" style="display: none">
-				SELECT PLAYER
+					<div>
+						<img
+							src="/assets/img/coffee-house.jpg"
+							height="200px"
+							width="200px"
+							alt=""
+						/>
+					</div>
+				</div>
+				<div style="display: flex" id="final-score-holder">
+					SCORE:<span id="game-over-final-score"></span>
+				</div>
+
+				<div id="restart-level-button">RESTART</div>
+				<div id="select-character-button" style="display: none">
+					SELECT PLAYER
+				</div>
+				<div id="back-to-home-button" style="display: none">HOME</div>
 			</div>
-			<div id="back-to-home-button" style="display: none">HOME</div>
 			<!-- <div style="display: flex; flex-direction: row">
 				<span
 					style="
