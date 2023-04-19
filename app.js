@@ -81,10 +81,11 @@ class Game {
 		this.assetLoader
 			.init()
 			.then(() => {
+				this.initGameScene();
 				this.initGameState();
 				this.initScoreSystem();
 				this.initHealthSystem();
-				this.initGameScene();
+				this.uiManager = new UIManager(this);
 				// this.initLevels();
 				this.initPlayerInstance();
 
@@ -93,7 +94,6 @@ class Game {
 					this.world
 				);
 
-				this.uiManager = new UIManager(this);
 				// this.districtPicker = new DistrictPicker(this);
 				this.characterPicker = new CharacterPicker(this);
 

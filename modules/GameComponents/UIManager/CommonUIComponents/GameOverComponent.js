@@ -10,9 +10,9 @@ class GameOverComponent extends BaseUIComponent {
 			"#select-character-button"
 		);
 
-		this.gameOverMessage = document.querySelector("#game-over-messaege");
+		this.gameOverMessage = document.querySelector("#game-over-message");
 		this.gameOverMessage.style.display = "none";
-		this.rewardMessage = document.querySelector("#reward-claim-messaege");
+		this.rewardMessage = document.querySelector("#reward-claim-message");
 		this.rewardMessage.style.display = "none";
 
 		this.finalScoreHolder = document.getElementById("game-over-final-score");
