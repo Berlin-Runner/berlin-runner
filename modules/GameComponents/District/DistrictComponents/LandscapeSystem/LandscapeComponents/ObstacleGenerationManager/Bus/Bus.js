@@ -18,32 +18,29 @@ class Bus extends Obstacle {
 
 		this.delta = new THREE.Clock();
 
-		this.modelUrl =
-			"/modules/GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeComponents/ObstacleGenerationManager/Bus/Model/buses_.glb";
-
 		this.loadCar();
 
 		this.setupEventSubscriber();
 	}
 
 	async loadCar() {
-		let model = this.initObstacle(this.modelUrl);
-		model.then((res) => {
-			this.busMesh = res.model;
+		let res = this.context.busModel;
+		// model.then((res) => {
+		this.busMesh = res;
 
-			this.context.__BM__ = this.busMesh.getObjectByName("aabb");
-			this.context.__BM__.visible = false;
-			let busBB = new THREE.Box3();
-			this.context.busBB = busBB;
-			this.context.busBB.setFromObject(this.context.__BM__);
+		this.context.__BM__ = this.busMesh.getObjectByName("aabb");
+		this.context.__BM__.visible = false;
+		let busBB = new THREE.Box3();
+		this.context.busBB = busBB;
+		this.context.busBB.setFromObject(this.context.__BM__);
 
-			const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
+		const box = new THREE.Box3Helper(this.context.busBB, 0xff0000);
 
-			// this.context.cityContainer.add(this.busMesh);
-			this.context.tileOne.add(this.busMesh);
+		// this.context.cityContainer.add(this.busMesh);
+		this.context.landscapeTiles.tileOne.add(this.busMesh);
 
-			requestAnimationFrame(this.update.bind(this));
-		});
+		requestAnimationFrame(this.update.bind(this));
+		// });
 	}
 
 	setupEventSubscriber() {

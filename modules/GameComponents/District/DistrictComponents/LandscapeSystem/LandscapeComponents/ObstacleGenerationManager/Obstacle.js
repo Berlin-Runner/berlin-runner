@@ -7,9 +7,8 @@ class Obstacle {
 	}
 
 	async loadObstacle(url) {
-		let { model, animations } = await this.context.assetLoader.loadModel(url);
-
-		return { model, animations };
+		// let { model, animations } = await this.context.assetLoader.loadModel(url);
+		// return { model, animations };
 	}
 
 	async initObstacle(url) {

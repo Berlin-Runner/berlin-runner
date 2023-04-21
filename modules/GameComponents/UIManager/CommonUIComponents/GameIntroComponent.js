@@ -14,15 +14,18 @@ class GameIntroComponent extends BaseUIComponent {
 	}
 
 	init() {
-		this.tiles = [
-			this.context.tileOne,
-			this.context.tileTwo,
-			this.context.tileThree,
-			this.context.tileFour,
-			this.context.tileFive,
-			this.context.tileSix,
-			this.context.tileSeven,
-		];
+		this.tiles = Object.values(this.context.landscapeTiles);
+		console.log(this.context.landscapeTiles);
+		console.log(this.tiles);
+		//  [
+		// 	this.context.tileOne,
+		// 	this.context.tileTwo,
+		// 	this.context.tileThree,
+		// 	this.context.tileFour,
+		// 	this.context.tileFive,
+		// 	this.context.tileSix,
+		// 	this.context.tileSeven,
+		// ];
 	}
 
 	setUpComponentEventListners() {

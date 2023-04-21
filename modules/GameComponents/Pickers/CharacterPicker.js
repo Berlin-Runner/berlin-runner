@@ -334,13 +334,15 @@ export default class CharacterPicker {
 	}
 
 	async addPlayerMeshes() {
-		this.context.ben.model.scale.setScalar(190);
-		this.context.ben.model.position.x = 60;
-		this.pickerArea.add(this.context.ben.model);
+		this.context.characterModels.ben.model.scale.setScalar(190);
+		this.context.characterModels.ben.model.position.x = 60;
+		this.pickerArea.add(this.context.characterModels.ben.model);
 
-		this.mixer = new THREE.AnimationMixer(this.context.ben.model);
+		this.mixer = new THREE.AnimationMixer(
+			this.context.characterModels.ben.model
+		);
 		this.idleClip = THREE.AnimationClip.findByName(
-			this.context.ben.animations,
+			this.context.characterModels.ben.animations,
 			"Idle"
 		);
 		this.idleAction = this.mixer.clipAction(this.idleClip);
@@ -348,71 +350,81 @@ export default class CharacterPicker {
 
 		this.scene.getObjectByName("aabb").visible = false;
 
-		this.context.katy.model.scale.setScalar(4.25);
-		this.context.katy.model.position.x = 45;
-		this.context.katy.model.position.z = 0.5;
-		this.pickerArea.add(this.context.katy.model);
+		this.context.characterModels.katy.model.scale.setScalar(4.25);
+		this.context.characterModels.katy.model.position.x = 45;
+		this.context.characterModels.katy.model.position.z = 0.5;
+		this.pickerArea.add(this.context.characterModels.katy.model);
 
-		this.mixer_ = new THREE.AnimationMixer(this.context.katy.model);
+		this.mixer_ = new THREE.AnimationMixer(
+			this.context.characterModels.katy.model
+		);
 		this.idleClip_ = THREE.AnimationClip.findByName(
-			this.context.katy.animations,
+			this.context.characterModels.katy.animations,
 			"Idle"
 		);
 		this.idleAction_ = this.mixer_.clipAction(this.idleClip_);
 		this.idleAction_.play();
 
 		this.scene.getObjectByName("aabb").visible = false;
-		this.context.katy.model.traverse((child) => {
+		this.context.characterModels.katy.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
 
-		this.context.captain.model.scale.setScalar(200);
-		this.context.captain.model.position.x = 15;
-		this.context.captain.model.traverse((child) => {
+		this.context.characterModels.captain.model.scale.setScalar(200);
+		this.context.characterModels.captain.model.position.x = 15;
+		this.context.characterModels.captain.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
-		this.pickerArea.add(this.context.captain.model);
+		this.pickerArea.add(this.context.characterModels.captain.model);
 
-		this.mixer___ = new THREE.AnimationMixer(this.context.captain.model);
+		this.mixer___ = new THREE.AnimationMixer(
+			this.context.characterModels.captain.model
+		);
 		this.idleClip___ = THREE.AnimationClip.findByName(
-			this.context.captain.animations,
+			this.context.characterModels.captain.animations,
 			"Idle"
 		);
 		this.idleAction___ = this.mixer___.clipAction(this.idleClip___);
 		this.idleAction___.play();
 
-		this.context.coach.model.scale.setScalar(1.5);
-		this.context.coach.model.position.x = 30;
-		this.context.coach.model.position.z = 0.5;
-		this.pickerArea.add(this.context.coach.model);
-		this.context.coach.model.traverse((child) => {
+		this.context.characterModels.coach.model.scale.setScalar(1.5);
+		this.context.characterModels.coach.model.position.x = 30;
+		this.context.characterModels.coach.model.position.z = 0.5;
+		this.pickerArea.add(this.context.characterModels.coach.model);
+		this.context.characterModels.coach.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
 
-		this.mixer__ = new THREE.AnimationMixer(this.context.coach.model);
+		this.mixer__ = new THREE.AnimationMixer(
+			this.context.characterModels.coach.model
+		);
 		this.idleClip__ = THREE.AnimationClip.findByName(
-			this.context.coach.animations,
+			this.context.characterModels.coach.animations,
 			"Idle"
 		);
 		this.idleAction__ = this.mixer__.clipAction(this.idleClip__);
 		this.idleAction__.play();
 
-		this.context.bouncer.model.scale.setScalar(2);
-		this.context.bouncer.model.position.x = 0;
-		this.context.bouncer.model.position.z = 0.5;
-		this.pickerArea.add(this.context.bouncer.model);
-		this.context.bouncer.model.traverse((child) => {
+		this.context.characterModels.bouncer.model.scale.setScalar(2);
+		this.context.characterModels.bouncer.model.position.x = 0;
+		this.context.characterModels.bouncer.model.position.z = 0.5;
+		this.pickerArea.add(this.context.characterModels.bouncer.model);
+		this.context.characterModels.bouncer.model.traverse((child) => {
 			if (child.name === "aabb") child.visible = false;
 		});
 
 		this.bouncerWorldPos = new THREE.Vector3(0, 0, 0);
-		this.context.bouncer.model.getWorldPosition(this.bouncerWorldPos);
+		this.context.characterModels.bouncer.model.getWorldPosition(
+			this.bouncerWorldPos
+		);
 
 		console.log(this.bouncerWorldPos);
 
-		this.mixer____ = new THREE.AnimationMixer(this.context.bouncer.model);
+		this.mixer____ = new THREE.AnimationMixer(
+			this.context.characterModels.bouncer.model
+		);
 		this.idleClip____ = THREE.AnimationClip.findByName(
-			this.context.bouncer.animations,
+			this.context.characterModels.bouncer.animations,
 			"Idle"
 		);
 		this.idleAction____ = this.mixer____.clipAction(this.idleClip____);
@@ -420,24 +432,24 @@ export default class CharacterPicker {
 
 		this.playerModels = [
 			{
-				model: this.context.bouncer.model,
-				animations: this.context.bouncer.animations,
+				model: this.context.characterModels.bouncer.model,
+				animations: this.context.characterModels.bouncer.animations,
 			},
 			{
-				model: this.context.captain.model,
-				animations: this.context.captain.animations,
+				model: this.context.characterModels.captain.model,
+				animations: this.context.characterModels.captain.animations,
 			},
 			{
-				model: this.context.coach.model,
-				animations: this.context.coach.animations,
+				model: this.context.characterModels.coach.model,
+				animations: this.context.characterModels.coach.animations,
 			},
 			{
-				model: this.context.katy.model,
-				animations: this.context.katy.animations,
+				model: this.context.characterModels.katy.model,
+				animations: this.context.characterModels.katy.animations,
 			},
 			{
-				model: this.context.ben.model,
-				animations: this.context.ben.animations,
+				model: this.context.characterModels.ben.model,
+				animations: this.context.characterModels.ben.animations,
 			},
 		];
 	}

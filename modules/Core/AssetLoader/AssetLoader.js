@@ -1,9 +1,37 @@
 import { LandscapeTile } from "../../GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js";
-import { UTIL } from "../../Util/UTIL.js";
+
+const assetConfig = {
+	landscapeTiles: {
+		tileOne: "assets/models/tiles/tiles.1.2.glb",
+		tileTwo: "assets/models/tiles/tiles.2.3.glb",
+		tileThree: "assets/models/tiles/tiles.3.2.glb",
+		tileFour: "assets/models/tiles/tiles.4.glb",
+		tileFive: "assets/models/tiles/tiles.5.glb",
+		tileSix: "assets/models/tiles/tiles.6.3.glb",
+		tileSeven: "assets/models/tiles/tiles.7.glb",
+		tileEight: "assets/models/tiles/tiles.8.glb",
+	},
+
+	characterModels: {
+		ben: "/assets/models/zen-ben-v2.glb",
+		katy: "/assets/models/katy.glb",
+		captain: "/assets/models/captain-bubble.glb",
+		coach: "/assets/models/coach_aabb.glb",
+		bouncer: "/assets/models/bouncer.glb",
+	},
+
+	otherModels: {
+		coffee: "/assets/models/coffee_cup_2.glb",
+		bus: "/assets/models/buses_.glb",
+	},
+};
+
 export default class AssetLoader {
 	constructor(context) {
 		this.context = context;
+	}
 
+	async init() {
 		this.error = false;
 
 		this.setupLoadingManager();
@@ -13,17 +41,20 @@ export default class AssetLoader {
 		this.instructionsContainer = document.querySelector(".instructions");
 		this.loadBarElement = document.querySelector(".loading-bar");
 		this.percentSpan = document.querySelector(".percentage");
-		// console.log(this.loadingPage.style.bac);
-	}
 
-	async init() {
 		return new Promise(async (resolve, reject) => {
-			await this.loadLandscapeTiles();
-			await this.loadCharacterModels();
-			await this.loadObstacleModels();
-			await this.loadRewardModels();
-			await this.loadDonut();
+			this.context.landscapeTiles = await this.loadAssets(
+				assetConfig.landscapeTiles,
+				this.loadLandscapeTile.bind(this)
+			);
+
+			this.context.characterModels = await this.loadAssets(
+				assetConfig.characterModels,
+				this.loadModel.bind(this)
+			);
+
 			await this.loadCoffee();
+			await this.loadBusModel();
 
 			if (this.error) {
 				reject("there's some problem");
@@ -33,63 +64,18 @@ export default class AssetLoader {
 
 	setupLoadingManager() {
 		this.manager = new THREE.LoadingManager();
-		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
-			// console.log(
-			// 	"Started loading file: " +
-			// 		url +
-			// 		".\nLoaded " +
-			// 		itemsLoaded +
-			// 		" of " +
-			// 		itemsTotal +
-			// 		" files."
-			// );
-		};
+		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
 
-		this.manager.onLoad = () => {
-			// console.log("Loading complete!");
-			// this.loadingPage.style.display = "none";
-
-			const tl = gsap.timeline({
-				onComplete: () => {
-					// Set the display style of the div to none
-					// this.loadingPage.style.display = "none";
-				},
-			});
-
-			// Add the opacity animation to the timeline
-			tl.to(this.loadingPage.style, {
-				duration: 0.5,
-				opacity: 0,
-			});
-
-			// Start the timeline
-			tl.play();
-		};
+		this.manager.onLoad = () => {};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-			// console.log(
-			// 	"Loading file: " +
-			// 		url +
-			// 		".\nLoaded " +
-			// 		itemsLoaded +
-			// 		" of " +
-			// 		itemsTotal +
-			// 		" files."
-			// );
-
-			// this.loadingPage.style.backgroundColor = `rgba(255 , 0 , 0 , ${
-			// 	1 - itemsLoaded / itemsTotal
-			// })`;
-
 			this.progressRatio = itemsLoaded / itemsTotal;
-			this.percentSpan.innerHTML = Math.round(this.progressRatio * 100);
+			this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}%`;
 			this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
-
-			// console.log(itemsLoaded / itemsTotal);
 		};
 
 		this.manager.onError = (url) => {
-			// console.log("There was an error loading " + url);
+			this.error = url;
 		};
 
 		this.context.globalLoadingManager = this.manager;
@@ -107,9 +93,7 @@ export default class AssetLoader {
 					let result = { model: gltf.scene, animations: gltf.animations };
 					resolve(result);
 				},
-				(progress) => {
-					//   console.log(progress);
-				},
+				(progress) => {},
 				(err) => {
 					reject(err);
 				}
@@ -117,117 +101,41 @@ export default class AssetLoader {
 		});
 	}
 
-	async loadLandscapeTiles() {
+	loadLandscapeTile = async (url) => {
 		try {
-			this.tileOne = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.1.2.glb"
-			);
-			this.context.tileOne = this.tileOne;
-			this.tileTwo = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.2.3.glb"
-			);
-			this.context.tileTwo = this.tileTwo;
-			this.tileThree = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.3.2.glb"
-			);
-			this.context.tileThree = this.tileThree;
-			this.tileFour = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.4.glb"
-			);
-			this.context.tileFour = this.tileFour;
-			this.tileFive = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.5.glb"
-			);
-			this.context.tileFive = this.tileFive;
-			this.tileSix = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.6.3.glb"
-			);
-			this.context.tileSix = this.tileSix;
-			this.tileSeven = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.7.glb"
-			);
-			this.context.tileSeven = this.tileSeven;
-
-			this.tileEight = await new LandscapeTile(
-				this.context,
-				"assets/models/tiles/tiles.8.glb"
-			);
-			this.context.tileEight = this.tileEight;
-
-			// console.log("console.log)");
+			const tile = await new LandscapeTile(this.context, url);
+			return tile;
 		} catch (error) {
-			// console.log(error);
+			console.error(`Error loading LandscapeTile from ${url}:`, error);
+			throw error;
 		}
-	}
+	};
 
-	async loadBenModel() {
-		let { model, animations } = await this.loadModel(
-			"/assets/models/zen-ben-v2.glb"
-		);
+	loadCharacterModel = async (url) => {
+		try {
+			const { model, animations } = await this.loadModel(url);
+			return { model, animations };
+		} catch (error) {
+			console.error(`Error loading character model from ${url}:`, error);
+			throw error;
+		}
+	};
 
-		return { model, animations };
-	}
-
-	async loadLadyModel() {
-		let { model, animations } = await this.loadModel("/assets/models/katy.glb");
-
-		return { model, animations };
-	}
-
-	async loadCaptainModel() {
-		let { model, animations } = await this.loadModel(
-			"/assets/models/captain-bubble.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async loadCoachModel() {
-		let { model, animations } = await this.loadModel(
-			"/assets/models/coach_aabb.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async loadBouncerModel() {
-		let { model, animations } = await this.loadModel(
-			"/assets/models/bouncer.glb"
-		);
-
-		return { model, animations };
-	}
-
-	async loadDonut() {
-		let { model } = await this.loadModel("/assets/models/donut.glb");
-
-		this.context.donut = model;
+	async loadAssets(assetURLs, loaderFunc) {
+		const loadedAssets = {};
+		for (const key in assetURLs) {
+			loadedAssets[key] = await loaderFunc(assetURLs[key]);
+		}
+		return loadedAssets;
 	}
 
 	async loadCoffee() {
-		let { model } = await this.loadModel("/assets/models/coffee_cup_2.glb");
-
-		// console.log(model);
-
+		let { model } = await this.loadModel(assetConfig.otherModels.coffee);
 		this.context.coffee = model;
 	}
 
-	async loadCharacterModels() {
-		this.context.ben = await this.loadBenModel();
-		this.context.katy = await this.loadLadyModel();
-		this.context.captain = await this.loadCaptainModel();
-		this.context.coach = await this.loadCoachModel();
-		this.context.bouncer = await this.loadBouncerModel();
+	async loadBusModel() {
+		let { model } = await this.loadModel(assetConfig.otherModels.bus);
+		this.context.busModel = model;
 	}
-
-	loadObstacleModels() {}
-
-	loadRewardModels() {}
 }

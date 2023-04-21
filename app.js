@@ -55,8 +55,6 @@ class Game {
 		this.assetLoader = new AssetLoader(this);
 
 		this.init();
-
-		this.assetLoader.loadLandscapeTiles();
 	}
 
 	async init() {
@@ -80,7 +78,10 @@ class Game {
 		this.G = this._g.getG();
 		this.assetLoader
 			.init()
-			.then(() => {
+			.then((res) => {
+				console.log(res);
+				console.log(this.landscapeTiles);
+
 				this.initGameScene();
 				this.initGameState();
 				this.initScoreSystem();
@@ -97,7 +98,6 @@ class Game {
 				this.characterPicker = new CharacterPicker(this);
 
 				this.started = true;
-				this.loadingPage.style.display = "none";
 
 				let result = new UAParser().getResult();
 				this.G.DEVICE_TYPE =
@@ -105,6 +105,7 @@ class Game {
 
 				this.playerMovementEventBus = new EventBus();
 				this.tutorial = new TutorialManager(this);
+				this.loadingPage.style.display = "none";
 			})
 			.catch((err) => {
 				console.log(err);
