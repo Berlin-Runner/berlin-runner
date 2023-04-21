@@ -30,10 +30,7 @@ class GameIntroComponent extends BaseUIComponent {
 			this.startGame();
 		});
 
-		window.addEventListener("keypress", (e) => {
-			if (e.code === "KeyM") {
-			}
-		});
+		// alert("listener is attached to the first button");
 	}
 
 	setupEventBusSubscriptions() {

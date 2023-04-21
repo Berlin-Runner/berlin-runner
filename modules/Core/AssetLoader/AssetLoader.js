@@ -47,7 +47,23 @@ export default class AssetLoader {
 
 		this.manager.onLoad = () => {
 			// console.log("Loading complete!");
-			this.loadingPage.style.display = "none";
+			// this.loadingPage.style.display = "none";
+
+			const tl = gsap.timeline({
+				onComplete: () => {
+					// Set the display style of the div to none
+					// this.loadingPage.style.display = "none";
+				},
+			});
+
+			// Add the opacity animation to the timeline
+			tl.to(this.loadingPage.style, {
+				duration: 0.5,
+				opacity: 0,
+			});
+
+			// Start the timeline
+			tl.play();
 		};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {

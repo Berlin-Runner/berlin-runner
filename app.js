@@ -86,18 +86,18 @@ class Game {
 				this.initScoreSystem();
 				this.initHealthSystem();
 				this.uiManager = new UIManager(this);
-				// this.initLevels();
 				this.initPlayerInstance();
 
 				this.cannonDebugger = new CannonDebugger(
 					this.gameWorld.scene,
 					this.world
 				);
+				this.loadingPage = document.getElementById("loading-progress-page");
 
-				// this.districtPicker = new DistrictPicker(this);
 				this.characterPicker = new CharacterPicker(this);
 
 				this.started = true;
+				this.loadingPage.style.display = "none";
 
 				let result = new UAParser().getResult();
 				this.G.DEVICE_TYPE =
