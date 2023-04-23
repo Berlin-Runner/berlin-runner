@@ -20,7 +20,7 @@ class LandscapeGenerationManager {
 
 		this.tilesToRecycle = [];
 
-		this.init();
+		this._init();
 	}
 
 	shuffleArray(array) {
@@ -36,9 +36,10 @@ class LandscapeGenerationManager {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
-	init() {
+	_init() {
 		this.counter = 0;
 		this.delta = new THREE.Clock();
+		this.deltaTime = 0;
 
 		this.lastRewardPlacementTime = 0;
 		this.rewardPlacementInterval = 3000; // 3000 ms or 3 seconds
@@ -77,14 +78,11 @@ class LandscapeGenerationManager {
 
 		this.z = -this.modelLength * this.landscapesArray.length;
 
-		this.cityCenter = this.modelLength * this.landscapesArray.length * 0.5;
-		this.cityTiles.position.z = this.cityCenter - this.modelLength;
-
 		this.cityTiles.traverse((child) => {
 			if (child.isMesh) {
 				child.material.roughness = 0.8;
 				child.material.castShadow = true;
-				child.material.recieveShadow = true;
+				child.material.receiveShadow = true;
 			}
 		});
 
@@ -160,24 +158,22 @@ class LandscapeGenerationManager {
 		}
 	}
 
-	updateCityMeshPosition() {
-		requestAnimationFrame(this.updateCityMeshPosition.bind(this));
+	updateCityMeshPosition(tf) {
 		if (
 			this.gameState.currentState === "in_play" &&
 			this.cityTiles &&
 			this.settings.moveCity
 		) {
 			this.cityTiles.position.z +=
-				this.modelLength *
-				this.context.G.UPDATE_SPEED_FACTOR *
-				this.delta.getDelta();
+				this.modelLength * this.context.G.UPDATE_SPEED_FACTOR * tf;
 		}
 	}
 
 	animate() {
 		requestAnimationFrame(this.animate.bind(this));
+		this.deltaTime = this.delta.getDelta();
 		this.updateCityTiles();
-		this.updateCityMeshPosition();
+		this.updateCityMeshPosition(this.deltaTime);
 		this.updateRewardPlacements();
 	}
 
