@@ -29,15 +29,7 @@ class District {
 	}
 
 	start() {
-		this.landscapeManager.update();
-
-		this.landscapeManager.updateSpeed();
-
-		this.landscapeManager.updateCityMeshPoistion();
-
-		this.landscapeManager.updatePlacements();
-
-		this.landscapeManager.updateRewardPlacements();
+		this.landscapeManager.animate();
 	}
 
 	dispose() {
