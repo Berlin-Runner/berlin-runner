@@ -13,8 +13,7 @@ export default class MovementManager {
 	_init() {
 		this.movementEventBus = this.context.playerMovementEventBus;
 
-		this.tweenDuration = 0.5;
-		this.cameraTweenDuration = 0.85;
+		this.tweenDuration = 1;
 
 		this.currentLane = LANES.CENTER;
 		this.moveToLane(LANES.CENTER);
@@ -152,7 +151,7 @@ export default class MovementManager {
 		setTimeout(() => {
 			this.canJump = false;
 			this.context.G.PLAYER_JUMPING = this.canJump;
-		}, 1500);
+		}, 1810);
 	}
 
 	update(delta) {}
