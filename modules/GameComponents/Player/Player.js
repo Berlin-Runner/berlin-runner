@@ -1,6 +1,6 @@
 import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
-import { MovementFSM } from "./MovementFSM.js";
-import { Camer3rdPerson } from "./Camera3rdPerson.js";
+import PlayerController from "./PlayerController/PlayerController.js";
+import { Camera3rdPerson } from "./Camera3rdPerson.js";
 
 import AnimationManager from "./AnimationManager.js";
 
@@ -15,7 +15,7 @@ class Player {
 		this.playerAnimations = playerAnimations;
 
 		this.settings = {
-			cameraFollow: true,
+			cameraFollow: false,
 			playerScale: 0.9,
 			colliderDimensions: new Vec3(0.2, 1, 0.2),
 			playerColliderMass: 100,
@@ -35,8 +35,8 @@ class Player {
 	async init() {
 		await this.addPlayerMesh(this.playerModel, this.playerAnimations);
 
-		this.thirdPersonCamera = new Camer3rdPerson(this.context, this.player);
-		this.movementManager = new MovementFSM(this.context, this.player);
+		this.thirdPersonCamera = new Camera3rdPerson(this.context, this.player);
+		this.movementManager = new PlayerController(this.context, this.player);
 
 		this.setupEventSubscriptions();
 	}
@@ -64,6 +64,11 @@ class Player {
 		this.context.settingEventBus.subscribe("go-hands-free", (val) => {
 			this.settings.cameraFollow = !val;
 		});
+
+		this.context.gameStateEventBus.subscribe(
+			"enter_play",
+			() => (this.settings.cameraFollow = true)
+		);
 	}
 
 	async addPlayerMesh(player, animations) {
