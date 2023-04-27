@@ -73,6 +73,7 @@ class Game {
 		/* this.stats = new Stats();
 		this.stats.showPanel(0);
 		document.body.appendChild(this.stats.dom); */
+		this.playerMovementEventBus = new EventBus();
 
 		this._g = new G();
 		this.G = this._g.getG();
@@ -103,7 +104,6 @@ class Game {
 				this.G.DEVICE_TYPE =
 					result.device.type === undefined ? "desktop" : "mobile";
 
-				this.playerMovementEventBus = new EventBus();
 				this.tutorial = new TutorialManager(this);
 				this.loadingPage.style.display = "none";
 			})
