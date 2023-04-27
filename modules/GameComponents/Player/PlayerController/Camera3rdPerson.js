@@ -37,13 +37,7 @@ class Camera3rdPerson {
 	 * With this approach, you can adjust the cameraDistance, elevationAngle, and rotationAngle properties to set the camera's position relative to the player. The update method will then compute the camera's position in Cartesian coordinates and set the camera to look at the player.
 	 */
 	update() {
-		if (
-			!this.camera ||
-			!this.player ||
-			!this.follow ||
-			this.context.G.PLAYER_SLIDING
-		)
-			return;
+		if (this.context.G.PLAYER_SLIDING) return;
 
 		this.camera.position.set(
 			this.player.position.x + this.camOffsetX,
@@ -53,7 +47,7 @@ class Camera3rdPerson {
 
 		// console.log(this.camera.position.z);
 
-		this.camera.lookAt(this.player.position);
+		// this.camera.lookAt(this.player.position);
 	}
 
 	addClassSettings() {
