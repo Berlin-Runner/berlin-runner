@@ -1,3 +1,4 @@
+import AnimationFSM from "./AnimationFSM.js";
 export default class AnimationManager {
 	constructor(context, mesh, animations) {
 		this.context = context;
@@ -30,7 +31,7 @@ export default class AnimationManager {
 
 	initializeActions(clip, loop = THREE.LoopRepeat, weight = 0) {
 		const action = this.mixer.clipAction(clip);
-		action.setLoop(loop, 0);
+		action.setLoop(loop);
 		action.play();
 		this.setWeight(action, weight);
 		return action;
@@ -61,13 +62,10 @@ export default class AnimationManager {
 
 		if (this.mixer) {
 			this.runAction = this.initializeActions(this.runClip);
+
 			this.fallAction = this.initializeActions(this.fallClip, THREE.LoopOnce);
 			this.deadAction = this.initializeActions(this.deadClip, THREE.LoopOnce);
-			this.idleAction = this.initializeActions(
-				this.idleClip,
-				THREE.LoopRepeat,
-				1
-			);
+			this.idleAction = this.initializeActions(this.idleClip);
 			this.jumpAction = this.initializeActions(this.jumpClip, THREE.LoopOnce);
 			this.slideAction = this.initializeActions(this.slideClip, THREE.LoopOnce);
 		}
@@ -83,7 +81,10 @@ export default class AnimationManager {
 	}
 
 	prepareCrossFade(startActionKey, endActionKey, defaultDuration) {
-		const startAction = this.context.currentAction;
+		const startAction =
+			startActionKey == "_"
+				? this.context.playerActions.runAction
+				: this.context.currentAction;
 		const endAction = this.context.playerActions[endActionKey];
 
 		const duration = this.getCrossFadeDuration(defaultDuration);
@@ -118,101 +119,5 @@ export default class AnimationManager {
 		if (this.mixer != undefined && this.mixer != null) {
 			this.mixer.update(this.context.time.getDelta());
 		}
-	}
-}
-
-class AnimationFSM {
-	constructor(context, animationManager) {
-		this.context = context;
-		this.stateBus = this.context.gameStateEventBus;
-		this.manager = animationManager;
-
-		this.playerAnimationStates = {
-			running: 0,
-			falling: 1,
-			dead: 2,
-			idle: 3,
-			jumping: 4,
-			sliding: 5,
-		};
-
-		this.context.playerAnimationStates = this.playerAnimationStates;
-
-		this.currentState = this.playerAnimationStates.idle;
-		this.context.currentPlayerState = this.currentState;
-
-		this.setupEventSubscriptions();
-	}
-
-	setupEventSubscriptions() {
-		this.stateBus.subscribe("back_to_home", () => {});
-
-		this.stateBus.subscribe("pick-district", () => {});
-
-		this.stateBus.subscribe("start_game", () => this.onStartGame());
-
-		this.stateBus.subscribe("enter_stage", () => this.onEnterStage());
-
-		this.stateBus.subscribe("enter_play", () => this.onEnterPlay());
-
-		this.stateBus.subscribe("pause_game", () => this.onPauseGame());
-
-		this.stateBus.subscribe("resume_game", () => this.onResumeGame());
-
-		this.stateBus.subscribe("restart_game", () => this.onRestartGame());
-
-		this.stateBus.subscribe("game_over", () => this.onGameOver());
-	}
-
-	onStartGame() {
-		this.manager.prepareCrossFade("runAction", "idleAction", 0);
-		this.currentState = this.playerAnimationStates.idle;
-		this.updatePlayerState();
-	}
-
-	onEnterStage() {
-		this.manager.prepareCrossFade("runAction", "idleAction", 0);
-		this.currentState = this.playerAnimationStates.idleAction;
-		this.updatePlayerState();
-	}
-
-	onEnterPlay() {
-		this.manager.setWeight(this.context.playerActions["idleAction"], 0);
-		this.manager.prepareCrossFade("runAction", "runAction", 0);
-		this.currentState = this.playerAnimationStates.running;
-		this.updatePlayerState();
-	}
-
-	onPauseGame() {
-		this.manager.prepareCrossFade("runAction", "idleAction", 0);
-		this.currentState = this.playerAnimationStates.idle;
-		this.updatePlayerState();
-	}
-
-	onResumeGame() {
-		this.manager.prepareCrossFade("runAction", "runAction", 0);
-		this.currentState = this.playerAnimationStates.running;
-		this.updatePlayerState();
-	}
-
-	onRestartGame() {
-		this.manager.prepareCrossFade("idleAction", "runAction", 0);
-		this.currentState = this.playerAnimationStates.running;
-		this.updatePlayerState();
-	}
-
-	onGameOver() {
-		this.manager.prepareCrossFade("runAction", "deadAction", 0.5);
-		this.currentState = this.playerAnimationStates.falling;
-		this.updatePlayerState();
-		this.context.mixer.addEventListener("finished", () => {
-			this.manager.prepareCrossFade("deadAction", "idleAction", 0);
-			this.currentState = this.playerAnimationStates.idle;
-			this.updatePlayerState();
-		});
-	}
-
-	updatePlayerState() {
-		this.context.currentPlayerState = this.currentState;
 	}
 }
