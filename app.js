@@ -80,9 +80,6 @@ class Game {
 		this.assetLoader
 			.init()
 			.then((res) => {
-				console.log(res);
-				console.log(this.landscapeTiles);
-
 				this.initGameScene();
 				this.initGameState();
 				this.initScoreSystem();

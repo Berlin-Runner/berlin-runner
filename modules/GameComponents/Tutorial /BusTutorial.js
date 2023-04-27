@@ -13,7 +13,7 @@ export default class BusTutorial {
 		this.init(uiElementId, messageElementId);
 	}
 
-	init() {
+	init(uiElementId, messageElementId) {
 		this.uiElement = document.getElementById(uiElementId);
 
 		this.messageElement = document.getElementById(messageElementId);

@@ -15,8 +15,7 @@ class GameIntroComponent extends BaseUIComponent {
 
 	init() {
 		this.tiles = Object.values(this.context.landscapeTiles);
-		console.log(this.context.landscapeTiles);
-		console.log(this.tiles);
+
 		//  [
 		// 	this.context.tileOne,
 		// 	this.context.tileTwo,

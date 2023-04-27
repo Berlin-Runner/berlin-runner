@@ -318,7 +318,6 @@ export default class CharacterPicker {
 
 	async addPlayerMeshes() {
 		const addCharacter = (character, scale, position, mixerVar) => {
-			console.log(character);
 			character.model.scale.setScalar(scale);
 			character.model.position.set(position.x, position.y, position.z);
 			this.pickerArea.add(character.model);
@@ -382,8 +381,6 @@ export default class CharacterPicker {
 			model: data.character.model,
 			animations: data.character.animations,
 		}));
-
-		console.log(this.playerModels);
 	}
 
 	next() {
