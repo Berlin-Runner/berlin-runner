@@ -75,7 +75,7 @@ class World_ {
 		// Set the intensity of the light to simulate the brightness of the sun
 
 		// sunlight.castShadow = true;
-		sunlight_.castShadow = true;
+		// sunlight_.castShadow = true;
 
 		// sunlight.shadow.mapSize.width = 1024;
 		// sunlight.shadow.mapSize.height = 1024;
