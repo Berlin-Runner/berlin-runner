@@ -7,6 +7,7 @@ export default class MovementManager {
 	constructor(context, player) {
 		this.context = context;
 		this.player = player;
+		this.camera = this.context.gameWorld.camera;
 		this._init();
 	}
 
@@ -46,6 +47,7 @@ export default class MovementManager {
 
 	moveToCenter() {
 		this.moveObjectToPosition(this.player, 0, this.tweenDuration, () => {});
+		this.moveObjectToPosition(this.camera, 0, this.tweenDuration * 0.75);
 		if (this.prevLane == LANES.LEFT)
 			this.rotateObject(this.player, Math.PI * 0.75);
 		if (this.prevLane == LANES.RIGHT)
@@ -65,12 +67,14 @@ export default class MovementManager {
 	moveLeft() {
 		this.movementEventBus.publish("player-side-moved");
 		this.rotateObject(this.player, Math.PI * 1.25);
+		this.moveObjectToPosition(this.camera, -2, this.tweenDuration * 0.75);
 		this.moveObjectToPosition(this.player, -2.5, this.tweenDuration, () => {});
 	}
 
 	moveRight() {
 		this.movementEventBus.publish("player-side-moved");
 		this.rotateObject(this.player, Math.PI * 0.75);
+		this.moveObjectToPosition(this.camera, 2, this.tweenDuration * 0.75);
 		this.moveObjectToPosition(this.player, 2.5, this.tweenDuration, () => {});
 	}
 
@@ -134,6 +138,19 @@ export default class MovementManager {
 		this.movementEventBus.publish("player-jumped");
 		this.canJump = true;
 		this.context.G.PLAYER_JUMPING = this.canJump;
+
+		gsap.to(this.context.gameWorld.camera.position, {
+			y: 4,
+			z: 5.5,
+			duration: 0.2,
+
+			onComplete: () =>
+				gsap.to(this.context.gameWorld.camera.position, {
+					y: 2.2847,
+					z: 5.582,
+					duration: 0.6,
+				}),
+		});
 
 		gsap.to(this.player.position, {
 			y: 3,
