@@ -62,9 +62,9 @@ class LandscapeGenerationManager {
 
 		this.context.gameWorld.scene.traverse((child) => {
 			if (child.isMesh) {
-				console.log(child.name);
-				child.castShadow = true;
-				child.receiveShadow = true;
+				// console.log(child.name);
+				// child.castShadow = true;
+				// child.receiveShadow = true;
 				child.material.roughness = 0.8;
 			}
 		});
