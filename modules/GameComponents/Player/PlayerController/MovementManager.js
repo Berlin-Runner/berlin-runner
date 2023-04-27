@@ -13,13 +13,13 @@ export default class MovementManager {
 	_init() {
 		this.movementEventBus = this.context.playerMovementEventBus;
 
-		this.tweenDuration = 0.45;
+		this.tweenDuration = 0.95;
 
 		this.currentLane = LANES.CENTER;
 		this.moveToLane(LANES.CENTER);
 	}
 
-	/* moveObjectToPosition(object, position, duration, finishCallBack) {
+	moveObjectToPosition(object, position, duration, finishCallBack) {
 		gsap.to(object.position, {
 			x: position,
 			duration,
@@ -28,32 +28,9 @@ export default class MovementManager {
 				setTimeout(finishCallBack, 500);
 			},
 		});
-	} */
-
-	moveObjectToPosition(object, position, duration, finishCallBack) {
-		const startPosition = object.position.x;
-		const distance = position - startPosition;
-		const startTime = performance.now();
-		const easing = (t) => Math.pow(t, 1); // Power4 easing function
-
-		const animate = (currentTime) => {
-			const elapsed = currentTime - startTime;
-			const progress = elapsed / (duration * 1000);
-
-			if (progress < 1) {
-				const easedProgress = easing(progress);
-				object.position.x = startPosition + distance * easedProgress;
-				requestAnimationFrame(animate);
-			} else {
-				object.position.x = position;
-				finishCallBack();
-			}
-		};
-
-		requestAnimationFrame(animate);
 	}
 
-	/* rotateObject(object, angle) {
+	rotateObject(object, angle) {
 		gsap.to(object.rotation, {
 			y: angle,
 			duration: this.tweenDuration / 6,
@@ -65,45 +42,6 @@ export default class MovementManager {
 				});
 			},
 		});
-	} */
-
-	rotateObject(object, angle) {
-		const startAngle = object.rotation.y;
-		const angleDifference = angle - startAngle;
-		const durationFirstPart = this.tweenDuration / 2;
-		const durationSecondPart = this.tweenDuration / 2;
-		const startTime = performance.now();
-
-		const easing = (t) => t; // Linear easing function
-
-		const animateFirstPart = (currentTime) => {
-			const elapsed = currentTime - startTime;
-			const progress = elapsed / (durationFirstPart * 1000);
-
-			if (progress < 1) {
-				const easedProgress = easing(progress);
-				object.rotation.y = startAngle + angleDifference * easedProgress;
-				requestAnimationFrame(animateFirstPart);
-			} else {
-				object.rotation.y = angle;
-				animateSecondPart(currentTime);
-			}
-		};
-
-		const animateSecondPart = (currentTime) => {
-			const elapsed = currentTime - startTime - durationFirstPart * 1000;
-			const progress = elapsed / (durationSecondPart * 1000);
-
-			if (progress < 1) {
-				const easedProgress = easing(progress);
-				object.rotation.y = angle + (Math.PI - angle) * easedProgress;
-				requestAnimationFrame(animateSecondPart);
-			} else {
-				object.rotation.y = Math.PI;
-			}
-		};
-
-		requestAnimationFrame(animateFirstPart);
 	}
 
 	moveToCenter() {

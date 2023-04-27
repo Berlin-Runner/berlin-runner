@@ -309,3 +309,66 @@ export { MovementFSM }; */
 // 	this.camera.position.z += (targetZ - this.camera.position.z) * lerpFactor;
 // 	this.camera.position.x += (targetX - this.camera.position.x) * lerpFactor;
 // }
+
+// different movement implementations
+/* moveObjectToPosition(object, position, duration, finishCallBack) {
+		const startPosition = object.position.x;
+		const distance = position - startPosition;
+		const startTime = performance.now();
+		const easing = (t) => Math.pow(t, 1); // Power4 easing function
+
+		const animate = (currentTime) => {
+			const elapsed = currentTime - startTime;
+			const progress = elapsed / (duration * 1000);
+
+			if (progress < 1) {
+				const easedProgress = easing(progress);
+				object.position.x = startPosition + distance * easedProgress;
+				requestAnimationFrame(animate);
+			} else {
+				object.position.x = position;
+				finishCallBack();
+			}
+		};
+
+		requestAnimationFrame(animate);
+	} */
+
+/* rotateObject(object, angle) {
+		const startAngle = object.rotation.y;
+		const angleDifference = angle - startAngle;
+		const durationFirstPart = this.tweenDuration / 2;
+		const durationSecondPart = this.tweenDuration / 2;
+		const startTime = performance.now();
+
+		const easing = (t) => t; // Linear easing function
+
+		const animateFirstPart = (currentTime) => {
+			const elapsed = currentTime - startTime;
+			const progress = elapsed / (durationFirstPart * 1000);
+
+			if (progress < 1) {
+				const easedProgress = easing(progress);
+				object.rotation.y = startAngle + angleDifference * easedProgress;
+				requestAnimationFrame(animateFirstPart);
+			} else {
+				object.rotation.y = angle;
+				animateSecondPart(currentTime);
+			}
+		};
+
+		const animateSecondPart = (currentTime) => {
+			const elapsed = currentTime - startTime - durationFirstPart * 1000;
+			const progress = elapsed / (durationSecondPart * 1000);
+
+			if (progress < 1) {
+				const easedProgress = easing(progress);
+				object.rotation.y = angle + (Math.PI - angle) * easedProgress;
+				requestAnimationFrame(animateSecondPart);
+			} else {
+				object.rotation.y = Math.PI;
+			}
+		};
+
+		requestAnimationFrame(animateFirstPart);
+	} */

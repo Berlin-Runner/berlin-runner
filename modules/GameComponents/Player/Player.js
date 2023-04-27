@@ -85,7 +85,7 @@ class Player {
 				.applyMatrix4(this.context.__PM__.matrixWorld);
 		}
 
-		requestAnimationFrame(this.update.bind(this));
+		requestAnimationFrame(() => this.update);
 	}
 
 	addClassSettings() {
