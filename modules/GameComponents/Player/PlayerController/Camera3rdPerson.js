@@ -39,11 +39,12 @@ class Camera3rdPerson {
 	update() {
 		if (this.context.G.PLAYER_SLIDING) return;
 
-		this.camera.position.set(
-			this.player.position.x + this.camOffsetX,
-			this.player.position.y + this.camOffsetY,
-			this.player.position.z + this.camOffsetZ
-		);
+		// this.camera.position.set(
+		// 	this.player.position.x + this.camOffsetX,
+		// 	this.player.position.y + this.camOffsetY,
+
+		// );
+		this.camera.position.z = this.player.position.z + this.camOffsetZ;
 
 		// console.log(this.camera.position.z);
 
