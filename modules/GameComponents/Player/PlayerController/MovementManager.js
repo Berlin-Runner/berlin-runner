@@ -13,7 +13,7 @@ export default class MovementManager {
 	_init() {
 		this.movementEventBus = this.context.playerMovementEventBus;
 
-		this.tweenDuration = 0.75;
+		this.tweenDuration = 0.5;
 		this.cameraTweenDuration = 0.85;
 
 		this.currentLane = LANES.CENTER;
@@ -72,7 +72,7 @@ export default class MovementManager {
 	moveRight() {
 		this.movementEventBus.publish("player-side-moved");
 		this.rotateObject(this.player, Math.PI * 0.75);
-		this.moveObjectToPosition(this.player, 1.5, this.tweenDuration, () => {});
+		this.moveObjectToPosition(this.player, 2.5, this.tweenDuration, () => {});
 	}
 
 	moveToLane(lane) {
