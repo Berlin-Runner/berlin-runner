@@ -1,6 +1,6 @@
 import { Quaternion, Vec3 } from "../../../libs/cannon-es.js";
 import { BaseAudioComponent } from "/modules/Core/AudioManager/BaseAudioComponent.js";
-class MovementFSM {
+/* class MovementFSM {
 	constructor(context, player) {
 		this.context = context;
 		this.player = player;
@@ -207,11 +207,11 @@ class MovementFSM {
 
 	moveToCenter() {
 		this.moveObjectToPosition(this.player, 0, this.tweenDuration);
-		this.moveObjectToPosition(
-			this.context.gameWorld.camera,
-			0,
-			this.cameraTweenDuration
-		);
+		// this.moveObjectToPosition(
+		// 	this.context.gameWorld.camera,
+		// 	0,
+		// 	this.cameraTweenDuration
+		// );
 		if (this.currentPlayerLane == this.lanes.left)
 			this.rotateObject(this.player, Math.PI * 0.75);
 		if (this.currentPlayerLane == this.lanes.right)
@@ -221,7 +221,7 @@ class MovementFSM {
 
 	pullToCenter() {
 		this.moveObjectToPosition(this.player, 0, 1);
-		this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
+		// this.moveObjectToPosition(this.context.gameWorld.camera, 0, 0.75);
 
 		if (this.currentPlayerLane == this.lanes.left)
 			this.rotateObject(this.player, Math.PI * 0.75);
@@ -242,11 +242,11 @@ class MovementFSM {
 			case this.lanes.center:
 				this.currentPlayerLane = this.lanes.left;
 				this.rotateObject(this.player, Math.PI * 1.25);
-				this.moveObjectToPosition(
-					this.context.gameWorld.camera,
-					-2.75,
-					this.cameraTweenDuration
-				);
+				// this.moveObjectToPosition(
+				// 	this.context.gameWorld.camera,
+				// 	-2.75,
+				// 	this.cameraTweenDuration
+				// );
 				this.moveObjectToPosition(this.player, -2.5, this.tweenDuration, () => {
 					if (this.keysDown.left) return;
 					// this.pullToCenter();
@@ -267,11 +267,11 @@ class MovementFSM {
 			case this.lanes.center:
 				this.rotateObject(this.player, Math.PI * 0.75);
 				this.currentPlayerLane = this.lanes.right;
-				this.moveObjectToPosition(
-					this.context.gameWorld.camera,
-					2.75,
-					this.cameraTweenDuration
-				);
+				// this.moveObjectToPosition(
+				// 	this.context.gameWorld.camera,
+				// 	2.75,
+				// 	this.cameraTweenDuration
+				// );
 				this.moveObjectToPosition(this.player, 2.5, this.tweenDuration, () => {
 					if (this.keysDown.right) return;
 					// this.pullToCenter();
@@ -280,53 +280,32 @@ class MovementFSM {
 		}
 	}
 
-	updatePlayerColliderPosition() {
-		if (this.resetToCenter) {
-			this.context.playerInstance.player.position.set(
-				0,
-				this.context.playerInstance.player.position.y,
-				0
-			);
-			this.context.playerCollider.position.set(
-				0,
-				this.context.playerCollider.position.y,
-				0
-			);
-
-			this.resetToCenter = false;
-
-			return;
-		}
-
-		this.context.playerCollider.position.x =
-			this.context.playerInstance.player.position.x;
-
-		if (!this.isSliding)
-			this.context.playerInstance.player.position.y =
-				this.context.playerCollider.position.y - 1;
-
-		this.context.playerCollider.position.z =
-			this.context.playerInstance.player.position.z;
-
-		if (!this.isSliding)
-			this.context.playerCollider.quaternion = new Quaternion(0, 0, 0, 1);
-	}
-
-	update() {
-		// if (
-		// 	this.context.playerInstance &&
-		// 	this.context.playerInstance.player.position.y > 0.75
-		// ) {
-		// 	this.canJump = false;
-		// }
-		// if (this.player.position.y < 0.75) this.canJump = true;
-		// if (this.canJump) this.player.position.y += 0.001;
-		// if (this.player.position.y > 0.01) this.player.position.y -= 0.001;
-	}
-
 	addClassSettings() {
 		this.localSettings = this.context.gui.addFolder("PLAYER-MOVEMENT-SETTINGS");
 	}
 }
 
-export { MovementFSM };
+export { MovementFSM }; */
+
+// different camera follow approaches
+
+/* update() {
+		if (!this.camera || !this.player || !this.follow) return;
+		this.camera.position.y =
+			this.player.position.y + this.currentCameraOffset.y;
+		this.camera.position.z =
+			this.player.position.z + this.currentCameraOffset.z;
+	} */
+
+// update() {
+// 	if (!this.camera || !this.player || !this.follow) return;
+
+// 	const targetY = this.player.position.y + this.currentCameraOffset.y;
+// 	const targetZ = this.player.position.z + this.currentCameraOffset.z;
+// 	const targetX = this.player.position.x;
+// 	const lerpFactor = 0.1;
+
+// 	this.camera.position.y += (targetY - this.camera.position.y) * lerpFactor;
+// 	this.camera.position.z += (targetZ - this.camera.position.z) * lerpFactor;
+// 	this.camera.position.x += (targetX - this.camera.position.x) * lerpFactor;
+// }
