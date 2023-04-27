@@ -367,7 +367,7 @@ export default class CharacterPicker {
 			{
 				name: "ben",
 				character: this.context.characterModels.ben,
-				scale: 190,
+				scale: 200,
 				position: { x: 60, y: 0, z: 0 },
 				mixerVar: "mixerBen",
 			},

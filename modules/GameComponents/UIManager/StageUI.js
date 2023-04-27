@@ -38,8 +38,8 @@ export default class StageUI extends BaseUIComponent {
 			},
 		});
 		gsap.to(this.context.gameWorld.camera.position, {
-			y: 3,
-			z: 4,
+			y: 2,
+			z: 3,
 			duration: 1.125,
 
 			onComplete: () => {
@@ -49,7 +49,7 @@ export default class StageUI extends BaseUIComponent {
 	}
 
 	moveCameraToViewPlayer() {
-		this.context.gameWorld.camera.position.z = -2;
+		this.context.gameWorld.camera.position.z = -0.5;
 		this.context.gameWorld.camera.position.y = 1;
 		this.context.gameWorld.camera.lookAt(new THREE.Vector3(0, 1, 0));
 	}

@@ -21,7 +21,7 @@ class World_ {
 
 	initCamera() {
 		this.camera = new THREE.PerspectiveCamera(
-			95,
+			90,
 			window.innerWidth / window.innerHeight,
 			0.1,
 			100000.0
@@ -59,35 +59,33 @@ class World_ {
 	}
 
 	initLights() {
-		let ambLight = new THREE.AmbientLight("#ffffff", 2);
+		let ambLight = new THREE.AmbientLight("#ffffff", 0.75);
 		this.scene.add(ambLight);
 
-		let sunlight = new THREE.DirectionalLight(0xffffff, 1);
+		let sunlight = new THREE.DirectionalLight(0xffffff, 1.5);
+		let sunlight_ = new THREE.DirectionalLight(0xffffff, 1.5);
 
 		// Set the position of the light to simulate the sun's position
-		sunlight.position.set(0, 1, 1);
+		sunlight.position.set(10, 5, 5);
+		sunlight_.position.set(10, 10, -10);
 
 		// Set the color of the light to a warm yellow tone
-		sunlight.color.setHex(0xf9d71c);
+		// sunlight.color.setHex(0xf9d71c);
 
 		// Set the intensity of the light to simulate the brightness of the sun
-		sunlight.intensity = 0.75;
 
-		// Set the castShadow property to true to enable shadows
 		sunlight.castShadow = true;
+		sunlight_.castShadow = true;
 
-		// Set the shadow properties to improve the quality of the shadows
 		sunlight.shadow.mapSize.width = 1024;
 		sunlight.shadow.mapSize.height = 1024;
-		sunlight.shadow.camera.near = 0.1;
-		sunlight.shadow.camera.far = 1000;
-		sunlight.shadow.camera.left = -500;
-		sunlight.shadow.camera.right = 500;
-		sunlight.shadow.camera.top = 500;
-		sunlight.shadow.camera.bottom = -500;
+
+		sunlight.shadow.camera.near = 500;
+		sunlight.shadow.camera.far = 4000;
+		sunlight.shadow.camera.fov = 30;
 
 		// Add the light to the scene
-		this.scene.add(sunlight);
+		this.scene.add(sunlight, sunlight_);
 	}
 
 	setupResize() {

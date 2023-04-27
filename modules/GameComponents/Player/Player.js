@@ -41,7 +41,7 @@ class Player {
 
 	async addPlayerMesh(player, animations) {
 		this.player = new THREE.Group();
-		this.player.position.set(0, 0, 0);
+		this.player.position.set(0, 0, 1.5);
 
 		let playerMesh = player;
 		let playerAnimation = animations;

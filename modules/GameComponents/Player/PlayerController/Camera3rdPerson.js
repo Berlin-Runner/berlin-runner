@@ -16,7 +16,7 @@ class Camera3rdPerson {
 		this.currentCameraOffset = this.cameraOffsetProfiles[this.currentProfile];
 
 		this.cameraDistance = 5.5;
-		this.elevationAngle = Math.PI / 2.85;
+		this.elevationAngle = Math.PI / 2.75;
 		this.rotationAngle = Math.PI / 2;
 
 		this.addClassSettings();
@@ -27,6 +27,7 @@ class Camera3rdPerson {
 	 */
 	update() {
 		if (!this.camera || !this.player || !this.follow) return;
+		if (this.context.G.PLAYER_SLIDING) return;
 
 		const x =
 			this.cameraDistance *
@@ -36,13 +37,17 @@ class Camera3rdPerson {
 		const z =
 			this.cameraDistance *
 			Math.sin(this.elevationAngle) *
-			Math.sin(this.rotationAngle);
+			Math.sin(this.rotationAngle) *
+			0.8;
 
 		this.camera.position.set(
 			this.player.position.x + x,
 			this.player.position.y + y,
 			this.player.position.z + z
 		);
+
+		// console.log(this.camera.position.z);
+
 		this.camera.lookAt(this.player.position);
 	}
 

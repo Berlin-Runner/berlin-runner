@@ -115,7 +115,20 @@ export default class MovementManager {
 			this.player.position.y = 0;
 			this.isSliding = false;
 			this.context.G.PLAYER_SLIDING = this.isSliding;
-		}, 1200);
+		}, 1600);
+
+		gsap.to(this.context.gameWorld.camera.position, {
+			y: 0.5,
+			z: 2.4,
+			duration: 0.8,
+
+			onComplete: () =>
+				gsap.to(this.context.gameWorld.camera.position, {
+					y: 2.2847,
+					z: 5.582,
+					duration: 0.8,
+				}),
+		});
 	}
 
 	jump() {
@@ -125,19 +138,21 @@ export default class MovementManager {
 
 		gsap.to(this.player.position, {
 			y: 3,
-			duration: 0.2,
+			z: 1.75,
+			duration: 0.3,
 
 			onComplete: () =>
 				gsap.to(this.player.position, {
 					y: 0,
-					duration: 0.3,
+					z: 1.5,
+					duration: 0.6,
 				}),
 		});
 
 		setTimeout(() => {
 			this.canJump = false;
 			this.context.G.PLAYER_JUMPING = this.canJump;
-		}, 1200);
+		}, 1500);
 	}
 
 	update(delta) {}

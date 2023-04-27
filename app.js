@@ -107,6 +107,7 @@ class Game {
 			.catch((err) => {
 				console.log(err);
 			});
+
 		// this.physicsManager = new PhysicsManager(this);
 	}
 
@@ -218,13 +219,13 @@ class Game {
 				if (this.G.PLAYER_SLIDING) {
 					this.gameWorld.scene.getObjectByName(
 						"Train_Station001"
-					).material.wireframe = true;
+					).material.wireframe = false;
 					this.gameWorld.scene.getObjectByName(
 						"Train_Station001_1"
-					).material.wireframe = true;
+					).material.wireframe = false;
 					this.gameWorld.scene.getObjectByName(
 						"Train_Station001_2"
-					).material.wireframe = true;
+					).material.wireframe = false;
 				} else {
 				}
 				if (!this.G.PLAYER_SLIDING) {

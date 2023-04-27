@@ -4,12 +4,20 @@ export default class AnimationManager {
 		this.mixer = this.context.mixer;
 	}
 
-	playAnimationWithCrossFade(actionName, playerState) {
-		this.context.animationManager.prepareCrossFade("_", actionName, 0.0);
+	playAnimationWithCrossFade(toActionName, fromActionName, playerState) {
+		this.context.animationManager.prepareCrossFade(
+			fromActionName,
+			toActionName,
+			0.0
+		);
 		this.context.currentPlayerState = playerState;
 
 		this.mixer.addEventListener("finished", () => {
-			this.context.animationManager.prepareCrossFade("_", "runAction", 0);
+			this.context.animationManager.prepareCrossFade(
+				toActionName,
+				fromActionName,
+				0
+			);
 			this.context.currentPlayerState =
 				this.context.playerAnimationStates.running;
 		});
@@ -18,6 +26,7 @@ export default class AnimationManager {
 	playSlideAnimation() {
 		this.playAnimationWithCrossFade(
 			"slideAction",
+			"runAction",
 			this.context.playerAnimationStates.sliding
 		);
 	}
@@ -25,6 +34,7 @@ export default class AnimationManager {
 	playJumpAnimation() {
 		this.playAnimationWithCrossFade(
 			"jumpAction",
+			"runAction",
 			this.context.playerAnimationStates.jumping
 		);
 	}

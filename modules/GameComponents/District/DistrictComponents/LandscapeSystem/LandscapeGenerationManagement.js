@@ -59,6 +59,15 @@ class LandscapeGenerationManager {
 
 		this.obstacleManager = new ObstacleGenerationManager(this.context);
 		this.rewardManager = new RewardGenerationManagement(this.context);
+
+		this.context.gameWorld.scene.traverse((child) => {
+			if (child.isMesh) {
+				console.log(child.name);
+				child.castShadow = true;
+				child.receiveShadow = true;
+				child.material.roughness = 0.8;
+			}
+		});
 	}
 
 	initCityTiles() {
