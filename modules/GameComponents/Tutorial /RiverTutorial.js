@@ -16,7 +16,7 @@ export default class RiverTutorial {
 	init(uiElementId, messageElementId) {
 		this.uiElement = document.getElementById(uiElementId);
 
-		this.messageElement = document.getElementById(this.messageElement);
+		this.messageElement = document.getElementById(messageElementId);
 
 		if (this.context.G.DEVICE_TYPE === "mobile")
 			this.messageElement.innerText = "SWIPE UP";
