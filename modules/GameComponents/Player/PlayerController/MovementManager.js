@@ -35,7 +35,7 @@ export default class MovementManager {
 		gsap.to(object.rotation, {
 			y: angle,
 			duration: this.tweenDuration / 6,
-			ease: "power4.out",
+			// ease: "power4.out",
 			onComplete: () => {
 				gsap.to(object.rotation, {
 					y: Math.PI,
