@@ -62,30 +62,30 @@ class World_ {
 		let ambLight = new THREE.AmbientLight("#ffffff", 1);
 		this.scene.add(ambLight);
 
-		let sunlight = new THREE.DirectionalLight(0xffffff, 1);
-		let sunlight_ = new THREE.DirectionalLight(0xffffff, 1);
+		let sunlight = new THREE.DirectionalLight(0xffffff, 2);
+		// let sunlight_ = new THREE.DirectionalLight(0xffffff, 1);
 
 		// Set the position of the light to simulate the sun's position
 		sunlight.position.set(10, 5, 5);
-		sunlight_.position.set(10, 10, -10);
+		// sunlight_.position.set(10, 10, -10);
 
 		// Set the color of the light to a warm yellow tone
 		// sunlight.color.setHex(0xf9d71c);
 
 		// Set the intensity of the light to simulate the brightness of the sun
 
-		sunlight.castShadow = true;
+		// sunlight.castShadow = true;
 		sunlight_.castShadow = true;
 
-		sunlight.shadow.mapSize.width = 1024;
-		sunlight.shadow.mapSize.height = 1024;
+		// sunlight.shadow.mapSize.width = 1024;
+		// sunlight.shadow.mapSize.height = 1024;
 
-		sunlight.shadow.camera.near = 500;
-		sunlight.shadow.camera.far = 4000;
-		sunlight.shadow.camera.fov = 30;
+		// sunlight.shadow.camera.near = 500;
+		// sunlight.shadow.camera.far = 4000;
+		// sunlight.shadow.camera.fov = 30;
 
 		// Add the light to the scene
-		this.scene.add(sunlight, sunlight_);
+		this.scene.add(sunlight);
 	}
 
 	setupResize() {
