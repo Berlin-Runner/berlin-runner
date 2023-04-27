@@ -28,49 +28,48 @@ export default class AnimationManager {
 		this.update();
 	}
 
+	initializeActions(clip, loop = THREE.LoopRepeat, weight = 0) {
+		const action = this.mixer.clipAction(clip);
+		action.setLoop(loop, 0);
+		action.play();
+		this.setWeight(action, weight);
+		return action;
+	}
+
 	initializeAnimations(clips) {
-		this.runClip =
-			THREE.AnimationClip.findByName(clips, "Running") ||
-			THREE.AnimationClip.findByName(clips, "Run");
-		this.fallClip =
-			THREE.AnimationClip.findByName(clips, "Fall") ||
-			THREE.AnimationClip.findByName(clips, "Falling");
-		this.deadClip =
-			THREE.AnimationClip.findByName(clips, "Dying") ||
-			THREE.AnimationClip.findByName(clips, "Die");
+		const runClipNames = ["Running", "Run"];
+		this.runClip = clips.find((clip) => runClipNames.includes(clip.name));
+
+		const fallClipNames = ["Fall", "Falling"];
+		this.fallClip = clips.find((clip) => fallClipNames.includes(clip.name));
+
+		const deadClipNames = ["Dying", "Die"];
+		this.deadClip = clips.find((clip) => deadClipNames.includes(clip.name));
+
 		this.idleClip = THREE.AnimationClip.findByName(clips, "Idle");
-		this.jumpClip =
-			THREE.AnimationClip.findByName(clips, "Jump") ||
-			THREE.AnimationClip.findByName(clips, "Running Jump");
-		this.slideClip =
-			THREE.AnimationClip.findByName(clips, "Running slide") ||
-			THREE.AnimationClip.findByName(clips, "Sliding") ||
-			THREE.AnimationClip.findByName(clips, "Running Slide") ||
-			THREE.AnimationClip.findByName(clips, "Slide");
+
+		const jumpClipNames = ["Jump", "Running Jump"];
+		this.jumpClip = clips.find((clip) => jumpClipNames.includes(clip.name));
+
+		const slideClipNames = [
+			"Running slide",
+			"Sliding",
+			"Running Slide",
+			"Slide",
+		];
+		this.slideClip = clips.find((clip) => slideClipNames.includes(clip.name));
 
 		if (this.mixer) {
-			this.runAction = this.mixer.clipAction(this.runClip);
-			this.runAction.play();
-			this.setWeight(this.runAction, 0);
-			this.fallAction = this.mixer.clipAction(this.fallClip);
-			this.fallAction.setLoop(THREE.LoopOnce, 0);
-			this.fallAction.play();
-			this.setWeight(this.fallAction, 0);
-			this.deadAction = this.mixer.clipAction(this.deadClip);
-			this.deadAction.setLoop(THREE.LoopOnce, 0);
-			this.deadAction.play();
-			this.setWeight(this.deadAction, 0);
-			this.idleAction = this.mixer.clipAction(this.idleClip);
-			this.idleAction.play();
-			this.setWeight(this.idleAction, 1);
-			this.jumpAction = this.mixer.clipAction(this.jumpClip);
-			this.jumpAction.setLoop(THREE.LoopOnce, 0);
-			this.jumpAction.play();
-			this.setWeight(this.jumpAction, 0);
-			this.slideAction = this.mixer.clipAction(this.slideClip);
-			this.slideAction.setLoop(THREE.LoopOnce, 0);
-			this.slideAction.play();
-			this.setWeight(this.slideAction, 0);
+			this.runAction = this.initializeActions(this.runClip);
+			this.fallAction = this.initializeActions(this.fallClip, THREE.LoopOnce);
+			this.deadAction = this.initializeActions(this.deadClip, THREE.LoopOnce);
+			this.idleAction = this.initializeActions(
+				this.idleClip,
+				THREE.LoopRepeat,
+				1
+			);
+			this.jumpAction = this.initializeActions(this.jumpClip, THREE.LoopOnce);
+			this.slideAction = this.initializeActions(this.slideClip, THREE.LoopOnce);
 		}
 
 		this.context.playerActions = {
@@ -83,16 +82,16 @@ export default class AnimationManager {
 		};
 	}
 
-	prepareCrossFade(startAction_, endAction_, defaultDuration) {
-		let startAction = this.context.currentAction;
-		let endAction = this.context.playerActions[endAction_];
+	prepareCrossFade(startActionKey, endActionKey, defaultDuration) {
+		const startAction = this.context.currentAction;
+		const endAction = this.context.playerActions[endActionKey];
 
-		const duration = this.setCrossFadeDuration(defaultDuration);
+		const duration = this.getCrossFadeDuration(defaultDuration);
 
 		this.executeCrossFade(startAction, endAction, duration);
 	}
 
-	setCrossFadeDuration(defaultDuration) {
+	getCrossFadeDuration(defaultDuration) {
 		if (this.settings["use default duration"]) {
 			return defaultDuration;
 		} else {
@@ -142,10 +141,6 @@ class AnimationFSM {
 		this.currentState = this.playerAnimationStates.idle;
 		this.context.currentPlayerState = this.currentState;
 
-		this.init();
-	}
-
-	init() {
 		this.setupEventSubscriptions();
 	}
 
@@ -154,52 +149,66 @@ class AnimationFSM {
 
 		this.stateBus.subscribe("pick-district", () => {});
 
-		this.stateBus.subscribe("start_game", () => {
-			this.manager.prepareCrossFade("runAction", "idleAction", 0);
+		this.stateBus.subscribe("start_game", () => this.onStartGame());
+
+		this.stateBus.subscribe("enter_stage", () => this.onEnterStage());
+
+		this.stateBus.subscribe("enter_play", () => this.onEnterPlay());
+
+		this.stateBus.subscribe("pause_game", () => this.onPauseGame());
+
+		this.stateBus.subscribe("resume_game", () => this.onResumeGame());
+
+		this.stateBus.subscribe("restart_game", () => this.onRestartGame());
+
+		this.stateBus.subscribe("game_over", () => this.onGameOver());
+	}
+
+	onStartGame() {
+		this.manager.prepareCrossFade("runAction", "idleAction", 0);
+		this.currentState = this.playerAnimationStates.idle;
+		this.updatePlayerState();
+	}
+
+	onEnterStage() {
+		this.manager.prepareCrossFade("runAction", "idleAction", 0);
+		this.currentState = this.playerAnimationStates.idleAction;
+		this.updatePlayerState();
+	}
+
+	onEnterPlay() {
+		this.manager.setWeight(this.context.playerActions["idleAction"], 0);
+		this.manager.prepareCrossFade("runAction", "runAction", 0);
+		this.currentState = this.playerAnimationStates.running;
+		this.updatePlayerState();
+	}
+
+	onPauseGame() {
+		this.manager.prepareCrossFade("runAction", "idleAction", 0);
+		this.currentState = this.playerAnimationStates.idle;
+		this.updatePlayerState();
+	}
+
+	onResumeGame() {
+		this.manager.prepareCrossFade("runAction", "runAction", 0);
+		this.currentState = this.playerAnimationStates.running;
+		this.updatePlayerState();
+	}
+
+	onRestartGame() {
+		this.manager.prepareCrossFade("idleAction", "runAction", 0);
+		this.currentState = this.playerAnimationStates.running;
+		this.updatePlayerState();
+	}
+
+	onGameOver() {
+		this.manager.prepareCrossFade("runAction", "deadAction", 0.5);
+		this.currentState = this.playerAnimationStates.falling;
+		this.updatePlayerState();
+		this.context.mixer.addEventListener("finished", () => {
+			this.manager.prepareCrossFade("deadAction", "idleAction", 0);
 			this.currentState = this.playerAnimationStates.idle;
 			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("enter_stage", () => {
-			this.manager.prepareCrossFade("runAction", "idleAction", 0);
-			this.currentState = this.playerAnimationStates.idleAction;
-			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("enter_play", () => {
-			this.manager.setWeight(this.context.playerActions["idleAction"], 0);
-			this.manager.prepareCrossFade("runAction", "runAction", 0);
-			this.currentState = this.playerAnimationStates.running;
-			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("pause_game", () => {
-			this.manager.prepareCrossFade("runAction", "idleAction", 0);
-			this.currentState = this.playerAnimationStates.idle;
-			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("resume_game", () => {
-			this.manager.prepareCrossFade("runAction", "runAction", 0);
-			this.currentState = this.playerAnimationStates.running;
-			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("restart_game", () => {
-			this.manager.prepareCrossFade("idleAction", "runAction", 0);
-			this.currentState = this.playerAnimationStates.running;
-			this.updatePlayerState();
-		});
-
-		this.stateBus.subscribe("game_over", () => {
-			this.manager.prepareCrossFade("runAction", "deadAction", 0.5);
-			this.currentState = this.playerAnimationStates.falling;
-			this.updatePlayerState();
-			this.context.mixer.addEventListener("finished", () => {
-				this.manager.prepareCrossFade("deadAction", "idleAction", 0);
-				this.currentState = this.playerAnimationStates.idle;
-				this.updatePlayerState();
-			});
 		});
 	}
 
