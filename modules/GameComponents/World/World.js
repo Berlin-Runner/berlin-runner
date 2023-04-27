@@ -59,11 +59,11 @@ class World_ {
 	}
 
 	initLights() {
-		let ambLight = new THREE.AmbientLight("#ffffff", 0.75);
+		let ambLight = new THREE.AmbientLight("#ffffff", 1);
 		this.scene.add(ambLight);
 
-		let sunlight = new THREE.DirectionalLight(0xffffff, 1.5);
-		let sunlight_ = new THREE.DirectionalLight(0xffffff, 1.5);
+		let sunlight = new THREE.DirectionalLight(0xffffff, 1);
+		let sunlight_ = new THREE.DirectionalLight(0xffffff, 1);
 
 		// Set the position of the light to simulate the sun's position
 		sunlight.position.set(10, 5, 5);

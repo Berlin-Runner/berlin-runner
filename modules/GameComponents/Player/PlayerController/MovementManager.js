@@ -118,7 +118,7 @@ export default class MovementManager {
 		}, 1600);
 
 		gsap.to(this.context.gameWorld.camera.position, {
-			y: 0.5,
+			y: 0.6,
 			z: 2.4,
 			duration: 0.8,
 
