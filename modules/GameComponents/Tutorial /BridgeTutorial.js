@@ -1,18 +1,21 @@
 export default class BridgeTutorial {
-	constructor(context) {
+	constructor(
+		context,
+		uiElementId = "bridge-tutorial",
+		messageElementId = "bridge-tutorial-message"
+	) {
 		this.context = context;
 		this.movementEventBus = this.context.playerMovementEventBus;
 		this.stateBus = this.context.gameStateEventBus;
 
 		this.playerPosition = new THREE.Vector3(0, 0, 0);
 
-		this.init();
+		this.init(uiElementId, messageElementId);
 	}
 
-	init() {
-		this.uiElement = document.getElementById("bridge-tutorial");
-		this.messageElement = document.getElementById("bridge-tutorial-message");
-
+	init(uiElementId, messageElementId) {
+		this.uiElement = document.getElementById(uiElementId);
+		this.messageElement = document.getElementById(messageElementId);
 		if (this.context.G.DEVICE_TYPE === "mobile")
 			this.messageElement.innerText = "SWIPE DOWN";
 
@@ -34,7 +37,6 @@ export default class BridgeTutorial {
 				if (!this.captureGlobalUpdateSpeedFactor)
 					this.context.G.UPDATE_SPEED_FACTOR = this.globalUpdateSpeedFactor;
 				this.completed = true;
-				// this.inRange = false;
 			}
 		});
 

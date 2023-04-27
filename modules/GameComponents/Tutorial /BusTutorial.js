@@ -1,18 +1,22 @@
 export default class BusTutorial {
-	constructor(context) {
+	constructor(
+		context,
+		uiElementId = "bus-tutorial",
+		messageElementId = "bus-tutorial-message"
+	) {
 		this.context = context;
 		this.movementEventBus = this.context.playerMovementEventBus;
 		this.stateBus = this.context.gameStateEventBus;
 
 		this.playerPosition = new THREE.Vector3(0, 0, 0);
 
-		this.init();
+		this.init(uiElementId, messageElementId);
 	}
 
 	init() {
-		this.uiElement = document.getElementById("bus-tutorial");
+		this.uiElement = document.getElementById(uiElementId);
 
-		this.messageElement = document.getElementById("bus-tutorial-message");
+		this.messageElement = document.getElementById(messageElementId);
 
 		if (this.context.G.DEVICE_TYPE === "mobile")
 			this.messageElement.innerText = "SWIPE LEFT / RIGHT";
@@ -32,7 +36,6 @@ export default class BusTutorial {
 				this.uiElement.style.display = "none";
 				this.context.G.UPDATE_SPEED_FACTOR = 0.4;
 				this.completed = true;
-				// this.inRange = false;
 			}
 		});
 

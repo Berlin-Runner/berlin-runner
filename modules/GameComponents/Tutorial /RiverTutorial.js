@@ -1,18 +1,22 @@
 export default class RiverTutorial {
-	constructor(context) {
+	constructor(
+		context,
+		uiElementId = "river-tutorial",
+		messageElementId = "river-tutorial-message"
+	) {
 		this.context = context;
 		this.movementEventBus = this.context.playerMovementEventBus;
 		this.stateBus = this.context.gameStateEventBus;
 
 		this.playerPosition = new THREE.Vector3(0, 0, 0);
 
-		this.init();
+		this.init(uiElementId, messageElementId);
 	}
 
 	init() {
-		this.uiElement = document.getElementById("river-tutorial");
+		this.uiElement = document.getElementById(uiElementId);
 
-		this.messageElement = document.getElementById("river-tutorial-message");
+		this.messageElement = document.getElementById(this.messageElement);
 
 		if (this.context.G.DEVICE_TYPE === "mobile")
 			this.messageElement.innerText = "SWIPE UP";
@@ -32,7 +36,6 @@ export default class RiverTutorial {
 				this.uiElement.style.display = "none";
 				this.context.G.UPDATE_SPEED_FACTOR = 0.4;
 				this.completed = true;
-				// this.inRange = false;
 			}
 		});
 
