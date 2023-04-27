@@ -1,8 +1,7 @@
 import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 import PlayerController from "./PlayerController/PlayerController.js";
-import { Camera3rdPerson } from "./Camera3rdPerson.js";
 
-import AnimationManager from "./AnimationManager.js";
+import AnimationManager from "./AnimationManager/AnimationManager.js";
 
 class Player {
 	constructor(context, playerModel, playerAnimations) {
@@ -35,7 +34,6 @@ class Player {
 	async init() {
 		await this.addPlayerMesh(this.playerModel, this.playerAnimations);
 
-		this.thirdPersonCamera = new Camera3rdPerson(this.context, this.player);
 		this.movementManager = new PlayerController(this.context, this.player);
 
 		this.setupEventSubscriptions();
@@ -64,11 +62,6 @@ class Player {
 		this.context.settingEventBus.subscribe("go-hands-free", (val) => {
 			this.settings.cameraFollow = !val;
 		});
-
-		this.context.gameStateEventBus.subscribe(
-			"enter_play",
-			() => (this.settings.cameraFollow = true)
-		);
 	}
 
 	async addPlayerMesh(player, animations) {
@@ -113,9 +106,6 @@ class Player {
 	}
 
 	update() {
-		if (this.settings.cameraFollow) {
-			this.thirdPersonCamera.update();
-		}
 		if (this.movementManager) this.movementManager.update();
 
 		if (this.context.playerBB && this.context.playerInstance) {
