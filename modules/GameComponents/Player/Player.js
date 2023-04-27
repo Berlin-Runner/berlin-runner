@@ -1,6 +1,5 @@
 import { Vec3, Body, Box } from "../../../libs/cannon-es.js";
 import PlayerController from "./PlayerController/PlayerController.js";
-
 import AnimationManager from "./AnimationManager/AnimationManager.js";
 
 class Player {
@@ -13,54 +12,30 @@ class Player {
 		this.playerModel = playerModel;
 		this.playerAnimations = playerAnimations;
 
-		this.settings = {
-			cameraFollow: false,
-			playerScale: 0.9,
-			colliderDimensions: new Vec3(0.2, 1, 0.2),
-			playerColliderMass: 100,
-			playerInitialPosition: new Vec3(0, 0, 0),
-			playerLinearDampeneingFactor: 0,
+		this.cameraFollow = false;
+		this.playerScale = 0.9;
+		this.colliderDimensions = new Vec3(0.2, 1, 0.2);
+		this.playerColliderMass = 100;
+		this.playerInitialPosition = new Vec3(0, 0, 0);
+		this.playerLinearDampeneingFactor = 0;
+		this.debugAABB = false;
+		this.playerName = "ben";
 
-			debugAABB: false,
-
-			player: "ben",
-		};
+		this.movementManager = null;
+		this.animationManager = null;
 
 		this.init();
-
-		// this.addClassSettings();
 	}
 
 	async init() {
 		await this.addPlayerMesh(this.playerModel, this.playerAnimations);
-
-		this.movementManager = new PlayerController(this.context, this.player);
-
+		this.playerController = new PlayerController(this.context, this.player);
 		this.setupEventSubscriptions();
-	}
-
-	initCharachterCollider() {
-		const halfExtents = this.settings.colliderDimensions;
-		const boxShape = new Box(halfExtents);
-		this.context.playerCollider = new Body({
-			mass: this.settings.playerColliderMass,
-			material: this.physicsMaterial,
-		});
-		this.context.playerCollider.quaternion.setFromAxisAngle(
-			new Vec3(0, 1, 0),
-			90
-		);
-		this.context.playerCollider.addShape(boxShape);
-
-		this.context.playerCollider.linearDamping =
-			this.settings.playerLinearDampeneingFactor;
-		this.context.playerCollider.allowSleep = false;
-		this.context.world.addBody(this.context.playerCollider);
 	}
 
 	setupEventSubscriptions() {
 		this.context.settingEventBus.subscribe("go-hands-free", (val) => {
-			this.settings.cameraFollow = !val;
+			this.cameraFollow = !val;
 		});
 	}
 
@@ -76,11 +51,8 @@ class Player {
 		this.player.add(playerMesh);
 		this.player.rotation.set(0, Math.PI, 0);
 		this.player.scale.setScalar(0.23);
-		// this.context.cityContainer.add(this.player); // the player is the child of the city container
 		this.context.player = this.player;
 		this.scene.add(this.player);
-
-		console.log(this.player.position);
 
 		this.animationManager = new AnimationManager(
 			this.context,
@@ -92,7 +64,6 @@ class Player {
 	}
 
 	initPlayerBB(playerMesh) {
-		// console.log(playerMesh);
 		this.context.__PM__ = playerMesh.getObjectByName("aabb");
 		this.context.__PM__.visible = false;
 
@@ -102,11 +73,11 @@ class Player {
 		this.context.playerBB.setFromObject(this.context.__PM__);
 
 		const box = new THREE.Box3Helper(this.context.playerBB, 0x0000ff);
-		if (this.settings.debugAABB) this.scene.add(box);
+		if (this.debugAABB) this.scene.add(box);
 	}
 
 	update() {
-		if (this.movementManager) this.movementManager.update();
+		if (this.playerController) this.playerController.update();
 
 		if (this.context.playerBB && this.context.playerInstance) {
 			this.context.playerBB
@@ -141,9 +112,9 @@ class Player {
 		let colliderDimensions = playerPhysicsSettings.addFolder(
 			"COLLIDER-DIMENSIONS"
 		);
-		colliderDimensions.add(this.settings.colliderDimensions, "x", 0, 1, 0.001);
-		colliderDimensions.add(this.settings.colliderDimensions, "y", 0, 1, 0.001);
-		colliderDimensions.add(this.settings.colliderDimensions, "z", 0, 1, 0.001);
+		colliderDimensions.add(this.colliderDimensions, "x", 0, 1, 0.001);
+		colliderDimensions.add(this.colliderDimensions, "y", 0, 1, 0.001);
+		colliderDimensions.add(this.colliderDimensions, "z", 0, 1, 0.001);
 
 		colliderDimensions.open();
 
@@ -165,22 +136,6 @@ class Player {
 
 		this.localSettings.open();
 	}
-}
-
-function cannonToThreeVec3(cannonvec3) {
-	return new THREE.Vector3(
-		cannonToThreejsVec3.x,
-		cannonToThreejsVec3.y,
-		cannonToThreejsVec3.z
-	);
-}
-
-function threeToCannonVec3(cannonvec3) {
-	return new Vec3(
-		threeToCannonVec3.x,
-		threeToCannonVec3.y,
-		threeToCannonVec3.z
-	);
 }
 
 export { Player };
