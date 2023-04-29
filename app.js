@@ -86,6 +86,7 @@ class Game {
 				this.loadingPage = document.getElementById("loading-progress-page");
 
 				this.characterPicker = new CharacterPicker(this);
+				this.loadingPage.classList.add("ended");
 
 				this.started = true;
 

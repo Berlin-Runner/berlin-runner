@@ -68,9 +68,7 @@ export default class AssetLoader {
 		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
 		this.loadingText = document.getElementById("loading-text");
 
-		this.manager.onLoad = () => {
-			this.loadingPage.classList.add("ended");
-		};
+		this.manager.onLoad = () => {};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
 			this.progressRatio = itemsLoaded / itemsTotal;
