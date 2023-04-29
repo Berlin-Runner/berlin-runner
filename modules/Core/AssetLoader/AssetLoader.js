@@ -70,13 +70,15 @@ export default class AssetLoader {
 		this.manager.onLoad = () => {};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+			// setTimeout(() => {
 			this.progressRatio = itemsLoaded / itemsTotal;
 			this.progress = this.progressRatio * 100;
 			if (this.progress > this.lastLoadedAMount) {
-				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}`;
+				this.percentSpan.innerHTML = `${Math.round(this.progress)}`;
 				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
 				this.lastLoadedAMount = this.progress;
 			}
+			// }, 10);
 		};
 
 		this.manager.onError = (url) => {

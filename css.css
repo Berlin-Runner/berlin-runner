@@ -625,7 +625,7 @@ canvas {
 	align-items: center;
 
 	transform: display;
-	transition: transform 0.5 ease-in-out;
+	transition: transform 0.5 ease-in-out 1;
 	will-change: transform;
 }
 
@@ -696,7 +696,8 @@ canvas {
 
 	transform: scaleX(0);
 	transform-origin: top left;
-	transition: transform 1 ease-in;
+	transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+
 	will-change: transform;
 
 	margin-right: 2px;
@@ -712,12 +713,12 @@ canvas {
 
 .loading-bar.ended {
 	transform-origin: top right;
-	transition: transform 1.5s ease-in-out;
+	transition: transform 0.5s ease-in-out;
 }
 
 .loader-container.ended {
 	display: none;
-	transition: transform 0.5s ease-in-out;
+	transition: transform 0.8s ease-in-out;
 }
 
 .loading-percent.ended {
