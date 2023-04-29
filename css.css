@@ -625,7 +625,7 @@ canvas {
 	align-items: center;
 
 	transform: display;
-	transition: transform 0.5;
+	transition: transform 1 ease;
 	will-change: transform;
 }
 

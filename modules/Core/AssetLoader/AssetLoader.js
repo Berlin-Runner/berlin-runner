@@ -64,14 +64,19 @@ export default class AssetLoader {
 
 	setupLoadingManager() {
 		this.manager = new THREE.LoadingManager();
+		this.lastLoadedAMount = 0;
 		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
 
 		this.manager.onLoad = () => {};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
 			this.progressRatio = itemsLoaded / itemsTotal;
-			this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}%`;
-			this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
+			this.progress = this.progressRatio * 100;
+			if (this.progress > this.lastLoadedAMount) {
+				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}%`;
+				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
+				this.lastLoadedAMount = this.progress;
+			}
 		};
 
 		this.manager.onError = (url) => {
