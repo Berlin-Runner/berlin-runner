@@ -719,7 +719,7 @@ canvas {
 .loader-container.ended,
 .loading-progress-page.ended {
 	display: none;
-	transition: transform 0.8s ease-in-out 1s;
+	transition: transform 0.8s ease-in-out 0.2s;
 }
 
 .loading-percent.ended {
