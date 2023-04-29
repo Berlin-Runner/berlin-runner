@@ -73,7 +73,7 @@ export default class AssetLoader {
 			this.progressRatio = itemsLoaded / itemsTotal;
 			this.progress = this.progressRatio * 100;
 			if (this.progress > this.lastLoadedAMount) {
-				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}%`;
+				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}`;
 				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
 				this.lastLoadedAMount = this.progress;
 			}

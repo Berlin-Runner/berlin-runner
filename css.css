@@ -625,7 +625,7 @@ canvas {
 	align-items: center;
 
 	transform: display;
-	transition: transform 1 ease;
+	transition: transform 0.5 ease-in-out;
 	will-change: transform;
 }
 
@@ -696,7 +696,7 @@ canvas {
 
 	transform: scaleX(0);
 	transform-origin: top left;
-	transition: transform 0.001;
+	transition: transform 1 ease-in;
 	will-change: transform;
 
 	margin-right: 2px;
