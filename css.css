@@ -716,9 +716,10 @@ canvas {
 	transition: transform 0.5s ease-in-out;
 }
 
-.loader-container.ended {
+.loader-container.ended,
+.loading-progress-page.ended {
 	display: none;
-	transition: transform 0.8s ease-in-out;
+	transition: transform 0.8s ease-in-out 1s;
 }
 
 .loading-percent.ended {
