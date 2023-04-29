@@ -94,7 +94,6 @@ class Game {
 					result.device.type === undefined ? "desktop" : "mobile";
 
 				this.tutorial = new TutorialManager(this);
-				this.loadingPage.classList.add("ended");
 			})
 			.catch((err) => {
 				console.log(err);
