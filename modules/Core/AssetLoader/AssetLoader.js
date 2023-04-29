@@ -66,19 +66,25 @@ export default class AssetLoader {
 		this.manager = new THREE.LoadingManager();
 		this.lastLoadedAMount = 0;
 		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
+		this.loadingText = document.getElementById("loading-text");
 
 		this.manager.onLoad = () => {};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-			// setTimeout(() => {
 			this.progressRatio = itemsLoaded / itemsTotal;
 			this.progress = this.progressRatio * 100;
+
+			if (this.progress < 100) {
+				this.loadingText.innerHTML = "Loading...";
+			} else {
+				this.loadingText.innerText = "Assembling";
+			}
+
 			if (this.progress > this.lastLoadedAMount) {
-				this.percentSpan.innerHTML = `${Math.round(this.progress)}`;
+				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}`;
 				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
 				this.lastLoadedAMount = this.progress;
 			}
-			// }, 10);
 		};
 
 		this.manager.onError = (url) => {
