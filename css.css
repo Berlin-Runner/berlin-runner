@@ -63,8 +63,8 @@ canvas {
 
 .game-title-3d {
 	/* border: white 2px solid; */
-	width: 700px;
-	height: 400px;
+	width: 400px;
+	height: 200px;
 	background: url("/assets/gifs/intro__.gif");
 	background-size: contain;
 	background-position: center;
@@ -143,6 +143,20 @@ canvas {
 	left: 0;
 }
 
+.game-message {
+	width: 50%;
+	padding: 20px;
+	color: greenyellow;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	font-size: 20px;
+}
+.game-message p {
+	text-align: center;
+}
+
 #intro-screen {
 	display: none;
 	width: 100vw;
@@ -179,6 +193,7 @@ canvas {
 }
 
 #game-over-screen .container {
+	padding: 40px;
 	height: 60%;
 	width: 80%;
 	background-color: rgba(50, 50, 50, 0.95);
@@ -280,8 +295,20 @@ canvas {
 	text-shadow: -4px 4px black;
 }
 
+#game-title {
+	display: flex;
+	justify-content: center;
+	min-width: 50%;
+	color: greenyellow;
+	z-index: inherit;
+	font-size: 5.5rem;
+	text-shadow: -2px 2px blue;
+	padding: 0px 15px;
+	border: 2px solid greenyellow;
+	border-radius: 20px;
+}
+
 .level-title,
-#game-title,
 .level-complete-title {
 	color: aquamarine;
 	font-weight: 900;
@@ -533,9 +560,40 @@ canvas {
 }
 
 @media (max-width: 768px) {
+	#instructions {
+		color: aliceblue;
+		font-family: "VT323", monospace;
+		font-size: 24px;
+		text-align: center;
+		text-shadow: -4px 4px black;
+	}
 	/* Mobile styles */
 	.character-picker .banner {
 		font-size: 64px;
+	}
+
+	#game-title {
+		display: flex;
+		justify-content: center;
+		min-width: 50%;
+		color: greenyellow;
+		z-index: inherit;
+		font-size: 3.5rem;
+		text-shadow: -2px 2px blue;
+		padding: 0px 15px;
+		border: 2px solid greenyellow;
+		border-radius: 20px;
+	}
+
+	.game-message {
+		width: 50%;
+		/* padding: 20px; */
+		color: greenyellow;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-around;
+		font-size: 15px;
 	}
 }
 

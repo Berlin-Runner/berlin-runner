@@ -5,6 +5,12 @@ export default class StageUI extends BaseUIComponent {
 		super(id, context);
 
 		this.startGameButton = document.getElementById("start-game-button-final");
+		this.instructionText = document.getElementById("instruction-text");
+		this.context.G.DEVICE_TYPE == "desktop"
+			? (this.instructionText.innerHTML =
+					"LANE: A|D&nbsp; | SLIDE: S&nbsp; | JUMP: SPACE&nbsp; | MUTE : M")
+			: (this.instructionText.innerHTML =
+					" LANE : SWIPE LEFT/RIGHT &nbsp; <br/> SLIDE : SWIPE DOWN&nbsp; <br/> JUMP : SWIPE UP&nbsp;");
 
 		this.init();
 	}
