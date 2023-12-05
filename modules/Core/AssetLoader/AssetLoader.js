@@ -64,13 +64,24 @@ export default class AssetLoader {
 
 	setupLoadingManager() {
 		this.manager = new THREE.LoadingManager();
-		this.lastLoadedAMount = 0;
-		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {};
 		this.loadingText = document.getElementById("loading-text");
+		this.lastLoadedAMount = 0;
+		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
+			var message = 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
+			console.log( message );
+			this.loadingText.innerHTML = message
+		};
 
-		this.manager.onLoad = () => {};
+		this.manager.onLoad = () => {
+			var message = 'Loading complete!';
+			console.log( message );
+			this.loadingText.innerHTML = message
+		};
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
+			var message = 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' ;
+			console.log( message );
+			this.loadingText.innerHTML = message
 			this.progressRatio = itemsLoaded / itemsTotal;
 			this.progress = this.progressRatio * 100;
 
