@@ -10,8 +10,8 @@ export default class Coffee extends Reward {
 		this.delta = new THREE.Clock();
 
 		this.coffeeCup = this.context.coffee;
-		// console.log(this.coffeeCup);
-		// this.coffeeCup.scale.setScalar(10);
+		console.log(this.coffeeCup);
+		this.coffeeCup.scale.setScalar(5);
 		this.coffeeCup.position.y = 1;
 		this.coffeeCup.position.copy(spawnPosition);
 		// this.coffeeCup.children[0].rotateZ(45 * (Math.PI / 180));
@@ -77,7 +77,7 @@ export default class Coffee extends Reward {
 				z: 0.1,
 				duration: 0.14,
 				onComplete: () => {
-					gsap.to(this.coffeeCup.scale, { x: 1, y: 1, z: 1, duration: 0.4 });
+					gsap.to(this.coffeeCup.scale, { x: 5, y: 5, z: 5, duration: 0.4 });
 				},
 			});
 		}

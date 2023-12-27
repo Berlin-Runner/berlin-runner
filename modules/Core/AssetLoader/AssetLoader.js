@@ -21,7 +21,7 @@ const assetConfig = {
 	},
 
 	otherModels: {
-		coffee: "/assets/models/coffee_cup_2.glb",
+		coffee: "/assets/models/coffee_cup.glb",
 		bus: "/assets/models/buses_.glb",
 	},
 };

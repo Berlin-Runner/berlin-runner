@@ -206,7 +206,8 @@ canvas {
 }
 
 #game-over-screen .container #game-over-message,
-#game-over-screen .container #reward-claim-message {
+#game-over-screen .container #reward-claim-message,
+#game-over-screen .container #feedback-form {
 	height: 100%;
 	width: 100%;
 	text-align: center;
@@ -215,6 +216,19 @@ canvas {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+#game-over-screen .container #game-over-message,
+#game-over-screen .container #reward-claim-message {
+	display: none !important;
+}
+
+#feedback-form > a {
+	color: beige;
+	font-family: "VT323", monospace;
+	font-size: 28px;
+	text-align: center;
+	text-shadow: -4px 4px black;
 }
 
 #final-score-holder,
