@@ -226,7 +226,7 @@ canvas {
 #feedback-form > a {
 	color: beige;
 	font-family: "VT323", monospace;
-	font-size: 28px;
+	font-size: 38px;
 	text-align: center;
 	text-shadow: -4px 4px black;
 }
@@ -320,6 +320,30 @@ canvas {
 	padding: 0px 15px;
 	border: 2px solid greenyellow;
 	border-radius: 20px;
+}
+
+#title-feedback-link {
+	color: greenyellow;
+	z-index: inherit;
+	text-shadow: -2px 2px blue;
+	padding: 0px 15px;
+}
+
+.arrow::before {
+  content: '\2192';
+  /* little make up */
+  font-size: 2em;
+  /* whatever needed*/
+  padding: 0 0.5em;
+  /* whatever needed*/
+  vertical-align: -0.1em;
+  /* whatever needed*/
+}
+
+a {
+  text-decoration: none;
+  float:left;
+  clear:both
 }
 
 .level-title,
