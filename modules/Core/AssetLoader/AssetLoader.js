@@ -1,4 +1,4 @@
-import { LandscapeTile } from "../../GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js";
+import { LandscapeTile } from "../../GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js"
 
 const assetConfig = {
 	landscapeTiles: {
@@ -21,86 +21,100 @@ const assetConfig = {
 	},
 
 	otherModels: {
-		coffee: "/assets/models/coffee_cup.glb",
+		coffee: "/assets/models/coffee_cup_v3.glb",
 		bus: "/assets/models/buses_.glb",
 	},
-};
+}
 
 export default class AssetLoader {
 	constructor(context) {
-		this.context = context;
+		this.context = context
 	}
 
 	async init() {
-		this.error = false;
+		this.error = false
 
-		this.setupLoadingManager();
-		this.setupGLTFLoader();
+		this.setupLoadingManager()
+		this.setupGLTFLoader()
 
-		this.loadingPage = document.getElementById("loading-progress-page");
-		this.instructionsContainer = document.querySelector(".instructions");
-		this.loadBarElement = document.querySelector(".loading-bar");
-		this.percentSpan = document.querySelector(".percentage");
+		this.loadingPage = document.getElementById("loading-progress-page")
+		this.instructionsContainer = document.querySelector(".instructions")
+		this.loadBarElement = document.querySelector(".loading-bar")
+		this.percentSpan = document.querySelector(".percentage")
 
 		return new Promise(async (resolve, reject) => {
 			this.context.landscapeTiles = await this.loadAssets(
 				assetConfig.landscapeTiles,
 				this.loadLandscapeTile.bind(this)
-			);
+			)
 
 			this.context.characterModels = await this.loadAssets(
 				assetConfig.characterModels,
 				this.loadModel.bind(this)
-			);
+			)
 
-			await this.loadCoffee();
-			await this.loadBusModel();
+			await this.loadCoffee()
+			await this.loadBusModel()
 
 			if (this.error) {
-				reject("there's some problem");
-			} else resolve("everything is good");
-		});
+				reject("there's some problem")
+			} else resolve("everything is good")
+		})
 	}
 
 	setupLoadingManager() {
-		this.manager = new THREE.LoadingManager();
-		this.loadingText = document.getElementById("loading-text");
-		this.lastLoadedAMount = 0;
+		this.manager = new THREE.LoadingManager()
+		this.loadingText = document.getElementById("loading-text")
+		this.lastLoadedAMount = 0
 		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
-			var message = 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.'
-			console.log( message );
+			var message =
+				"Started loading file: " +
+				url +
+				".\nLoaded " +
+				itemsLoaded +
+				" of " +
+				itemsTotal +
+				" files."
+			console.log(message)
 			this.loadingText.innerHTML = message
-		};
+		}
 
 		this.manager.onLoad = () => {
-			var message = 'Loading complete!';
-			console.log( message );
+			var message = "Loading complete!"
+			console.log(message)
 			this.loadingText.innerHTML = message
-		};
+		}
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-			var message = 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' ;
-			console.log( message );
+			var message =
+				"Loading file: " +
+				url +
+				".\nLoaded " +
+				itemsLoaded +
+				" of " +
+				itemsTotal +
+				" files."
+			console.log(message)
 			this.loadingText.innerHTML = message
-			this.progressRatio = itemsLoaded / itemsTotal;
-			this.progress = this.progressRatio * 100;
+			this.progressRatio = itemsLoaded / itemsTotal
+			this.progress = this.progressRatio * 100
 
 			if (this.progress > this.lastLoadedAMount) {
-				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}`;
-				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`;
-				this.lastLoadedAMount = this.progress;
+				this.percentSpan.innerHTML = `${Math.round(this.progressRatio * 100)}`
+				this.loadBarElement.style.transform = `scaleX(${this.progressRatio})`
+				this.lastLoadedAMount = this.progress
 			}
-		};
+		}
 
 		this.manager.onError = (url) => {
-			this.error = url;
-		};
+			this.error = url
+		}
 
-		this.context.globalLoadingManager = this.manager;
+		this.context.globalLoadingManager = this.manager
 	}
 
 	setupGLTFLoader() {
-		this.loader = new THREE.GLTFLoader(this.manager);
+		this.loader = new THREE.GLTFLoader(this.manager)
 	}
 
 	loadModel(url) {
@@ -108,52 +122,53 @@ export default class AssetLoader {
 			this.loader.load(
 				url,
 				(gltf) => {
-					let result = { model: gltf.scene, animations: gltf.animations };
-					resolve(result);
+					let result = { model: gltf.scene, animations: gltf.animations }
+					resolve(result)
 				},
 				(progress) => {},
 				(err) => {
-					reject(err);
+					reject(err)
 				}
-			);
-		});
+			)
+		})
 	}
 
 	loadLandscapeTile = async (url) => {
 		try {
-			const tile = await new LandscapeTile(this.context, url);
-			return tile;
+			const tile = await new LandscapeTile(this.context, url)
+			return tile
 		} catch (error) {
-			console.error(`Error loading LandscapeTile from ${url}:`, error);
-			throw error;
+			console.error(`Error loading LandscapeTile from ${url}:`, error)
+			throw error
 		}
-	};
+	}
 
 	loadCharacterModel = async (url) => {
 		try {
-			const { model, animations } = await this.loadModel(url);
-			return { model, animations };
+			const { model, animations } = await this.loadModel(url)
+			return { model, animations }
 		} catch (error) {
-			console.error(`Error loading character model from ${url}:`, error);
-			throw error;
+			console.error(`Error loading character model from ${url}:`, error)
+			throw error
 		}
-	};
+	}
 
 	async loadAssets(assetURLs, loaderFunc) {
-		const loadedAssets = {};
+		const loadedAssets = {}
 		for (const key in assetURLs) {
-			loadedAssets[key] = await loaderFunc(assetURLs[key]);
+			loadedAssets[key] = await loaderFunc(assetURLs[key])
 		}
-		return loadedAssets;
+		return loadedAssets
 	}
 
 	async loadCoffee() {
-		let { model } = await this.loadModel(assetConfig.otherModels.coffee);
-		this.context.coffee = model;
+		let { model } = await this.loadModel(assetConfig.otherModels.coffee)
+		console.log(model)
+		this.context.coffee = model
 	}
 
 	async loadBusModel() {
-		let { model } = await this.loadModel(assetConfig.otherModels.bus);
-		this.context.busModel = model;
+		let { model } = await this.loadModel(assetConfig.otherModels.bus)
+		this.context.busModel = model
 	}
 }
