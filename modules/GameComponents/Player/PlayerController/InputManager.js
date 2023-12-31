@@ -2,10 +2,10 @@ import MovementManager from "./MovementManager.js";
 import AnimationManager from "./AnimationManager.js";
 
 const KEY_CODES = {
-	LEFT: "KeyA",
-	RIGHT: "KeyD",
-	JUMP: "Space",
-	SLIDE: "KeyS",
+	LEFT: ["ArrowLeft", "KeyA"],
+	RIGHT: ["ArrowRight","KeyD"],
+	JUMP: ["ArrowUp","KeyW", "Space"],
+	SLIDE: ["ArrowDown","KeyS"],
 };
 
 const LANES = {
@@ -53,25 +53,25 @@ export default class InputManager {
 
 	initKeyboardListeners() {
 		document.addEventListener("keydown", (event) => {
-			if (event.code === KEY_CODES.LEFT && !this.keyStates.left) {
+			if (KEY_CODES.LEFT.includes(event.code) && !this.keyStates.left) {
 				this.left();
-			} else if (event.code === KEY_CODES.RIGHT && !this.keyStates.right) {
+			} else if (KEY_CODES.RIGHT.includes(event.code) && !this.keyStates.right) {
 				this.right();
-			} else if (event.code === KEY_CODES.JUMP && !this.keyStates.jump) {
+			} else if (KEY_CODES.JUMP.includes(event.code) && !this.keyStates.jump) {
 				this.up();
-			} else if (event.code === KEY_CODES.SLIDE && !this.keyStates.slide) {
+			} else if (KEY_CODES.SLIDE.includes(event.code) && !this.keyStates.slide) {
 				this.down();
 			}
 		});
 
 		document.addEventListener("keyup", (event) => {
-			if (event.code === KEY_CODES.LEFT) {
+			if (KEY_CODES.LEFT.includes(event.code)) {
 				this.keyStates.left = false;
-			} else if (event.code === KEY_CODES.RIGHT) {
+			} else if (KEY_CODES.RIGHT.includes(event.code)) {
 				this.keyStates.right = false;
-			} else if (event.code === KEY_CODES.JUMP) {
+			} else if (KEY_CODES.JUMP.includes(event.code)) {
 				this.keyStates.jump = false;
-			} else if (event.code === KEY_CODES.SLIDE) {
+			} else if (KEY_CODES.SLIDE.includes(event.code)) {
 				this.keyStates.slide = false;
 			}
 		});
