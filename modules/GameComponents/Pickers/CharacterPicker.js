@@ -28,10 +28,10 @@ export default class CharacterPicker {
 
 		this.characterNames = [
 			"berlin bouncer",
-			"captain bubbles",
-			"doctor d",
-			"special k",
-			"big ben",
+			"hipster runner",
+			"muscle mouse",
+			"green runner",
+			"auslander",
 		];
 
 		this.characterNameHodler.innerText =
