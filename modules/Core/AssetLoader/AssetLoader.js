@@ -10,6 +10,7 @@ const assetConfig = {
 		tileSix: "assets/models/tiles/tiles.6.3.glb",
 		tileSeven: "assets/models/tiles/tiles.7.glb",
 		tileEight: "assets/models/tiles/tiles.8.glb",
+		tileNine: "assets/models/tiles/tiles.9.glb",
 	},
 
 	characterModels: {
