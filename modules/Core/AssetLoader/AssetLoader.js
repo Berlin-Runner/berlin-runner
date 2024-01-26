@@ -11,6 +11,7 @@ const assetConfig = {
 		tileSix: "assets/models/tiles/tiles.6.3.glb",
 		tileSeven: "assets/models/tiles/tiles.7.glb",
 		tileEight: "assets/models/tiles/tiles.8.glb",
+		tileNine: "assets/models/tiles/tiles.9.glb",
 	},
 
 	characterModels: {
@@ -69,9 +70,10 @@ export default class AssetLoader {
 		this.lastLoadedAMount = 0
 		this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
 			var message =
-				"Started loading file: " +
-				url +
-				".\nLoaded " +
+				//"Started loading file: " +
+				//url +
+				//+".\n"
+				"Loaded " +
 				itemsLoaded +
 				" of " +
 				itemsTotal +
@@ -88,9 +90,10 @@ export default class AssetLoader {
 
 		this.manager.onProgress = (url, itemsLoaded, itemsTotal) => {
 			var message =
-				"Loading file: " +
-				url +
-				".\nLoaded " +
+				//"Loading file: " +
+				//url +
+				//+".\n"
+				"Loaded " +
 				itemsLoaded +
 				" of " +
 				itemsTotal +

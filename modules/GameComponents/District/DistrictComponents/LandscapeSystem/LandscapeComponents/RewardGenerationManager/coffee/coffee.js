@@ -12,12 +12,14 @@ export default class Coffee extends Reward {
 
 		this.coffeeCup = this.context.coffee
 
-		UTIL.bendMesh(this.coffeeCup, true)
+		console.log(this.coffeeCup)
+		this.coffeeCup.scaleFactor = 2
+		this.coffeeCup.scale.setScalar(this.coffeeCup.scaleFactor)
+		this.coffeeCup.position.y = 0
+    UTIL.bendMesh(this.coffeeCup, true)
 
-		this.coffeeCup.scale.setScalar(1)
-		this.coffeeCup.position.y = 2
 		this.coffeeCup.position.copy(spawnPosition)
-		this.coffeeCup.children[0].rotateZ(45 * (Math.PI / 180))
+		this.coffeeCup.rotateZ(44 * (Math.PI / 180))
 
 		this.context.cityContainer.add(this.coffeeCup)
 
@@ -81,9 +83,9 @@ export default class Coffee extends Reward {
 				duration: 0.14,
 				onComplete: () => {
 					gsap.to(this.coffeeCup.scale, {
-						x: 1,
-						y: 1,
-						z: 1,
+						x: this.coffeeCup.scaleFactor,
+						y: this.coffeeCup.scaleFactor,
+						z: this.coffeeCup.scaleFactor,
 						duration: 0.4,
 					})
 				},
