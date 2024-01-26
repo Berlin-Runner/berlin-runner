@@ -1,5 +1,6 @@
 import { Reward } from "../Reward.js"
 import { Vec3, Body, Box } from "../../../../../../../../libs/cannon-es.js"
+import { UTIL } from "../../../../../../../Util/UTIL.js"
 
 export default class Coffee extends Reward {
 	constructor(context, spawnPosition) {
@@ -10,10 +11,13 @@ export default class Coffee extends Reward {
 		this.delta = new THREE.Clock()
 
 		this.coffeeCup = this.context.coffee
+
 		console.log(this.coffeeCup)
 		this.coffeeCup.scaleFactor = 2
 		this.coffeeCup.scale.setScalar(this.coffeeCup.scaleFactor)
 		this.coffeeCup.position.y = 0
+    UTIL.bendMesh(this.coffeeCup, true)
+
 		this.coffeeCup.position.copy(spawnPosition)
 		this.coffeeCup.rotateZ(44 * (Math.PI / 180))
 
