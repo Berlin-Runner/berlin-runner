@@ -1,4 +1,5 @@
 import { LandscapeTile } from "../../GameComponents/District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js"
+import { UTIL } from "../../Util/UTIL.js"
 
 const assetConfig = {
 	landscapeTiles: {
@@ -75,13 +76,13 @@ export default class AssetLoader {
 				" of " +
 				itemsTotal +
 				" files."
-			console.log(message)
+			// console.log(message)
 			this.loadingText.innerHTML = message
 		}
 
 		this.manager.onLoad = () => {
 			var message = "Loading complete!"
-			console.log(message)
+			// console.log(message)
 			this.loadingText.innerHTML = message
 		}
 
@@ -94,7 +95,7 @@ export default class AssetLoader {
 				" of " +
 				itemsTotal +
 				" files."
-			console.log(message)
+			// console.log(message)
 			this.loadingText.innerHTML = message
 			this.progressRatio = itemsLoaded / itemsTotal
 			this.progress = this.progressRatio * 100
@@ -163,7 +164,6 @@ export default class AssetLoader {
 
 	async loadCoffee() {
 		let { model } = await this.loadModel(assetConfig.otherModels.coffee)
-		console.log(model)
 		this.context.coffee = model
 	}
 
