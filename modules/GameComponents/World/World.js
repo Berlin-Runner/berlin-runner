@@ -1,22 +1,22 @@
 class World_ {
 	constructor(context) {
-		this.context = context;
-		this.init();
-		this.resize();
-		this.setupResize();
-		this.addClassSettings();
+		this.context = context
+		this.init()
+		this.resize()
+		this.setupResize()
+		this.addClassSettings()
 	}
 
 	init() {
-		this.initCamera();
+		this.initCamera()
 
-		this.initScene();
+		this.initScene()
 
-		this.initRenderer();
+		this.initRenderer()
 
-		this.initControls();
+		this.initControls()
 
-		this.initLights();
+		this.initLights()
 	}
 
 	initCamera() {
@@ -25,48 +25,48 @@ class World_ {
 			window.innerWidth / window.innerHeight,
 			0.1,
 			100000.0
-		);
+		)
 	}
 
 	initScene() {
-		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color("#87CEFA");
+		this.scene = new THREE.Scene()
+		this.scene.background = new THREE.Color("#87CEFA")
 	}
 
 	initRenderer() {
-		this.canvas = document.getElementById("webgl");
+		this.canvas = document.getElementById("webgl")
 
 		this.renderer = new THREE.WebGLRenderer({
 			antialias: true,
 			powerPreference: "high-performance",
-		});
+		})
 
-		this.renderer.setSize(window.innerWidth, window.innerHeight);
-		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5);
+		this.renderer.setSize(window.innerWidth, window.innerHeight)
+		this.renderer.setPixelRatio(window.devicePixelRatio * 0.5)
 
-		this.renderer.outputEncoding = THREE.sRGBEncoding;
-		this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-		this.renderer.physicallyCorrectLights = true;
-		this.canvas.appendChild(this.renderer.domElement);
+		this.renderer.outputEncoding = THREE.sRGBEncoding
+		this.renderer.toneMapping = THREE.ACESFilmicToneMapping
+		this.renderer.physicallyCorrectLights = true
+		this.canvas.appendChild(this.renderer.domElement)
 	}
 
 	initControls() {
 		this.controls = new THREE.OrbitControls(
 			this.camera,
 			this.renderer.domElement
-		);
-		this.controls.enabled = false;
+		)
+		this.controls.enabled = false
 	}
 
 	initLights() {
-		let ambLight = new THREE.AmbientLight("#ffffff", 1);
-		this.scene.add(ambLight);
+		let ambLight = new THREE.AmbientLight("#ffffff", 1)
+		this.scene.add(ambLight)
 
-		let sunlight = new THREE.DirectionalLight(0xffffff, 2);
+		let sunlight = new THREE.DirectionalLight(0xffffff, 2)
 		// let sunlight_ = new THREE.DirectionalLight(0xffffff, 1);
 
 		// Set the position of the light to simulate the sun's position
-		sunlight.position.set(10, 5, 5);
+		sunlight.position.set(10, 5, 5)
 		// sunlight_.position.set(10, 10, -10);
 
 		// Set the color of the light to a warm yellow tone
@@ -85,40 +85,40 @@ class World_ {
 		// sunlight.shadow.camera.fov = 30;
 
 		// Add the light to the scene
-		this.scene.add(sunlight);
+		this.scene.add(sunlight)
 	}
 
 	setupResize() {
-		window.addEventListener("resize", this.resize.bind(this));
+		window.addEventListener("resize", this.resize.bind(this))
 	}
 
 	resize() {
-		let w = window.innerWidth;
-		let h = window.innerHeight;
+		let w = window.innerWidth
+		let h = window.innerHeight
 
-		this.renderer.setSize(w, h);
-		this.camera.aspect = w / h;
-		this.camera.updateProjectionMatrix();
+		this.renderer.setSize(w, h)
+		this.camera.aspect = w / h
+		this.camera.updateProjectionMatrix()
 	}
 
 	update() {
-		if (this.controls.enabled) this.controls.update();
-		this.renderer.render(this.scene, this.camera);
+		if (this.controls.enabled) this.controls.update()
+		this.renderer.render(this.scene, this.camera)
 	}
 
 	addClassSettings() {
-		this.localSettings = this.context.gui.addFolder("WORLD SETTINGS");
+		this.localSettings = this.context.gui.addFolder("WORLD SETTINGS")
 
 		this.localSettings
 			.add(this.controls, "enabled")
 			.onChange((value) => {
-				this.controls.enabled = value;
-				this.context.settingEventBus.publish("go-hands-free", value);
+				this.controls.enabled = value
+				this.context.settingEventBus.publish("go-hands-free", value)
 			})
-			.name("hands-free");
+			.name("hands-free")
 
-		this.localSettings.open();
+		this.localSettings.open()
 	}
 }
 
-export { World_ };
+export { World_ }
