@@ -12,11 +12,11 @@ export default class Coffee extends Reward {
 
 		this.coffeeCup = this.context.coffee
 
-		console.log(this.coffeeCup)
 		this.coffeeCup.scaleFactor = 2
 		this.coffeeCup.scale.setScalar(this.coffeeCup.scaleFactor)
 		this.coffeeCup.position.y = 0
-    UTIL.bendMesh(this.coffeeCup, true)
+
+		UTIL.bendMesh(this.coffeeCup, true)
 
 		this.coffeeCup.position.copy(spawnPosition)
 		this.coffeeCup.rotateZ(44 * (Math.PI / 180))

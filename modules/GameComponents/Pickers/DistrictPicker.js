@@ -1,33 +1,33 @@
-import { LandscapeTile } from "../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js";
-import CharacterPicker from "./CharacterPicker.js";
-import { LevelZero } from "../Levels/LevelZero/LevelZero.js";
+import { LandscapeTile } from "../District/DistrictComponents/LandscapeSystem/LandscapeTiles/LandscapeTile.js"
+import CharacterPicker from "./CharacterPicker.js"
+import { LevelZero } from "../Levels/LevelZero/LevelZero.js"
 
 export default class DistrictPicker {
 	constructor(context) {
-		this.context = context;
-		this.stateBus = this.context.gameStateEventBus;
-		this.camera = this.context.gameWorld.camera;
-		this.scene = this.context.gameWorld.scene;
+		this.context = context
+		this.stateBus = this.context.gameStateEventBus
+		this.camera = this.context.gameWorld.camera
+		this.scene = this.context.gameWorld.scene
 
-		this.init();
-		this.update();
+		this.init()
+		this.update()
 	}
 
 	init() {
-		document.getElementById("in-play-screen").style.display = " none";
-		this.pickerUIComponent = document.getElementById("district-picker");
-		this.pickerUIComponent.style.display = "none";
-		this.nextButton = document.getElementById("next-district");
-		this.prevButton = document.getElementById("previous-district");
-		this.selectButton = document.getElementById("confirm-district-selection");
-		this.districtNameHolder = document.getElementById("district-name-holder");
+		document.getElementById("in-play-screen").style.display = " none"
+		this.pickerUIComponent = document.getElementById("district-picker")
+		this.pickerUIComponent.style.display = "none"
+		this.nextButton = document.getElementById("next-district")
+		this.prevButton = document.getElementById("previous-district")
+		this.selectButton = document.getElementById("confirm-district-selection")
+		this.districtNameHolder = document.getElementById("district-name-holder")
 
-		this.selectedDistrict = this.context.G.SELECTED_DISTRICT;
+		this.selectedDistrict = this.context.G.SELECTED_DISTRICT
 
-		this.districtIndex = 0;
-		this.totalDistrictCount = 7;
+		this.districtIndex = 0
+		this.totalDistrictCount = 7
 
-		this.gapDistance = 10;
+		this.gapDistance = 10
 
 		this.districtNames = [
 			"alexanderplatz",
@@ -37,63 +37,63 @@ export default class DistrictPicker {
 			"oberbaumbruecke",
 			" kottbusser tor",
 			"goerlitzer park",
-		];
+		]
 
 		this.districtNameHolder.innerText =
-			this.districtNames[this.selectedDistrict];
+			this.districtNames[this.selectedDistrict]
 
-		this.setupPickerArea();
+		this.setupPickerArea()
 
-		this.setupUIEventListeners();
-		this.listenForSwipeInputs();
-		this.setupStateEventListeners();
+		this.setupUIEventListeners()
+		this.listenForSwipeInputs()
+		this.setupStateEventListeners()
 
-		this.context.characterPicker = new CharacterPicker(this.context);
+		this.context.characterPicker = new CharacterPicker(this.context)
 	}
 
 	listenForSwipeInputs() {
-		let hammertime = new Hammer(document.getElementById("district-picker"), {});
+		let hammertime = new Hammer(document.getElementById("district-picker"), {})
 
-		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL })
 
 		hammertime.on("swipeleft", (e) => {
-			this.next();
-		});
+			this.next()
+		})
 
 		hammertime.on("swiperight", (e) => {
-			this.prev();
-		});
+			this.prev()
+		})
 	}
 
 	setupUIEventListeners() {
 		this.nextButton.addEventListener("click", () => {
-			this.next();
-		});
+			this.next()
+		})
 		this.prevButton.addEventListener("click", () => {
-			this.prev();
-		});
+			this.prev()
+		})
 		this.selectButton.addEventListener("click", () => {
-			this.select();
-		});
+			this.select()
+		})
 	}
 
 	setupStateEventListeners() {
 		this.stateBus.subscribe("pick-district", () => {
-			this.pickerUIComponent.style.display = "flex";
-		});
+			this.pickerUIComponent.style.display = "flex"
+		})
 	}
 
 	async setupPickerArea() {
-		this.camera.position.set(0, 55, -7.5);
+		this.camera.position.set(0, 55, -7.5)
 
-		this.pickerArea = new THREE.Group();
-		this.pickerArea_ = new THREE.Group();
-		this.pickerArea.position.set(0, 50, 0);
-		this.pickerArea_.position.set(0, 50, 0);
+		this.pickerArea = new THREE.Group()
+		this.pickerArea_ = new THREE.Group()
+		this.pickerArea.position.set(0, 50, 0)
+		this.pickerArea_.position.set(0, 50, 0)
 
-		this.camera.lookAt(this.pickerArea.position);
+		this.camera.lookAt(this.pickerArea.position)
 
-		let geometry = new THREE.PlaneGeometry(100, 100);
+		let geometry = new THREE.PlaneGeometry(100, 100)
 		let material = new THREE.MeshStandardMaterial({
 			color: 0x3a3a3a,
 
@@ -101,35 +101,36 @@ export default class DistrictPicker {
 
 			transparent: true,
 			opacity: 0.99,
-		});
-		let plane = new THREE.Mesh(geometry, material);
-		plane.rotateX(30 * (Math.PI / 180));
+		})
+		let plane = new THREE.Mesh(geometry, material)
+		plane.rotateX(30 * (Math.PI / 180))
 
-		plane.position.y = -20;
+		plane.position.y = -20
 
-		this.pickerArea_.add(plane);
+		this.pickerArea_.add(plane)
 
-		let ground_geometry = new THREE.PlaneGeometry(100, 100, 64, 64);
+		let ground_geometry = new THREE.PlaneGeometry(100, 100, 64, 64)
 		let ground_material = new THREE.MeshStandardMaterial({
 			color: new THREE.Color("greenyellow"),
 			side: THREE.DoubleSide,
 			wireframe: true,
 			transparent: true,
 			opacity: 0.15,
-		});
-		let ground_plane = new THREE.Mesh(ground_geometry, ground_material);
-		ground_plane.rotateX(110 * (Math.PI / 180));
-		ground_plane.position.z = -0.1;
-		this.pickerArea_.add(ground_plane);
+		})
+		let ground_plane = new THREE.Mesh(ground_geometry, ground_material)
+		ground_plane.rotateX(110 * (Math.PI / 180))
+		ground_plane.position.z = -0.1
+		ground_plane.position.y = -10
+		this.pickerArea_.add(ground_plane)
 
-		this.disrtictsHolder = new THREE.Group();
+		this.disrtictsHolder = new THREE.Group()
 
-		this.pickerArea.add(this.disrtictsHolder);
+		this.pickerArea.add(this.disrtictsHolder)
 
-		this.scene.add(this.pickerArea);
-		this.scene.add(this.pickerArea_);
+		this.scene.add(this.pickerArea)
+		this.scene.add(this.pickerArea_)
 
-		this.addTiles();
+		this.addTiles()
 	}
 
 	addTiles() {
@@ -141,91 +142,91 @@ export default class DistrictPicker {
 			this.context.tileFive,
 			this.context.tileSix,
 			this.context.tileSeven,
-		];
+		]
 
 		// console.log(this.tiles);
 
 		this.tiles.forEach((tile, index) => {
-			tile.position.x = -this.gapDistance * index;
-			tile.scale.setScalar(0.15);
-			tile.rotateY(180 * (Math.PI / 180));
-			tile.rotateX(-20 * (Math.PI / 180));
-			this.disrtictsHolder.add(tile);
-		});
+			tile.position.x = -this.gapDistance * index
+			tile.scale.setScalar(0.15)
+			tile.rotateY(180 * (Math.PI / 180))
+			tile.rotateX(-20 * (Math.PI / 180))
+			this.disrtictsHolder.add(tile)
+		})
 	}
 
 	next() {
-		console.log(this.districtIndex);
+		console.log(this.districtIndex)
 
-		if (this.districtIndex >= 6) return;
+		if (this.districtIndex >= 6) return
 
-		this.districtIndex += 1;
+		this.districtIndex += 1
 		gsap.to(this.pickerArea.position, {
 			x: this.gapDistance * (this.districtIndex % this.totalDistrictCount),
 			duration: 1,
-		});
+		})
 
-		this.districtNameHolder.innerText = this.districtNames[this.districtIndex];
+		this.districtNameHolder.innerText = this.districtNames[this.districtIndex]
 	}
 
 	prev() {
-		if (this.districtIndex < 1) return;
-		this.districtIndex -= 1;
+		if (this.districtIndex < 1) return
+		this.districtIndex -= 1
 		gsap.to(this.pickerArea.position, {
 			x: this.gapDistance * (this.districtIndex % this.totalDistrictCount),
 			duration: 1,
-		});
-		this.districtNameHolder.innerText = this.districtNames[this.districtIndex];
+		})
+		this.districtNameHolder.innerText = this.districtNames[this.districtIndex]
 	}
 
 	update() {
-		requestAnimationFrame(this.update.bind(this));
+		requestAnimationFrame(this.update.bind(this))
 
 		if (this.context.gameStateManager.currentState === "picking-district") {
 			if (this.districtIndex == 0) {
-				this.prevButton.style.display = "none";
+				this.prevButton.style.display = "none"
 			} else {
-				this.prevButton.style.display = "flex";
+				this.prevButton.style.display = "flex"
 			}
 
 			if (this.districtIndex == 6) {
-				console.log("=)");
-				this.nextButton.style.display = "none";
+				console.log("=)")
+				this.nextButton.style.display = "none"
 			} else {
-				this.nextButton.style.display = "flex";
+				this.nextButton.style.display = "flex"
 			}
 		}
 	}
 
 	select() {
-		this.pickerArea.visible = false;
-		this.pickerArea_.visible = false;
-		this.pickerUIComponent.style.display = "none";
-		this.context.G.SELECTED_DISTRICT = this.districtIndex + 3;
+		this.pickerArea.visible = false
+		this.pickerArea_.visible = false
+		this.pickerUIComponent.style.display = "none"
+		this.context.G.SELECTED_DISTRICT = this.districtIndex + 3
 
 		gsap.to(this.camera.position, {
 			x: 0,
 			y: 50,
 			z: -110,
 			duration: 0.75,
-		});
-		gsap.to(this.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.75 });
-		this.stateBus.publish("display-chracter-selector");
-		this.context.gameStateManager.showCharacterPicker();
-		this.initLevels();
+		})
+		gsap.to(this.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.75 })
+		this.stateBus.publish("display-chracter-selector")
+		this.context.gameStateManager.showCharacterPicker()
+		this.initLevels()
 	}
 
 	initLevels() {
 		this.tiles.forEach((tile, index) => {
-			tile.position.z = 0;
-			tile.position.x = 0;
-			tile.position.y = -0.1;
-			tile.scale.setScalar(1);
-			tile.rotation.set(0, 0, 0);
-		});
-		this.context.levelZero = new LevelZero(this.context);
-		this.context.levelZero.activeLevel = true;
+			tile.position.z = 0
+			tile.position.x = 0
+			tile.position.y = -0.1
+			tile.scale.setScalar(1)
+			tile.rotation.set(0, 0, 0)
+		})
+		this.context.levelZero = new LevelZero(this.context)
+		this.context.levelZero.activeLevel = true
 
-		this.context.currentLevel = this.context.levelZero;
+		this.context.currentLevel = this.context.levelZero
 	}
 }

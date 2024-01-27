@@ -73,11 +73,7 @@ export default class AssetLoader {
 				//"Started loading file: " +
 				//url +
 				//+".\n"
-				"Loaded " +
-				itemsLoaded +
-				" of " +
-				itemsTotal +
-				" files."
+				"Loaded " + itemsLoaded + " of " + itemsTotal + " files."
 			// console.log(message)
 			this.loadingText.innerHTML = message
 		}
@@ -93,11 +89,7 @@ export default class AssetLoader {
 				//"Loading file: " +
 				//url +
 				//+".\n"
-				"Loaded " +
-				itemsLoaded +
-				" of " +
-				itemsTotal +
-				" files."
+				"Loaded " + itemsLoaded + " of " + itemsTotal + " files."
 			// console.log(message)
 			this.loadingText.innerHTML = message
 			this.progressRatio = itemsLoaded / itemsTotal
@@ -126,6 +118,11 @@ export default class AssetLoader {
 			this.loader.load(
 				url,
 				(gltf) => {
+					gltf.scene.traverse((child) => {
+						if (child.isMesh) {
+							child.castShadow = true
+						}
+					})
 					let result = { model: gltf.scene, animations: gltf.animations }
 					resolve(result)
 				},

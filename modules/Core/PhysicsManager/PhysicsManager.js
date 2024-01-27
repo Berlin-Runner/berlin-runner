@@ -7,14 +7,14 @@ import {
 	Body,
 	Plane,
 	GSSolver,
-} from "../../../libs/cannon-es.js";
-import CannonUtils from "./utils/cannonUtils.js";
+} from "../../../libs/cannon-es.js"
+import CannonUtils from "./utils/cannonUtils.js"
 
 class PhysicsManager {
 	constructor(context) {
-		this.context = context;
+		this.context = context
 
-		this.deviceType = this.context.G.DEVICE_TYPE;
+		this.deviceType = this.context.G.DEVICE_TYPE
 
 		this.settings = {
 			worldAllowSleep: true,
@@ -31,37 +31,37 @@ class PhysicsManager {
 			playerColliderMass: 0.35,
 			playerInitialPosition: new Vec3(0, 0.75, 0),
 			playerLinearDampeneingFactor: 0,
-		};
+		}
 
-		this.initWorld();
+		this.initWorld()
 	}
 
 	initWorld() {
-		this.context.world = new World({});
+		this.context.world = new World({})
 
-		this.context.world.allowSleep = this.settings.worldAllowSleep;
+		this.context.world.allowSleep = this.settings.worldAllowSleep
 
-		this.context.world.defaultContactMaterial.contactEquationStiffness = 1e9;
+		this.context.world.defaultContactMaterial.contactEquationStiffness = 1e9
 
 		// Stabilization time in number of timesteps
-		this.context.world.defaultContactMaterial.contactEquationRelaxation = 4;
+		this.context.world.defaultContactMaterial.contactEquationRelaxation = 4
 
-		this.solver = new GSSolver();
+		this.solver = new GSSolver()
 		if (this.deviceType === "desktop") {
-			this.solver.iterations = 1;
+			this.solver.iterations = 1
 		} else if (this.deviceType === "mobile") {
-			this.solver.iterations = 1;
+			this.solver.iterations = 1
 		}
 
 		if (this.settings.useSplitSolver) {
-			this.context.world.solver = new SplitSolver(this.solver);
+			this.context.world.solver = new SplitSolver(this.solver)
 		} else {
-			this.context.world.solver = this.solver;
+			this.context.world.solver = this.solver
 		}
 
-		this.context.world.gravity = this.settings.gravity;
+		this.context.world.gravity = this.settings.gravity
 
-		this.physicsMaterial = new Material("physics");
+		this.physicsMaterial = new Material("physics")
 
 		this.physics_physics = new ContactMaterial(
 			this.physicsMaterial,
@@ -70,19 +70,20 @@ class PhysicsManager {
 				friction: this.settings.globalContactMaterial.friction,
 				restitution: this.settings.globalContactMaterial.restitution,
 			}
-		);
+		)
 
-		this.context.world.addContactMaterial(this.physics_physics);
-		this.addGround();
+		this.context.world.addContactMaterial(this.physics_physics)
+		this.addGround()
 	}
 
 	addGround() {
 		this.groundBody = new Body({
 			type: Body.STATIC,
 			shape: new Plane(),
-		});
-		this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0);
-		this.context.world.addBody(this.groundBody);
+		})
+		this.groundBody.position.set(0, -10, 0)
+		this.groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0)
+		this.context.world.addBody(this.groundBody)
 	}
 
 	cannonifyMeshAutoHull(
@@ -92,21 +93,21 @@ class PhysicsManager {
 		bodyMaterial,
 		bodyMass
 	) {
-		let canonifiedMesh = threeToCannon(meshToBeCanonified, { type: hullType });
+		let canonifiedMesh = threeToCannon(meshToBeCanonified, { type: hullType })
 
-		let { shape } = canonifiedMesh;
+		let { shape } = canonifiedMesh
 
 		let cannonifiedBody = new Body({
 			mass: bodyMass,
 			type: bodyType,
 			shape,
 			material: bodyMaterial,
-		});
+		})
 
-		cannonifiedBody.position.copy(meshToBeCanonified.position);
-		cannonifiedBody.quaternion.copy(meshToBeCanonified.quaternion);
+		cannonifiedBody.position.copy(meshToBeCanonified.position)
+		cannonifiedBody.quaternion.copy(meshToBeCanonified.quaternion)
 
-		this.context.world.addBody(cannonifiedBody);
+		this.context.world.addBody(cannonifiedBody)
 	}
 
 	cannonifyMeshGeometry(
@@ -119,44 +120,44 @@ class PhysicsManager {
 		collisionFilterGroup = 1
 	) {
 		if (!meshToBeCanonified) {
-			console.log(`uh oh the mesh ${meshName} seems to be problematic`);
-			return;
+			console.log(`uh oh the mesh ${meshName} seems to be problematic`)
+			return
 		}
 
-		let shape = CannonUtils.CreateTrimesh(meshToBeCanonified.geometry);
-		shape.scale.copy(scale);
+		let shape = CannonUtils.CreateTrimesh(meshToBeCanonified.geometry)
+		shape.scale.copy(scale)
 
 		let meshBody = new Body({
 			type: bodyType,
 			material: bodyMaterial,
 			mass: bodyMass,
-		});
+		})
 
-		meshBody.addShape(shape);
-		meshBody.position.copy(meshToBeCanonified.position);
-		meshBody.quaternion.copy(meshToBeCanonified.quaternion);
+		meshBody.addShape(shape)
+		meshBody.position.copy(meshToBeCanonified.position)
+		meshBody.quaternion.copy(meshToBeCanonified.quaternion)
 
 		if (collisionFilterGroup != 1)
-			meshBody.collisionFilterGroup = collisionFilterGroup;
-		this.context.world.addBody(meshBody);
+			meshBody.collisionFilterGroup = collisionFilterGroup
+		this.context.world.addBody(meshBody)
 	}
 
 	cannonifyMeshWithCustomConvexHull(
 		customConvexHullGeometry,
 		meshToBeCanonified
 	) {
-		let shape = CannonUtils.CreateTrimesh(customConvexHullGeometry.geometry);
+		let shape = CannonUtils.CreateTrimesh(customConvexHullGeometry.geometry)
 
 		let customConvexHullBody = new Body({
 			material: this.physicsMaterial,
-		});
+		})
 
-		customConvexHullBody.addShape(shape);
+		customConvexHullBody.addShape(shape)
 
-		customConvexHullBody.position.copy(meshToBeCanonified.position);
-		customConvexHullBody.quaternion.set(0, 0, 0, 1);
+		customConvexHullBody.position.copy(meshToBeCanonified.position)
+		customConvexHullBody.quaternion.set(0, 0, 0, 1)
 
-		this.context.world.addBody(customConvexHullBody);
+		this.context.world.addBody(customConvexHullBody)
 	}
 
 	addClassSettings() {
@@ -175,10 +176,10 @@ class PhysicsManager {
       playerColliderMass: 0.25,
       playerInitialPosition: new THREE.Vector3(-2, 3, -1),
     */
-		let localSettings = this.context.gui.addFolder("GLOBAL PHYSICS PROPERTIES");
+		let localSettings = this.context.gui.addFolder("GLOBAL PHYSICS PROPERTIES")
 		let obj = {
 			renderingState: "none",
-		};
+		}
 		localSettings
 			.add(obj, "renderingState", {
 				renderNone: "none",
@@ -187,48 +188,48 @@ class PhysicsManager {
 				renderAll: null,
 			})
 			.onChange((value) => {
-				this.context.cannonDebugger.updateRenderingState(value);
-			});
+				this.context.cannonDebugger.updateRenderingState(value)
+			})
 
-		localSettings.add(this.settings, "worldAllowSleep").name("Allow Sleep");
+		localSettings.add(this.settings, "worldAllowSleep").name("Allow Sleep")
 
 		localSettings
 			.add(this.settings.gravity, "y", -20, 5, 0.25)
-			.name("Gravity Value");
+			.name("Gravity Value")
 
 		localSettings
 			.add(this.settings.globalContactMaterial, "friction", 0, 1, 0.01)
 			.name("Global Friction")
 			.onChange((value) => {
-				this.context.world.contactmaterials[0].friction = value;
-			});
+				this.context.world.contactmaterials[0].friction = value
+			})
 		localSettings
 			.add(this.settings.globalContactMaterial, "restitution", 0, 1, 0.01)
 			.name("Global Restitution")
 			.onChange((value) => {
-				this.context.world.contactmaterials[0].restitution = value;
-				this.context.debugLog.error(this.context.world);
-			});
+				this.context.world.contactmaterials[0].restitution = value
+				this.context.debugLog.error(this.context.world)
+			})
 
 		let playerColliderSettings = localSettings.addFolder(
 			"PLAYER COLLIDER SETTINGS"
-		);
+		)
 
-		playerColliderSettings.open();
+		playerColliderSettings.open()
 
 		playerColliderSettings
 			.add(this.settings, "playerColliderRadius", 0.1, 0.5, 0.001)
 			.onChange((value) => {
-				this.context.sphereBody.shapes[0].radius = value;
+				this.context.sphereBody.shapes[0].radius = value
 			})
-			.name("Radius");
+			.name("Radius")
 
 		playerColliderSettings
 			.add(this.settings, "playerColliderMass", 0.1, 1, 0.05)
 			.onChange((value) => {
-				this.context.sphereBody.mass = value;
+				this.context.sphereBody.mass = value
 			})
-			.name("Mass");
+			.name("Mass")
 
 		playerColliderSettings
 			.add(this.settings, "playerLinearDampeneingFactor", 0, 1, 0.05)
@@ -239,43 +240,43 @@ class PhysicsManager {
 					1,
 					0.95,
 					0.99
-				);
+				)
 			})
-			.name("Collider Friction");
+			.name("Collider Friction")
 
 		let playerInitialPosition = playerColliderSettings.addFolder(
 			"PLAYER INITIAL POSITION"
-		);
+		)
 
-		playerInitialPosition.open();
+		playerInitialPosition.open()
 
 		playerInitialPosition
 			.add(this.settings.playerInitialPosition, "x", -5, 5, 0.5)
 			.onChange((value) => {
-				this.context.sphereBody.position.X = value;
+				this.context.sphereBody.position.X = value
 			})
-			.name("X");
+			.name("X")
 
 		playerInitialPosition
 			.add(this.settings.playerInitialPosition, "y", 0, 15, 0.5)
 			.onChange((value) => {
-				this.context.sphereBody.position.X = value;
+				this.context.sphereBody.position.X = value
 			})
-			.name("Y");
+			.name("Y")
 
 		playerInitialPosition
 			.add(this.settings.playerInitialPosition, "z", -5, 5, 0.5)
 			.onChange((value) => {
-				this.context.sphereBody.position.X = value;
+				this.context.sphereBody.position.X = value
 			})
-			.name("Z");
+			.name("Z")
 	}
 
 	// ===========================++++++++++++++++++===========================//
 	// Linear mapping from range <a1, a2> to range <b1, b2>
 	mapLinear(x, a1, a2, b1, b2) {
-		return b1 + ((x - a1) * (b2 - b1)) / (a2 - a1);
+		return b1 + ((x - a1) * (b2 - b1)) / (a2 - a1)
 	}
 }
 
-export { PhysicsManager };
+export { PhysicsManager }

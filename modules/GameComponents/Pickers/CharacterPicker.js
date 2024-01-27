@@ -1,30 +1,30 @@
-import { UTIL } from "../../Util/UTIL.js";
-import { Player } from "../Player/Player.js";
+import { UTIL } from "../../Util/UTIL.js"
+import { Player } from "../Player/Player.js"
 
 export default class CharacterPicker {
 	constructor(context) {
-		this.context = context;
-		this.camera = this.context.gameWorld.camera;
-		this.scene = this.context.gameWorld.scene;
-		this.stateBus = this.context.gameStateEventBus;
-		this.stateManager = this.context.gameStateManager;
-		this.pickerActive = true;
+		this.context = context
+		this.camera = this.context.gameWorld.camera
+		this.scene = this.context.gameWorld.scene
+		this.stateBus = this.context.gameStateEventBus
+		this.stateManager = this.context.gameStateManager
+		this.pickerActive = true
 
-		this._init();
+		this._init()
 	}
 
 	_init() {
-		document.getElementById("in-play-screen").style.display = " none";
-		this.chararcterPickerUI = document.getElementById("character-picker");
-		this.chararcterPickerUI.style.display = "none";
-		this.characterNameHodler = document.getElementById("character-name");
-		this.nextButton = document.getElementById("character-picker-next");
-		this.prevButton = document.getElementById("character-picker-prev");
-		this.continueButton = document.getElementById("charachter-continue-button");
-		this.totalCharacterCount = 5;
+		document.getElementById("in-play-screen").style.display = " none"
+		this.chararcterPickerUI = document.getElementById("character-picker")
+		this.chararcterPickerUI.style.display = "none"
+		this.characterNameHodler = document.getElementById("character-name")
+		this.nextButton = document.getElementById("character-picker-next")
+		this.prevButton = document.getElementById("character-picker-prev")
+		this.continueButton = document.getElementById("charachter-continue-button")
+		this.totalCharacterCount = 5
 
-		this.characterIndex = 0;
-		this.gapDistance = 15;
+		this.characterIndex = 0
+		this.gapDistance = 15
 
 		this.characterNames = [
 			"berlin bouncer",
@@ -32,78 +32,75 @@ export default class CharacterPicker {
 			"muscle mouse",
 			"green runner",
 			"auslander",
-		];
+		]
 
 		this.characterNameHodler.innerText =
-			this.characterNames[this.characterIndex];
+			this.characterNames[this.characterIndex]
 
-		this.setupUIEventListeners();
-		this.listenForSwipeInputs();
-		this.setupStateEventListeners();
-		this.setupPickerArea();
+		this.setupUIEventListeners()
+		this.listenForSwipeInputs()
+		this.setupStateEventListeners()
+		this.setupPickerArea()
 
-		this.update();
+		this.update()
 	}
 
 	listenForSwipeInputs() {
-		let hammertime = new Hammer(
-			document.getElementById("character-picker"),
-			{}
-		);
+		let hammertime = new Hammer(document.getElementById("character-picker"), {})
 
-		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
+		hammertime.get("swipe").set({ direction: Hammer.DIRECTION_ALL })
 
 		hammertime.on("swipeleft", (e) => {
-			this.next();
-		});
+			this.next()
+		})
 
 		hammertime.on("swiperight", (e) => {
-			this.prev();
-		});
+			this.prev()
+		})
 	}
 
 	setupUIEventListeners() {
 		this.continueButton.addEventListener("click", () => {
-			this.select();
-		});
+			this.select()
+		})
 
 		this.prevButton.addEventListener("click", () => {
-			this.prev();
-		});
+			this.prev()
+		})
 
 		this.nextButton.addEventListener("click", () => {
-			this.next();
-		});
+			this.next()
+		})
 	}
 
 	setupStateEventListeners() {
 		this.stateBus.subscribe("display-chracter-selector", () => {
-			this.start();
-		});
+			this.start()
+		})
 	}
 
 	start() {
-		this.chararcterPickerUI.style.display = "flex";
-		this.pickerArea.visible = true;
-		this.pickerArea_.visible = true;
-		this.pickerActive = true;
+		this.chararcterPickerUI.style.display = "flex"
+		this.pickerArea.visible = true
+		this.pickerArea_.visible = true
+		this.pickerActive = true
 	}
 
 	setupPickerArea() {
-		this.setUpContainers();
-		this.addGroundPlane();
-		this.addPlayerMeshes();
+		this.setUpContainers()
+		this.addGroundPlane()
+		this.addPlayerMeshes()
 	}
 
 	setUpContainers() {
-		this.pickerArea = new THREE.Group();
-		this.pickerArea_ = new THREE.Group();
-		this.pickerArea.position.set(0, 47.5, -120);
-		this.pickerArea_.position.set(0, 47.5, -120);
-		this.scene.add(this.pickerArea_);
-		this.scene.add(this.pickerArea);
+		this.pickerArea = new THREE.Group()
+		this.pickerArea_ = new THREE.Group()
+		this.pickerArea.position.set(0, 47.5, -120)
+		this.pickerArea_.position.set(0, 47.5, -120)
+		this.scene.add(this.pickerArea_)
+		this.scene.add(this.pickerArea)
 
-		let geometry = new THREE.PlaneGeometry(100, 100, 512, 512);
+		let geometry = new THREE.PlaneGeometry(100, 100, 512, 512)
 		let material = new THREE.MeshStandardMaterial({
 			color: "#222",
 
@@ -111,21 +108,21 @@ export default class CharacterPicker {
 
 			transparent: true,
 			opacity: 0.99,
-		});
+		})
 
-		let plane = new THREE.Mesh(geometry, material);
-		plane.rotateX(10 * (Math.PI / 180));
+		let plane = new THREE.Mesh(geometry, material)
+		plane.rotateX(10 * (Math.PI / 180))
 
-		plane.position.y = 15;
-		this.pickerArea_.add(plane);
+		plane.position.y = 15
+		this.pickerArea_.add(plane)
 	}
 
 	addGroundPlane() {
-		let debugObject = {};
-		debugObject.depthColor = "#aaa";
-		debugObject.surfaceColor = "#ccc";
+		let debugObject = {}
+		debugObject.depthColor = "#aaa"
+		debugObject.surfaceColor = "#ccc"
 
-		let ground_geometry = new THREE.PlaneGeometry(100, 50, 512, 512);
+		let ground_geometry = new THREE.PlaneGeometry(100, 50, 512, 512)
 
 		this.ground_material = new THREE.ShaderMaterial({
 			wireframe: true,
@@ -308,32 +305,32 @@ export default class CharacterPicker {
 				gl_FragColor = vec4(color , 1.0 );
 			}
 	  `,
-		});
+		})
 
-		let ground_plane = new THREE.Mesh(ground_geometry, this.ground_material);
-		ground_plane.rotateX(110 * (Math.PI / 180));
-		ground_plane.position.z = -0.1;
-		this.pickerArea_.add(ground_plane);
+		let ground_plane = new THREE.Mesh(ground_geometry, this.ground_material)
+		ground_plane.rotateX(110 * (Math.PI / 180))
+		ground_plane.position.z = -0.1
+		this.pickerArea_.add(ground_plane)
 	}
 
 	async addPlayerMeshes() {
 		const addCharacter = (character, scale, position, mixerVar) => {
-			character.model.scale.setScalar(scale);
-			character.model.position.set(position.x, position.y, position.z);
-			this.pickerArea.add(character.model);
+			character.model.scale.setScalar(scale)
+			character.model.position.set(position.x, position.y, position.z)
+			this.pickerArea.add(character.model)
 
-			this[mixerVar] = new THREE.AnimationMixer(character.model);
+			this[mixerVar] = new THREE.AnimationMixer(character.model)
 			const idleClip = THREE.AnimationClip.findByName(
 				character.animations,
 				"Idle"
-			);
-			const idleAction = this[mixerVar].clipAction(idleClip);
-			idleAction.play();
+			)
+			const idleAction = this[mixerVar].clipAction(idleClip)
+			idleAction.play()
 
 			character.model.traverse((child) => {
-				if (child.name === "aabb") child.visible = false;
-			});
-		};
+				if (child.name === "aabb") child.visible = false
+			})
+		}
 
 		const characterData = [
 			{
@@ -371,110 +368,110 @@ export default class CharacterPicker {
 				position: { x: 60, y: 0, z: 0 },
 				mixerVar: "mixerBen",
 			},
-		];
+		]
 
 		for (const data of characterData) {
-			addCharacter(data.character, data.scale, data.position, data.mixerVar);
+			addCharacter(data.character, data.scale, data.position, data.mixerVar)
 		}
 
 		this.playerModels = characterData.map((data) => ({
 			model: data.character.model,
 			animations: data.character.animations,
-		}));
+		}))
 	}
 
 	next() {
-		if (this.characterIndex >= 4) return;
-		this.characterIndex += 1;
+		if (this.characterIndex >= 4) return
+		this.characterIndex += 1
 		gsap.to(this.pickerArea.position, {
 			x: -15 * (this.characterIndex % this.totalCharacterCount),
 			duration: 1,
-		});
+		})
 		this.characterNameHodler.innerText =
-			this.characterNames[this.characterIndex];
+			this.characterNames[this.characterIndex]
 	}
 
 	prev() {
-		if (this.characterIndex < 1) return;
-		this.characterIndex -= 1;
+		if (this.characterIndex < 1) return
+		this.characterIndex -= 1
 		gsap.to(this.pickerArea.position, {
 			x: -15 * (this.characterIndex % this.totalCharacterCount),
 			duration: 1,
-		});
+		})
 		this.characterNameHodler.innerText =
-			this.characterNames[this.characterIndex];
+			this.characterNames[this.characterIndex]
 	}
 
 	select() {
-		this.hidePicker();
-		this.instantiateSelectedPlayer();
-		this.stateManager.enterStage();
-		this.cleanUp();
+		this.hidePicker()
+		this.instantiateSelectedPlayer()
+		this.stateManager.enterStage()
+		this.cleanUp()
 	}
 
 	hidePicker() {
-		this.pickerArea.visible = false;
-		this.pickerArea_.visible = false;
-		this.pickerActive = false;
-		this.chararcterPickerUI.style.display = "none";
+		this.pickerArea.visible = false
+		this.pickerArea_.visible = false
+		this.pickerActive = false
+		this.chararcterPickerUI.style.display = "none"
 	}
 
 	instantiateSelectedPlayer() {
-		this.selectedCharacter = this.playerModels[this.characterIndex].model;
+		this.selectedCharacter = this.playerModels[this.characterIndex].model
 
-		this.selectedCharacter.position.set(0, 0, 0);
-		this.selectedCharacter.rotation.set(0, 0, 0);
+		this.selectedCharacter.position.set(0, 0, 0)
+		this.selectedCharacter.rotation.set(0, 0, 0)
 
 		this.context.playerInstance = new Player(
 			this.context,
 			this.selectedCharacter,
 			this.playerModels[this.characterIndex].animations
-		);
+		)
 	}
 
 	cleanUp() {
-		this.mixerBen = null;
-		this.mixerCoach = null;
-		this.mixerKaty = null;
-		this.mixerBouncer = null;
-		this.mixerCapitan = null;
+		this.mixerBen = null
+		this.mixerCoach = null
+		this.mixerKaty = null
+		this.mixerBouncer = null
+		this.mixerCapitan = null
 	}
 
 	update() {
-		requestAnimationFrame(this.update.bind(this));
-		this.ground_material.uniforms.uTime.value += 0.02;
-		this.updateCharacters();
-		this.updateUI();
+		requestAnimationFrame(this.update.bind(this))
+		this.ground_material.uniforms.uTime.value += 0.02
+		this.updateCharacters()
+		this.updateUI()
 	}
 
 	updateCharacters() {
-		if (!this.pickerActive) return;
+		if (!this.pickerActive) return
 		if (this.mixerBouncer)
-			this.mixerBouncer.update(this.context.time.getDelta());
+			this.mixerBouncer.update(this.context.time.getDelta())
 		if (this.mixerCaptain)
-			this.mixerCaptain.update(this.context.time.getDelta());
-		if (this.mixerCoach) this.mixerCoach.update(this.context.time.getDelta());
-		if (this.mixerKaty) this.mixerKaty.update(this.context.time.getDelta());
-		if (this.mixerBen) this.mixerBen.update(this.context.time.getDelta());
-		if (this.context.ben) this.context.ben.model.rotation.y += 0.015;
-		if (this.context.katy) this.context.katy.model.rotation.y += 0.015;
-		if (this.context.coach) this.context.coach.model.rotation.y += 0.015;
-		if (this.context.captain) this.context.captain.model.rotation.y += 0.015;
-		if (this.context.bouncer) this.context.bouncer.model.rotation.y += 0.015;
+			this.mixerCaptain.update(this.context.time.getDelta())
+		if (this.mixerCoach) this.mixerCoach.update(this.context.time.getDelta())
+		if (this.mixerKaty) this.mixerKaty.update(this.context.time.getDelta())
+		if (this.mixerBen) this.mixerBen.update(this.context.time.getDelta())
+		if (this.context.ben) this.context.ben.model.rotation.y += 0.015
+		if (this.context.katy) this.context.katy.model.rotation.y += 0.015
+		if (this.context.coach) this.context.coach.model.rotation.y += 0.015
+		if (this.context.captain) this.context.captain.model.rotation.y += 0.015
+		if (this.context.bouncer) this.context.bouncer.model.rotation.y += 0.015
 	}
 
 	updateUI() {
 		if (this.characterIndex == 0) {
-			this.prevButton.style.display = "none";
+			this.prevButton.style.display = "none"
 		} else {
-			this.prevButton.style.display = "flex";
+			this.prevButton.style.display = "flex"
 		}
 
 		if (this.characterIndex == 4) {
 			// console.log("=)");
-			this.nextButton.style.display = "none";
+			this.nextButton.style.display = "none"
 		} else {
-			this.nextButton.style.display = "flex";
+			this.nextButton.style.display = "flex"
 		}
 	}
 }
