@@ -13,7 +13,7 @@ const foldableShader = `
 
 // Bending parameters
 const BEND_AMOUNT = 0.05
-const BEND_RADIUS = 100.0
+const BEND_RADIUS = 100
 
 class UTIL {
 	static async sleep(ms) {
@@ -77,18 +77,16 @@ class UTIL {
 				}
 				child.material = THREE.extendMaterial(THREE.MeshStandardMaterial, {
 					class: THREE.CustomMaterial,
-
 					vertex: {
 						transformEnd: `
-                        // Bending formula
-                        float theta = ${parseFloat(
-													BEND_AMOUNT
-												)} * worldPosition.z / ${parseFloat(BEND_RADIUS)}.0;
-
-                        worldPosition.y = worldPosition.y * cos(theta) - worldPosition.z * sin(theta);
-                    `,
+		                // Bending formula
+		                float theta = ${parseFloat(
+											BEND_AMOUNT
+										)} * bentPosition.z / ${parseFloat(BEND_RADIUS)}.0;
+		                bentPosition.y = bentPosition.y * cos(theta) - bentPosition.z * sin(theta);
+						vec3 transformed = vec3(position);
+		            `,
 					},
-
 					uniforms: uniform,
 				})
 
@@ -96,11 +94,12 @@ class UTIL {
 					shader.vertexShader = shader.vertexShader
 						.replace(
 							"#include <begin_vertex>",
-							`vec4 worldPosition = modelMatrix * vec4(position, 1.0);`
+							`vec4 bentPosition = modelMatrix * vec4(position, 1.0);`
 						)
+
 						.replace(
 							"#include <project_vertex>",
-							`vec4 mvPosition = viewMatrix * worldPosition; gl_Position = projectionMatrix * mvPosition;`
+							`vec4 mvPosition = viewMatrix * bentPosition; gl_Position = projectionMatrix * mvPosition;`
 						)
 				}
 
