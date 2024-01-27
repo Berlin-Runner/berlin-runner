@@ -44,8 +44,13 @@ class LandscapeTile {
 	async initLandscape(url) {
 		try {
 			let { model } = await this.context.assetLoader.loadModel(url)
-
+			model.traverse((child) => {
+				if (child.isMesh) {
+					child.receiveShadow = true
+				}
+			})
 			UTIL.bendMesh(model, false)
+			// model.visible = false
 
 			return model
 		} catch (err) {
