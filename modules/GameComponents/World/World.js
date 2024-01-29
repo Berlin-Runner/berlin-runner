@@ -199,7 +199,7 @@ class World_ {
 		// "drops"
 		let gPos = []
 		let gEnds = []
-		let gCount = 5000
+		let gCount = 2500
 		for (let i = 0; i < gCount; i++) {
 			let x = THREE.MathUtils.randFloatSpread(15)
 			let y = THREE.MathUtils.randFloat(-5, 20)
