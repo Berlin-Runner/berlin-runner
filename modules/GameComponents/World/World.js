@@ -25,23 +25,77 @@ class World_ {
 	}
 
 	initWeatherSystem() {
-		this.sun = new Sun(this)
-		this.isSunny = true
-		if (this.isSunny) {
-			this.sun.showSun()
-			this.sun.sunRiseAnimation()
-		} else this.sun.hideSun()
-
-		this.rain = new Rain(this)
-		this.isRaining = false
-		this.isRaining
-			? (this.rain.rainObject.visible = true)
-			: (this.rain.rainObject.visible = false)
-
-		this.isSnowing = false
-
 		this.frame = 4
 		this.meshList = []
+
+		this.sun = new Sun(this)
+		this.rain = new Rain(this)
+		this.snow = new Snow()
+
+		this.weatherStates = ["sunny", "raining", "snowing"]
+		this.currentWeather = this.getRandomWeatherState()
+
+		this.applyWeatherState(this.currentWeather)
+
+		gsap.to(
+			{},
+			{
+				duration: 15,
+				repeat: -1, // Infinite loop
+				onRepeat: () => {
+					this.currentWeather = this.getRandomWeatherState()
+					this.applyWeatherState(this.currentWeather)
+				},
+			}
+		)
+	}
+
+	getRandomWeatherState() {
+		const randomIndex = Math.floor(Math.random() * this.weatherStates.length)
+		return this.weatherStates[randomIndex]
+	}
+
+	applyWeatherState(weather) {
+		this.isSunny = false
+		this.isRaining = false
+		this.isSnowing = false
+
+		switch (weather) {
+			case "sunny":
+				this.isSunny = true
+				this.sun.showSun()
+				this.sun.sunRiseAnimation()
+				this.rain.hideRain()
+				this.hideSnow()
+				this.isSnowing = false
+
+				break
+			case "raining":
+				this.isRaining = true
+				this.rain.showRain()
+				this.sun.hideSun()
+				this.isSnowing = false
+				this.hideSnow()
+				break
+			case "snowing":
+				this.sun.hideSun()
+				this.rain.hideRain()
+				this.isSnowing = true
+				this.showSnow()
+				break
+		}
+	}
+
+	hideSnow() {
+		for (var i = 0; i < this.meshList.length; i++) {
+			this.meshList[i].visible = false
+		}
+	}
+
+	showSnow() {
+		for (var i = 0; i < this.meshList.length; i++) {
+			this.meshList[i].visible = true
+		}
 	}
 
 	initCamera() {
@@ -120,9 +174,10 @@ class World_ {
 	}
 
 	updateSnow() {
-		var mesh = new Snow()
-		this.scene.add(mesh)
-		this.meshList.push(mesh)
+		this.snow = new Snow()
+
+		this.scene.add(this.snow)
+		this.meshList.push(this.snow)
 		for (var i = 0; i < this.meshList.length; i++) {
 			this.meshList[i].update()
 		}
