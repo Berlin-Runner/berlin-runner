@@ -62,16 +62,16 @@ class Snow extends THREE.Object3D {
 				transparent: true,
 			})
 
-			var particles = new THREE.Points(geometry, materials[i])
-			particles.rotation.x = Math.random() * 360
-			particles.rotation.y = Math.random() * 360
-			particles.rotation.z = Math.random() * 360
-			particles.vx = 0
-			particles.vy = 0
-			particles.material.opacity = 0
+			this.particles = new THREE.Points(geometry, materials[i])
+			this.particles.rotation.x = Math.random() * 360
+			this.particles.rotation.y = Math.random() * 360
+			this.particles.rotation.z = Math.random() * 360
+			this.particles.vx = 0
+			this.particles.vy = 0
+			this.particles.material.opacity = 0
 
-			this.add(particles)
-			this.snowList.push(particles)
+			this.add(this.particles)
+			this.snowList.push(this.particles)
 		}
 	}
 
