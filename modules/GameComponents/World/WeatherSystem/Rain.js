@@ -152,6 +152,29 @@ class Rain {
 		this.world.scene.add(rainObject)
 	}
 
+	hideRain() {
+		this.rainObject.material.transparent = true
+
+		gsap.to(this.rainObject.material, {
+			opacity: 0,
+			duration: 0.1,
+			onComplete: () => {
+				this.rainObject.visible = false
+			},
+		})
+	}
+
+	showRain() {
+		this.rainObject.visible = true
+
+		this.rainObject.material.opacity = 0
+
+		gsap.to(this.rainObject.material, {
+			opacity: 1,
+			duration: 0.4,
+		})
+	}
+
 	updateRain() {
 		this.globalUniforms.time.value = this.time.getElapsedTime()
 	}

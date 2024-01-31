@@ -11,13 +11,42 @@ class Sun {
 	}
 
 	hideSun() {
-		this.sun.visible = false
-		this.sunlight.visible = false
+		gsap.to(this.sun.material, {
+			opacity: 0,
+			duration: 2,
+			onComplete: () => {
+				this.sun.visible = false
+			},
+		})
+
+		gsap.to(this.sunlight, {
+			intensity: 0,
+			duration: 2,
+			onComplete: () => {
+				this.sunlight.visible = false
+			},
+		})
 	}
 
 	showSun() {
 		this.sun.visible = true
 		this.sunlight.visible = true
+
+		this.sun.material.opacity = 0
+		this.sunlight.intensity = 0
+
+		this.sun.material.transparent = true
+
+		gsap.to(this.sun.material, {
+			opacity: 1,
+			duration: 2,
+		})
+
+		const originalIntensity = 1
+		gsap.to(this.sunlight, {
+			intensity: originalIntensity,
+			duration: 2,
+		})
 	}
 
 	addSunMesh() {
