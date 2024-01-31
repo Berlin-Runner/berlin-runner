@@ -29,7 +29,7 @@ class World_ {
 		this.isSunny = true
 		if (this.isSunny) {
 			this.sun.showSun()
-			this.sun.animateSun()
+			this.sun.sunRiseAnimation()
 		} else this.sun.hideSun()
 
 		this.rain = new Rain(this)

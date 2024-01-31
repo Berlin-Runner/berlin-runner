@@ -54,12 +54,12 @@ class Sun {
 		this.world.scene.add(this.sunlight)
 	}
 
-	animateSun() {
+	sunRiseAnimation() {
 		// 60sec * [n]Minutes
 		let morningToMiddayDuration = 60 * 0.5
 
 		const startPos = { x: 0, y: -2, z: -100 }
-		const endPos = { x: 0, y: 20, z: -15 }
+		const endPos = { x: 0, y: 40, z: -25 }
 
 		// Starting and ending colors
 		const startColor = new THREE.Color(0xff2200) // Reddish color for morning
@@ -76,6 +76,9 @@ class Sun {
 				this.sun.position.set(startPos.x, startPos.y, startPos.z)
 				this.sunlight.position.set(startPos.x, startPos.y, startPos.z)
 			},
+			onComplete: () => {
+				this.sunSetAnimation()
+			},
 		})
 
 		// GSAP animation for color
@@ -84,6 +87,56 @@ class Sun {
 			r: endColor.r,
 			g: endColor.g,
 			b: endColor.b,
+			onUpdate: () => {
+				// Interpolate the color
+				const currentColor = new THREE.Color(
+					startColor.r,
+					startColor.g,
+					startColor.b
+				)
+				this.sun.material.color = currentColor
+				this.sun.material.emissive = currentColor
+				this.sunlight.color = currentColor
+			},
+		})
+	}
+
+	sunSetAnimation() {
+		// Duration of the sunset animation in seconds
+		let middayToEveningDuration = 60 * 2
+
+		// Define the starting and ending positions
+		const startPos = { x: 0, y: 40, z: -25 } // Midday position
+		const endPos = { x: 0, y: -2, z: -100 } // Evening position
+
+		// Starting and ending colors
+		const startColor = new THREE.Color(0xffffff) // White color for midday
+		const endColor = new THREE.Color(0xff2200) // Reddish color for evening
+
+		// GSAP animation for position
+		gsap.to(startPos, {
+			duration: middayToEveningDuration,
+			x: endPos.x,
+			y: endPos.y,
+			z: endPos.z,
+			ease: "easeInOut",
+			onUpdate: () => {
+				// Update the position of the sun and the light
+				this.sun.position.set(startPos.x, startPos.y, startPos.z)
+				this.sunlight.position.set(startPos.x, startPos.y, startPos.z)
+			},
+			onComplete: () => {
+				this.sunRiseAnimation()
+			},
+		})
+
+		// GSAP animation for color
+		gsap.to(startColor, {
+			duration: middayToEveningDuration,
+			r: endColor.r,
+			g: endColor.g,
+			b: endColor.b,
+			ease: "easeInOut",
 			onUpdate: () => {
 				// Interpolate the color
 				const currentColor = new THREE.Color(
