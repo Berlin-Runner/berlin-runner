@@ -30,7 +30,6 @@ class World_ {
 
 		this.sun = new Sun(this)
 		this.rain = new Rain(this)
-		this.snow = new Snow()
 
 		this.weatherStates = ["sunny", "raining", "snowing"]
 		this.currentWeather = this.getRandomWeatherState()
