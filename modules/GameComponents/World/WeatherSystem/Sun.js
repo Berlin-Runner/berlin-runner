@@ -28,6 +28,24 @@ class Sun {
 		})
 	}
 
+	dimSun() {
+		gsap.to(this.sun.material, {
+			opacity: 0.5,
+			duration: 2,
+			onComplete: () => {
+				//this.sun.visible = false
+			},
+		})
+
+		gsap.to(this.sunlight, {
+			intensity: 0.5,
+			duration: 2,
+			onComplete: () => {
+				//this.sunlight.visible = false
+			},
+		})
+	}
+
 	showSun() {
 		this.sun.visible = true
 		this.sunlight.visible = true

@@ -72,12 +72,12 @@ class World_ {
 			case "raining":
 				this.isRaining = true
 				this.rain.showRain()
-				this.sun.hideSun()
+				this.sun.dimSun()
 				this.isSnowing = false
 				this.hideSnow()
 				break
 			case "snowing":
-				this.sun.hideSun()
+				this.sun.dimSun()
 				this.rain.hideRain()
 				this.isSnowing = true
 				this.showSnow()
