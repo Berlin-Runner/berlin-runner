@@ -75,7 +75,7 @@ export default class Coffee extends Reward {
 			this.context.playerBB &&
 			this.context.playerBB.intersectsBox(this.coffeeCupBB)
 		) {
-			this.context.scoreEventBus.publish("add-score", 1)
+			this.context.scoreEventBus.publish("add-progress", 1)
 			gsap.to(this.coffeeCup.scale, {
 				x: 0.1,
 				y: 0.1,

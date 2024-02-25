@@ -95,6 +95,23 @@ canvas {
 	border-radius: 4px;
 }
 
+.progress {
+	width: fit-content;
+	position: fixed;
+	top: 5%;
+	right: 0;
+	font-size: 60px;
+	z-index: 100;
+	font-weight: 900;
+	padding: 10px;
+	/* border: 5px solid red; */
+	font-family: "VT323", monospace;
+	color: aliceblue;
+	text-shadow: -5px 5px black;
+	border-radius: 4px;
+	display: flex;
+}
+
 #pause-button-holder {
 	position: fixed;
 	top: 0;
@@ -330,20 +347,20 @@ canvas {
 }
 
 .arrow::before {
-  content: '\2192';
-  /* little make up */
-  font-size: 2em;
-  /* whatever needed*/
-  padding: 0 0.1em;
-  /* whatever needed*/
-  vertical-align: -0.1em;
-  /* whatever needed*/
+	content: "\2192";
+	/* little make up */
+	font-size: 2em;
+	/* whatever needed*/
+	padding: 0 0.1em;
+	/* whatever needed*/
+	vertical-align: -0.1em;
+	/* whatever needed*/
 }
 
 a {
-  text-decoration: none;
-  float:left;
-  clear:both
+	text-decoration: none;
+	float: left;
+	clear: both;
 }
 
 .level-title,

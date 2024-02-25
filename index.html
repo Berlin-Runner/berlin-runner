@@ -55,7 +55,7 @@
 					<div class="loading-text">
 						<div id="loading-text">LOADING BERLIN RUNNER</div>
 						<div style="">
-							<span style="display:none;" class="percentage"></span>
+							<span style="display: none" class="percentage"></span>
 						</div>
 					</div>
 
@@ -76,16 +76,25 @@
 
 				<p>YOU ARE NOT IN BERLIN TO RELAX. YOU'RE TIRED AND YOU NEED COFFEE.</p>
 
-				<p>DASH THROUGH THE STREETS, DODGE BUSES, JUMP, SLIDE, and COLLECT COFFEES FOR A REWARD!
+				<p>
+					DASH THROUGH THE STREETS, DODGE BUSES, JUMP, SLIDE, and COLLECT
+					COFFEES FOR A REWARD!
 				</p>
 			</div>
 			<div id="" style="color: white; font-size: 18px">
 				<div style="text-align: center; padding: 20px">
-					TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE : M
+					TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE :
+					M
 				</div>
 			</div>
 			<div id="start-game-button">ENTER CITY</div>
-			<a id="title-feedback-link" class="arrow" target="_blank" href="https://forms.gle/ph34k8H6v2LjpDAz8">FEEDBACK FORM</a>
+			<a
+				id="title-feedback-link"
+				class="arrow"
+				target="_blank"
+				href="https://forms.gle/ph34k8H6v2LjpDAz8"
+				>FEEDBACK FORM</a
+			>
 			<div style="display: flex; flex-direction: row">
 				<span
 					style="
@@ -275,7 +284,8 @@
 				</button>
 				<div id="instructions">
 					<div id="instruction-text" style="text-align: center; padding: 20px">
-						TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE : M
+						TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE
+						: M
 					</div>
 				</div>
 				<button class="start-game-button-final" id="start-game-button-final">
@@ -292,7 +302,11 @@
 			</div>
 
 			<div class="score" id="score-holder">
-				COFFEE: &nbsp;&nbsp;<span id="score_text" style="display: flex">0</span>
+				SCORE: &nbsp;&nbsp;<span id="score_text" style="display: flex">0</span>
+			</div>
+
+			<div class="progress" id="progress-holder">
+				PROGRESS: &nbsp; <span id="progress_text" style="display: flex">0</span>
 			</div>
 			<div class="health" style="display: none">
 				HEALTH: <span id="health-value">=)</span> %
@@ -423,16 +437,24 @@
 		<div id="game-over-screen" class="full-screen">
 			<div class="container">
 				<div id="feedback-form">
-					<p>THX FOR PLAYING! COULD YOU DO US A FAVOR?
+					<p>THX FOR PLAYING! COULD YOU DO US A FAVOR?</p>
+
+					<p>
+						We need your help to finish Berlin Runner! Please support the demo
+						by leaving feedback here:
 					</p>
 
-					<p>We need your help to finish Berlin Runner! Please support the demo by leaving feedback here:</p>
-
-					<a id="title-feedback-link" class="arrow" target="_blank" href="https://forms.gle/ph34k8H6v2LjpDAz8">FEEDBACK FORM</a>
-
+					<a
+						id="title-feedback-link"
+						class="arrow"
+						target="_blank"
+						href="https://forms.gle/ph34k8H6v2LjpDAz8"
+						>FEEDBACK FORM</a
+					>
 				</div>
 				<div id="game-over-message" style="display: none">
-					Almost! By the way, if you get a score of 10 coffees or more in the game, you win a surprise, so try again!
+					Almost! By the way, if you get a score of 10 coffees or more in the
+					game, you win a surprise, so try again!
 				</div>
 
 				<div id="reward-claim-message" style="display: none">
@@ -453,7 +475,9 @@
 					</div>
 				</div>
 				<div style="display: flex" id="final-score-holder">
-					SCORE:<span id="game-over-final-score"></span>
+					SCORE:<span id="game-over-final-score"></span> PROGRESS:<span
+						id="game-over-final-progress"
+					></span>
 				</div>
 
 				<div id="restart-level-button">RESTART</div>
