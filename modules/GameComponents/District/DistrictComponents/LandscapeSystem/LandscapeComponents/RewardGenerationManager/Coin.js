@@ -1,100 +1,128 @@
-import { UTIL } from "../../../../../../Util/UTIL.js";
+import { UTIL } from "../../../../../../Util/UTIL.js"
 
 class Coin {
 	constructor(context, spawnPosition) {
-		this.context = context;
-		this.spawnPosition = spawnPosition;
+		this.context = context
+		this.spawnPosition = spawnPosition
 
-		this.scene = this.context.gameWorld.scene;
-		this.scoreBus = this.context.scoreEventBus;
+		this.scene = this.context.gameWorld.scene
+		this.scoreBus = this.context.scoreEventBus
 
 		this.settings = {
 			coinColliderMass: 0.0,
-		};
+		}
 
-		this.init();
+		this.init()
 
-		this.addClassSettings();
+		this.addClassSettings()
 	}
 
 	init() {
-		this.modelLength = this.context.G.TILE_LENGTH;
+		this.modelLength = this.context.G.TILE_LENGTH
 
-		this.delta = new THREE.Clock();
+		this.delta = new THREE.Clock()
 
-		this.addCoin();
+		this.addCoin()
 
-		this.update();
+		this.update()
+
+		this.testForCollision()
+	}
+
+	createCoinMesh(positionZ) {
+		let coinGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16)
+		let coinMaterial = new THREE.MeshStandardMaterial({
+			color: new THREE.Color("yellow"),
+			metalness: 0.5,
+			roughness: 0.25,
+		})
+
+		let coinMesh = new THREE.Mesh(coinGeo, coinMaterial)
+		coinMesh.castShadow = true
+		coinMesh.rotation.x = Math.PI / 2 // Simplified conversion to radians
+		coinMesh.position.set(0, 0, positionZ)
+
+		return coinMesh
 	}
 
 	addCoin() {
-		let coinGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16);
-		let coinMaterial = new THREE.MeshStandardMaterial({
-			color: new THREE.Color("gold"),
-			metalness: 0.5,
-			roughness: 0.25,
-		});
+		this.coinsHolder = new THREE.Group()
 
-		// this.coinMesh.position.copy(this.spawnPosition);
-		this.coinMesh = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh.rotation.x = 90 * (Math.PI / 180);
-		this.coinMesh.position.set(0, 0, 1);
+		// Specify how many coins you want to add
+		const numberOfCoins = 5
+		const startPositionZ = 1 // Starting position for the first coin
 
-		this.coinMesh2 = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh2.rotation.x = 90 * (Math.PI / 180);
-		this.coinMesh2.position.set(0, 0, 2);
+		for (let i = 0; i < numberOfCoins; i++) {
+			let coinMesh = this.createCoinMesh(startPositionZ + i)
+			this.coinsHolder.add(coinMesh)
+		}
 
-		this.coinMesh3 = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh3.rotation.x = 90 * (Math.PI / 180);
-		this.coinMesh3.position.set(0, 0, 3);
+		this.initCoinAABB() // Initialize coin AABB if needed
 
-		this.coinMesh4 = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh4.rotation.x = 90 * (Math.PI / 180);
-		this.coinMesh4.position.set(0, 0, 4);
+		this.scene.add(this.coinsHolder)
+	}
 
-		this.coinMesh5 = new THREE.Mesh(coinGeo, coinMaterial);
-		this.coinMesh5.rotation.x = 90 * (Math.PI / 180);
-		this.coinMesh5.position.set(0, 0, 5);
-
-		this.coinsHolder = new THREE.Group();
-		this.coinsHolder.add(
-			this.coinMesh,
-			this.coinMesh2,
-			this.coinMesh3,
-			this.coinMesh4,
-			this.coinMesh5
-		);
-
-		// this.coinsHolder.traverse((child) => {
-		// 	child.position.z -= 1.5;
-		// });
-
-		this.scene.add(this.coinsHolder);
+	initCoinAABB() {
+		this.coinAABB = new THREE.Box3().setFromObject(this.coinsHolder.children[2])
+		const box = new THREE.Box3Helper(this.coinAABB, 0xff0000)
+		// this.context.gameWorld.scene.add(box)
 	}
 
 	getCoin() {
-		return this.coinsHolder;
+		return this.coinsHolder
 	}
 
 	updatePosition(placementPostion) {
-		this.coinsHolder.position.x = placementPostion.x;
-		this.coinsHolder.position.y = placementPostion.y;
-		this.coinsHolder.position.z = placementPostion.z;
+		this.coinsHolder.position.x = placementPostion.x
+		this.coinsHolder.position.y = placementPostion.y
+		this.coinsHolder.position.z = placementPostion.z
+	}
+
+	updateCoinRotations() {
+		// Define the initial rotation increment for the first coin
+		let initialRotationIncrement = 0.05
+		// Define the decrement amount for each subsequent coin's rotation increment
+		const decrementPerCoin = 0.005
+
+		this.coinsHolder.children.forEach((coin, index) => {
+			// Calculate the rotation increment for the current coin
+			let rotationIncrement =
+				initialRotationIncrement - decrementPerCoin * index
+			// Apply the rotation increment to the current coin
+			coin.rotation.z += rotationIncrement
+		})
 	}
 
 	update() {
-		requestAnimationFrame(this.update.bind(this));
+		requestAnimationFrame(this.update.bind(this))
 
-		this.coinMesh.rotation.z += 0.05;
-		this.coinMesh2.rotation.z += 0.045;
-		this.coinMesh3.rotation.z += 0.04;
-		this.coinMesh4.rotation.z += 0.035;
-		this.coinMesh5.rotation.z += 0.03;
+		this.updateCoinRotations()
 
 		this.coinsHolder.position.z +=
 			this.modelLength *
 			this.context.G.UPDATE_SPEED_FACTOR *
-			this.delta.getDelta();
+			this.delta.getDelta()
+
+		if (this.coinAABB && this.context.playerBB) {
+			this.coinAABB
+				.copy(this.coinsHolder.children[2].geometry.boundingBox)
+				.applyMatrix4(this.coinsHolder.children[2].matrixWorld)
+		}
+	}
+
+	testForCollision() {
+		if (!this.context.gameStateManager.currentState === "in_play") return
+
+		if (
+			this.coinAABB &&
+			this.context.playerBB &&
+			this.context.playerBB.intersectsBox(this.coinAABB)
+		) {
+			console.log("intersection")
+			this.context.scoreEventBus.publish("add-score", 1)
+		}
+
+		requestAnimationFrame(this.testForCollision.bind(this))
 	}
 
 	addClassSettings() {
@@ -107,8 +135,8 @@ class Coin {
 	}
 
 	clone() {
-		return new Coin(this.context, this.spawnPosition);
+		return new Coin(this.context, this.spawnPosition)
 	}
 }
 
-export { Coin };
+export { Coin }
