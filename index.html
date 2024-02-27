@@ -302,11 +302,19 @@
 			</div>
 
 			<div class="score" id="score-holder">
-				SCORE: &nbsp;&nbsp;<span id="score_text" style="display: flex">0</span>
+				<!-- <div> -->
+				<span>SCORE:</span>
+
+				<span id="score_text" style="display: flex">0</span>
 			</div>
+			<!-- </div> -->
 
 			<div class="progress" id="progress-holder">
-				PROGRESS: &nbsp; <span id="progress_text" style="display: flex">0</span>
+				PROGRESS
+				<span id="progress_text" style="display: none">0</span>
+				<div class="progress-bar" id="progress-bar">
+					<div class="progress-fill" id="progressBar"></div>
+				</div>
 			</div>
 			<div class="health" style="display: none">
 				HEALTH: <span id="health-value">=)</span> %
@@ -474,10 +482,13 @@
 						/>
 					</div>
 				</div>
-				<div style="display: flex" id="final-score-holder">
-					SCORE:<span id="game-over-final-score"></span> PROGRESS:<span
-						id="game-over-final-progress"
-					></span>
+				<div
+					style="display: flex; flex-direction: column"
+					id="final-score-holder"
+				>
+					<span> SCORE:<span id="game-over-final-score"> </span> </span>
+
+					<span> PROGRESS:<span id="game-over-final-progress"></span> </span>
 				</div>
 
 				<div id="restart-level-button">RESTART</div>
