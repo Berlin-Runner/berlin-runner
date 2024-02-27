@@ -1,4 +1,5 @@
 import { BaseUIComponent } from "../BaseUIComponent.js"
+import { ExplosiveElement } from "../ExplosiveButton.js"
 
 class GamePlayComponent extends BaseUIComponent {
 	constructor(id, context) {
@@ -7,11 +8,20 @@ class GamePlayComponent extends BaseUIComponent {
 		this.pauseButton = new BaseUIComponent("pause-button", this.context)
 		this.scoreHolder = document.getElementById("score_text")
 		this.progressHolder = document.getElementById("progress_text")
+		this.progressBar = document.getElementById("progressBar")
+		this.incrementValue(0)
+		this.explosiveProgressBar = new ExplosiveElement("progress-holder")
 
 		this.healthValueHolder = document.getElementById("health-value")
 
 		this.setUpComponentEventListners()
 		this.setupEventBusSubscriptions()
+	}
+
+	incrementValue(value) {
+		if (value < 10) {
+			progressBar.style.width = `${value * 10}%` // Update width based on value
+		}
 	}
 
 	setUpComponentEventListners() {
@@ -27,6 +37,15 @@ class GamePlayComponent extends BaseUIComponent {
 
 		this.scoreBus.subscribe("update_progress", (value) => {
 			this.upadteProgress(value)
+			this.incrementValue(value)
+		})
+
+		this.context.scoreEventBus.subscribe("level-one", () => {
+			this.explosiveProgressBar.runExplosion()
+		})
+
+		this.context.scoreEventBus.subscribe("level-two", () => {
+			this.explosiveProgressBar.runExplosion()
 		})
 
 		this.healthBus.subscribe("update_health", (health) => {
@@ -43,7 +62,9 @@ class GamePlayComponent extends BaseUIComponent {
 
 		this.stateBus.subscribe("restart_game", () => {
 			this.pauseButton.showComponent()
-			this.scoreHolder.innerText = "=("
+			this.scoreHolder.innerText = "0"
+			this.progressHolder.innerText = "0"
+			this.incrementValue(0)
 			this.healthValueHolder.innerText = "=)"
 		})
 	}

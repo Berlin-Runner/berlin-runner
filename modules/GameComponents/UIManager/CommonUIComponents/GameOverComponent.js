@@ -1,94 +1,99 @@
-import { BaseUIComponent } from "../BaseUIComponent.js";
+import { BaseUIComponent } from "../BaseUIComponent.js"
 class GameOverComponent extends BaseUIComponent {
 	constructor(id, context) {
-		super(id, context);
-		this.camera = this.context.gameWorld.camera;
+		super(id, context)
+		this.camera = this.context.gameWorld.camera
 
-		this.restartLevelButton = document.getElementById("restart-level-button");
-		this.backToHomeButton = document.getElementById("back-to-home-button");
+		this.restartLevelButton = document.getElementById("restart-level-button")
+		this.backToHomeButton = document.getElementById("back-to-home-button")
 		this.selectCharacterButton = document.querySelector(
 			"#select-character-button"
-		);
+		)
 
-		this.gameOverMessage = document.querySelector("#game-over-message");
-		this.gameOverMessage.style.display = "none";
-		this.rewardMessage = document.querySelector("#reward-claim-message");
-		this.rewardMessage.style.display = "none";
+		this.gameOverMessage = document.querySelector("#game-over-message")
+		this.gameOverMessage.style.display = "none"
+		this.rewardMessage = document.querySelector("#reward-claim-message")
+		this.rewardMessage.style.display = "none"
 
-		this.finalScoreHolder = document.getElementById("game-over-final-score");
+		this.finalScoreHolder = document.getElementById("game-over-final-score")
+		this.finalProgressHolder = document.getElementById(
+			"game-over-final-progress"
+		)
 
-		this.setUpComponentEventListners();
-		this.setupEventBusSubscriptions();
+		this.setUpComponentEventListners()
+		this.setupEventBusSubscriptions()
 	}
 
 	setUpComponentEventListners() {
 		this.restartLevelButton.addEventListener("click", () => {
-			this.restart();
-		});
+			this.restart()
+		})
 
 		this.backToHomeButton.addEventListener("click", () => {
 			// this.backToHome();
-		});
+		})
 
 		this.selectCharacterButton.addEventListener("click", () => {
-			this.selectCharacter();
-		});
+			this.selectCharacter()
+		})
 	}
 
 	setupEventBusSubscriptions() {
 		this.stateBus.subscribe("player-crashed", () => {
-			this.finalScoreHolder.innerHTML = this.scoreManager.getScore();
-			this.stateBus.publish("game-over");
-			this.showComponent();
-			this.showStatic();
-		});
+			this.finalScoreHolder.innerHTML = this.scoreManager.getScore()
+			this.finalProgressHolder.innerHTML = this.scoreManager.getProgress()
+			this.stateBus.publish("game-over")
+			this.showComponent()
+			this.showStatic()
+		})
 
 		this.stateBus.subscribe("game_over", () => {
-			this.finalScoreHolder.innerHTML = this.scoreManager.getScore();
-			document.getElementById("in-play-screen").style.display = " none";
+			this.finalScoreHolder.innerHTML = this.scoreManager.getScore()
+			this.finalProgressHolder.innerHTML = this.scoreManager.getProgress()
+			document.getElementById("in-play-screen").style.display = " none"
 			if (this.scoreManager.getScore() < 10) {
-				this.gameOverMessage.style.display = "flex";
+				this.gameOverMessage.style.display = "flex"
 			} else {
-				this.rewardMessage.style.display = "flex";
+				this.rewardMessage.style.display = "flex"
 			}
-			this.showComponent();
-			this.showStatic();
-		});
+			this.showComponent()
+			this.showStatic()
+		})
 
 		this.stateBus.subscribe("restart_game", () => {
-			this.hideComponent();
-			document.getElementById("in-play-screen").style.display = " flex";
+			this.hideComponent()
+			document.getElementById("in-play-screen").style.display = " flex"
 
-			this.gameOverMessage.style.display = "none";
-			this.rewardMessage.style.display = "none";
+			this.gameOverMessage.style.display = "none"
+			this.rewardMessage.style.display = "none"
 			// this.hideStatic();
-		});
+		})
 
 		this.stateBus.subscribe("back_to_home", () => {
-			this.hideComponent();
-		});
+			this.hideComponent()
+		})
 	}
 
 	restart() {
-		this.stateManager.restartGame();
+		this.stateManager.restartGame()
 	}
 
 	backToHome() {
-		this.stateManager.resetState();
+		this.stateManager.resetState()
 	}
 
 	selectCharacter() {
-		this.hideComponent();
+		this.hideComponent()
 		gsap.to(this.camera.position, {
 			x: 0,
 			y: 50,
 			z: -110,
 			duration: 0,
-		});
-		gsap.to(this.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.75 });
-		this.stateBus.publish("display-chracter-selector");
-		this.context.gameStateManager.showCharacterPicker();
+		})
+		gsap.to(this.camera.rotation, { x: 0, y: 0, z: 0, duration: 0.75 })
+		this.stateBus.publish("display-chracter-selector")
+		this.context.gameStateManager.showCharacterPicker()
 	}
 }
 
-export { GameOverComponent };
+export { GameOverComponent }
