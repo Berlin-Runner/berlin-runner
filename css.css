@@ -79,37 +79,43 @@ canvas {
 	text-shadow: -4px 4px black;
 }
 
-.score,
-#score_text {
+.score {
+	width: 300px;
 	position: fixed;
 	top: 0;
 	right: 0;
 	font-size: 60px;
 	z-index: 100;
 	font-weight: 900;
-	padding: 10px;
-	/* border: 5px solid red; */
-	font-family: "VT323", monospace;
-	color: aliceblue;
-	text-shadow: -5px 5px black;
-	border-radius: 4px;
-}
-
-.progress {
-	width: fit-content;
-	position: fixed;
-	top: 5%;
-	right: 0;
-	font-size: 60px;
-	z-index: 100;
-	font-weight: 900;
-	padding: 10px;
+	padding: 1rem;
+	margin: 1rem;
 	/* border: 5px solid red; */
 	font-family: "VT323", monospace;
 	color: aliceblue;
 	text-shadow: -5px 5px black;
 	border-radius: 4px;
 	display: flex;
+	justify-content: start;
+	/* flex-direction: column; */
+}
+
+.progress {
+	width: 300px;
+	position: fixed;
+	top: 6%;
+	right: 0%;
+	font-size: 40px;
+	z-index: 100;
+	font-weight: 900;
+	padding: 1rem;
+	margin: 1rem;
+	/* border: 5px solid red; */
+	font-family: "VT323", monospace;
+	color: aliceblue;
+	text-shadow: -5px 5px black;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
 }
 
 #pause-button-holder {
@@ -883,4 +889,45 @@ a {
 	color: aliceblue;
 
 	font-size: 28px;
+}
+
+.progress-bar {
+	width: 300px; /* Adjust width as needed */
+	height: 20px;
+	background-color: rgba(255, 166, 0, 0.398);
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.progress-fill {
+	height: 100%;
+	background-color: orange; /* Adjust fill color as needed */
+	transition: width 0.5s ease-in-out; /* Adjust animation duration and curve */
+}
+
+.exploding,
+.exploding:focus,
+.exploding:hover {
+	background: transparent;
+	color: transparent;
+}
+.exploding {
+	pointer-events: none;
+	/* position: relative; */
+	will-change: transform;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.particle {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.particle--debris {
+	background: #255ff4;
+}
+.particle--fire {
+	border-radius: 50%;
 }
