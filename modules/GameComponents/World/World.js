@@ -22,6 +22,8 @@ class World_ {
 		this.initLights()
 
 		this.initWeatherSystem()
+
+		this.setupEventSubscriptions()
 	}
 
 	initWeatherSystem() {
@@ -31,22 +33,26 @@ class World_ {
 		this.sun = new Sun(this)
 		this.rain = new Rain(this)
 
-		this.weatherStates = ["sunny", "raining", "snowing"]
-		this.currentWeather = this.getRandomWeatherState()
+		this.weatherStates = ["snowing", "sunny", "raining"]
+		this.currentWeather = this.weatherStates[0]
 
 		this.applyWeatherState(this.currentWeather)
+	}
 
-		gsap.to(
-			{},
-			{
-				duration: 15,
-				repeat: -1, // Infinite loop
-				onRepeat: () => {
-					this.currentWeather = this.getRandomWeatherState()
-					this.applyWeatherState(this.currentWeather)
-				},
-			}
-		)
+	setupEventSubscriptions() {
+		// console.log(this.context)
+
+		this.context.scoreEventBus.subscribe("level-zero", () => {
+			this.applyWeatherState("snowing")
+		})
+
+		this.context.scoreEventBus.subscribe("level-one", () => {
+			this.applyWeatherState("raining")
+		})
+
+		this.context.scoreEventBus.subscribe("level-two", () => {
+			this.applyWeatherState("sunny")
+		})
 	}
 
 	getRandomWeatherState() {

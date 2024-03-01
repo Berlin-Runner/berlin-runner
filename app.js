@@ -57,6 +57,8 @@ class Game {
 		this.renderGraphics = true
 
 		this.settingEventBus = new EventBus()
+		this.scoreEventBus = new EventBus()
+
 		this.gui = new dat.GUI()
 		this.gui.close()
 		this.gui.hide()
@@ -107,7 +109,6 @@ class Game {
 	}
 
 	initScoreSystem() {
-		this.scoreEventBus = new EventBus()
 		this.gameScoreManager = new ScoreManager(this)
 	}
 
