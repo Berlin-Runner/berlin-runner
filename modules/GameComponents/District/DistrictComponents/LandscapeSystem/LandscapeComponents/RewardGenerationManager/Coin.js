@@ -1,35 +1,20 @@
-import { UTIL } from "../../../../../../Util/UTIL.js"
-
 class Coin {
-	constructor(context, spawnPosition) {
+	constructor(context, coinPos) {
 		this.context = context
-		this.spawnPosition = spawnPosition
-
-		this.scene = this.context.gameWorld.scene
-		this.scoreBus = this.context.scoreEventBus
-
-		this.settings = {
-			coinColliderMass: 0.0,
-		}
+		this.coinPos = coinPos
 
 		this.init()
-
-		this.addClassSettings()
+		this.update()
+		return this.coinMesh
 	}
 
 	init() {
-		this.modelLength = this.context.G.TILE_LENGTH
-
-		this.delta = new THREE.Clock()
-
-		this.addCoin()
-
-		this.update()
-
+		this.createCoinMesh()
+		this.initCoinAABB()
 		this.testForCollision()
 	}
 
-	createCoinMesh(positionZ) {
+	createCoinMesh() {
 		let coinGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16)
 		let coinMaterial = new THREE.MeshStandardMaterial({
 			color: new THREE.Color("yellow"),
@@ -37,76 +22,38 @@ class Coin {
 			roughness: 0.25,
 		})
 
-		let coinMesh = new THREE.Mesh(coinGeo, coinMaterial)
-		coinMesh.castShadow = true
-		coinMesh.rotation.x = Math.PI / 2 // Simplified conversion to radians
-		coinMesh.position.set(0, 0, positionZ)
+		this.coinMesh = new THREE.Mesh(coinGeo, coinMaterial)
+		this.coinMesh.castShadow = true
+		this.coinMesh.rotation.x = Math.PI / 2 // Simplified conversion to radians
+		this.coinMesh.position.set(0, 0, this.coinPos)
 
-		return coinMesh
-	}
-
-	addCoin() {
-		this.coinsHolder = new THREE.Group()
-
-		// Specify how many coins you want to add
-		const numberOfCoins = 5
-		const startPositionZ = 1 // Starting position for the first coin
-
-		for (let i = 0; i < numberOfCoins; i++) {
-			let coinMesh = this.createCoinMesh(startPositionZ + i)
-			this.coinsHolder.add(coinMesh)
-		}
-
-		this.initCoinAABB() // Initialize coin AABB if needed
-
-		this.scene.add(this.coinsHolder)
+		return this.coinMesh
 	}
 
 	initCoinAABB() {
-		this.coinAABB = new THREE.Box3().setFromObject(this.coinsHolder.children[2])
+		this.coinAABB = new THREE.Box3().setFromObject(this.coinMesh)
 		const box = new THREE.Box3Helper(this.coinAABB, 0xff0000)
-		// this.context.gameWorld.scene.add(box)
+		this.context.gameWorld.scene.add(box)
 	}
 
-	getCoin() {
-		return this.coinsHolder
-	}
-
-	updatePosition(placementPostion) {
-		this.coinsHolder.position.x = placementPostion.x
-		this.coinsHolder.position.y = placementPostion.y
-		this.coinsHolder.position.z = placementPostion.z
-	}
-
-	updateCoinRotations() {
+	updateCoinRotation() {
 		// Define the initial rotation increment for the first coin
 		let initialRotationIncrement = 0.05
 		// Define the decrement amount for each subsequent coin's rotation increment
-		const decrementPerCoin = 0.005
 
-		this.coinsHolder.children.forEach((coin, index) => {
-			// Calculate the rotation increment for the current coin
-			let rotationIncrement =
-				initialRotationIncrement - decrementPerCoin * index
-			// Apply the rotation increment to the current coin
-			coin.rotation.z += rotationIncrement
-		})
+		// Apply the rotation increment to the current coin
+		this.coinMesh.rotation.z += initialRotationIncrement
 	}
 
 	update() {
 		requestAnimationFrame(this.update.bind(this))
 
-		this.updateCoinRotations()
-
-		this.coinsHolder.position.z +=
-			this.modelLength *
-			this.context.G.UPDATE_SPEED_FACTOR *
-			this.delta.getDelta()
+		this.updateCoinRotation()
 
 		if (this.coinAABB && this.context.playerBB) {
 			this.coinAABB
-				.copy(this.coinsHolder.children[2].geometry.boundingBox)
-				.applyMatrix4(this.coinsHolder.children[2].matrixWorld)
+				.copy(this.coinMesh.geometry.boundingBox)
+				.applyMatrix4(this.coinMesh.matrixWorld)
 		}
 	}
 
@@ -120,22 +67,23 @@ class Coin {
 		) {
 			console.log("intersection")
 			this.context.scoreEventBus.publish("add-score", 1)
+			gsap.to(this.coinMesh.position, {
+				x: 15,
+				y: 15,
+				z: -30,
+				duration: 2,
+				onComplete: () => {
+					gsap.to(this.coinMesh.position, {
+						x: this.coinPos.x,
+						y: this.coinPos.y,
+						z: this.coinPos.z,
+						duration: 0.4,
+					})
+				},
+			})
 		}
 
 		requestAnimationFrame(this.testForCollision.bind(this))
-	}
-
-	addClassSettings() {
-		/* this.localSettings = this.context.gui.addFolder("COIN SETTINGS");
-		this.localSettings
-			.add(this.audioComponent, "volume", 0, 1, 0.0124)
-			.onChange((value) => {
-				this.audioComponent.volume = value;
-			}); */
-	}
-
-	clone() {
-		return new Coin(this.context, this.spawnPosition)
 	}
 }
 

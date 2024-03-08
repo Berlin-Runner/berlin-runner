@@ -1,4 +1,4 @@
-import { Coin } from "./Coin.js"
+import { CoinGroup } from "./CoinGroup.js"
 import { UTIL } from "../../../../../../Util/UTIL.js"
 import { Vec3 } from "../../../../../../../libs/cannon-es.js"
 import Donut from "./donut/donut.js"
@@ -13,7 +13,7 @@ class RewardGenerationManagement {
 		this.coinPositionsX = [-2.5, 0, 2.5]
 		this.coinPositionsY = [1, 1]
 
-		this.spawnPosition = new THREE.Vector3(0, -10000, 1000)
+		this.spawnPosition = new THREE.Vector3(0, 10000, 1000)
 		this.coffeePlacementPostion = new THREE.Vector3(-2.5, 0, 0)
 		this.coinPlacementPostion = new THREE.Vector3(-2.5, 0, 0)
 
@@ -30,12 +30,12 @@ class RewardGenerationManagement {
 		this.coffees = []
 
 		this.coinIndex = 0
-		this.totalCoins = 10
+		this.totalCoins = 15
 		this.coins = []
 
 		// let donut = new Donut(this.context, this.spawnPosition);
 
-		let coin = new Coin(this.context, this.spawnPosition)
+		let coin = new CoinGroup(this.context, this.spawnPosition)
 		let coffee = new Coffee(this.context, this.spawnPosition)
 
 		for (let index = 0; index < this.totalCoins; index++) {
