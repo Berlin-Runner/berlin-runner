@@ -9,6 +9,7 @@ class Coin {
 	}
 
 	init() {
+		this.debugAABB = false
 		this.createCoinMesh()
 		this.initCoinAABB()
 		this.testForCollision()
@@ -33,7 +34,7 @@ class Coin {
 	initCoinAABB() {
 		this.coinAABB = new THREE.Box3().setFromObject(this.coinMesh)
 		const box = new THREE.Box3Helper(this.coinAABB, 0xff0000)
-		this.context.gameWorld.scene.add(box)
+		if (this.debugAABB) this.context.gameWorld.scene.add(box)
 	}
 
 	updateCoinRotation() {
