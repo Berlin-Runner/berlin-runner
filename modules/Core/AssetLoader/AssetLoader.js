@@ -3,15 +3,15 @@ import { UTIL } from "../../Util/UTIL.js"
 
 const assetConfig = {
 	landscapeTiles: {
-		tileOne: "assets/models/tiles/tiles.1.2.glb",
-		tileTwo: "assets/models/tiles/tiles.2.3.glb",
-		tileThree: "assets/models/tiles/tiles.3.2.glb",
-		tileFour: "assets/models/tiles/tiles.4.glb",
-		tileFive: "assets/models/tiles/tiles.5.glb",
-		tileSix: "assets/models/tiles/tiles.6.3.glb",
-		tileSeven: "assets/models/tiles/tiles.7.glb",
-		tileEight: "assets/models/tiles/tiles.8.glb",
-		tileNine: "assets/models/tiles/tiles.9.glb",
+		tileOne: "assets/models/tiles/alexanderplatz.glb",
+		tileTwo: "assets/models/tiles/u1.glb",
+		tileThree: "assets/models/tiles/braves.glb",
+		tileFour: "assets/models/tiles/sportsbase.glb",
+		tileFive: "assets/models/tiles/oberbaum.glb",
+		tileSix: "assets/models/tiles/kotti.glb",
+		tileSeven: "assets/models/tiles/trees.glb",
+		tileEight: "assets/models/tiles/house.glb",
+		tileNine: "assets/models/tiles/brandenburger.glb",
 	},
 
 	characterModels: {
