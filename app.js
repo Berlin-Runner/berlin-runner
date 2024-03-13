@@ -13,7 +13,7 @@ import { UIManager } from './modules/GameComponents/UIManager/UIManager.js';
 
 import * as dat from '/libs/dat.gui.module.js';
 import AssetLoader from './modules/Core/AssetLoader/AssetLoader.js';
-import TutorialManager from './modules/GameComponents/Tutorial /TutorialManager.js';
+import TutorialManager from './modules/GameComponents/Tutorial/TutorialManager.js';
 import CharacterPicker from './modules/GameComponents/Pickers/CharacterPicker.js';
 
 class Game {
