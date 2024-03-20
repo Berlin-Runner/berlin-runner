@@ -45,8 +45,9 @@ class Game {
 
     this.started = false;
     this.assetLoader = new AssetLoader(this);
-
-    this.init();
+    this.audioManager = AudioManager.getInstance();
+    this.attachUserInteractionListener();
+    this.init(); // Set up the game, assuming no immediate need for AudioContext
   }
 
   async init() {
@@ -103,6 +104,28 @@ class Game {
       });
   }
 
+  attachUserInteractionListener() {
+    const initializeAudioAndToggleMute = async (event) => {
+      if (event.type === 'keydown' && event.key === 'M') {
+        await this.audioManager.initializeAudioContext();
+        await this.audioManager.toggleMute();
+      } else {
+        await this.audioManager.initializeAudioContext();
+      }
+
+      // After handling the initial user interaction, remove the event listeners.
+      document.removeEventListener('click', initializeAudioAndToggleMute);
+      document.removeEventListener('keydown', initializeAudioAndToggleMute);
+    };
+
+    document.addEventListener('click', initializeAudioAndToggleMute, {
+      once: true,
+    });
+    document.addEventListener('keydown', initializeAudioAndToggleMute, {
+      once: true,
+    });
+  }
+
   initGameState() {
     this.gameStateEventBus = new EventBus();
     this.gameStateManager = new GameStateManager(this);
@@ -121,7 +144,6 @@ class Game {
     this.audioEventBus = new EventBus();
     this.gameWorld = new World_(this);
     this.G.scene = this.gameWorld.scene;
-    this.audioManager = new AudioManager(this);
   }
 
   initPlayerInstance() {}

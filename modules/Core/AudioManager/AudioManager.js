@@ -1,73 +1,182 @@
 class AudioManager {
-	constructor(context) {
-		this.context = context;
+  constructor() {
+    // Ensures a single instance of AudioManager throughout the application.
+    if (!AudioManager.instance) {
+      this.initFields();
+      AudioManager.instance = this;
+    }
+    if (!this.listenersSetUp) {
+      this.initializeListeners(); // Ensure listeners are set up as soon as the instance is created.
+    }
+    return AudioManager.instance;
+  }
 
-		this.muteIcons = document.getElementsByClassName("mute-icon");
-		this.muteIconText = document.getElementsByClassName("mute-icon-text");
+  // Initializes class fields to set default states and collections.
+  initFields() {
+    this.audioSources = []; // Holds all registered audio sources for global mute/unmute.
+    this.isMute = true; // Initialize as true to match the initial "muted" state in HTML
+    this.listenersSetUp = false;
+    this.isContextActivated = false; // track AudioContext activation
+    this.backgroundMusic = this.createBackgroundMusic();
+    this.audioContext = null; // Moved here for clarity
+  }
 
-		this.init();
-		this.setupMuteListener();
-	}
+  async initializeListeners() {
+    if (!this.listenersSetUp) {
+      this.attachMuteToggleListener();
+      this.attachKeyboardListeners();
+      this.listenersSetUp = true;
+    }
+  }
 
-	init() {
-		this.audioSources = [];
-		this.setupEventSubscriptions();
-	}
+  // Separate logic for attaching the mute toggle listener.
+  attachMuteToggleListener() {
+    try {
+      const muteToggle = document.getElementById('mute');
+      if (!muteToggle) throw new Error('Mute toggle element not found.');
+      muteToggle.addEventListener('click', () => {
+        this.toggleMute().catch((error) =>
+          console.error('Error toggling mute:', error)
+        );
+      });
+      console.info('Mute toggle CLICK listener attached.');
+    } catch (error) {
+      console.error('Error setting up mute toggle listener:', error);
+    }
+  }
 
-	setupEventSubscriptions() {}
+  // Separate logic for attaching keyboard listeners, specifically for muting/unmuting.
+  attachKeyboardListeners() {
+    try {
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'KeyM') {
+          this.toggleMute().catch((error) =>
+            console.error('Error toggling mute:', error)
+          );
+        }
+      });
+      console.info('Global KEYDOWN listener for mute toggle attached.');
+    } catch (error) {
+      console.error('Error setting up keyboard listeners:', error);
+    }
+  }
 
-	setupMuteListener() {
-		document.addEventListener("keypress", (e) => {
-			if (e.code === "KeyM") {
-				if (this.isMute) {
-					this.unmuteAudio();
-				} else {
-					this.muteAudio();
-				}
-			}
-		});
-	}
+  // Asynchronously initializes and resumes the AudioContext, managing browser autoplay policies.
+  async initializeAudioContext() {
+    if (!this.isContextActivated && typeof AudioContext !== 'undefined') {
+      this.audioContext = new AudioContext();
+      try {
+        await this.audioContext.resume();
+        this.isContextActivated = true;
+        console.log('AudioContext activated.');
+        this.playBackgroundMusic();
+      } catch (error) {
+        console.error('Error initializing AudioContext:', error);
+      }
+    }
+  }
 
-	muteAudio() {
-		this.isMute = !this.isMute;
-		Array.from(this.muteIcons).forEach((icon) => {
-			icon.innerText = "volume_off";
-		});
-		Array.from(this.muteIconText).forEach((icon) => {
-			icon.innerText = "MUTED";
-		});
+  createBackgroundMusic() {
+    const music = new Audio('./assets/sounds/background-test.mp3');
+    music.loop = true;
+    music.volume = 0.5;
+    music.muted = this.isMute; // Ensure initial muted state is applied
+    return music;
+  }
 
-		if (this.audioSources.length > 0) {
-			console.log("muting things");
-			this.audioSources.forEach((audioSource) => {
-				console.log(audioSource);
-				audioSource.sound.muted = true;
-			});
-		}
+  playBackgroundMusic() {
+    // Ensure the music plays respecting the current mute state
+    if (this.isContextActivated) {
+      this.backgroundMusic
+        .play()
+        .catch((e) => console.error('Failed to play background music:', e));
+    }
+  }
 
-		// do the actual mute and unmuting =)
-	}
+  // Toggles the global mute state and updates audio sources and UI elements accordingly.
+  async toggleMute() {
+    try {
+      // Ensure the AudioContext is initialized before toggling mute state.
+      if (!this.isContextActivated && typeof AudioContext !== 'undefined') {
+        await this.initializeAudioContext();
+      }
+      this.isMute = !this.isMute;
+      this.applyMuteStateToAllSources();
+      // Emit an event instead of directly updating UI
+      // Dispatch the event to notify all components of the mute state change.
+      const audioMuteEvent = new CustomEvent('audioMuteToggle', {
+        detail: { isMute: this.isMute },
+      });
+      document.dispatchEvent(audioMuteEvent);
+      console.log(this.isMute ? 'Audio muted' : 'Audio unmuted');
+    } catch (error) {
+      console.error('Error toggling mute state:', error);
+      // Optionally handle the error by reverting state or notifying the user.
+    }
+  }
 
-	unmuteAudio() {
-		this.isMute = !this.isMute;
-		Array.from(this.muteIcons).forEach((icon) => {
-			icon.innerText = "volume_up";
-		});
-		Array.from(this.muteIconText).forEach((icon) => {
-			icon.innerText = "UNMUTED";
-		});
+  // Apply the current mute state to all registered audio sources
+  applyMuteStateToAllSources() {
+    this.audioSources.forEach((source) => {
+      try {
+        if (source && source.muted !== undefined) {
+          source.updateMuteState(this.isMute);
+        }
+      } catch (error) {
+        console.error('Error applying mute state to an audio source:', error);
+        // Handle individual source errors, possibly removing them from the list.
+      }
+    });
+    this.backgroundMusic.muted = this.isMute; // Only mute/unmute without stopping
+  }
 
-		if (this.audioSources.length > 0) {
-			this.audioSources.forEach((audioSource) => {
-				audioSource.sound.muted = false;
-			});
-		}
-		// do the actual mute and unmuting =)
-	}
+  // Add an audio source to the manager, applying the current mute state.
+  addAudioSource(source) {
+    try {
+      if (source) {
+        this.audioSources.push(source);
+        source.updateMuteState(this.isMute); // Apply current mute state to new audio source.
+      }
+    } catch (error) {
+      console.error('Error adding audio source:', error);
+      // Consider removing the faulty source or notifying the user.
+    }
+  }
 
-	setVolume(volume) {
-		this.audio.volume = volume;
-	}
+  // Removes an audio source from the manager
+  removeAudioSource(audio) {
+    try {
+      const index = this.audioSources.indexOf(audio);
+      if (index !== -1) {
+        this.audioSources.splice(index, 1);
+      }
+    } catch (error) {
+      console.error('Error removing audio source:', error);
+      // Additional error handling logic here
+    }
+  }
+
+  // Sets the volume for all audio sources, ensuring the volume is within an acceptable range.
+  setVolume(volume) {
+    try {
+      // Ensure volume is between 0 and 1
+      const clampedVolume = Math.max(0, Math.min(1, volume));
+      this.audioSources.forEach((source) => {
+        if (source && 'volume' in source) {
+          // Added check for 'volume' property existence.
+          source.volume = clampedVolume;
+        }
+      });
+    } catch (error) {
+      console.error('Error setting volume:', error);
+      // Consider handling this error by notifying the user or reverting to a default volume.
+    }
+  }
+
+  // Retrieves the singleton instance of AudioManager, creating it if necessary.
+  static getInstance() {
+    return AudioManager.instance || new AudioManager();
+  }
 }
 
 export { AudioManager };
