@@ -26,15 +26,6 @@ class RadioPlayerComponent extends BaseUIComponent {
   }
 
   setupUI() {
-    // Implement UI setup logic here, including play/pause buttons and channel selection
-    // This might involve creating DOM elements dynamically or showing/hiding existing ones based on `id`
-    // Example for play/pause button setup
-    // const playPauseButton =
-    //   this.uiComponent.querySelector('.play-pause-button');
-    // playPauseButton.addEventListener('click', () => this.togglePlayPause());
-    // Implement channel selection UI setup
-    // ...
-
     // Add a Play/Pause button
     const playPauseBtn = document.createElement('button');
     playPauseBtn.id = 'play-pause-btn';
@@ -56,6 +47,34 @@ class RadioPlayerComponent extends BaseUIComponent {
       this.switchStation(stationSelect.value);
     });
     this.uiComponent.appendChild(stationSelect);
+
+    // Container for volume control and label
+    const volumeContainer = document.createElement('div');
+    volumeContainer.id = 'volume-container';
+
+    // Label for the volume control slider
+    const volumeLabel = document.createElement('label');
+    volumeLabel.id = 'volume-control-label';
+    volumeLabel.setAttribute('for', 'volume-control');
+    volumeLabel.textContent = 'Volume';
+    volumeContainer.appendChild(volumeLabel); // Add label to the container
+
+    // Add a volume control slider
+    const volumeControl = document.createElement('input');
+    volumeControl.type = 'range';
+    volumeControl.id = 'volume-control';
+    volumeControl.min = 0; // Minimum volume
+    volumeControl.max = 1; // Maximum volume
+    volumeControl.step = 0.01; // Fineness of control
+    volumeControl.value = this.audioElement.volume; // Default to the current volume
+
+    volumeControl.addEventListener('input', () => {
+      this.adjustVolume(volumeControl.value);
+    });
+
+    volumeContainer.appendChild(volumeControl); // Add slider to the container
+
+    this.uiComponent.appendChild(volumeContainer); // Add the volume container to the UI component
   }
 
   // Toggles play/pause state of the audio
@@ -105,8 +124,8 @@ class RadioPlayerComponent extends BaseUIComponent {
       });
   }
 
+  // Adjusts the volume of the audio element
   adjustVolume(volumeLevel) {
-    // Adjusts the volume of the audio element
     this.audioElement.volume = volumeLevel;
   }
 
