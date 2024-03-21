@@ -35,15 +35,30 @@ class RadioPlayerComponent extends BaseUIComponent {
     // Implement channel selection UI setup
     // ...
 
-    // Example for adding a Play/Pause button dynamically
+    // Add a Play/Pause button
     const playPauseBtn = document.createElement('button');
     playPauseBtn.id = 'play-pause-btn';
     playPauseBtn.textContent = 'Play'; // Initial button text
     playPauseBtn.addEventListener('click', () => this.togglePlayPause());
 
     this.uiComponent.appendChild(playPauseBtn);
+
+    // Add a station selection dropdown
+    const stationSelect = document.createElement('select');
+    stationSelect.id = 'station-select';
+    this.stations.forEach((station, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.textContent = station.name;
+      stationSelect.appendChild(option);
+    });
+    stationSelect.addEventListener('change', () => {
+      this.switchStation(stationSelect.value);
+    });
+    this.uiComponent.appendChild(stationSelect);
   }
 
+  // Toggles play/pause state of the audio
   togglePlayPause() {
     if (this.audioElement.paused) {
       this.audioElement
@@ -75,11 +90,19 @@ class RadioPlayerComponent extends BaseUIComponent {
     }
   }
 
+  // Switches the current radio station and updates the audio source
   switchStation(index) {
-    // Switches the current radio station and updates the audio source
     this.currentStationIndex = index;
     this.audioElement.src = this.stations[index].url;
-    this.audioElement.play();
+    this.audioElement
+      .play()
+      .then(() => {
+        document.getElementById('play-pause-btn').textContent = 'Pause';
+      })
+      .catch((error) => {
+        console.error('Playback failed:', error);
+        // Handle playback failure here
+      });
   }
 
   adjustVolume(volumeLevel) {
