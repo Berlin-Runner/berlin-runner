@@ -113,15 +113,22 @@ class RadioPlayerComponent extends BaseUIComponent {
   switchStation(index) {
     this.currentStationIndex = index;
     this.audioElement.src = this.stations[index].url;
-    this.audioElement
-      .play()
-      .then(() => {
-        document.getElementById('play-pause-btn').textContent = 'Pause';
-      })
-      .catch((error) => {
-        console.error('Playback failed:', error);
-        // Handle playback failure here
-      });
+    // Remove any existing event listeners to avoid multiple triggers
+    this.audioElement.removeEventListener('canplay', this.playAudio);
+    // Define playAudio as an arrow function to preserve the context of 'this'
+    this.playAudio = () => {
+      this.audioElement
+        .play()
+        .then(() => {
+          document.getElementById('play-pause-btn').textContent = 'Pause';
+        })
+        .catch((error) => {
+          console.error('Playback failed:', error);
+          // Handle playback failure here
+        });
+    };
+    // Add event listener for 'canplay' event
+    this.audioElement.addEventListener('canplay', this.playAudio);
   }
 
   // Adjusts the volume of the audio element
