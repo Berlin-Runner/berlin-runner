@@ -1,45 +1,52 @@
-import { GameIntroComponent } from "./CommonUIComponents/GameIntroComponent.js";
-import { GamePlayComponent } from "./CommonUIComponents/GamePlayComponent.js";
-import { GamePausedComponent } from "./CommonUIComponents/GamePausedComponent.js";
-import { GameOverComponent } from "./CommonUIComponents/GameOverComponent.js";
+import { GameIntroComponent } from './CommonUIComponents/GameIntroComponent.js';
+import { RadioPlayerComponent } from './CommonUIComponents/RadioPlayerComponent.js';
+import { GamePlayComponent } from './CommonUIComponents/GamePlayComponent.js';
+import { GamePausedComponent } from './CommonUIComponents/GamePausedComponent.js';
+import { GameOverComponent } from './CommonUIComponents/GameOverComponent.js';
 
-import StageUI from "./StageUI.js";
+import StageUI from './StageUI.js';
 class UIManager {
-	constructor(context) {
-		this.context = context;
-		this.setupUIComponents();
-	}
+  constructor(context) {
+    this.context = context;
+    this.setupUIComponents();
+  }
 
-	setupUIComponents() {
-		this.gameIntroComponent = new GameIntroComponent(
-			"intro-screen",
-			this.context
-		);
-		this.gameIntroComponent.showComponent();
-		this.gameIntroComponent.showStatic();
+  setupUIComponents() {
+    this.radioPlayerComponent = new RadioPlayerComponent(
+      'radio-player',
+      this.context
+    );
+    // No need to hide or show the component based on game states
 
-		this.stageUIComponent = new StageUI("stage-screen", this.context);
+    this.gameIntroComponent = new GameIntroComponent(
+      'intro-screen',
+      this.context
+    );
+    this.gameIntroComponent.showComponent();
+    this.gameIntroComponent.showStatic();
 
-		this.gamePlayComponent = new GamePlayComponent(
-			"in-play-screen",
-			this.context
-		);
+    this.stageUIComponent = new StageUI('stage-screen', this.context);
 
-		this.gamePlayComponent.showComponent();
-		this.gamePlayComponent.showStatic();
+    this.gamePlayComponent = new GamePlayComponent(
+      'in-play-screen',
+      this.context
+    );
 
-		this.gamePausedComponent = new GamePausedComponent(
-			"paused-screen",
-			this.context
-		);
-		this.gamePausedComponent.hideComponent();
+    this.gamePlayComponent.showComponent();
+    this.gamePlayComponent.showStatic();
 
-		this.gameOverComponent = new GameOverComponent(
-			"game-over-screen",
-			this.context
-		);
-		this.gameOverComponent.hideComponent();
-	}
+    this.gamePausedComponent = new GamePausedComponent(
+      'paused-screen',
+      this.context
+    );
+    this.gamePausedComponent.hideComponent();
+
+    this.gameOverComponent = new GameOverComponent(
+      'game-over-screen',
+      this.context
+    );
+    this.gameOverComponent.hideComponent();
+  }
 }
 
 export { UIManager };

@@ -28,12 +28,10 @@ class RadioPlayerComponent extends BaseUIComponent {
   setupUI() {
     // Implement UI setup logic here, including play/pause buttons and channel selection
     // This might involve creating DOM elements dynamically or showing/hiding existing ones based on `id`
-
     // Example for play/pause button setup
-    const playPauseButton =
-      this.uiComponent.querySelector('.play-pause-button');
-    playPauseButton.addEventListener('click', () => this.togglePlayPause());
-
+    // const playPauseButton =
+    //   this.uiComponent.querySelector('.play-pause-button');
+    // playPauseButton.addEventListener('click', () => this.togglePlayPause());
     // Implement channel selection UI setup
     // ...
   }
