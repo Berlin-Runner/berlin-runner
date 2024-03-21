@@ -17,7 +17,6 @@ class AudioManager {
     this.isMute = true; // Initialize as true to match the initial "muted" state in HTML
     this.listenersSetUp = false;
     this.isContextActivated = false; // track AudioContext activation
-    this.backgroundMusic = this.createBackgroundMusic();
     this.audioContext = null; // Moved here for clarity
   }
 
@@ -69,27 +68,9 @@ class AudioManager {
         await this.audioContext.resume();
         this.isContextActivated = true;
         console.log('AudioContext activated.');
-        this.playBackgroundMusic();
       } catch (error) {
         console.error('Error initializing AudioContext:', error);
       }
-    }
-  }
-
-  createBackgroundMusic() {
-    const music = new Audio('./assets/sounds/background-test.mp3');
-    music.loop = true;
-    music.volume = 0.5;
-    music.muted = this.isMute; // Ensure initial muted state is applied
-    return music;
-  }
-
-  playBackgroundMusic() {
-    // Ensure the music plays respecting the current mute state
-    if (this.isContextActivated) {
-      this.backgroundMusic
-        .play()
-        .catch((e) => console.error('Failed to play background music:', e));
     }
   }
 
@@ -127,7 +108,6 @@ class AudioManager {
         // Handle individual source errors, possibly removing them from the list.
       }
     });
-    this.backgroundMusic.muted = this.isMute; // Only mute/unmute without stopping
   }
 
   // Add an audio source to the manager, applying the current mute state.
