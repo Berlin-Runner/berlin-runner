@@ -42,7 +42,18 @@ body {
   border: 6px solid black;
 }
 
-footer,
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 1); /* Slightly darker for contrast */
+  color: white;
+  text-align: center;
+  padding: 12px 0; /* Add padding above and below the content */
+  z-index: 103; /* Ensure it's above other content but adjust as needed */
+}
+
 a,
 canvas {
   margin: 0 !important;
@@ -74,17 +85,12 @@ canvas {
 
 /* Radio Player Component - start */
 .radio-player-container {
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Semi-transparent background for minimal intrusiveness */
-  border-radius: 5px;
-  padding: 10px;
+  display: inline-block; /* Adjust based on your specific layout needs */
+  background-color: transparent; /* Let the footer's background show */
+  padding: 5px 10px; /* Adjust padding as needed */
   text-align: center;
   color: white;
-  z-index: 103; /* Higher than #intro-screen to be visible from the begining*/
+  z-index: 104; /* Ensure it's above the footer's background */
 }
 
 #station-select {
@@ -231,7 +237,7 @@ canvas {
 
 .full-screen {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px); /* Adjust 100px to the height of your footer */
   position: fixed;
   top: 0;
   left: 0;
@@ -254,8 +260,7 @@ canvas {
 #intro-screen {
   display: none;
   width: 100vw;
-  height: 100vh;
-  position: fixed;
+  height: calc(100% - 100px);
   top: 0;
   left: 0;
   background-color: black;
@@ -455,7 +460,6 @@ a {
 #page_static {
   background-size: 600px 600px;
   position: absolute;
-  z-index: 500;
   width: 100%;
   height: 100%;
   top: 0px;
