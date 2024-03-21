@@ -34,14 +34,44 @@ class RadioPlayerComponent extends BaseUIComponent {
     // playPauseButton.addEventListener('click', () => this.togglePlayPause());
     // Implement channel selection UI setup
     // ...
+
+    // Example for adding a Play/Pause button dynamically
+    const playPauseBtn = document.createElement('button');
+    playPauseBtn.id = 'play-pause-btn';
+    playPauseBtn.textContent = 'Play'; // Initial button text
+    playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+
+    this.uiComponent.appendChild(playPauseBtn);
   }
 
   togglePlayPause() {
-    // Toggles play/pause state of the audio
     if (this.audioElement.paused) {
-      this.audioElement.play();
+      this.audioElement
+        .play()
+        .then(() => {
+          document.getElementById('play-pause-btn').textContent = 'Pause';
+        })
+        .catch((error) => {
+          console.error('Playback failed:', error); // Log the error to the console
+          // Show an error message to the user
+          const errorMessageElement = document.getElementById('error-message');
+          if (!errorMessageElement) {
+            // If an error message element doesn't exist, create it and append it to the body or a specific container
+            const newErrorMessageElement = document.createElement('div');
+            newErrorMessageElement.id = 'error-message';
+            newErrorMessageElement.style.color = 'red'; // Style the error message
+            newErrorMessageElement.textContent =
+              'Playback failed. Please try again later.';
+            document.body.appendChild(newErrorMessageElement); // You might want to append this to a specific container instead
+          } else {
+            // If it exists, just update its message
+            errorMessageElement.textContent =
+              'Playback failed. Please try again later.';
+          }
+        });
     } else {
       this.audioElement.pause();
+      document.getElementById('play-pause-btn').textContent = 'Play';
     }
   }
 
