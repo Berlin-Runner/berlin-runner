@@ -110,9 +110,10 @@ class LandscapeGenerationManager {
 			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor
 		})
 
-		this.context.scoreEventBus.subscribe("increase-speed", () => {
+		this.context.scoreEventBus.subscribe("increase-speed", (speedFactor) => {
 			if (this.gameState.currentState != "in_play") return
-			this.updateSpeedFactor += this.settings.speedFactorIncrement / 2
+			this.updateSpeedFactor +=
+				(this.settings.speedFactorIncrement / 2) * speedFactor
 			this.context.G.UPDATE_SPEED_FACTOR = this.updateSpeedFactor
 			if (this.updateSpeedFactor > 1) return
 		})

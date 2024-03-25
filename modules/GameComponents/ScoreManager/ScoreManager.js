@@ -35,13 +35,13 @@ class ScoreManager {
 		})
 
 		this.scoreBus.subscribe("add-score", (value) => {
-			if (!this.updateScore) return
-			setTimeout(() => {
-				this.updateScore = true
-			}, 1000)
+			// if (!this.updateScore) return
+			// setTimeout(() => {
+			// 	this.updateScore = true
+			// }, 10)
 			this.score += value
-			this.updateScore = false
-			this.context.scoreEventBus.publish("increase-speed")
+			// this.updateScore = false
+			this.context.scoreEventBus.publish("increase-speed", 1 / 60)
 			this.scoreBus.publish("update_score", this.formatScore(this.score))
 		})
 

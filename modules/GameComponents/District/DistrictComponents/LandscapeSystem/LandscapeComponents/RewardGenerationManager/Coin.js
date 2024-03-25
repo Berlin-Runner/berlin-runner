@@ -4,15 +4,15 @@ class Coin {
 		this.coinPos = coinPos
 
 		this.init()
-		this.update()
 		return this.coinMesh
 	}
 
 	init() {
+		this.coinActive = true
 		this.debugAABB = false
 		this.createCoinMesh()
-		this.initCoinAABB()
 		this.testForCollision()
+		this.update()
 	}
 
 	createCoinMesh() {
@@ -27,6 +27,7 @@ class Coin {
 		this.coinMesh.castShadow = true
 		this.coinMesh.rotation.x = Math.PI / 2 // Simplified conversion to radians
 		this.coinMesh.position.set(0, 0, this.coinPos)
+		this.initCoinAABB()
 
 		return this.coinMesh
 	}
@@ -58,21 +59,25 @@ class Coin {
 		}
 	}
 
-	testForCollision() {
-		if (!this.context.gameStateManager.currentState === "in_play") return
+	/* testForCollision() {
+		requestAnimationFrame(this.testForCollision.bind(this))
+		if (!this.coinActive) return
+		if (this.context.gameStateManager.currentState !== "in_play") return
 
 		if (
+			this.coinActive &&
 			this.coinAABB &&
 			this.context.playerBB &&
 			this.context.playerBB.intersectsBox(this.coinAABB)
 		) {
 			console.log("intersection")
 			this.context.scoreEventBus.publish("add-score", 1)
+			this.coinActive = false
 			gsap.to(this.coinMesh.position, {
 				x: 15,
 				y: 15,
 				z: -30,
-				duration: 2,
+				duration: 1,
 				onComplete: () => {
 					gsap.to(this.coinMesh.position, {
 						x: this.coinPos.x,
@@ -82,9 +87,47 @@ class Coin {
 					})
 				},
 			})
+			setTimeout(() => {
+				this.coinActive = true
+			}, 1000)
 		}
+	} */
 
+	testForCollision() {
 		requestAnimationFrame(this.testForCollision.bind(this))
+		if (
+			!this.coinActive ||
+			this.context.gameStateManager.currentState !== "in_play"
+		)
+			return
+
+		if (this.context.playerBB.intersectsBox(this.coinAABB)) {
+			console.log("intersection")
+			this.context.scoreEventBus.publish("add-score", 1) // Add score
+			this.coinActive = false // Deactivate the coin to prevent multiple scores
+
+			// Move the coin out of view and then reset its position after some delay
+			gsap.to(this.coinMesh.position, {
+				x: 15,
+				y: 15,
+				z: -30,
+				duration: 1,
+				onComplete: () => {
+					gsap.to(this.coinMesh.position, {
+						x: this.coinPos.x,
+						y: this.coinPos.y,
+						z: this.coinPos.z,
+						duration: 0.1,
+						onComplete: () => {
+							// Reactivate the coin after the animations and a safe buffer time
+							setTimeout(() => {
+								this.coinActive = true
+							}, 400) // Adjust this delay based on your game's requirements
+						},
+					})
+				},
+			})
+		}
 	}
 }
 

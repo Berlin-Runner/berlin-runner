@@ -27,7 +27,7 @@ class CoinGroup {
 		this.update()
 	}
 
-	createCoinMesh(positionZ) {
+	/* 	createCoinMesh(positionZ) {
 		let coinGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.1, 16)
 		let coinMaterial = new THREE.MeshStandardMaterial({
 			color: new THREE.Color("yellow"),
@@ -41,13 +41,13 @@ class CoinGroup {
 		coinMesh.position.set(0, 0, positionZ)
 
 		return coinMesh
-	}
+	} */
 
 	addCoin() {
 		this.coinsHolder = new THREE.Group()
 
 		// Specify how many coins you want to add
-		const numberOfCoins = 10
+		const numberOfCoins = 5
 
 		for (let i = 0; i < numberOfCoins; i++) {
 			let coinMesh = new Coin(this.context, 1 + i * 2)

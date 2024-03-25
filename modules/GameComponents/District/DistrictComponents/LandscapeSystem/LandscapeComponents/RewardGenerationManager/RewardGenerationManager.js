@@ -30,7 +30,7 @@ class RewardGenerationManagement {
 		this.coffees = []
 
 		this.coinIndex = 0
-		this.totalCoins = 15
+		this.totalCoins = 10
 		this.coins = []
 
 		// let donut = new Donut(this.context, this.spawnPosition);
