@@ -1,5 +1,4 @@
 import { Reward } from "../Reward.js"
-import { Vec3, Body, Box } from "../../../../../../../../libs/cannon-es.js"
 import { UTIL } from "../../../../../../../Util/UTIL.js"
 
 export default class Coffee extends Reward {

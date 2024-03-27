@@ -1,7 +1,5 @@
 import { CoinGroup } from "./CoinGroup.js"
 import { UTIL } from "../../../../../../Util/UTIL.js"
-import { Vec3 } from "../../../../../../../libs/cannon-es.js"
-import Donut from "./donut/donut.js"
 import Coffee from "./coffee/coffee.js"
 class RewardGenerationManagement {
 	constructor(context) {
@@ -21,19 +19,13 @@ class RewardGenerationManagement {
 	}
 
 	init() {
-		// this.donutIndex = 0;
-		// this.totalDonuts = 15;
-		// this.donuts = [];
-
 		this.coffeeIndex = 0
 		this.totalCoffees = 15
 		this.coffees = []
 
 		this.coinIndex = 0
-		this.totalCoins = 10
+		this.totalCoins = 5
 		this.coins = []
-
-		// let donut = new Donut(this.context, this.spawnPosition);
 
 		let coin = new CoinGroup(this.context, this.spawnPosition)
 		let coffee = new Coffee(this.context, this.spawnPosition)
@@ -45,8 +37,6 @@ class RewardGenerationManagement {
 		for (let index = 0; index < this.totalCoffees; index++) {
 			this.coffees.push(coffee.clone())
 		}
-
-		// console.log(this.coffees);
 	}
 
 	setRewardPosition(rewardPosition, positionsX, positionsY, z) {
@@ -93,24 +83,7 @@ class RewardGenerationManagement {
 		)
 	}
 
-	/* let reward_ = this.donuts[this.donutIndex % this.totalDonuts];
-	console.log(
-		`placing donut # ${this.donutIndex % this.totalDonuts} at zPos: ${
-			this.placementPostion.z
-		}`
-	);
-	reward_.updatePosition(this.placementPostion);
-	this.donutIndex++; */
-
 	update() {}
-}
-
-function threeToCannonVec3(cannonvec3) {
-	return new Vec3(cannonvec3.x, cannonvec3.y, cannonvec3.z)
-}
-
-function cannonToThreeVec3(cannonvec3) {
-	return new THREE.Vector3(cannonvec3.x, cannonvec3.y, cannonvec3.z)
 }
 
 export { RewardGenerationManagement }

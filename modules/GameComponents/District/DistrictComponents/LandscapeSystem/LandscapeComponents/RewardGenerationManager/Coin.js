@@ -1,7 +1,8 @@
 class Coin {
-	constructor(context, coinPos) {
+	constructor(context, coinPos, parent) {
 		this.context = context
 		this.coinPos = coinPos
+		this.parent = parent
 
 		this.init()
 		return this.coinMesh
@@ -59,40 +60,6 @@ class Coin {
 		}
 	}
 
-	/* testForCollision() {
-		requestAnimationFrame(this.testForCollision.bind(this))
-		if (!this.coinActive) return
-		if (this.context.gameStateManager.currentState !== "in_play") return
-
-		if (
-			this.coinActive &&
-			this.coinAABB &&
-			this.context.playerBB &&
-			this.context.playerBB.intersectsBox(this.coinAABB)
-		) {
-			console.log("intersection")
-			this.context.scoreEventBus.publish("add-score", 1)
-			this.coinActive = false
-			gsap.to(this.coinMesh.position, {
-				x: 15,
-				y: 15,
-				z: -30,
-				duration: 1,
-				onComplete: () => {
-					gsap.to(this.coinMesh.position, {
-						x: this.coinPos.x,
-						y: this.coinPos.y,
-						z: this.coinPos.z,
-						duration: 0.4,
-					})
-				},
-			})
-			setTimeout(() => {
-				this.coinActive = true
-			}, 1000)
-		}
-	} */
-
 	testForCollision() {
 		requestAnimationFrame(this.testForCollision.bind(this))
 		if (
@@ -102,27 +69,24 @@ class Coin {
 			return
 
 		if (this.context.playerBB.intersectsBox(this.coinAABB)) {
-			console.log("intersection")
 			this.context.scoreEventBus.publish("add-score", 1) // Add score
-			this.coinActive = false // Deactivate the coin to prevent multiple scores
+			this.coinActive = false
 
-			// Move the coin out of view and then reset its position after some delay
 			gsap.to(this.coinMesh.position, {
 				x: 15,
 				y: 15,
-				z: -30,
+				z: -20,
 				duration: 1,
 				onComplete: () => {
 					gsap.to(this.coinMesh.position, {
-						x: this.coinPos.x,
-						y: this.coinPos.y,
-						z: this.coinPos.z,
+						x: 0,
+						y: 0,
+						z: this.parent.position.z,
 						duration: 0.1,
 						onComplete: () => {
-							// Reactivate the coin after the animations and a safe buffer time
 							setTimeout(() => {
 								this.coinActive = true
-							}, 400) // Adjust this delay based on your game's requirements
+							}, 1100)
 						},
 					})
 				},
