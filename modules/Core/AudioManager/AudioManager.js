@@ -82,6 +82,18 @@ class AudioManager {
         await this.initializeAudioContext();
       }
       this.isMute = !this.isMute;
+
+      // Attempt to play audio sources if unmuting
+      if (!this.isMute) {
+        this.audioSources.forEach((source) => {
+          if (source.sound && source.sound.paused) {
+            source.sound
+              .play()
+              .catch((error) => console.error('Playback error:', error));
+          }
+        });
+      }
+
       this.applyMuteStateToAllSources();
       // Emit an event instead of directly updating UI
       // Dispatch the event to notify all components of the mute state change.

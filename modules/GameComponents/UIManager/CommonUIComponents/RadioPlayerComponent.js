@@ -1,10 +1,19 @@
+import { AudioManager } from '../../../Core/AudioManager/AudioManager.js';
+import { BaseAudioComponent } from '../../../Core/AudioManager/BaseAudioComponent.js';
 import { BaseUIComponent } from '../BaseUIComponent.js';
 
-class RadioPlayerComponent extends BaseUIComponent {
+class RadioPlayerComponent {
   constructor(id, context) {
-    super(id, context);
-    // Define additional properties specific to the radio player
-    this.audioElement = new Audio();
+    this.audioManager = AudioManager.getInstance();
+    this.audioComponent = new BaseAudioComponent(this.audioManager, {
+      url: '', // The URL will be set in switchStation
+      doesLoop: true,
+      volume: 1.0,
+    });
+    // UI Component setup
+    this.uiComponent = new BaseUIComponent(id, context).uiComponent;
+
+    // Stations setup
     this.currentStationIndex = 0; // Default to the first station
     this.stations = [
       {
@@ -20,21 +29,21 @@ class RadioPlayerComponent extends BaseUIComponent {
         url: 'https://streams.fluxfm.de/boomfm/mp3-320/audio/',
       },
     ];
-    // Initially set the audio source to the first station
-    this.audioElement.src = this.stations[this.currentStationIndex].url;
+    // Set the audio source to the first station and start playing immediately
+    this.switchStation(this.currentStationIndex);
+    // Listen for global mute state changes
+    document.addEventListener(
+      'audioMuteToggle',
+      this.handleAudioMuteToggle.bind(this)
+    );
+
     this.setupUI();
   }
 
   setupUI() {
-    // Add a Play/Pause button
-    const playPauseBtn = document.createElement('button');
-    playPauseBtn.id = 'play-pause-btn';
-    playPauseBtn.textContent = 'Play'; // Initial button text
-    playPauseBtn.addEventListener('click', () => this.togglePlayPause());
+    const container = this.uiComponent;
 
-    this.uiComponent.appendChild(playPauseBtn);
-
-    // Add a station selection dropdown
+    // Station Selection Dropdown
     const stationSelect = document.createElement('select');
     stationSelect.id = 'station-select';
     this.stations.forEach((station, index) => {
@@ -43,10 +52,10 @@ class RadioPlayerComponent extends BaseUIComponent {
       option.textContent = station.name;
       stationSelect.appendChild(option);
     });
-    stationSelect.addEventListener('change', () => {
-      this.switchStation(stationSelect.value);
+    stationSelect.addEventListener('change', (e) => {
+      this.switchStation(e.target.value);
     });
-    this.uiComponent.appendChild(stationSelect);
+    container.appendChild(stationSelect);
 
     // Container for volume control and label
     const volumeContainer = document.createElement('div');
@@ -56,7 +65,7 @@ class RadioPlayerComponent extends BaseUIComponent {
     const volumeLabel = document.createElement('label');
     volumeLabel.id = 'volume-control-label';
     volumeLabel.setAttribute('for', 'volume-control');
-    volumeLabel.textContent = 'Volume';
+    volumeLabel.textContent = 'Volume:';
     volumeContainer.appendChild(volumeLabel); // Add label to the container
 
     // Add a volume control slider
@@ -66,81 +75,36 @@ class RadioPlayerComponent extends BaseUIComponent {
     volumeControl.min = 0; // Minimum volume
     volumeControl.max = 1; // Maximum volume
     volumeControl.step = 0.01; // Fineness of control
-    volumeControl.value = this.audioElement.volume; // Default to the current volume
-
-    volumeControl.addEventListener('input', () => {
-      this.adjustVolume(volumeControl.value);
+    volumeControl.value = this.audioComponent.sound.volume; // Default to the current volume
+    volumeControl.addEventListener('input', (e) => {
+      // Directly call `updateVolume` on `audioComponent` with the new value
+      this.audioComponent.updateVolume(parseFloat(e.target.value));
     });
-
     volumeContainer.appendChild(volumeControl); // Add slider to the container
-
-    this.uiComponent.appendChild(volumeContainer); // Add the volume container to the UI component
-  }
-
-  // Toggles play/pause state of the audio
-  togglePlayPause() {
-    if (this.audioElement.paused) {
-      this.audioElement
-        .play()
-        .then(() => {
-          document.getElementById('play-pause-btn').textContent = 'Pause';
-        })
-        .catch((error) => {
-          console.error('Playback failed:', error); // Log the error to the console
-          // Show an error message to the user
-          const errorMessageElement = document.getElementById('error-message');
-          if (!errorMessageElement) {
-            // If an error message element doesn't exist, create it and append it to the body or a specific container
-            const newErrorMessageElement = document.createElement('div');
-            newErrorMessageElement.id = 'error-message';
-            newErrorMessageElement.style.color = 'red'; // Style the error message
-            newErrorMessageElement.textContent =
-              'Playback failed. Please try again later.';
-            document.body.appendChild(newErrorMessageElement); // You might want to append this to a specific container instead
-          } else {
-            // If it exists, just update its message
-            errorMessageElement.textContent =
-              'Playback failed. Please try again later.';
-          }
-        });
-    } else {
-      this.audioElement.pause();
-      document.getElementById('play-pause-btn').textContent = 'Play';
-    }
+    container.appendChild(volumeContainer); // Add the volume container to the UI component
   }
 
   // Switches the current radio station and updates the audio source
   switchStation(index) {
     this.currentStationIndex = index;
-    this.audioElement.src = this.stations[index].url;
-    // Remove any existing event listeners to avoid multiple triggers
-    this.audioElement.removeEventListener('canplay', this.playAudio);
-    // Define playAudio as an arrow function to preserve the context of 'this'
-    this.playAudio = () => {
-      this.audioElement
-        .play()
-        .then(() => {
-          document.getElementById('play-pause-btn').textContent = 'Pause';
-        })
-        .catch((error) => {
-          console.error('Playback failed:', error);
-          // Handle playback failure here
-        });
-    };
-    // Add event listener for 'canplay' event
-    this.audioElement.addEventListener('canplay', this.playAudio);
-  }
-
-  // Adjusts the volume of the audio element
-  adjustVolume(volumeLevel) {
-    this.audioElement.volume = volumeLevel;
+    const stationUrl = this.stations[index].url;
+    if (this.audioComponent.sound) {
+      this.audioComponent.sound.src = stationUrl;
+      this.audioComponent.sound.load();
+      this.audioComponent.sound.play().catch((error) => {
+        console.error('Error playing sound:', error);
+        // Handle auto-play policy issues or other errors here
+      });
+    }
   }
 
   // Override handleAudioMuteToggle to mute/unmute radio player
-  handleAudioMuteToggle(event) {
+  handleAudioMuteToggle = (event) => {
     const isMute = event.detail.isMute;
-    this.audioElement.muted = isMute;
-  }
+    if (this.audioComponent.sound) {
+      this.audioComponent.sound.muted = isMute;
+    }
+  };
 
   // Additional methods for managing radio player state and UI updates can be added here
 }
