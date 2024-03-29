@@ -43,6 +43,19 @@ class RadioPlayerComponent {
   setupUI() {
     const container = this.uiComponent;
 
+    // Create a flex container for inline display of elements
+    const flexContainer = document.createElement('div');
+    flexContainer.style.display = 'flex';
+    flexContainer.style.flexDirection = 'row';
+    flexContainer.style.alignItems = 'center';
+    flexContainer.style.marginTop = '10px';
+    container.appendChild(flexContainer);
+
+    // Radio Channel Selection Label
+    const stationSelectLabel = document.createElement('span');
+    stationSelectLabel.textContent = 'Radio Channel Selection: ';
+    flexContainer.appendChild(stationSelectLabel);
+
     // Station Selection Dropdown
     const stationSelect = document.createElement('select');
     stationSelect.id = 'station-select';
@@ -55,33 +68,46 @@ class RadioPlayerComponent {
     stationSelect.addEventListener('change', (e) => {
       this.switchStation(e.target.value);
     });
-    container.appendChild(stationSelect);
+    flexContainer.appendChild(stationSelect); // Append to the flex container for inline display
 
-    // Container for volume control and label
-    const volumeContainer = document.createElement('div');
-    volumeContainer.id = 'volume-container';
-
-    // Label for the volume control slider
-    const volumeLabel = document.createElement('label');
-    volumeLabel.id = 'volume-control-label';
-    volumeLabel.setAttribute('for', 'volume-control');
-    volumeLabel.textContent = 'Volume:';
-    volumeContainer.appendChild(volumeLabel); // Add label to the container
-
-    // Add a volume control slider
-    const volumeControl = document.createElement('input');
-    volumeControl.type = 'range';
-    volumeControl.id = 'volume-control';
-    volumeControl.min = 0; // Minimum volume
-    volumeControl.max = 1; // Maximum volume
-    volumeControl.step = 0.01; // Fineness of control
-    volumeControl.value = this.audioComponent.sound.volume; // Default to the current volume
-    volumeControl.addEventListener('input', (e) => {
-      // Directly call `updateVolume` on `audioComponent` with the new value
-      this.audioComponent.updateVolume(parseFloat(e.target.value));
+    // Mute/Unmute Button
+    const muteUnmuteBtn = document.createElement('span');
+    muteUnmuteBtn.className = 'material-symbols-outlined mute-icon';
+    muteUnmuteBtn.id = 'mute';
+    muteUnmuteBtn.textContent = this.audioManager.isMute
+      ? 'volume_off'
+      : 'volume_up';
+    muteUnmuteBtn.style.cursor = 'pointer';
+    muteUnmuteBtn.style.marginLeft = '15px'; // Adjust spacing between the dropdown and mute button
+    muteUnmuteBtn.style.color = this.audioManager.isMute
+      ? 'red'
+      : 'greenyellow';
+    muteUnmuteBtn.addEventListener('click', () => {
+      this.audioManager.toggleMute();
     });
-    volumeContainer.appendChild(volumeControl); // Add slider to the container
-    container.appendChild(volumeContainer); // Add the volume container to the UI component
+    flexContainer.appendChild(muteUnmuteBtn);
+
+    // Audio Status Text
+    const audioStatusText = document.createElement('div');
+    audioStatusText.id = 'audio_status_text';
+    audioStatusText.className = 'mute-icon-text';
+    audioStatusText.textContent = this.audioManager.isMute
+      ? 'MUTED'
+      : 'UNMUTED';
+    audioStatusText.style.color = this.audioManager.isMute
+      ? 'red'
+      : 'greenyellow';
+    audioStatusText.style.marginLeft = '10px'; // Adjust spacing for visual separation
+    flexContainer.appendChild(audioStatusText);
+
+    // Update UI on global mute state change
+    document.addEventListener('audioMuteToggle', (event) => {
+      const isMute = event.detail.isMute;
+      muteUnmuteBtn.textContent = isMute ? 'volume_off' : 'volume_up';
+      muteUnmuteBtn.style.color = isMute ? 'red' : 'greenyellow';
+      audioStatusText.textContent = isMute ? 'MUTED' : 'UNMUTED';
+      audioStatusText.style.color = isMute ? 'red' : 'greenyellow';
+    });
   }
 
   // Switches the current radio station and updates the audio source
