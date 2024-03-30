@@ -1,7 +1,6 @@
 class ExplosiveElement {
 	constructor(el) {
 		this.element = document.getElementById(el)
-		console.log(this.element)
 		this.width = 0
 		this.height = 0
 		this.centerX = 0
@@ -17,7 +16,6 @@ class ExplosiveElement {
 	}
 
 	runExplosion() {
-		console.log("gotta explode")
 		this.explode(this.duration)
 	}
 
