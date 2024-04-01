@@ -48,37 +48,47 @@ class RadioPlayerComponent {
     flexContainer.style.display = 'flex';
     flexContainer.style.flexDirection = 'row';
     flexContainer.style.alignItems = 'center';
-    flexContainer.style.marginTop = '10px';
+    flexContainer.style.padding = '5px 0px 12px';
     container.appendChild(flexContainer);
 
-    // Radio Channel Selection Label
-    const stationSelectLabel = document.createElement('span');
-    stationSelectLabel.textContent = 'Radio Channel Selection: ';
-    flexContainer.appendChild(stationSelectLabel);
+    // Station Name Display
+    const stationNameDisplay = document.createElement('span');
+    stationNameDisplay.textContent =
+      this.stations[this.currentStationIndex].name;
+    stationNameDisplay.style.flexGrow = '1'; // Allows the station name to take up more space
+    stationNameDisplay.style.marginRight = '10px'; // Space before the next button
 
-    // Station Selection Dropdown
-    const stationSelect = document.createElement('select');
-    stationSelect.id = 'station-select';
-    this.stations.forEach((station, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = station.name;
-      stationSelect.appendChild(option);
+    // Next Station Button
+    const nextStationBtn = document.createElement('button');
+    nextStationBtn.textContent = '▶|'; // Next station icon
+    nextStationBtn.style.color = 'white';
+    nextStationBtn.style.cursor = 'pointer';
+    nextStationBtn.style.backgroundColor = 'transparent';
+    nextStationBtn.style.border = '1px solid bisque'; // Light gray border
+    nextStationBtn.style.borderRadius = '5px'; // Rounded corners
+
+    nextStationBtn.addEventListener('click', () => {
+      // Increment the station index, wrapping around if necessary
+      this.currentStationIndex =
+        (this.currentStationIndex + 1) % this.stations.length;
+      // Update the station and the button text (including the icon)
+      this.switchStation(this.currentStationIndex);
+      stationNameDisplay.textContent =
+        this.stations[this.currentStationIndex].name; // Update the station name text
     });
-    stationSelect.addEventListener('change', (e) => {
-      this.switchStation(e.target.value);
-    });
-    flexContainer.appendChild(stationSelect); // Append to the flex container for inline display
+
+    // Store the button reference in the class instance
+    this.nextStationBtn = nextStationBtn;
 
     // Mute/Unmute Button
     const muteUnmuteBtn = document.createElement('span');
     muteUnmuteBtn.className = 'material-symbols-outlined mute-icon';
     muteUnmuteBtn.id = 'mute';
-    muteUnmuteBtn.textContent = this.audioManager.isMute
-      ? 'volume_off'
-      : 'volume_up';
+    muteUnmuteBtn.innerHTML = this.audioManager.isMute
+      ? '&#x1F508;'
+      : '&#x1F50A;';
     muteUnmuteBtn.style.cursor = 'pointer';
-    muteUnmuteBtn.style.marginLeft = '15px'; // Adjust spacing between the dropdown and mute button
+    muteUnmuteBtn.style.marginRight = '5px'; // Adjust spacing between the dropdown and mute button
     muteUnmuteBtn.style.color = this.audioManager.isMute
       ? 'red'
       : 'greenyellow';
@@ -86,27 +96,18 @@ class RadioPlayerComponent {
       this.audioManager.toggleMute();
     });
     flexContainer.appendChild(muteUnmuteBtn);
-
-    // Audio Status Text
-    const audioStatusText = document.createElement('div');
-    audioStatusText.id = 'audio_status_text';
-    audioStatusText.className = 'mute-icon-text';
-    audioStatusText.textContent = this.audioManager.isMute
-      ? 'MUTED'
-      : 'UNMUTED';
-    audioStatusText.style.color = this.audioManager.isMute
-      ? 'red'
-      : 'greenyellow';
-    audioStatusText.style.marginLeft = '10px'; // Adjust spacing for visual separation
-    flexContainer.appendChild(audioStatusText);
+    flexContainer.appendChild(stationNameDisplay);
+    flexContainer.appendChild(nextStationBtn); // Append to the flex container for inline display: ;
 
     // Update UI on global mute state change
     document.addEventListener('audioMuteToggle', (event) => {
       const isMute = event.detail.isMute;
-      muteUnmuteBtn.textContent = isMute ? 'volume_off' : 'volume_up';
+      muteUnmuteBtn.innerHTML = this.audioManager.isMute
+        ? '&#x1F508;'
+        : '&#x1F50A;';
       muteUnmuteBtn.style.color = isMute ? 'red' : 'greenyellow';
-      audioStatusText.textContent = isMute ? 'MUTED' : 'UNMUTED';
-      audioStatusText.style.color = isMute ? 'red' : 'greenyellow';
+      // audioStatusText.textContent = isMute ? 'MUTED' : 'UNMUTED';
+      // audioStatusText.style.color = isMute ? 'red' : 'greenyellow';
     });
   }
 
@@ -121,6 +122,11 @@ class RadioPlayerComponent {
         console.error('Error playing sound:', error);
         // Handle auto-play policy issues or other errors here
       });
+    }
+    // Update the cycle station button's text to the current station's name
+    // Ensure nextStationBtn is defined before trying to update its textContent
+    if (this.nextStationBtn) {
+      this.nextStationBtn.textContent = '▶|';
     }
   }
 

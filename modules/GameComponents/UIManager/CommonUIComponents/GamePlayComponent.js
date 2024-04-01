@@ -1,104 +1,147 @@
-import { BaseUIComponent } from "../BaseUIComponent.js"
-import { ExplosiveElement } from "../ExplosiveButton.js"
+import { BaseUIComponent } from '../BaseUIComponent.js';
+import { ExplosiveElement } from '../ExplosiveButton.js';
 
 class GamePlayComponent extends BaseUIComponent {
-	constructor(id, context) {
-		super(id, context)
+  constructor(id, context) {
+    super(id, context);
 
-		this.pauseButton = new BaseUIComponent("pause-button", this.context)
-		this.scoreHolder = document.getElementById("score_text")
-		this.progressHolder = document.getElementById("progress_text")
-		this.progressBar = document.getElementById("progressBar")
-		this.incrementValue(0)
-		this.explosiveProgressBar = new ExplosiveElement("progress-holder")
+    this.pauseButton = new BaseUIComponent('pause-button', this.context);
+    this.pauseButton.uiComponent.innerHTML = '&#x23EF; Pause Game'; // Set the pause symbol as button content
+    this.isGamePaused = false; // Add a flag to track game pause state
 
-		this.healthValueHolder = document.getElementById("health-value")
+    this.scoreHolder = document.getElementById('score_text');
+    this.progressHolder = document.getElementById('progress_text');
+    this.progressBar = document.getElementById('progressBar');
+    this.incrementValue(0);
+    this.explosiveProgressBar = new ExplosiveElement('progress-holder');
 
-		this.setUpComponentEventListners()
-		this.setupEventBusSubscriptions()
-	}
+    this.healthValueHolder = document.getElementById('health-value');
 
-	incrementValue(value) {
-		if (value < 10) {
-			progressBar.style.width = `${value * 10}%` // Update width based on value
-		}
-	}
+    this.setUpComponentEventListners();
+    this.setupEventBusSubscriptions();
+  }
 
-	setUpComponentEventListners() {
-		this.pauseButton.listenToEvent("click", () => {
-			this.pauseGame()
-		})
-	}
+  incrementValue(value) {
+    if (value < 10) {
+      progressBar.style.width = `${value * 10}%`; // Update width based on value
+    }
+  }
 
-	setupEventBusSubscriptions() {
-		this.scoreBus.subscribe("update_score", (score) => {
-			this.upadteScore(score)
-		})
+  setUpComponentEventListners() {
+    this.pauseButton.listenToEvent('click', () => {
+      // Toggle between pausing and resuming the game
+      if (this.isGamePaused) {
+        this.resumeGame();
+      } else {
+        this.pauseGame();
+      }
+    });
+    this.stateBus.subscribe('restart_game', () => {
+      this.pauseButton.showComponent();
+      this.scoreHolder.innerText = '0';
+      this.progressHolder.innerText = '0';
+      this.incrementValue(0);
+      this.healthValueHolder.innerText = '=)';
+    });
+  }
 
-		this.scoreBus.subscribe("update_progress", (value) => {
-			this.upadteProgress(value)
-			this.incrementValue(value)
-		})
+  pauseGame() {
+    console.log('Pausing the game');
+    this.stateManager.pauseGame();
+    this.stateBus.publish('pause_game'); // Publish event to pause the game
+    this.isGamePaused = true;
+    this.updatePauseButtonText(); // Update the button text
+    // Move bottom-controls to paused-screen
+    document
+      .getElementById('paused-screen')
+      .appendChild(document.getElementById('bottom-controls'));
+  }
 
-		this.context.scoreEventBus.subscribe("level-one", () => {
-			this.explosiveProgressBar.runExplosion()
-		})
+  resumeGame() {
+    console.log('Resuming the game');
+    this.stateManager.resumeGame();
+    this.stateBus.publish('resume_game'); // Publish event to resume the game
+    this.isGamePaused = false;
+    this.updatePauseButtonText(); // Update the button text
+    // Move bottom-controls back to in-play-screen
+    document
+      .getElementById('in-play-screen')
+      .appendChild(document.getElementById('bottom-controls'));
+  }
 
-		this.context.scoreEventBus.subscribe("level-two", () => {
-			this.explosiveProgressBar.runExplosion()
-		})
+  updatePauseButtonText() {
+    // Update the button text based on the game state
+    this.pauseButton.uiComponent.innerHTML = this.isGamePaused
+      ? '&#x23EF; Resume Game'
+      : '&#x23EF; Pause Game';
+  }
 
-		this.healthBus.subscribe("update_health", (health) => {
-			this.updateHealth(health)
-		})
+  setupEventBusSubscriptions() {
+    this.scoreBus.subscribe('update_score', (score) => {
+      this.upadteScore(score);
+    });
 
-		this.stateBus.subscribe("pause_game", () => {
-			this.pauseButton.hideComponent()
-		})
+    this.scoreBus.subscribe('update_progress', (value) => {
+      this.upadteProgress(value);
+      this.incrementValue(value);
+    });
 
-		this.stateBus.subscribe("resume_game", () => {
-			this.pauseButton.showComponent()
-		})
+    this.context.scoreEventBus.subscribe('level-one', () => {
+      this.explosiveProgressBar.runExplosion();
+    });
 
-		this.stateBus.subscribe("restart_game", () => {
-			this.pauseButton.showComponent()
-			this.scoreHolder.innerText = "0"
-			this.progressHolder.innerText = "0"
-			this.incrementValue(0)
-			this.healthValueHolder.innerText = "=)"
-		})
-	}
+    this.context.scoreEventBus.subscribe('level-two', () => {
+      this.explosiveProgressBar.runExplosion();
+    });
 
-	pauseGame() {
-		console.log("pausing the game")
-		this.stateManager.pauseGame()
-	}
+    this.healthBus.subscribe('update_health', (health) => {
+      this.updateHealth(health);
+    });
 
-	upadteScore(score) {
-		this.scoreHolder.innerText = score
-		gsap.to(this.scoreHolder.style, {
-			fontSize: "136px",
-			duration: 0.125,
-			onComplete: () => {
-				gsap.to(this.scoreHolder.style, { fontSize: "60px", duration: 0.1 })
-			},
-		})
-	}
+    this.stateBus.subscribe('restart_game', () => {
+      this.showComponent();
+      this.scoreHolder.innerText = '0';
+      this.progressHolder.innerText = '0';
+      this.incrementValue(0);
+      this.healthValueHolder.innerText = '=)';
+      this.isGamePaused = false;
+      this.updatePauseButtonText();
 
-	upadteProgress(value) {
-		this.progressHolder.innerText = value
-		gsap.to(this.progressHolder.style, {
-			fontSize: "136px",
-			duration: 0.125,
-			onComplete: () => {
-				gsap.to(this.progressHolder.style, { fontSize: "60px", duration: 0.1 })
-			},
-		})
-	}
+      // Ensure bottom-controls are moved back to in-play-screen
+      document
+        .getElementById('in-play-screen')
+        .appendChild(document.getElementById('bottom-controls'));
 
-	updateHealth(health) {
-		this.healthValueHolder.innerText = health
-	}
+      // Reset any specific styles if necessary, for example:
+      document.getElementById('in-play-screen').style.display = 'flex'; // Or any other style adjustments needed
+    });
+  }
+
+  upadteScore(score) {
+    this.scoreHolder.innerText = score;
+    gsap.to(this.scoreHolder.style, {
+      fontSize: '136px',
+      duration: 0.125,
+      onComplete: () => {
+        gsap.to(this.scoreHolder.style, { fontSize: '60px', duration: 0.1 });
+      },
+    });
+  }
+
+  upadteProgress(value) {
+    this.progressHolder.innerText = value;
+    gsap.to(this.progressHolder.style, {
+      fontSize: '136px',
+      duration: 0.125,
+      onComplete: () => {
+        gsap.to(this.progressHolder.style, { fontSize: '60px', duration: 0.1 });
+      },
+    });
+  }
+
+  updateHealth(health) {
+    this.healthValueHolder.innerText = health;
+  }
 }
 
-export { GamePlayComponent }
+export { GamePlayComponent };

@@ -274,11 +274,7 @@
     <!-- =============================================== STAGE UI END =============================================== -->
 
     <!-- =============================================== GAME PLAY SCREEN START =============================================== -->
-    <div id="in-play-screen" class="_">
-      <div id="pause-button-holder">
-        <span class="material-symbols-outlined" id="pause-button"> pause </span>
-      </div>
-
+    <div id="in-play-screen">
       <div class="score" id="score-holder">
         <!-- <div> -->
         <span>SCORE:</span>
@@ -345,6 +341,11 @@
         </div>
       </div>
 
+      <div id="bottom-controls">
+        <div id="radio-player" class="radio-player-container"></div>
+        <div id="pause-button"></div>
+      </div>
+
       <div class="in-game-debug" style="display: none">
         <div>GAME DEBUG PANEL</div>
 
@@ -393,29 +394,8 @@
       <div id="game-title">BERLIN RUNNER</div>
 
       <div class="button-holder" style="display: flex; flex-direction: row">
-        <div id="resume-button">RESUME GAME</div>
         <div id="restart-button">RESTART LEVEL</div>
       </div>
-      <div style="display: flex; flex-direction: row"></div>
-      <span
-        style="
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          margin: 0 5px;
-        "
-      >
-        <span class="material-symbols-outlined mute-icon" id="mute">
-          volume_off
-        </span>
-        <div
-          id="audio_status_text"
-          class="mute-icon-text"
-          style="color: greenyellow"
-        >
-          MUTED
-        </div>
-      </span>
     </div>
     <!-- =============================================== GAME PAUSED SCREEN END =============================================== -->
 
@@ -572,14 +552,6 @@
     <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
     <div id="webgl"></div>
     <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
-
-    <!-- =============================================== FOOTER START =============================================== -->
-    <footer class="game-footer">
-      <!-- =============================================== Radio Player =============================================== -->
-      <div id="radio-player" class="radio-player-container"></div>
-      <!-- =============================================== Radio Player =============================================== -->
-    </footer>
-    <!-- =============================================== FOOTER END =============================================== -->
     <script type="module" src="app.js"></script>
   </body>
 </html>

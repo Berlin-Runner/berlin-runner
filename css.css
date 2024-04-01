@@ -42,18 +42,6 @@ body {
   border: 6px solid black;
 }
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 1); /* Slightly darker for contrast */
-  color: white;
-  text-align: center;
-  padding: 12px 0; /* Add padding above and below the content */
-  z-index: 103; /* Ensure it's above other content but adjust as needed */
-}
-
 a,
 canvas {
   margin: 0 !important;
@@ -83,25 +71,45 @@ canvas {
   background-clip: content-box;
 }
 
-/* Radio Player Component - start */
-.radio-player-container {
-  display: inline-block; /* Adjust based on your specific layout needs */
-  background-color: transparent; /* Let the footer's background show */
-  padding: 5px 10px; /* Adjust padding as needed */
-  text-align: center;
+#bottom-controls {
+  display: flex; /* Use flexbox to align children inline */
+  justify-content: center; /* This will push the children to opposite ends */
+  align-items: center; /* Align the children vertically in the center */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 1); /* Slightly darker for contrast */
   color: white;
-  z-index: 104; /* Ensure it's above the footer's background */
+  text-align: center;
+  z-index: 103; /* Ensure it's above other content but adjust as needed */
 }
 
-#station-select {
-  background: #333; /* Dark background for contrast */
-  color: #fff; /* Light text for readability */
-  border: none;
-  padding: 5px;
-  margin: 10px; /* Space it out from the play/pause button */
-  cursor: pointer;
+.radio-player-container,
+#pause-button {
+  display: inline-flex; /* Adjust to inline-flex to allow internal flex properties */
+  align-items: center; /* Align internal items in the center vertically */
+  justify-content: center; /* Center internal items horizontally */
+  background-color: transparent; /* Let the footer's background show */
+  padding: 5px; /* Adjust padding as needed */
+  text-align: center;
+  color: white;
+  z-index: 106; /* Ensure it's above everything */
 }
-/* Radio Player Component - end */
+
+#pause-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid bisque; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  margin-left: 24px; /* Only apply margin to create spacing from the edge */
+  order: 2; /* Moves it visually to the right */
+}
+
+.radio-player-container {
+  margin-right: 24px; /* Similar margin on the radio player for right edge */
+  order: 1; /* Ensures it appears to the left of the pause button */
+}
 
 #mute {
   font-size: 32px;
@@ -149,26 +157,6 @@ canvas {
   flex-direction: column;
 }
 
-#pause-button-holder {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  z-index: 100;
-  font-weight: 900;
-  padding: 10px;
-  /* border: 5px solid red; */
-  font-family: 'VT323', monospace;
-  color: aliceblue;
-  text-shadow: -5px 5px black;
-  border-radius: 4px;
-}
-
-#pause-button {
-  font-size: 72px;
-  cursor: crosshair;
-}
-
 .health {
   position: fixed;
   top: 50px;
@@ -213,7 +201,6 @@ canvas {
 
 #intro-screen {
   width: 100vw;
-  height: calc(100% - 100px); /* Adjust 100px to the height of your footer */
   position: fixed;
   top: 0;
   left: 0;
@@ -225,10 +212,6 @@ canvas {
   flex-direction: column;
 
   /* border: 1px greenyellow dashed; */
-}
-
-#stage-screen {
-  height: calc(100% - 100px); /* Adjust 100px to the height of your footer */
 }
 
 #game-over-screen {
@@ -250,7 +233,7 @@ canvas {
 }
 
 #game-over-screen .container {
-  padding: 40px;
+  padding: 80px 40px;
   height: 60%;
   width: 80%;
   background-color: rgba(50, 50, 50, 0.95);
@@ -334,7 +317,6 @@ canvas {
 #restart-level-button,
 #select-character-button,
 #back-to-home-button,
-#resume-button,
 #restart-button,
 .generic-button {
   /* display: inline; */
@@ -351,7 +333,7 @@ canvas {
   background-color: transparent;
   text-shadow: -2px 2px white;
   /* border-radius: 5px; */
-  cursor: crosshair;
+  cursor: pointer;
 }
 
 #start-game-button:hover {
@@ -531,7 +513,7 @@ a {
   color: aquamarine;
   border: 1px solid gray;
   /* width: 100%; */
-  cursor: crosshair;
+  cursor: pointer;
 }
 
 /* .district .district-enter-button .coming-soon-button {
@@ -572,7 +554,6 @@ a {
 }
 
 .character-picker {
-  height: calc(100% - 100px); /* Adjust 100px to the height of your footer */
   /* z-index: 100000; */
   background: rgba(0, 0, 0, 0.125);
   /* position: absolute; */
@@ -709,7 +690,7 @@ a {
   border: 1px solid gray;
   width: 75%;
 
-  cursor: crosshair;
+  cursor: pointer;
   /* align-self: flex-start; */
   justify-self: flex-end;
 }
@@ -735,7 +716,7 @@ a {
   border: 1px solid gray;
   /* width: 75%; */
 
-  cursor: crosshair;
+  cursor: pointer;
   /* align-self: flex-start; */
   justify-self: flex-end;
 }
