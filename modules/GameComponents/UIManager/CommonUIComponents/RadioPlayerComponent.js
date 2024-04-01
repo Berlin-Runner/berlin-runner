@@ -118,6 +118,7 @@ class RadioPlayerComponent {
     if (this.audioComponent.sound) {
       this.audioComponent.sound.src = stationUrl;
       this.audioComponent.sound.load();
+      this.audioComponent.sound.muted = this.audioManager.isMute; // Respect initial mute state
       this.audioComponent.sound.play().catch((error) => {
         console.error('Error playing sound:', error);
         // Handle auto-play policy issues or other errors here
