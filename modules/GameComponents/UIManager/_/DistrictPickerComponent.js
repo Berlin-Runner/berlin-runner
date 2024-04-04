@@ -1,46 +1,49 @@
-import { BaseUIComponent } from "../BaseUIComponent.js";
-import { DistrictUI } from "./DistrictUI.js";
+import { BaseUIComponent } from '../BaseUIComponent.js';
+import { DistrictUI } from './DistrictUI.js';
 class DistrictPickerComponent extends BaseUIComponent {
-	constructor(id, context) {
-		super(id, context);
+  constructor(id, context) {
+    super(id, context);
 
-		this.scoreHolder = document.getElementById("score-holder");
-		this.scoreHolder.style.display = "none";
+    this.scoreHolder = document.getElementById('score-holder');
+    this.scoreHolder.style.display = 'none';
 
-		this.setUpComponentEventListners();
-		this.setupEventBusSubscriptions();
+    this.setUpComponentEventListners();
+    this.setupEventBusSubscriptions();
 
-		this.setupDistricts();
-	}
+    this.setupDistricts();
+  }
 
-	setupDistricts() {
-		// this.districtOne = new DistrictUI("district-one", this.context, 0);
-	}
+  setupDistricts() {
+    // Initialize district UI components here
+    // Example: this.districtOne = new DistrictUI("district-one", this.context, 0);
+  }
 
-	setUpComponentEventListners() {}
+  setUpComponentEventListners() {
+    // Set up any event listeners specific to this component
+  }
 
-	setupEventBusSubscriptions() {
-		this.stateBus.subscribe("start_game", () => {
-			this.hideComponent();
-			// this.hideStatic();
-		});
+  setupEventBusSubscriptions() {
+    this.stateBus.subscribe('start_game', () => {
+      this.hideComponent();
+      // Optionally hide static or perform other actions
+      // this.hideStatic();
+    });
 
-		this.stateBus.subscribe("pick-district", () => {
-			this.showComponent();
-			this.showStatic();
-		});
-	}
+    this.stateBus.subscribe('pick-district', () => {
+      this.showComponent();
+      this.showStatic();
+    });
+  }
 
-	startGame() {
-		// console.log("start game function");
-		// this.stateManager.startGame();
-	}
+  startGame() {
+    // console.log("start game function");
+    // this.stateManager.startGame();
+  }
 
-	muteToggle() {
-		/*    THIS IS CURRENTLY BEING HANDLED BY THE AUDIO MANAGER,
-     PLEASE REFACTOR LATER WITH AN EVENT SYSTEM SO THAT EACH COMPONENT
-     HAS ITS OWN EVENT LISTENER AND DO ITS OWN IMPLEMENTATION OF MUTING AND UNMUTING */
-	}
+  // AudioManager globally manages audio. See handleAudioMuteToggle(event) for component-specific controls.
+  muteToggle() {
+    // Placeholder for potential future audio management refinements.
+  }
 }
 
 export { DistrictPickerComponent };

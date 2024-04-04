@@ -1,126 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>BERLIN RUNNER</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BERLIN RUNNER</title>
 
-		<link rel="stylesheet" href="css.css" />
+    <link rel="stylesheet" href="css.css" />
 
-		<!-- =============================================== LIB IMPORTS START =============================================== -->
-		<script src="libs/three.js"></script>
+    <!-- =============================================== LIB IMPORTS START =============================================== -->
+    <script src="libs/three.js"></script>
 
-		<script src="libs/ExtendMaterial.js"></script>
+    <script src="libs/ExtendMaterial.js"></script>
 
-		<script src="libs/gsap.js"></script>
-		<script src="libs/stats.js"></script>
-		<script src="libs/hammer.js"></script>
-		<script type="module" src="libs/cannon-es.js"></script>
+    <script src="libs/gsap.js"></script>
+    <script src="libs/stats.js"></script>
+    <script src="libs/hammer.js"></script>
+    <script type="module" src="libs/cannon-es.js"></script>
 
-		<script src="libs/BokehShader.js"></script>
-		<script src="libs/CopyShader.js"></script>
-		<script src="libs/EffectComposer.js"></script>
-		<script src="libs/RenderPass.js"></script>
-		<script src="libs/BokehPass.js"></script>
-		<script src="libs/ShaderPass.js"></script>
-		<script src="libs/HalftoneShader.js"></script>
-		<script src="libs/HalftonePass.js"></script>
-		<script src="libs/GLTFLoader.js"></script>
-		<script src="libs/OrbitControls.js"></script>
-		<script src="libs/ua-parser.js"></script>
-		<!-- =============================================== LIB IMPORTS END =============================================== -->
+    <script src="libs/BokehShader.js"></script>
+    <script src="libs/CopyShader.js"></script>
+    <script src="libs/EffectComposer.js"></script>
+    <script src="libs/RenderPass.js"></script>
+    <script src="libs/BokehPass.js"></script>
+    <script src="libs/ShaderPass.js"></script>
+    <script src="libs/HalftoneShader.js"></script>
+    <script src="libs/HalftonePass.js"></script>
+    <script src="libs/GLTFLoader.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="libs/ua-parser.js"></script>
+    <!-- =============================================== LIB IMPORTS END =============================================== -->
 
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
-			rel="stylesheet"
-		/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
 
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-		/>
-	</head>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
 
-	<body>
-		<!-- =============================================== STATIC SCREEN NOISE =============================================== -->
-		<div id="page_static" class="full-screen"></div>
-		<!-- =============================================== STATIC SCREEN NOISE =============================================== -->
+  <body>
+    <!-- =============================================== STATIC SCREEN NOISE =============================================== -->
+    <div id="page_static" class="full-screen"></div>
+    <!-- =============================================== STATIC SCREEN NOISE =============================================== -->
 
-		<div class="loading-progress-page" id="loading-progress-page">
-			<div class="loader-container" id="loader-bg">
-				<div class="loading-bar-container">
-					<div class="loading-text">
-						<div id="loading-text">LOADING BERLIN RUNNER</div>
-						<div style="">
-							<span style="display: none" class="percentage"></span>
-						</div>
-					</div>
+    <div class="loading-progress-page" id="loading-progress-page">
+      <div class="loader-container" id="loader-bg">
+        <div class="loading-bar-container">
+          <div class="loading-text">
+            <div id="loading-text">LOADING BERLIN RUNNER</div>
+            <div>
+              <span style="display: none" class="percentage"></span>
+            </div>
+          </div>
 
-					<div class="loading-bar-holder">
-						<div class="loading-bar"></div>
-					</div>
-				</div>
-			</div>
-		</div>
+          <div class="loading-bar-holder">
+            <div class="loading-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<!-- =============================================== GAME INTRO SCREEN START =============================================== -->
-		<div id="intro-screen" class="full-screen">
-			<div id="game-title">BERLIN RUNNER</div>
-			<div class="game-title-3d"></div>
+    <!-- =============================================== GAME INTRO SCREEN START =============================================== -->
+    <div id="intro-screen" class="full-screen intro-screen">
+      <div id="game-title">BERLIN RUNNER</div>
+      <div class="game-title-3d"></div>
 
-			<div class="game-message">
-				<p>WELCOME TO THE BERLIN RUNNER DEMO!</p>
+      <div class="game-message">
+        <p>WELCOME TO THE BERLIN RUNNER DEMO!</p>
 
-				<p>YOU ARE NOT IN BERLIN TO RELAX. YOU'RE TIRED AND YOU NEED COFFEE.</p>
+        <p>YOU ARE NOT IN BERLIN TO RELAX. YOU'RE TIRED AND YOU NEED COFFEE.</p>
 
-				<p>
-					DASH THROUGH THE STREETS, DODGE BUSES, JUMP, SLIDE, and COLLECT
-					COFFEES FOR A REWARD!
-				</p>
-			</div>
-			<div id="" style="color: white; font-size: 18px">
-				<div style="text-align: center; padding: 20px">
-					TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE :
-					M
-				</div>
-			</div>
-			<div id="start-game-button">ENTER CITY</div>
-			<a
-				id="title-feedback-link"
-				class="arrow"
-				target="_blank"
-				href="https://forms.gle/ph34k8H6v2LjpDAz8"
-				>FEEDBACK FORM</a
-			>
-			<div style="display: flex; flex-direction: row">
-				<span
-					style="
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						margin: 0 5px;
-					"
-				>
-					<span class="material-symbols-outlined mute-icon" id="mute">
-						volume_off
-					</span>
-					<div
-						id="audio_status_text"
-						class="mute-icon-text"
-						style="color: greenyellow"
-					>
-						MUTED
-					</div>
-				</span>
-			</div>
-		</div>
-		<!-- =============================================== GAME INTRO SCREEN END =============================================== -->
+        <p>
+          DASH THROUGH THE STREETS, DODGE BUSES, JUMP, SLIDE, and COLLECT
+          COFFEES FOR A REWARD!
+        </p>
+      </div>
+      <div id="" style="color: white; font-size: 18px">
+        <div style="text-align: center; padding: 20px">
+          TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE :
+          M
+        </div>
+      </div>
+      <div id="start-game-button">ENTER CITY</div>
+      <a
+        id="title-feedback-link"
+        class="arrow"
+        target="_blank"
+        href="https://forms.gle/ph34k8H6v2LjpDAz8"
+        >FEEDBACK FORM</a
+      >
+    </div>
+    <!-- =============================================== GAME INTRO SCREEN END =============================================== -->
 
-		<!-- =============================================== DISTRICT PICKER START =============================================== -->
-		<!-- <div
+    <!-- =============================================== DISTRICT PICKER START =============================================== -->
+    <!-- <div
 			id="district-picker"
 			class="full-screen district-picker"
 			style="display: flex"
@@ -203,301 +182,280 @@
 				</button>
 			</div>
 		</div> -->
-		<!-- =============================================== DISTRICT PICKER END =============================================== -->
+    <!-- =============================================== DISTRICT PICKER END =============================================== -->
 
-		<!-- =============================================== CHARACHTER PICKER START =============================================== -->
-		<div id="character-picker" class="full-screen character-picker">
-			<div class="banner">PICK CHARACTER</div>
-			<div
-				style="border: none"
-				class="generic-button"
-				id="character-name"
-			></div>
+    <!-- =============================================== CHARACHTER PICKER START =============================================== -->
+    <div id="character-picker" class="full-screen character-picker">
+      <div class="banner">PICK CHARACTER</div>
+      <div
+        style="border: none"
+        class="generic-button"
+        id="character-name"
+      ></div>
 
-			<div
-				class="character-selector-buttons"
-				style="
-					width: 100%;
-					height: 70%;
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				"
-			>
-				<div class="">
-					<button class="charachter-continue-button" id="character-picker-prev">
-						<span
-							class="material-symbols-outlined"
-							style="background: transparent; font-size: 64px"
-						>
-							navigate_before
-						</span>
-					</button>
-				</div>
+      <div
+        class="character-selector-buttons"
+        style="
+          width: 100%;
+          height: 70%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div class="">
+          <button class="charachter-continue-button" id="character-picker-prev">
+            <span
+              class="material-symbols-outlined"
+              style="background: transparent; font-size: 64px"
+            >
+              navigate_before
+            </span>
+          </button>
+        </div>
 
-				<div class="">
-					<button class="charachter-continue-button" id="character-picker-next">
-						<span
-							class="material-symbols-outlined"
-							style="background: transparent; font-size: 64px"
-						>
-							navigate_next
-						</span>
-					</button>
-				</div>
-			</div>
+        <div class="">
+          <button class="charachter-continue-button" id="character-picker-next">
+            <span
+              class="material-symbols-outlined"
+              style="background: transparent; font-size: 64px"
+            >
+              navigate_next
+            </span>
+          </button>
+        </div>
+      </div>
 
-			<div class="continue-button">
-				<button
-					class="charachter-continue-button"
-					id="charachter-continue-button"
-				>
-					DONE
-				</button>
-			</div>
-		</div>
-		<!-- =============================================== CHARACHTER PICKER END =============================================== -->
+      <div class="continue-button">
+        <button
+          class="charachter-continue-button"
+          id="charachter-continue-button"
+        >
+          DONE
+        </button>
+      </div>
+    </div>
+    <!-- =============================================== CHARACHTER PICKER END =============================================== -->
 
-		<!-- =============================================== STAGE UI START =============================================== -->
-		<div
-			id="stage-screen"
-			class="_ full-screen"
-			style="display: none; justify-content: center; align-items: flex-end"
-		>
-			<div
-				style="
-					color: white;
-					font-size: 128px;
-					z-index: 100000;
-					position: fixed;
-					bottom: 10%;
-					right: 50;
-				"
-			>
-				<button class="generic-button" style="display: none" id="">HOME</button>
-				<button
-					class="generic-button"
-					style="display: none"
-					id="display-character-picker"
-				>
-					CHARACTER
-				</button>
-				<div id="instructions">
-					<div id="instruction-text" style="text-align: center; padding: 20px">
-						TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE
-						: M
-					</div>
-				</div>
-				<button class="start-game-button-final" id="start-game-button-final">
-					GO!
-				</button>
-			</div>
-		</div>
-		<!-- =============================================== STAGE UI END =============================================== -->
+    <!-- =============================================== STAGE UI START =============================================== -->
+    <div
+      id="stage-screen"
+      class="full-screen stage-screen"
+      style="display: none; justify-content: center; align-items: flex-end"
+    >
+      <div
+        style="
+          color: white;
+          font-size: 128px;
+          z-index: 100000;
+          bottom: 10%;
+          right: 50;
+        "
+      >
+        <button class="generic-button" style="display: none" id="">HOME</button>
+        <button
+          class="generic-button"
+          style="display: none"
+          id="display-character-picker"
+        >
+          CHARACTER
+        </button>
+        <div id="instructions">
+          <div id="instruction-text" style="text-align: center; padding: 20px">
+            TURN: LEFT | RIGHT&nbsp; | SLIDE: DOWN&nbsp; | JUMP: UP&nbsp; | MUTE
+            : M
+          </div>
+        </div>
+        <button class="start-game-button-final" id="start-game-button-final">
+          GO!
+        </button>
+      </div>
+    </div>
+    <!-- =============================================== STAGE UI END =============================================== -->
 
-		<!-- =============================================== GAME PLAY SCREEN START =============================================== -->
-		<div id="in-play-screen" class="_">
-			<div id="pause-button-holder">
-				<span class="material-symbols-outlined" id="pause-button"> pause </span>
-			</div>
+    <!-- =============================================== GAME PLAY SCREEN START =============================================== -->
+    <div id="in-play-screen">
+      <div class="score" id="score-holder">
+        <!-- <div> -->
+        <span>SCORE:</span>
 
-			<div class="score" id="score-holder">
-				<!-- <div> -->
-				<span>SCORE:</span>
+        <span id="score_text" style="display: flex">0</span>
+      </div>
+      <!-- </div> -->
 
-				<span id="score_text" style="display: flex">0</span>
-			</div>
-			<!-- </div> -->
+      <div class="progress" id="progress-holder">
+        PROGRESS
+        <span id="progress_text" style="display: none">0</span>
+        <div class="progress-bar" id="progress-bar">
+          <div class="progress-fill" id="progressBar"></div>
+        </div>
+      </div>
+      <div class="health" style="display: none">
+        HEALTH: <span id="health-value">=)</span> %
+      </div>
 
-			<div class="progress" id="progress-holder">
-				PROGRESS
-				<span id="progress_text" style="display: none">0</span>
-				<div class="progress-bar" id="progress-bar">
-					<div class="progress-fill" id="progressBar"></div>
-				</div>
-			</div>
-			<div class="health" style="display: none">
-				HEALTH: <span id="health-value">=)</span> %
-			</div>
+      <div class="tutorial-screen">
+        <div class="river-tutorial" id="river-tutorial">
+          <div>
+            <div>
+              <span class="material-symbols-outlined" style="font-size: 28px">
+                arrow_upward
+              </span>
+            </div>
 
-			<div class="tutorial-screen">
-				<div class="river-tutorial" id="river-tutorial">
-					<div>
-						<div>
-							<span class="material-symbols-outlined" style="font-size: 28px">
-								arrow_upward
-							</span>
-						</div>
+            <div>
+              <span id="river-tutorial-message">PRESS "W"</span>
+            </div>
+          </div>
+        </div>
 
-						<div>
-							<span id="river-tutorial-message">PRESS "W"</span>
-						</div>
-					</div>
-				</div>
+        <div class="bridge-tutorial" id="bridge-tutorial">
+          <div>
+            <div>
+              <span class="material-symbols-outlined" style="font-size: 28px">
+                arrow_downward
+              </span>
+            </div>
 
-				<div class="bridge-tutorial" id="bridge-tutorial">
-					<div>
-						<div>
-							<span class="material-symbols-outlined" style="font-size: 28px">
-								arrow_downward
-							</span>
-						</div>
+            <div>
+              <span id="bridge-tutorial-message">PRESS 'S'</span>
+            </div>
+          </div>
+        </div>
 
-						<div>
-							<span id="bridge-tutorial-message">PRESS 'S'</span>
-						</div>
-					</div>
-				</div>
+        <div class="bus-tutorial" id="bus-tutorial">
+          <div>
+            <div>
+              <span class="material-symbols-outlined" style="font-size: 28px">
+                arrow_back
+              </span>
+              <span class="material-symbols-outlined" style="font-size: 28px">
+                arrow_forward
+              </span>
+            </div>
 
-				<div class="bus-tutorial" id="bus-tutorial">
-					<div>
-						<div>
-							<span class="material-symbols-outlined" style="font-size: 28px">
-								arrow_back
-							</span>
-							<span class="material-symbols-outlined" style="font-size: 28px">
-								arrow_forward
-							</span>
-						</div>
+            <div>
+              <span id="bus-tutorial-message">PRESS 'A' / 'D'</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-						<div>
-							<span id="bus-tutorial-message">PRESS 'A' / 'D'</span>
-						</div>
-					</div>
-				</div>
-			</div>
+      <div id="bottom-controls">
+        <div id="radio-player" class="radio-player-container"></div>
+        <div id="pause-button"></div>
+      </div>
 
-			<div class="in-game-debug" style="display: none">
-				<div>GAME DEBUG PANEL</div>
+      <div class="in-game-debug" style="display: none">
+        <div>GAME DEBUG PANEL</div>
 
-				<div class="debug-container">
-					<div class="__debug-box">
-						<div>DISTANCE TO OBSTACLES</div>
-						<div class="dist-to-river">
-							DIST TO RIVER : <span id="dist-to-river"></span>m
-						</div>
-						<div class="dist-to-bridge">
-							DIST TO BRIDGE : <span id="dist-to-bridge"></span>m
-						</div>
+        <div class="debug-container">
+          <div class="__debug-box">
+            <div>DISTANCE TO OBSTACLES</div>
+            <div class="dist-to-river">
+              DIST TO RIVER : <span id="dist-to-river"></span>m
+            </div>
+            <div class="dist-to-bridge">
+              DIST TO BRIDGE : <span id="dist-to-bridge"></span>m
+            </div>
 
-						<div class="dist-to-bridge">
-							DIST TO BUS : <span id="dist-to-bus"></span>m
-						</div>
-					</div>
-					<div class="__debug-box">
-						<div>GAME STATE</div>
-						<div class="dist-to-bridge">
-							CURRENT STATE : <span id="current-game-state"></span>
-						</div>
-					</div>
-					<div class="__debug-box">
-						<div>PLAYER STATE</div>
-						<div class="dist-to-bridge">
-							ACTIVE ANIMATION: <span id="active-player-animation"></span>
-						</div>
+            <div class="dist-to-bridge">
+              DIST TO BUS : <span id="dist-to-bus"></span>m
+            </div>
+          </div>
+          <div class="__debug-box">
+            <div>GAME STATE</div>
+            <div class="dist-to-bridge">
+              CURRENT STATE : <span id="current-game-state"></span>
+            </div>
+          </div>
+          <div class="__debug-box">
+            <div>PLAYER STATE</div>
+            <div class="dist-to-bridge">
+              ACTIVE ANIMATION: <span id="active-player-animation"></span>
+            </div>
 
-						<div class="dist-to-bridge">
-							JUMPING : <span id="player-is-jumping"></span>
-						</div>
+            <div class="dist-to-bridge">
+              JUMPING : <span id="player-is-jumping"></span>
+            </div>
 
-						<div class="dist-to-bridge">
-							SLIDING: <span id="player-is-sliding"></span>
-						</div>
-					</div>
-					<div class="__debug-box">MISC.</div>
-				</div>
-			</div>
-		</div>
-		<!-- =============================================== GAME PLAY SCREEN END =============================================== -->
+            <div class="dist-to-bridge">
+              SLIDING: <span id="player-is-sliding"></span>
+            </div>
+          </div>
+          <div class="__debug-box">MISC.</div>
+        </div>
+      </div>
+    </div>
+    <!-- =============================================== GAME PLAY SCREEN END =============================================== -->
 
-		<!-- =============================================== GAME PAUSED SCREEN START =============================================== -->
-		<div id="paused-screen" class="full-screen">
-			<div id="game-title">BERLIN RUNNER</div>
+    <!-- =============================================== GAME PAUSED SCREEN START =============================================== -->
+    <div id="paused-screen" class="full-screen">
+      <div id="game-title">BERLIN RUNNER</div>
 
-			<div class="button-holder" style="display: flex; flex-direction: row">
-				<div id="resume-button">RESUME GAME</div>
-				<div id="restart-button">RESTART LEVEL</div>
-			</div>
-			<div style="display: flex; flex-direction: row"></div>
-			<span
-				style="
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					margin: 0 5px;
-				"
-			>
-				<span class="material-symbols-outlined mute-icon" id="mute">
-					volume_off
-				</span>
-				<div
-					id="audio_status_text"
-					class="mute-icon-text"
-					style="color: greenyellow"
-				>
-					MUTED
-				</div>
-			</span>
-		</div>
-		<!-- =============================================== GAME PAUSED SCREEN END =============================================== -->
+      <div class="button-holder" style="display: flex; flex-direction: row">
+        <div id="restart-button">RESTART LEVEL</div>
+      </div>
+    </div>
+    <!-- =============================================== GAME PAUSED SCREEN END =============================================== -->
 
-		<!-- =============================================== GAME OVER SCREEN START =============================================== -->
-		<div id="game-over-screen" class="full-screen">
-			<div class="container">
-				<div id="feedback-form">
-					<p>THX FOR PLAYING! COULD YOU DO US A FAVOR?</p>
+    <!-- =============================================== GAME OVER SCREEN START =============================================== -->
+    <div id="game-over-screen" class="full-screen">
+      <div class="container">
+        <div id="feedback-form">
+          <p>THX FOR PLAYING! COULD YOU DO US A FAVOR?</p>
 
-					<p>
-						We need your help to finish Berlin Runner! Please support the demo
-						by leaving feedback here:
-					</p>
+          <p>
+            We need your help to finish Berlin Runner! Please support the demo
+            by leaving feedback here:
+          </p>
 
-					<a
-						id="title-feedback-link"
-						class="arrow"
-						target="_blank"
-						href="https://forms.gle/ph34k8H6v2LjpDAz8"
-						>FEEDBACK FORM</a
-					>
-				</div>
-				<div id="game-over-message" style="display: none">
-					Almost! By the way, if you get a score of 10 coffees or more in the
-					game, you win a surprise, so try again!
-				</div>
+          <a
+            id="title-feedback-link"
+            class="arrow"
+            target="_blank"
+            href="https://forms.gle/ph34k8H6v2LjpDAz8"
+            >FEEDBACK FORM</a
+          >
+        </div>
+        <div id="game-over-message" style="display: none">
+          Almost! By the way, if you get a score of 10 coffees or more in the
+          game, you win a surprise, so try again!
+        </div>
 
-				<div id="reward-claim-message" style="display: none">
-					<span style="font-size: 24px"> YOU WON A REWARD! </span>
-					<br />
-					<div>
-						Screenshot this and take it in to Five Elephant Kreuzberg, Mitte, or
-						Pberg for a discount ☕️
-					</div>
+        <div id="reward-claim-message" style="display: none">
+          <span style="font-size: 24px"> YOU WON A REWARD! </span>
+          <br />
+          <div>
+            Screenshot this and take it in to Five Elephant Kreuzberg, Mitte, or
+            Pberg for a discount ☕️
+          </div>
 
-					<div>
-						<img
-							src="/assets/img/coffee-house.jpg"
-							height="100px"
-							width="100px"
-							alt=""
-						/>
-					</div>
-				</div>
-				<div
-					style="display: flex; flex-direction: column"
-					id="final-score-holder"
-				>
-					<span> SCORE:<span id="game-over-final-score"> </span> </span>
+          <div>
+            <img
+              src="/assets/img/coffee-house.jpg"
+              height="100px"
+              width="100px"
+              alt=""
+            />
+          </div>
+        </div>
+        <div
+          style="display: flex; flex-direction: column"
+          id="final-score-holder"
+        >
+          <span> SCORE:<span id="game-over-final-score"> </span> </span>
 
-					<span> PROGRESS:<span id="game-over-final-progress"></span> </span>
-				</div>
+          <span> PROGRESS:<span id="game-over-final-progress"></span> </span>
+        </div>
 
-				<div id="restart-level-button">RESTART</div>
-				<div id="select-character-button" style="display: none">
-					SELECT PLAYER
-				</div>
-				<div id="back-to-home-button" style="display: none">HOME</div>
-			</div>
-			<!-- <div style="display: flex; flex-direction: row">
+        <div id="restart-level-button">RESTART</div>
+        <div id="select-character-button" style="display: none">
+          SELECT PLAYER
+        </div>
+        <div id="back-to-home-button" style="display: none">HOME</div>
+      </div>
+      <!-- <div style="display: flex; flex-direction: row">
 				<span
 					style="
 						display: flex;
@@ -518,83 +476,82 @@
 					</div>
 				</span>
 			</div> -->
-		</div>
-		<!-- =============================================== GAME OVER SCREEN END =============================================== -->
+    </div>
+    <!-- =============================================== GAME OVER SCREEN END =============================================== -->
 
-		<!-- *********************************************** LEVEL UIs START , :) *********************************************** -->
-		<!-- =============================================== LEVEL ZERO SCREENS START =============================================== -->
-		<div id="level-zero-intro-screen" class="full-screen" style="display: none">
-			<div class="level-title">Friedrichshain-Kreuzberg</div>
-			<div id="instructions">
-				<div style="text-align: center">
-					WELCOME TO THE Friedrichshain-Kreuzberg DISTRICT<br />
-					HAVE FUN WITH CROISSANTS, FILTER COFFEE AND MUSTACHES<br />
-					AVOID OBSTACLES, COLLECT COINS, HAVE FUN <br />
-					GAME WILL START IN: <br />
-					<span class="level-countdown-timer" style="font-size: 64px">;)</span
-					><br />
-					WE'RE PREPARING SOME THINGS FOR YOU,
-				</div>
-			</div>
+    <!-- *********************************************** LEVEL UIs START , :) *********************************************** -->
+    <!-- =============================================== LEVEL ZERO SCREENS START =============================================== -->
+    <div id="level-zero-intro-screen" class="full-screen" style="display: none">
+      <div class="level-title">Friedrichshain-Kreuzberg</div>
+      <div id="instructions">
+        <div style="text-align: center">
+          WELCOME TO THE Friedrichshain-Kreuzberg DISTRICT<br />
+          HAVE FUN WITH CROISSANTS, FILTER COFFEE AND MUSTACHES<br />
+          AVOID OBSTACLES, COLLECT COINS, HAVE FUN <br />
+          GAME WILL START IN: <br />
+          <span class="level-countdown-timer" style="font-size: 64px">;)</span
+          ><br />
+          WE'RE PREPARING SOME THINGS FOR YOU,
+        </div>
+      </div>
 
-			<div style="display: flex; flex-direction: row; margin: 10px">
-				<span
-					style="
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						margin: 0 5px;
-					"
-				>
-					<span class="material-symbols-outlined mute-icon" id="mute">
-						volume_off
-					</span>
-					<div
-						id="audio_status_text"
-						class="mute-icon-text"
-						style="color: greenyellow"
-					>
-						MUTED
-					</div>
-				</span>
-			</div>
-		</div>
+      <div style="display: flex; flex-direction: row; margin: 10px">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
 
-		<div id="level-zero-complete-screen" style="display: none">
-			<div class="level-complete-title">LEVEL ONE COMPLETE!, =)</div>
-			<div id="instructions">
-				<span style="font-size: 36px">YOU'VE MADE IT</span>
-			</div>
+    <div id="level-zero-complete-screen" style="display: none">
+      <div class="level-complete-title">LEVEL ONE COMPLETE!, =)</div>
+      <div id="instructions">
+        <span style="font-size: 36px">YOU'VE MADE IT</span>
+      </div>
 
-			<div style="display: flex; flex-direction: row; margin: 10px">
-				<span
-					style="
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						margin: 0 5px;
-					"
-				>
-					<span class="material-symbols-outlined mute-icon" id="mute">
-						volume_off
-					</span>
-					<div
-						id="audio_status_text"
-						class="mute-icon-text"
-						style="color: greenyellow"
-					>
-						MUTED
-					</div>
-				</span>
-			</div>
-		</div>
-		<!-- =============================================== LEVEL ZERO SCREENS END =============================================== -->
-		<!-- *********************************************** LEVEL UIs END , :( *********************************************** -->
+      <div style="display: flex; flex-direction: row; margin: 10px">
+        <span
+          style="
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 5px;
+          "
+        >
+          <span class="material-symbols-outlined mute-icon" id="mute">
+            volume_off
+          </span>
+          <div
+            id="audio_status_text"
+            class="mute-icon-text"
+            style="color: greenyellow"
+          >
+            MUTED
+          </div>
+        </span>
+      </div>
+    </div>
+    <!-- =============================================== LEVEL ZERO SCREENS END =============================================== -->
+    <!-- *********************************************** LEVEL UIs END , :( *********************************************** -->
 
-		<!-- =============================================== CANVAS MOUNT POINT =============================================== -->
-		<div id="webgl"></div>
-		<!-- =============================================== CANVAS MOUNT POINT =============================================== -->
-	</body>
-
-	<script type="module" src="app.js"></script>
+    <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
+    <div id="webgl"></div>
+    <!-- =============================================== CANVAS MOUNT POINT =============================================== -->
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
