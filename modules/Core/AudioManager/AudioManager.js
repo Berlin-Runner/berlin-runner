@@ -2,6 +2,7 @@ class AudioManager {
   constructor() {
     // Ensures a single instance of AudioManager throughout the application.
     if (!AudioManager.instance) {
+      this.audioSources = []; // Holds all registered audio sources for global mute/unmute.
       this.initFields();
       AudioManager.instance = this;
     }
@@ -13,7 +14,6 @@ class AudioManager {
 
   // Initializes class fields to set default states and collections.
   initFields() {
-    this.audioSources = []; // Holds all registered audio sources for global mute/unmute.
     this.isMute = true; // Initialize as true to match the initial "muted" state in HTML
     this.listenersSetUp = false;
     this.isContextActivated = false; // track AudioContext activation
@@ -112,7 +112,7 @@ class AudioManager {
   applyMuteStateToAllSources() {
     this.audioSources.forEach((source) => {
       try {
-        if (source && source.muted !== undefined) {
+        if (source && source.sound.muted !== undefined) {
           source.updateMuteState(this.isMute);
         }
       } catch (error) {
