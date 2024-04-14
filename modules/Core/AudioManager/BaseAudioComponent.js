@@ -7,13 +7,15 @@ class BaseAudioComponent {
       url: '',
       doesLoop: false,
       volume: 1.0,
+      autoPlay: false, // Doesn't auto-play on unmute
     };
     // Object destructuring with default values
-    const { url, doesLoop, volume } = { ...defaults, ...opts };
+    const { url, doesLoop, volume, autoPlay } = { ...defaults, ...opts };
 
     this.audioUrl = url;
     this.loop = doesLoop;
     this.volume = volume;
+    this.autoPlay = autoPlay;
 
     this.init();
   }

@@ -13,6 +13,7 @@ export default class AnimationManager {
       isMute: false,
       doesLoop: false,
       volume: 1,
+      autoPlay: false, // Ensure it does not play automatically on unmute
     });
     // Create and initialize the jump sound component
     this.slideSound = new BaseAudioComponent(this.audioManager, {
@@ -20,6 +21,7 @@ export default class AnimationManager {
       isMute: false,
       doesLoop: false,
       volume: 1,
+      autoPlay: false, // Ensure it does not play automatically on unmute
     });
   }
 

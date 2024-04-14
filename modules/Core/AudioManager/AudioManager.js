@@ -86,7 +86,7 @@ class AudioManager {
       // Attempt to play audio sources if unmuting
       if (!this.isMute) {
         this.audioSources.forEach((source) => {
-          if (source.sound && source.sound.paused) {
+          if (source.sound && source.sound.paused && source.autoPlay) {
             source.sound
               .play()
               .catch((error) => console.error('Playback error:', error));
