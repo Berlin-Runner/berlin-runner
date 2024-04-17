@@ -7,13 +7,15 @@ class BaseAudioComponent {
       url: '',
       doesLoop: false,
       volume: 1.0,
+      autoPlay: false, // Doesn't auto-play on unmute
     };
     // Object destructuring with default values
-    const { url, doesLoop, volume } = { ...defaults, ...opts };
+    const { url, doesLoop, volume, autoPlay } = { ...defaults, ...opts };
 
     this.audioUrl = url;
     this.loop = doesLoop;
     this.volume = volume;
+    this.autoPlay = autoPlay;
 
     this.init();
   }
@@ -32,6 +34,11 @@ class BaseAudioComponent {
 
     // Register this component with the AudioManager for centralized control
     this.audioManager.addAudioSource(this);
+    if (this.autoPlay && !this.audioManager.isMute) {
+      this.sound.play().catch((error) => {
+        console.error('Error auto-playing sound:', error);
+      });
+    }
   }
 
   play() {

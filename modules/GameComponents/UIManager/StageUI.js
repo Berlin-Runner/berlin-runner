@@ -1,8 +1,11 @@
 import { BaseUIComponent } from './BaseUIComponent.js';
+import { AudioManager } from '../../Core/AudioManager/AudioManager.js';
 
 export default class StageUI extends BaseUIComponent {
   constructor(id, context) {
     super(id, context);
+    // Initialize AudioManager instance
+    this.audioManager = AudioManager.getInstance();
 
     this.startGameButton = document.getElementById('start-game-button-final');
     this.instructionText = document.getElementById('instruction-text');
@@ -24,7 +27,8 @@ export default class StageUI extends BaseUIComponent {
     this.startGameButton.addEventListener('click', () => {
       this.hideComponent();
       this.animateCameraToStartingPoint();
-      this.context.audioManager.toggleMute(); // Assuming audio starts muted, toggle to unmute
+      this.context.audioManager.initializeRunningSound(); // Initialize the running sound before unmuting
+      this.context.audioManager.toggleMute(); // Assuming audio starts muted, toggle to unmute. All autoPlay sounds (eg RadioPlayer and Running) will start playing
     });
   }
 

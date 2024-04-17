@@ -1,7 +1,10 @@
+import { BaseAudioComponent } from './BaseAudioComponent.js';
+
 class AudioManager {
   constructor() {
     // Ensures a single instance of AudioManager throughout the application.
     if (!AudioManager.instance) {
+      this.audioSources = []; // Holds all registered audio sources for global mute/unmute.
       this.initFields();
       AudioManager.instance = this;
     }
@@ -13,7 +16,6 @@ class AudioManager {
 
   // Initializes class fields to set default states and collections.
   initFields() {
-    this.audioSources = []; // Holds all registered audio sources for global mute/unmute.
     this.isMute = true; // Initialize as true to match the initial "muted" state in HTML
     this.listenersSetUp = false;
     this.isContextActivated = false; // track AudioContext activation
@@ -86,7 +88,7 @@ class AudioManager {
       // Attempt to play audio sources if unmuting
       if (!this.isMute) {
         this.audioSources.forEach((source) => {
-          if (source.sound && source.sound.paused) {
+          if (source.sound && source.sound.paused && source.autoPlay) {
             source.sound
               .play()
               .catch((error) => console.error('Playback error:', error));
@@ -112,7 +114,7 @@ class AudioManager {
   applyMuteStateToAllSources() {
     this.audioSources.forEach((source) => {
       try {
-        if (source && source.muted !== undefined) {
+        if (source && source.sound.muted !== undefined) {
           source.updateMuteState(this.isMute);
         }
       } catch (error) {
@@ -168,6 +170,24 @@ class AudioManager {
   // Retrieves the singleton instance of AudioManager, creating it if necessary.
   static getInstance() {
     return AudioManager.instance || new AudioManager();
+  }
+
+  initializeRunningSound() {
+    const runningSoundOptions = {
+      url: './assets/sounds/running.mp3',
+      doesLoop: true,
+      volume: 1.0,
+      autoPlay: false, // This ensures it starts playing when unmuted if not already playing
+    };
+    this.runningSound = new BaseAudioComponent(this, runningSoundOptions);
+  }
+
+  toggleRunningSound(play) {
+    if (play) {
+      this.runningSound.play();
+    } else {
+      this.runningSound.stop();
+    }
   }
 }
 
