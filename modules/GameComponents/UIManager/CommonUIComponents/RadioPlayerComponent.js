@@ -8,7 +8,7 @@ class RadioPlayerComponent {
     this.audioComponent = new BaseAudioComponent(this.audioManager, {
       url: '', // The URL will be set in switchStation
       doesLoop: true,
-      volume: 1.0,
+      volume: 0.25,
       autoPlay: true, // Set to true for radio player to auto-play on unmute
     });
     // UI Component setup

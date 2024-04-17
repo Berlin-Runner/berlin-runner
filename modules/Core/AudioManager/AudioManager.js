@@ -1,3 +1,5 @@
+import { BaseAudioComponent } from './BaseAudioComponent.js';
+
 class AudioManager {
   constructor() {
     // Ensures a single instance of AudioManager throughout the application.
@@ -168,6 +170,24 @@ class AudioManager {
   // Retrieves the singleton instance of AudioManager, creating it if necessary.
   static getInstance() {
     return AudioManager.instance || new AudioManager();
+  }
+
+  initializeRunningSound() {
+    const runningSoundOptions = {
+      url: './assets/sounds/running.mp3',
+      doesLoop: true,
+      volume: 1.0,
+      autoPlay: false, // This ensures it starts playing when unmuted if not already playing
+    };
+    this.runningSound = new BaseAudioComponent(this, runningSoundOptions);
+  }
+
+  toggleRunningSound(play) {
+    if (play) {
+      this.runningSound.play();
+    } else {
+      this.runningSound.stop();
+    }
   }
 }
 

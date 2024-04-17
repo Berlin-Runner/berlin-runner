@@ -12,7 +12,7 @@ export default class AnimationManager {
       url: './assets/sounds/jump.mp3',
       isMute: false,
       doesLoop: false,
-      volume: 1,
+      volume: 0.25,
       autoPlay: false, // Ensure it does not play automatically on unmute
     });
     // Create and initialize the jump sound component
@@ -20,7 +20,7 @@ export default class AnimationManager {
       url: './assets/sounds/slide.mp3',
       isMute: false,
       doesLoop: false,
-      volume: 1,
+      volume: 0.25,
       autoPlay: false, // Ensure it does not play automatically on unmute
     });
   }
